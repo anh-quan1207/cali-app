@@ -159,7 +159,26 @@ interface WaterEntryDao {
 
     @Query("SELECT COALESCE(SUM(amount_ml), 0) FROM water_entry WHERE date = :date")
     fun observeTotal(date: LocalDate): Flow<Int>
+
+    // GĐ5: sửa lần uống (S15), lần uống gần nhất cho lịch nhắc (06 §4), cột tuần của S15.
+    @Update
+    suspend fun update(entry: WaterEntryEntity)
+
+    @Query("SELECT * FROM water_entry WHERE id = :id")
+    suspend fun byId(id: Long): WaterEntryEntity?
+
+    @Query("SELECT * FROM water_entry ORDER BY created_at DESC LIMIT 1")
+    suspend fun latest(): WaterEntryEntity?
+
+    @Query("SELECT COALESCE(SUM(amount_ml), 0) FROM water_entry WHERE date = :date")
+    suspend fun total(date: LocalDate): Int
+
+    @Query("SELECT date, SUM(amount_ml) AS total FROM water_entry WHERE date BETWEEN :from AND :to GROUP BY date")
+    fun observeTotalsBetween(from: LocalDate, to: LocalDate): Flow<List<WaterDayTotal>>
 }
+
+/** Tổng nước một ngày (cột tuần S15). */
+data class WaterDayTotal(val date: LocalDate, val total: Int)
 
 @Dao
 interface ChatMessageDao {

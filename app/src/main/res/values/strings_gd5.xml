@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chuỗi của GĐ5 (Nước và nhắc nhở). Tách file riêng để gộp nhánh dễ. -->
+<resources>
+    <!-- Thông báo nhắc (05 §3) -->
+    <string name="water_channel_name">Nhắc uống nước</string>
+    <string name="water_channel_desc">Nhắc uống nước trong khung giờ đã chọn</string>
+    <string name="water_notif_title">Uống nước thôi 💧</string>
+    <string name="water_notif_text">Bạn đã uống %1$s/%2$s ml hôm nay.</string>
+    <string name="water_notif_add">+%1$s ml</string>
+    <string name="water_notif_snooze">Để sau</string>
+    <string name="water_notif_logged">Đã ghi %1$s ml · %2$s/%3$s ml</string>
+</resources>
