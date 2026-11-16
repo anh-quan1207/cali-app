@@ -11,8 +11,8 @@ import com.cali.core.ai.PromptBuilder
 import com.cali.core.ai.RoomAiCallRecorder
 import com.cali.core.ai.SecureApiKeySource
 import com.cali.core.ai.SettingsModelSource
-import com.cali.core.ai.anthropic.AnthropicConfig
-import com.cali.core.ai.anthropic.AnthropicProvider
+import com.cali.core.ai.neuralwatt.NeuralwattConfig
+import com.cali.core.ai.neuralwatt.NeuralwattProvider
 import com.cali.core.calc.MealTypeResolver
 import dagger.Binds
 import dagger.Module
@@ -39,12 +39,12 @@ abstract class AiBindingsModule {
 object AiModule {
 
     @Provides @Singleton
-    fun anthropicConfig(): AnthropicConfig = AnthropicConfig()
+    fun neuralwattConfig(): NeuralwattConfig = NeuralwattConfig()
 
-    /** Log HTTP chỉ ở debug, đã che x-api-key (06 §5). */
+    /** Log HTTP chỉ ở debug, đã che Authorization / x-api-key (06 §5). */
     @Provides @Singleton @AiHttpClient
-    fun httpClient(config: AnthropicConfig): OkHttpClient =
-        AnthropicProvider.defaultClient(config, logger = if (BuildConfig.DEBUG) { line -> Log.d("CaliAi", line) } else null)
+    fun httpClient(config: NeuralwattConfig): OkHttpClient =
+        NeuralwattProvider.defaultClient(config, logger = if (BuildConfig.DEBUG) { line -> Log.d("CaliAi", line) } else null)
 
     @Provides fun promptBuilder(): PromptBuilder = PromptBuilder()
 
@@ -56,8 +56,8 @@ object AiModule {
         keySource: ApiKeySource,
         models: AiModelSource,
         recorder: AiCallRecorder,
-        config: AnthropicConfig,
+        config: NeuralwattConfig,
         promptBuilder: PromptBuilder,
         clock: Clock,
-    ): AiProvider = AnthropicProvider(client, keySource, models, recorder, config, promptBuilder, clock)
+    ): AiProvider = NeuralwattProvider(client, keySource, models, recorder, config, promptBuilder, clock)
 }

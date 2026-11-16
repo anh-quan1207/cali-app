@@ -1,4 +1,4 @@
-package com.cali.core.ai.anthropic
+package com.cali.core.ai
 
 import okhttp3.Headers
 import okhttp3.Interceptor
