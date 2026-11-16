@@ -105,6 +105,7 @@ class SettingsRepository @Inject constructor(
             waterIntervalMin = p[K.waterIntervalMin] ?: d.waterIntervalMin,
             waterCupSmallMl = p[K.waterCupSmallMl] ?: d.waterCupSmallMl,
             waterCupLargeMl = p[K.waterCupLargeMl] ?: d.waterCupLargeMl,
+            waterGoalOverrideMl = p[K.waterGoalOverrideMl],
             mealTimes = p[K.mealTimes]?.let(::decodeMeals) ?: d.mealTimes,
             saveThumbnails = p[K.saveThumbnails] ?: d.saveThumbnails,
             weeklyNotifyEnabled = p[K.weeklyNotifyEnabled] ?: d.weeklyNotifyEnabled,
@@ -131,6 +132,7 @@ class SettingsRepository @Inject constructor(
         p[K.waterIntervalMin] = s.waterIntervalMin
         p[K.waterCupSmallMl] = s.waterCupSmallMl
         p[K.waterCupLargeMl] = s.waterCupLargeMl
+        p.setOrRemove(K.waterGoalOverrideMl, s.waterGoalOverrideMl)
         p[K.mealTimes] = encodeMeals(s.mealTimes)
         p[K.saveThumbnails] = s.saveThumbnails
         p[K.weeklyNotifyEnabled] = s.weeklyNotifyEnabled
@@ -184,6 +186,7 @@ class SettingsRepository @Inject constructor(
         val waterIntervalMin = intPreferencesKey("water_interval_min")
         val waterCupSmallMl = intPreferencesKey("water_cup_small_ml")
         val waterCupLargeMl = intPreferencesKey("water_cup_large_ml")
+        val waterGoalOverrideMl = intPreferencesKey("water_goal_override_ml")
         val mealTimes = stringPreferencesKey("meal_times")
         val saveThumbnails = booleanPreferencesKey("save_thumbnails")
         val weeklyNotifyEnabled = booleanPreferencesKey("weekly_notify_enabled")
