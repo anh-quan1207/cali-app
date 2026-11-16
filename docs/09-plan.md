@@ -202,6 +202,21 @@ GĐ2 (16/11/2026):
 23. S40 GĐ2: AI / Nước / Bữa ăn / Dữ liệu hiện giá trị đang dùng nhưng chưa mở được ("Có ở giai đoạn sau"); Hôm nay / Chat / Lịch sử là màn giữ chỗ.
 24. Ô ghi đè kcal hiện "1400" khi đang gõ (mockup "1.400"); số đã áp dụng ở mọi chỗ khác có dấu chấm nghìn.
 
+GĐ4 lõi AI (16/11/2026, nhánh `gd4-core`; đánh số riêng G4-x để không đụng số của GĐ3 đang làm song song):
+- G4-1. 03 §3.1 / 06 §6 ghi PHOTO_LOG dùng `tool_choice = {type: tool}`; tài liệu API hiện hành: `claude-sonnet-5-5` **trả 400** với tool_choice ép tool (`tool` / `any`). → Mọi mode dùng `tool_choice: auto` + `strict: true`; khối system tĩnh của PHOTO_LOG thêm câu bắt buộc gọi `record_food_items`; PHOTO_LOG không có tool_use coi như JSON hỏng → gọi lại 1 lần.
+- G4-2. `anthropic-version: 2026-10-21`; không gửi `temperature/top_p/top_k` (400 ở version này) và không gửi `thinking` (mặc định adaptive). `output_config.effort`: ảnh `medium`, chat `low`; `max_tokens` 8.000 (thinking + tool call). Sonnet 5.5 bật fallback phía server (`anthropic-beta: server-side-fallback-2026-07-01`, `fallbacks: "default"`); Haiku 5.5 không có. `stop_reason: refusal` → lỗi REFUSED, không retry.
+- G4-3. Tool schema 03 §5 thêm `additionalProperties: false` (bắt buộc khi strict) và bỏ `minimum/maximum` của `confidence` (đưa vào description); Validator tự kẹp 0–1.
+- G4-4. 03 §2 `AiResult` chưa có id log → thêm `callId` để gắn `ai_call_id` vào món / tin nhắn. Mỗi request HTTP (kể cả retry, lỗi) ghi một dòng `ai_call_log`; chưa có key thì không gọi mạng, không ghi.
+- G4-5. "10 lượt gần nhất" (03 §9) hiểu là **10 tin nhắn**; tin đầu của AI bị bỏ (API cần tin đầu của người dùng), tin liền nhau cùng vai được gộp. Lượt AI đã ghi món gửi lại dạng "[đã ghi: …]".
+- G4-6. 03 §5 không nói tên món rỗng → coi như sai schema (gọi lại). `eaten_date` ở tương lai hoặc sai định dạng → bỏ qua; `eaten_time` nhận `H:mm`/`HH:mm`.
+- G4-7. 05 §4.1 ghi cho ngày khác hôm nay: AI có `meal_type` mà không có `eaten_time` → giờ giữa khung bữa (Tối 19:45, Trưa 12:00); không có cả hai → giờ gửi trên ngày đó.
+- G4-8. S42 "Kiểm tra kết nối" dùng `GET /v1/models?limit=1` (xác thực key, không tốn token) thay vì một lần gọi Messages.
+- G4-9. `ai_call_log` (04 §2) chưa có cột `cache_creation_input_tokens`; `TokenUsage` có, chưa lưu. Thêm cột khi làm thống kê chi phí (§8 danh sách chờ).
+- G4-10. Tài liệu không ghi định dạng số trong `<user_context>`: theo đúng mẫu 03 §4 (dấu chấm thập phân "74.2 kg", không chấm nghìn "1740 kcal") vì đây là chữ gửi AI, không phải giao diện. Vượt mục tiêu: "Còn lại: 0 kcal (đã vượt N kcal)". Ghi chú / món hay ăn rỗng thì bỏ dòng.
+- G4-11. Log HTTP debug tự viết (`RedactingLogInterceptor`, không log body) vì `okhttp-logging` chỉ là `debugImplementation`, code `main` không dùng được.
+- G4-12. `ImageCompressor` dùng `android.media.ExifInterface` (framework). Lint cảnh báo nên dùng `androidx.exifinterface` (đã có ở runtime qua CameraX nhưng chưa khai báo) → chờ người dùng quyết định có thêm dependency không.
+- G4-13. Chưa làm: gom `UserContext` từ repo (DiaryRepository đang sửa ở GĐ3 → làm khi nối UI), tool `submit_weekly_review` (GĐ6), giữ ảnh + ghi chú để gửi lại (trạng thái UI, `AiRequest` dùng lại được).
+
 Môi trường (máy dev, không phải mâu thuẫn đặc tả): JDK không tạo được Unix socket trong `C:\Users\…\Temp` → Gradle không nói chuyện được với daemon/worker ("Unable to establish loopback connection"). Cách chạy: `JAVA_TOOL_OPTIONS=-Djdk.net.unixdomain.tmpdir=E:\Cali\.gradle\uds` (thư mục đã gitignore). Robolectric 4.18 chưa hỗ trợ SDK 36 → `robolectric.properties` ghim sdk=35.
 
 ## 9. Tiến độ
@@ -212,7 +227,7 @@ Môi trường (máy dev, không phải mâu thuẫn đặc tả): JDK không t�
 | 1 | ☑ | 16/11/2026 | 16/11/2026 | Nhánh `gd1`. AGP 9.5.1 / Gradle 9.9.1 / Kotlin 2.4.21 / Compose BOM 2026.09.00, compileSdk 37 (Platform 37 cài 16/11), targetSdk 36. 62 unit test xanh (core.calc 48, Room 6, prefs 6, định dạng số 1, bỏ dấu 1) + 1 test thiết bị (Keystore thật, AVD Android 16). Lint 0 lỗi. Theme preview chụp sáng/tối ở `.impeccable/review/gd1-theme-preview/`, màu khớp s10 f0/f3. Còn: người dùng cài lên điện thoại thật; Material Symbols để GĐ3 |
 | 2 | ☑ | 16/11/2026 | 16/11/2026 | Nhánh `gd2`. S01 (5 bước) → S02 → S03 → vỏ 4 tab; S40 vỏ; S41 sửa hồ sơ + sheet Tốc độ + sheet Đang dùng / Mới + ghi đè kcal/macro; `ProfileRepository` tạo `goal_snapshot` (cùng ngày thì ghi đè). 74 unit test xanh (thêm GoalPlanner 7 — viết trước, đỏ 7/7 rồi xanh; ProfileRepository 4; VnFormat 2). Lint 0 lỗi. Trên AVD: onboarding với bộ số mockup ra 1.740 kcal (122/196/52 g, BMI 26,0, BMR 1.668, TDEE 2.293, 2,6 L); đổi tốc độ 0,75 ở S41 → 1.720 (kẹp, 192 g tinh bột) và mục tiêu mới từ hôm nay; ghi đè 1.400 → 1.720 kèm hộp hổ phách. Ảnh ở `.impeccable/review/gd2-onboarding/` (sáng + tối). Còn: người dùng gỡ/cài lại trên điện thoại thật và dùng thử |
 | 3 | ☐ | | | |
-| 4 | ☐ | | | |
+| 4 | ◐ lõi xong, chưa có UI | 16/11/2026 | | Nhánh `gd4-core` (worktree `E:\Cali-ai`, tách từ commit GĐ3 `29bdd39`). Xong mục 1–5: `AiProvider`/`FakeAiProvider`, `PromptBuilder`, `FoodLogValidator` + `FoodLogTiming`, `ImageCompressor` + `ThumbnailStore`, `AnthropicProvider` (Messages API 2026-10-21, MockWebServer), Hilt `AiModule`, prompt mặc định ở assets. 209 unit test xanh (91 mới: Validator 28, Timing 9, PromptBuilder 14, ImageCompressor 9, AnthropicProvider 27, Fake 4 — viết trước, đỏ 87/87 rồi xanh). `assembleDebug` + lint chạy được (1 cảnh báo ExifInterface, G4-12). Chưa gọi API thật. Thêm `mockwebserver3` (test) ở commit riêng. Còn: mục 6–9 (S11, S12, S20, S42, test tay 10 ảnh + 5 câu chat), mâu thuẫn G4-1…13 ở §8 |
 | 5 | ☐ | | | |
 | 6 | ☐ | | | |
 | 7 | ☐ | | | |
