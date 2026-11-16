@@ -18,6 +18,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material.icons.rounded.CalendarToday
 import androidx.compose.material.icons.rounded.PanTool
+import androidx.compose.material.icons.rounded.PhotoCamera
+import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material.icons.rounded.Sync
 import androidx.compose.material3.Button
@@ -63,7 +65,7 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 /** Nguồn của giờ ăn, hiện bằng chữ cạnh chip (05 §4.1). */
-enum class TimeSource { NOW, MEAL_DEFAULT, USER, SAVED }
+enum class TimeSource { NOW, MEAL_DEFAULT, USER, SAVED, CAPTURE, EXIF, AI, SENT }
 
 /** Giờ ăn · bữa đang chọn trên S12 / S13 / S14. Ngày của món = ngày của giờ ăn. */
 data class MealTime(
@@ -79,7 +81,7 @@ fun LocalTime.hm(): String = format(HM)
 
 /** Chip "🕐 12:35 · ■ Trưa ▾" (+ " · 12/11" khi không phải hôm nay) và nguồn bằng chữ bên cạnh. */
 @Composable
-fun MealTimeChip(value: MealTime, today: LocalDate, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun MealTimeChip(value: MealTime, today: LocalDate, onClick: () -> Unit, modifier: Modifier = Modifier, showSource: Boolean = true) {
     val cs = MaterialTheme.colorScheme
     val meal = stringResource(value.meal.label())
     val dayPart = if (value.date != today) " · " + VnFormat.dayMonth(value.date) else ""
@@ -103,14 +105,25 @@ fun MealTimeChip(value: MealTime, today: LocalDate, onClick: () -> Unit, modifie
             Text(meal + dayPart, style = MaterialTheme.typography.labelLarge, color = cs.onSecondaryContainer)
             Icon(Icons.Rounded.ArrowDropDown, null, tint = cs.onSecondaryContainer)
         }
+        if (!showSource) return@Row
         Spacer(Modifier.width(Spacing.md))
         val src = when (value.source) {
             TimeSource.NOW -> stringResource(R.string.s13_source_now)
             TimeSource.MEAL_DEFAULT -> stringResource(R.string.s13_source_meal, meal)
             TimeSource.USER -> stringResource(R.string.s13_source_set)
             TimeSource.SAVED -> stringResource(R.string.s13_source_saved)
+            TimeSource.CAPTURE -> stringResource(R.string.source_capture)
+            TimeSource.EXIF -> stringResource(R.string.source_exif)
+            TimeSource.AI -> stringResource(R.string.source_ai)
+            TimeSource.SENT -> stringResource(R.string.source_sent)
         }
-        Icon(Icons.Rounded.PanTool, null, tint = cs.onSurfaceVariant, modifier = Modifier.size(16.dp))
+        Icon(
+            when (value.source) {
+                TimeSource.CAPTURE, TimeSource.EXIF -> Icons.Rounded.PhotoCamera
+                TimeSource.AI, TimeSource.SENT -> Icons.Rounded.AutoAwesome
+                else -> Icons.Rounded.PanTool
+            },
+            null, tint = cs.onSurfaceVariant, modifier = Modifier.size(16.dp))
         Spacer(Modifier.width(Spacing.xs))
         Text(src, style = MaterialTheme.typography.labelMedium, color = cs.onSurfaceVariant)
     }

@@ -36,6 +36,10 @@ data class NewFood(
     val myFoodId: Long? = null,
     /** Dấu trang "Lưu vào Món của tôi" trên thẻ. */
     val saveAsMyFood: Boolean = false,
+    /** Chỉ món từ AI: độ tin cậy, dòng `ai_call_log`, thumbnail (nếu bật lưu ảnh thu nhỏ). */
+    val aiConfidence: Double? = null,
+    val aiCallId: Long? = null,
+    val thumbnailPath: String? = null,
 )
 
 data class DayData(
@@ -108,8 +112,11 @@ class DiaryRepository @Inject constructor(
                         carbG = f.values.carbG,
                         fatG = f.values.fatG,
                         source = if (f.source == FoodSource.MANUAL && f.myFoodId != null) FoodSource.MY_FOOD else f.source,
+                        aiConfidence = f.aiConfidence,
+                        aiCallId = f.aiCallId,
                         myFoodId = myId,
                         batchId = batch,
+                        thumbnailPath = f.thumbnailPath,
                         sortOrder = i,
                         createdAt = now,
                         updatedAt = now,

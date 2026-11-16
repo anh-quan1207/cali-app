@@ -106,6 +106,8 @@ import kotlin.math.roundToInt
 fun TodayRoute(
     onQuickAdd: (date: LocalDate, meal: MealType?) -> Unit,
     onEditFood: (id: Long) -> Unit,
+    onCapture: () -> Unit = {},
+    onOpenChat: () -> Unit = {},
     vm: TodayViewModel = hiltViewModel(),
 ) {
     val s by vm.state.collectAsStateWithLifecycle()
@@ -113,7 +115,7 @@ fun TodayRoute(
     CollectMessages(vm.messages, snack)
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { vm.refreshToday() }
     val st = s ?: return
-    TodayScreen(st, vm, snack, onQuickAdd, onEditFood)
+    TodayScreen(st, vm, snack, onQuickAdd, onEditFood, onCapture, onOpenChat)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -124,6 +126,8 @@ private fun TodayScreen(
     snack: SnackbarHostState,
     onQuickAdd: (LocalDate, MealType?) -> Unit,
     onEditFood: (Long) -> Unit,
+    onCapture: () -> Unit,
+    onOpenChat: () -> Unit,
 ) {
     val cs = MaterialTheme.colorScheme
     val list = rememberLazyListState()
@@ -133,7 +137,6 @@ private fun TodayScreen(
     var pickDate by remember { mutableStateOf(false) }
     var weigh by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-    val soon = stringResource(R.string.soon_ai)
     val day = s.day
     val sum = day.summary
     val date = day.date
@@ -185,7 +188,7 @@ private fun TodayScreen(
                 item(key = "actions") {
                     Row(Modifier.padding(start = Spacing.gutter, end = Spacing.gutter, top = Spacing.lg), horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
                         Button(
-                            onClick = { scope.launch { snack.showSnackbar(soon) } },
+                            onClick = onCapture,
                             modifier = Modifier.weight(1.25f).heightIn(min = 48.dp),
                             contentPadding = PaddingValues(horizontal = Spacing.lg),
                         ) {
@@ -194,7 +197,7 @@ private fun TodayScreen(
                             Text(stringResource(R.string.s10_capture), style = MaterialTheme.typography.labelLarge, maxLines = 1)
                         }
                         FilledTonalButton(
-                            onClick = { scope.launch { snack.showSnackbar(soon) } },
+                            onClick = onOpenChat,
                             modifier = Modifier.weight(1f).heightIn(min = 48.dp),
                             contentPadding = PaddingValues(horizontal = 14.dp),
                         ) {
@@ -243,7 +246,7 @@ private fun TodayScreen(
             modifier = Modifier.align(Alignment.BottomEnd).padding(end = Spacing.lg, bottom = Spacing.lg),
         ) {
             ExtendedFloatingActionButton(
-                onClick = { scope.launch { snack.showSnackbar(soon) } },
+                onClick = onCapture,
                 icon = { Icon(Icons.Rounded.PhotoCamera, null) },
                 text = { Text(stringResource(R.string.s10_capture), style = MaterialTheme.typography.labelLarge) },
                 containerColor = cs.primaryContainer,

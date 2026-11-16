@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- S42 Cài đặt AI -->
+    <string name="s42_title">AI</string>
+    <string name="s42_provider">Hãng AI</string>
+    <string name="s42_provider_neuralwatt">Neuralwatt</string>
+    <string name="s42_key">API key</string>
+    <string name="s42_key_placeholder_new">Dán API key (sk-…)</string>
+    <string name="s42_key_help">Chỉ hiện 4 ký tự cuối. Mã hoá trên máy, không vào bản sao lưu.</string>
+    <string name="s42_key_show">Hiện key</string>
+    <string name="s42_key_hide">Ẩn key</string>
+    <string name="s42_key_paste">Dán từ bộ nhớ tạm</string>
+    <string name="s42_key_invalid">API key không hợp lệ (401). Kiểm tra lại key đã dán trên trang quản lý của Neuralwatt.</string>
+    <string name="s42_test">Kiểm tra kết nối</string>
+    <string name="s42_testing">Đang kiểm tra…</string>
+    <string name="s42_test_ok">Đã kết nối lúc %1$s · Neuralwatt nhận key này</string>
+    <string name="s42_test_no_key">Chưa có API key. Dán key rồi kiểm tra.</string>
+    <string name="s42_test_no_network">Không có kết nối. Key chưa được kiểm tra, thử lại khi có mạng.</string>
+    <string name="s42_test_rate">Neuralwatt đang giới hạn lượt gọi (429). Thử lại sau ít phút.</string>
+    <string name="s42_test_quota">Tài khoản Neuralwatt hết số dư hoặc hạn mức (402).</string>
+    <string name="s42_test_other">Không kiểm tra được: %1$s</string>
+    <string name="s42_models">Model</string>
+    <string name="s42_model_vision">Model phân tích ảnh</string>
+    <string name="s42_model_chat">Model chat</string>
+    <string name="s42_model_vision_sub_default">Mặc định · dùng khi chụp món</string>
+    <string name="s42_model_vision_sub_custom">Đã đổi · dùng khi chụp món · mặc định %1$s</string>
+    <string name="s42_model_chat_sub_default">Mặc định · chat và nhận xét tuần</string>
+    <string name="s42_model_chat_sub_custom">Đã đổi · chat và nhận xét tuần · mặc định %1$s</string>
+    <string name="s42_instructions">Lời dặn cho AI</string>
+    <string name="s42_prompt">System prompt</string>
+    <string name="s42_prompt_default">Bản mặc định v%1$d · chưa sửa</string>
+    <string name="s42_prompt_edited">Đã sửa · dựa trên bản mặc định v%1$d</string>
+    <string name="s42_notes">Ghi chú cá nhân</string>
+    <string name="s42_notes_help">AI đọc ghi chú này mỗi lần gọi</string>
+    <string name="s42_usage">Sử dụng tháng này</string>
+    <string name="s42_usage_none">Chưa gọi AI lần nào trong tháng này.</string>
+    <string name="s42_usage_line">%1$d lần gọi · %2$s token vào · %3$s token ra · trung bình %4$s s mỗi lần</string>
+    <string name="s42_usage_failures">%1$d lần lỗi</string>
+    <string name="s42_weekly_note">Nhận xét AI tuần tự tạo khi mở: bật/tắt ở Nước &amp; nhắc nhở.</string>
+    <string name="s42_privacy">Key chỉ được giải mã ngay trước khi gọi AI và không bao giờ ghi vào log. Ảnh chỉ gửi tới hãng đã chọn ở trên.</string>
+    <string name="s42_saved_key">Đã lưu API key</string>
+
+    <!-- S42 trình soạn system prompt -->
+    <string name="s42e_title">System prompt</string>
+    <string name="s42e_edited">Đã sửa</string>
+    <string name="s42e_default_chip">Bản mặc định</string>
+    <string name="s42e_restore">Khôi phục mặc định</string>
+    <string name="s42e_restored">Đã khôi phục bản mặc định</string>
+    <string name="s42e_footer">Hồ sơ, đã ăn hôm nay và ghi chú cá nhân (&lt;user_context&gt;) app tự nối vào cuối mỗi lần gọi, không cần viết ở đây.</string>
+    <string name="s42e_saved">Đã lưu system prompt</string>
+
+    <!-- Nguồn giờ ăn (chip giờ · bữa) -->
+    <string name="source_capture">Lúc bấm chụp</string>
+    <string name="source_exif">Giờ chụp trong ảnh</string>
+    <string name="source_ai">Theo lời bạn</string>
+    <string name="source_sent">Lúc gửi</string>
+
+    <!-- S12 phần AI -->
+    <string name="s12ai_needs_check">Cần kiểm tra</string>
+    <string name="s12ai_very_high">Có vẻ cao</string>
+    <string name="s12ai_fixed">Số liệu đã được chỉnh</string>
+    <string name="s12ai_assumption">AI giả định: %1$s</string>
+    <string name="s12ai_answer_hint">Trả lời ngắn…</string>
+    <string name="s12ai_send">Gửi câu trả lời</string>
+    <string name="s12ai_skip">Hoặc bỏ qua và lưu luôn với ước lượng hiện tại.</string>
+    <string name="s12ai_no_food">Không nhận ra món ăn nào</string>
+    <string name="s12ai_quote">AI: “%1$s”</string>
+    <string name="s12ai_retake">Chụp lại</string>
+
+    <!-- Lỗi AI dùng chung (03 §8) -->
+    <string name="ai_err_network">Không có kết nối</string>
+    <string name="ai_err_timeout">AI trả lời quá 60 giây</string>
+    <string name="ai_err_no_key">Chưa có API key</string>
+    <string name="ai_err_key">API key không hợp lệ</string>
+    <string name="ai_err_busy">AI đang quá tải, đã thử lại 2 lần</string>
+    <string name="ai_err_quota">Hết số dư Neuralwatt</string>
+    <string name="ai_err_refused">AI từ chối yêu cầu này</string>
+    <string name="ai_err_invalid">AI trả kết quả không đọc được</string>
+    <string name="ai_err_unknown">Có lỗi khi gọi AI</string>
+
+    <!-- S11 Camera -->
+    <string name="s11_hint_top">Chụp từ trên xuống, thấy cả đĩa</string>
+    <string name="s11_flash_auto">Tự động</string>
+    <string name="s11_flash_on">Bật</string>
+    <string name="s11_flash_off">Tắt</string>
+    <string name="s11_flash_cd">Đèn flash: %1$s</string>
+    <string name="s11_switch_cd">Đổi camera</string>
+    <string name="s11_shutter_cd">Chụp</string>
+    <string name="s11_gallery">Thư viện</string>
+    <string name="s11_note">Ghi chú</string>
+    <string name="s11_low_light">Hơi tối, ảnh có thể khó nhận diện. Bật đèn hoặc ra chỗ sáng hơn.</string>
+    <string name="s11_perm_title">Cần quyền dùng camera</string>
+    <string name="s11_perm_body">Cali chỉ mở camera khi bạn vào màn này, để chụp món bạn ăn. Ảnh được thu nhỏ còn 1024 px và xóa vị trí trước khi gửi cho AI.</string>
+    <string name="s11_perm_gallery_hint">Không muốn cấp quyền? Chọn ảnh có sẵn trong thư viện, không cần quyền camera.</string>
+    <string name="s11_perm_allow">Cho phép</string>
+    <string name="s11_perm_denied_body">Quyền camera đang bị tắt. Bật lại trong Cài đặt của máy › Ứng dụng › Cali › Quyền, hoặc chọn ảnh từ thư viện.</string>
+    <string name="s11_perm_settings">Mở Cài đặt</string>
+    <string name="s11_pick_gallery">Chọn từ thư viện</string>
+    <string name="s11_review_title">Xem lại ảnh</string>
+    <string name="s11_note_label">Ghi chú cho AI (không bắt buộc)</string>
+    <string name="s11_note_placeholder">vd: không đường, ăn một nửa</string>
+    <string name="s11_note_help">AI dùng ghi chú để ước lượng khẩu phần. Nếu ăn lệch giờ, ghi luôn: “sáng nay 7h”.</string>
+    <string name="s11_privacy">Ảnh thu nhỏ còn 1024 px, xóa vị trí rồi mới gửi. Không lưu ảnh gốc.</string>
+    <string name="s11_retake">Chụp lại</string>
+    <string name="s11_analyze">Phân tích</string>
+    <string name="s11_analyzing">Đang nhận diện món ăn…</string>
+    <string name="s11_waited">Đã chờ %1$s</string>
+    <string name="s11_step1">Thu nhỏ ảnh</string>
+    <string name="s11_step1_sub">1024 px, đã xóa vị trí</string>
+    <string name="s11_step2">AI đang nhận diện món, ước lượng kcal</string>
+    <string name="s11_step2_sub">Đã gửi ảnh, đang chờ trả lời</string>
+    <string name="s11_wait_note">Thường mất vài giây, chờ tối đa 60 giây. Mạng chậm thì app tự thử lại, không cần bấm.</string>
+    <string name="s11_cancel_note">Hủy thì không lưu gì cả.</string>
+    <string name="s11_error_title">Chưa phân tích được</string>
+    <string name="s11_err_network_body">Ảnh và ghi chú vẫn được giữ. Thử lại khi có mạng, hoặc ghi món bằng tay.</string>
+    <string name="s11_err_timeout_body">Mạng chậm hoặc AI đang bận. Ảnh và ghi chú vẫn được giữ, thử lại nhé.</string>
+    <string name="s11_err_key_body">Kiểm tra lại API key trong Cài đặt AI.</string>
+    <string name="s11_err_other_body">Ảnh và ghi chú vẫn được giữ. Thử lại, hoặc ghi món bằng tay.</string>
+    <string name="s11_retry">Thử lại</string>
+    <string name="s11_open_ai">Mở Cài đặt AI</string>
+    <string name="s11_bad_image">Không đọc được ảnh này. Chọn ảnh khác nhé.</string>
+
+    <!-- S20 Chat -->
+    <string name="s20_title">Chat AI</string>
+    <string name="s20_left">còn %1$s kcal</string>
+    <string name="s20_over">vượt %1$s kcal</string>
+    <string name="s20_prev_day">Ngày trước</string>
+    <string name="s20_next_day">Ngày sau</string>
+    <string name="s20_empty_title">Hôm nay bạn ăn gì?</string>
+    <string name="s20_empty_title_day">Ngày này bạn ăn gì?</string>
+    <string name="s20_empty_sub">Gõ món, gửi ảnh, hoặc hỏi nên ăn gì tiếp.</string>
+    <string name="s20_sugg_1">Trưa nay mình ăn…</string>
+    <string name="s20_sugg_2">Tối nay còn bao nhiêu calo, nên ăn gì?</string>
+    <string name="s20_sugg_3">Hôm nay đủ đạm chưa?</string>
+    <string name="s20_input_hint">Nhắn món bạn ăn hoặc hỏi AI</string>
+    <string name="s20_attach_cd">Đính ảnh</string>
+    <string name="s20_send_cd">Gửi</string>
+    <string name="s20_remove_attach_cd">Bỏ ảnh</string>
+    <string name="s20_attach_camera">Chụp ảnh</string>
+    <string name="s20_attach_camera_sub">Giờ ăn lấy lúc bạn bấm chụp</string>
+    <string name="s20_attach_gallery">Chọn từ thư viện</string>
+    <string name="s20_attach_gallery_sub">Giờ ăn lấy theo giờ chụp ảnh</string>
+    <string name="s20_view_save">Xem &amp; lưu</string>
+    <string name="s20_skip">Bỏ qua</string>
+    <string name="s20_saved_to">Đã lưu vào %1$s</string>
+    <string name="s20_review">Xem lại</string>
+    <string name="s20_skipped">Đã bỏ qua</string>
+    <string name="s20_after_save">Hôm nay sau khi lưu</string>
+    <string name="s20_after_save_day">Ngày này sau khi lưu</string>
+    <string name="s20_yesterday_part">Hôm qua</string>
+    <string name="s20_unsent">Chưa gửi</string>
+    <string name="s20_retry">Thử lại</string>
+    <string name="s20_err_suffix">Tin nhắn chưa được gửi.</string>
+    <string name="s20_moved">Đã ghi vào luồng %1$s</string>
+    <string name="s20_moved_view">Xem</string>
+    <string name="s20_image_only">[ảnh]</string>
+    <string name="s20_typing_cd">AI đang trả lời</string>
+    <string name="s20_today">Hôm nay</string>
+</resources>

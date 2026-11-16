@@ -32,7 +32,7 @@ App Android cá nhân tính và kiểm soát calo: ghi món bằng AI (chụp �
 ## Quyết định đã chốt
 - Android native: Kotlin + Jetpack Compose + Material 3. Không iOS (D1). Một module `app`.
 - MVVM + UDF (UiState/UiEvent), Hilt, Coroutines/Flow, Room (KSP), DataStore, kotlinx.serialization, OkHttp, CameraX, Coil. Biểu đồ tự vẽ bằng Canvas (D4). minSdk 26.
-- AI: Claude, gọi thẳng API bằng key người dùng (`claude-sonnet-5-5` ảnh, `claude-haiku-5-5` chat). Mọi kết quả AI phải qua bước người dùng xác nhận trước khi lưu.
+- AI: Neuralwatt (`/v1/chat/completions`, OpenAI-compatible), gọi thẳng API bằng key người dùng; model theo ID cụ thể, không dùng bí danh `nw-*`: `kimi-k3.1-pro` ảnh, `deepseek-v4.1-flash` chat, dự phòng `qwen3.6-35b` (09 §8 G4-14). Mọi kết quả AI phải qua bước người dùng xác nhận trước khi lưu.
 - Dữ liệu chỉ ở máy. Sao lưu/khôi phục JSON làm ở GĐ3 (D2).
 - Tuần bắt đầu Thứ Hai. Điểm tuần Calo 40 / Đạm 20 / Nước 20 / Ghi chép 20.
 
@@ -86,5 +86,5 @@ Trên Windows dùng `gradlew.bat` nếu không chạy qua Git Bash.
 
 ## Bảo mật
 - Không bao giờ ghi API key vào file, log hay commit. Key chỉ nhập trong app, mã hoá bằng Android Keystore (`SecureKeyStore`).
-- Log OkHttp chỉ ở debug và che header `x-api-key`.
+- Log OkHttp chỉ ở debug và che header `Authorization` / `x-api-key`.
 - `.gitignore`: `local.properties`, `*.jks`, `/build`, `.gradle/`.

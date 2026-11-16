@@ -342,6 +342,8 @@ fun ProjectionBar(
     baseParts: List<RingPart>,
     pendingMeal: MealType,
     modifier: Modifier = Modifier,
+    /** false = không có nền thẻ riêng (đặt trong thẻ chat S20). */
+    contained: Boolean = true,
     footer: (@Composable () -> Unit)? = null,
 ) {
     val cs = MaterialTheme.colorScheme
@@ -352,7 +354,7 @@ fun ProjectionBar(
         com.cali.core.calc.RingStatus.OVER_MUCH -> cs.error
         else -> cs.onSurface
     }
-    Column(modifier.fillMaxWidth().clip(MaterialTheme.shapes.large).background(cs.surfaceContainerLow).padding(Spacing.lg)) {
+    Column(if (contained) modifier.fillMaxWidth().clip(MaterialTheme.shapes.large).background(cs.surfaceContainerLow).padding(Spacing.lg) else modifier.fillMaxWidth()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(title, style = MaterialTheme.typography.labelMedium, color = cs.onSurfaceVariant, modifier = Modifier.weight(1f))
             Text(

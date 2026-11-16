@@ -50,6 +50,14 @@ class SeedActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (intent.hasExtra("fakeAi")) {
+            val flag = java.io.File(filesDir, com.cali.core.ai.SwitchingAiProvider.DEBUG_FLAG_FILE)
+            if (intent.getBooleanExtra("fakeAi", false)) flag.createNewFile() else flag.delete()
+            if (!intent.hasExtra("day") && !intent.hasExtra("myfoods")) {
+                finish()
+                return
+            }
+        }
         val day = intent.getStringExtra("day") ?: "ok"
         val withMyFoods = intent.getBooleanExtra("myfoods", false)
         lifecycleScope.launch {
