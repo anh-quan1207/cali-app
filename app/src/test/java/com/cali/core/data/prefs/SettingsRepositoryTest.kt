@@ -1,6 +1,8 @@
 package com.cali.core.data.prefs
 
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.cali.core.calc.MealBoundary
 import com.cali.core.calc.MealTypeResolver
 import com.cali.core.calc.model.MacroPct
@@ -25,9 +27,9 @@ class SettingsRepositoryTest {
     @Test fun `gia tri mac dinh dung 04 §3`() = runTestWithScope {
         val s = repo(tmp.newFile("a.preferences_pb").also { it.delete() }).current()
         assertFalse(s.onboardingDone)
-        assertEquals("anthropic", s.aiProvider)
-        assertEquals("claude-sonnet-5-5", s.aiModelVision)
-        assertEquals("claude-haiku-5-5", s.aiModelChat)
+        assertEquals("neuralwatt", s.aiProvider)
+        assertEquals("kimi-k3.1-pro", s.aiModelVision)
+        assertEquals("deepseek-v4.1-flash", s.aiModelChat)
         assertNull(s.systemPromptOverride)
         assertEquals(1, s.systemPromptDefaultVersion)
         assertEquals("", s.personalNotes)
@@ -80,13 +82,33 @@ class SettingsRepositoryTest {
     }
 
     @Test fun `muc tieu nuoc tuy chinh - null la tu dong (GD5, 09 §8 G5-1)`() = runTestWithScope {
-        val repo = repo(tmp.newFile("d.preferences_pb").also { it.delete() })
+        val repo = repo(tmp.newFile("w.preferences_pb").also { it.delete() })
         assertNull(repo.current().waterGoalOverrideMl)
         repo.update { it.copy(waterGoalOverrideMl = 3000) }
         assertEquals(3000, repo.current().waterGoalOverrideMl)
         assertTrue(repo.exportRaw().containsKey("water_goal_override_ml"))
         repo.update { it.copy(waterGoalOverrideMl = null) }
         assertNull(repo.current().waterGoalOverrideMl)
+    }
+
+    @Test fun `ban cai cu da luu model Claude thi doc ra model Neuralwatt`() = runTestWithScope {
+        val file = tmp.newFile("d.preferences_pb").also { it.delete() }
+        val store = PreferenceDataStoreFactory.create(scope = scope) { file }
+        store.edit {
+            it[stringPreferencesKey("ai_provider")] = "anthropic"
+            it[stringPreferencesKey("ai_model_vision")] = "claude-sonnet-5-5"
+            it[stringPreferencesKey("ai_model_chat")] = "claude-haiku-5-5"
+        }
+        val s = SettingsRepository(store).current()
+        assertEquals("neuralwatt", s.aiProvider)
+        assertEquals("kimi-k3.1-pro", s.aiModelVision)
+        assertEquals("deepseek-v4.1-flash", s.aiModelChat)
+    }
+
+    @Test fun `model Neuralwatt nguoi dung chon thi giu nguyen`() = runTestWithScope {
+        val repo = repo(tmp.newFile("e.preferences_pb").also { it.delete() })
+        repo.update { it.copy(aiModelVision = "qwen3.6-35b") }.getOrThrow()
+        assertEquals("qwen3.6-35b", repo.current().aiModelVision)
     }
 }
 

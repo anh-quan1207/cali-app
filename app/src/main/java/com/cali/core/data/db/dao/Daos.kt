@@ -190,13 +190,33 @@ interface ChatMessageDao {
 
     @Query("SELECT * FROM chat_message WHERE date = :date ORDER BY created_at, id")
     fun observeByDate(date: LocalDate): Flow<List<ChatMessageEntity>>
+
+    @Query("SELECT * FROM chat_message WHERE id = :id")
+    suspend fun byId(id: Long): ChatMessageEntity?
 }
 
 @Dao
 interface AiCallLogDao {
     @Insert
     suspend fun insert(log: AiCallLogEntity): Long
+
+    /** Thống kê sử dụng (F16, S42) từ mốc [fromMillis]. */
+    @Query(
+        "SELECT COUNT(*) AS calls, COALESCE(SUM(CASE WHEN success = 0 THEN 1 ELSE 0 END), 0) AS failures, " +
+            "COALESCE(SUM(input_tokens), 0) AS inputTokens, COALESCE(SUM(output_tokens), 0) AS outputTokens, " +
+            "COALESCE(CAST(AVG(duration_ms) AS INTEGER), 0) AS avgDurationMs FROM ai_call_log WHERE created_at >= :fromMillis",
+    )
+    suspend fun usageSince(fromMillis: Long): AiUsage
+
+    @Query(
+        "SELECT COUNT(*) AS calls, COALESCE(SUM(CASE WHEN success = 0 THEN 1 ELSE 0 END), 0) AS failures, " +
+            "COALESCE(SUM(input_tokens), 0) AS inputTokens, COALESCE(SUM(output_tokens), 0) AS outputTokens, " +
+            "COALESCE(CAST(AVG(duration_ms) AS INTEGER), 0) AS avgDurationMs FROM ai_call_log WHERE created_at >= :fromMillis",
+    )
+    fun observeUsageSince(fromMillis: Long): Flow<AiUsage>
 }
+
+data class AiUsage(val calls: Int, val failures: Int, val inputTokens: Long, val outputTokens: Long, val avgDurationMs: Long)
 
 @Dao
 interface WeeklyReviewDao {

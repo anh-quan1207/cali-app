@@ -77,7 +77,7 @@ class SettingsViewModel @Inject constructor(
 
 /** S40 — vỏ danh sách mục. GĐ2 chỉ mở được S41; các mục khác ở giai đoạn sau. */
 @Composable
-fun SettingsRoute(onOpenProfile: () -> Unit, onOpenData: () -> Unit, onOpenMyFoods: () -> Unit, onOpenWater: () -> Unit, vm: SettingsViewModel = hiltViewModel()) {
+fun SettingsRoute(onOpenProfile: () -> Unit, onOpenData: () -> Unit, onOpenMyFoods: () -> Unit, onOpenWater: () -> Unit, onOpenAi: () -> Unit, vm: SettingsViewModel = hiltViewModel()) {
     val ui by vm.ui.collectAsStateWithLifecycle()
     val cs = MaterialTheme.colorScheme
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = Spacing.lg)) {
@@ -103,7 +103,7 @@ fun SettingsRoute(onOpenProfile: () -> Unit, onOpenData: () -> Unit, onOpenMyFoo
 
         GroupTitle(stringResource(R.string.s40_group_logging))
         GroupBlock {
-            NavRow(Icons.Rounded.AutoAwesome, stringResource(R.string.s40_ai), stringResource(if (u.hasKey) R.string.s40_ai_sub_key else R.string.s40_ai_sub_none), null)
+            NavRow(Icons.Rounded.AutoAwesome, stringResource(R.string.s40_ai), stringResource(if (u.hasKey) R.string.s40_ai_sub_key else R.string.s40_ai_sub_none), onOpenAi)
             RowDivider()
             // GĐ5: mục tiêu đang dùng (tùy chỉnh ?: tự động), mở S43.
             val litres = VnFormat.decimal1((s.waterGoalOverrideMl ?: u.goal?.waterMl ?: 0) / 1000.0)

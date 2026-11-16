@@ -342,6 +342,8 @@ fun ProjectionBar(
     baseParts: List<RingPart>,
     pendingMeal: MealType,
     modifier: Modifier = Modifier,
+    /** false = không có nền thẻ riêng (đặt trong thẻ chat S20). */
+    contained: Boolean = true,
     footer: (@Composable () -> Unit)? = null,
 ) {
     val cs = MaterialTheme.colorScheme
@@ -352,11 +354,14 @@ fun ProjectionBar(
         com.cali.core.calc.RingStatus.OVER_MUCH -> cs.error
         else -> cs.onSurface
     }
-    Column(modifier.fillMaxWidth().clip(MaterialTheme.shapes.large).background(cs.surfaceContainerLow).padding(Spacing.lg)) {
+    Column(if (contained) modifier.fillMaxWidth().clip(MaterialTheme.shapes.large).background(cs.surfaceContainerLow).padding(Spacing.lg) else modifier.fillMaxWidth()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(title, style = MaterialTheme.typography.labelMedium, color = cs.onSurfaceVariant, modifier = Modifier.weight(1f))
             Text(
-                if (p.overAfter > 0) {
+                // Ngày trước khi có mục tiêu: không có "còn / vượt", chỉ nêu tổng sau khi lưu.
+                if (targetKcal == null) {
+                    stringResource(R.string.proj_total_no_goal, VnFormat.int(p.afterKcal.roundToInt()))
+                } else if (p.overAfter > 0) {
                     val res = if (p.statusAfter == com.cali.core.calc.RingStatus.OVER_LIGHT) R.string.s12_over_light else R.string.s12_over_much
                     stringResource(res, p.overPercentAfter, VnFormat.int(p.overAfter))
                 } else {

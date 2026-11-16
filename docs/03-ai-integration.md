@@ -7,12 +7,16 @@
 3. **Không phụ thuộc hãng.** Code gọi AI qua interface `AiProvider`; đổi hãng chỉ cần thêm một implementation.
 4. **Gọi trực tiếp, không backend.** API key do người dùng nhập, mã hóa trên máy (xem 06).
 
-## 2. Hãng & model (giả định, chờ chốt)
+## 2. Hãng & model (đã chốt 16/11/2026: Neuralwatt, 09 §8 G4-14)
+
+Gọi `POST https://api.neuralwatt.com/v1/chat/completions` (OpenAI-compatible) bằng key người dùng, header `Authorization: Bearer`.
+Model ghi **ID cụ thể**, không dùng bí danh `nw-large` / `nw-flash` / `nw-small` (có thể bị trỏ sang model khác).
 
 | Mục đích | Model mặc định | Lý do |
 |---|---|---|
-| Phân tích ảnh | `claude-sonnet-5-5` | Nhận diện món & ước lượng khẩu phần từ ảnh cần model mạnh |
-| Chat văn bản | `claude-haiku-5-5` | Nhanh, rẻ, đủ cho ghi món bằng chữ và tư vấn |
+| Phân tích ảnh | `kimi-k3.1-pro` | Nhận diện món & ước lượng khẩu phần từ ảnh cần model mạnh; gửi `reasoning_effort: "low"` để nhanh (G4-16) |
+| Chat văn bản | `deepseek-v4.1-flash` | Nhanh, rẻ, đủ cho ghi món bằng chữ và tư vấn |
+| Dự phòng ảnh | `qwen3.6-35b` | Nếu Kimi ước sai hoặc chậm |
 
 Model là chuỗi cấu hình trong Cài đặt, đổi được không cần build lại.
 
@@ -43,7 +47,7 @@ sealed interface AiResult {
 ### 3.1 Chụp ảnh (PHOTO_LOG)
 ```
 Chụp / chọn ảnh → (ghi chú tùy chọn) → nén ảnh → gửi kèm context
-→ bắt buộc gọi tool `record_food_items` (tool_choice = tool cụ thể)
+→ bắt buộc gọi tool `record_food_items` (`tool_choice = {type: function, function: {name: record_food_items}}`)
 → validate → Thẻ xác nhận → người dùng sửa → Lưu
 ```
 
@@ -203,7 +207,7 @@ Bạn có hai nhiệm vụ:
 ## 9. Chi phí & giới hạn
 
 - Đặt **hạn mức chi tiêu tháng** trên trang quản lý của hãng AI (việc làm thủ công, ngoài app).
-- Bật **prompt caching** cho phần tĩnh của system prompt + tool definition.
+- Phần tĩnh của system prompt đặt **đầu** system message để Neuralwatt tự dùng prefix cache (không có `cache_control` như API Anthropic).
 - Lịch sử chat gửi kèm tối đa 10 lượt gần nhất của ngày hiện tại; ảnh trong các lượt cũ được thay bằng mô tả chữ "[ảnh: <tên các món đã ghi>]" để không gửi lại ảnh.
 - Mỗi lần gọi ghi một bản ghi `AiCallLog` (model, token vào/ra, thời gian, thành công/lỗi) để xem thống kê sử dụng (F16).
 - Món đã lưu vào Món của tôi thì thêm lại không tốn lượt gọi AI.

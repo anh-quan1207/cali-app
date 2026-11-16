@@ -137,6 +137,23 @@ class DiaryRepositoryTest : DbTestBase() {
         assertEquals(listOf("Phở bò"), groups[1].second.map { it.name })
     }
 
+    @Test fun `mon tu AI luu do tin cay, ai_call_id va thumbnail`() = runTestWithScope {
+        val repo = DiaryRepository(db, TEST_CLOCK)
+        val callId = db.aiCallLogDao().insert(
+            com.cali.core.data.db.entity.AiCallLogEntity(
+                mode = com.cali.core.data.db.entity.AiMode.PHOTO_LOG, provider = "neuralwatt", model = "kimi-k3.1-pro",
+                durationMs = 5000, success = true, createdAt = 1,
+            ),
+        )
+        val f = food("Phở bò", 450.0).copy(source = FoodSource.AI_PHOTO, aiConfidence = 0.85, aiCallId = callId, thumbnailPath = "/t/a.jpg")
+        repo.add(listOf(f), at(TEST_TODAY, 12, 35), MealType.LUNCH, false).getOrThrow()
+        val e = repo.observeDay(TEST_TODAY).first().entries.single()
+        assertEquals(FoodSource.AI_PHOTO, e.source)
+        assertEquals(0.85, e.aiConfidence!!, 0.0)
+        assertEquals(callId, e.aiCallId)
+        assertEquals("/t/a.jpg", e.thumbnailPath)
+    }
+
     @Test fun `ngay truoc khi co muc tieu thi goal null`() = runTestWithScope {
         val repo = DiaryRepository(db, TEST_CLOCK)
         assertNull(repo.observeDay(TEST_TODAY).first().goal)

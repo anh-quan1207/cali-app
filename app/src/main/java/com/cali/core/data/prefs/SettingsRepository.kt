@@ -91,9 +91,9 @@ class SettingsRepository @Inject constructor(
         val d = Settings()
         return Settings(
             onboardingDone = p[K.onboardingDone] ?: d.onboardingDone,
-            aiProvider = p[K.aiProvider] ?: d.aiProvider,
-            aiModelVision = p[K.aiModelVision] ?: d.aiModelVision,
-            aiModelChat = p[K.aiModelChat] ?: d.aiModelChat,
+            aiProvider = p[K.aiProvider]?.takeUnless { it == LEGACY_PROVIDER } ?: d.aiProvider,
+            aiModelVision = p[K.aiModelVision]?.takeUnless(::isLegacyModel) ?: d.aiModelVision,
+            aiModelChat = p[K.aiModelChat]?.takeUnless(::isLegacyModel) ?: d.aiModelChat,
             systemPromptOverride = p[K.systemPromptOverride],
             systemPromptDefaultVersion = p[K.systemPromptDefaultVersion] ?: d.systemPromptDefaultVersion,
             personalNotes = p[K.personalNotes] ?: d.personalNotes,
@@ -168,6 +168,11 @@ class SettingsRepository @Inject constructor(
     private companion object {
         const val TYPE = "type"
         const val VALUE = "value"
+
+        /** Bản cài GĐ1–GĐ3 có thể đã ghi giá trị Claude vào DataStore; đổi sang Neuralwatt (09 §8). */
+        const val LEGACY_PROVIDER = "anthropic"
+
+        fun isLegacyModel(id: String) = id.startsWith("claude-")
     }
 
     private object K {

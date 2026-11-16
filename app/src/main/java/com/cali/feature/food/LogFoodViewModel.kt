@@ -4,6 +4,17 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cali.R
+import com.cali.core.ai.AiDraft
+import com.cali.core.ai.AiDraftHolder
+import com.cali.core.ai.AiErrorType
+import com.cali.core.ai.AiFoodLogJson
+import com.cali.core.ai.AiLogService
+import com.cali.core.ai.AiOutcome
+import com.cali.core.ai.AiReview
+import com.cali.core.ai.ThumbnailStore
+import com.cali.core.ai.ValidatedFoodItem
+import com.cali.core.ai.ValidatedFoodLog
+import com.cali.core.data.repo.ChatRepository
 import com.cali.core.calc.FoodValues
 import com.cali.core.calc.MealTypeResolver
 import com.cali.core.calc.Projection
@@ -67,10 +78,24 @@ data class LogUi(
     val savedCount: Int,
     val manual: FoodFormState,
     val manualShowErrors: Boolean,
+    /** null = luồng không AI (S13 → S12). */
+    val ai: AiPanel? = null,
 ) {
     val totalKcal get() = items.sumOf { it.values.kcal }
     val projection: Projection? get() = day?.let { Projection.of(it.summary.totalKcal, 0.0, totalKcal, it.goal?.targetKcal) }
 }
+
+/** Phần riêng của S12 khi kết quả đến từ AI (ảnh hoặc chat). */
+data class AiPanel(
+    val source: FoodSource,
+    val thumbnail: ByteArray?,
+    val comment: String?,
+    val question: String?,
+    val noFood: Boolean,
+    val answering: Boolean = false,
+    val answerError: AiErrorType? = null,
+    val answerNote: String? = null,
+)
 
 /**
  * Luồng ghi món không AI: S13 Thêm nhanh → (Nhập tay) → S12 Xác nhận → lưu.
@@ -82,9 +107,16 @@ class LogFoodViewModel @Inject constructor(
     handle: SavedStateHandle,
     private val diary: DiaryRepository,
     private val myFoods: MyFoodRepository,
-    settings: SettingsRepository,
+    private val settings: SettingsRepository,
     private val undo: UndoCenter,
+    private val drafts: AiDraftHolder,
+    private val chat: ChatRepository,
+    private val aiService: AiLogService,
+    private val thumbs: ThumbnailStore,
 ) : ViewModel() {
+    private val argAi: Boolean = handle.get<Boolean>("ai") == true
+    private val argChat: Long = handle.get<Long>("chatId") ?: -1L
+    private val argStart: String = handle.get<String>("start").orEmpty()
     private val argDate: LocalDate = handle.get<String>("date")?.let(LocalDate::parse) ?: diary.today()
     private val argMeal: MealType? = handle.get<String>("meal")?.takeIf { it.isNotBlank() }?.let(MealType::valueOf)
 
@@ -99,7 +131,10 @@ class LogFoodViewModel @Inject constructor(
     private val recent = MutableStateFlow<List<Pair<LocalDate, List<PickRow>>>>(emptyList())
     private val search = MutableStateFlow<List<PickRow>?>(null)
     private val manual = MutableStateFlow(FoodFormState() to false)
+    private val aiPanel = MutableStateFlow<AiPanel?>(null)
     private var nextKey = 1L
+    private var aiDraft: AiDraft? = null
+    private var aiLog: ValidatedFoodLog? = null
 
     val done = MutableStateFlow(false)
 
@@ -121,7 +156,29 @@ class LogFoodViewModel @Inject constructor(
                 resolver = MealTypeResolver(m)
                 diary.resolver = resolver
                 // Giờ chưa bị người dùng đổi → tính lại theo khung giờ của người dùng.
-                if (mealTime.value.source != TimeSource.USER) mealTime.value = initialTime()
+                aiService.resolver = resolver
+                if (mealTime.value.source == TimeSource.NOW || mealTime.value.source == TimeSource.MEAL_DEFAULT) mealTime.value = initialTime()
+            }
+        }
+        when (argStart) {
+            "manual" -> openManual()
+            "myfoods" -> tab.value = PickTab.FREQUENT
+        }
+        when {
+            argAi -> drafts.take()?.let(::applyDraft) ?: run { done.value = true }
+            argChat >= 0 -> viewModelScope.launch {
+                val m = chat.byId(argChat)
+                val d = AiFoodLogJson.decode(m?.foodLogJson)
+                if (m == null || d == null) {
+                    done.value = true
+                } else {
+                    applyDraft(
+                        AiDraft(
+                            d.log, d.timing, d.mealManual, FoodSource.AI_CHAT, m.aiCallId, thumbnailJpeg = null,
+                            hadImage = false, defaultAt = d.timing.eatenAt, chatMessageId = m.id,
+                        ),
+                    )
+                }
             }
         }
         viewModelScope.launch { refreshRecent() }
@@ -142,10 +199,56 @@ class LogFoodViewModel @Inject constructor(
 
     private val dayFlow = mealTime.map { it.date }.flatMapLatest { diary.observeDay(it) }
 
+    // ---- AI ----
+    private fun applyDraft(d: AiDraft) {
+        aiDraft = d
+        aiLog = d.log
+        items.value = d.log.items.let(AiReview::reviewOrder).map { it.toDraft(d.source, d.callId) }
+        val t = d.timing.eatenAt
+        val saidByUser = d.log.eatenTime != null || d.log.eatenDate != null || d.log.mealType != null
+        val src = when {
+            saidByUser -> TimeSource.AI
+            d.source == FoodSource.AI_CHAT -> TimeSource.SENT
+            else -> TimeSource.CAPTURE
+        }
+        mealTime.value = MealTime(t.toLocalDate(), t.toLocalTime().withSecond(0).withNano(0), d.timing.mealType, d.mealManual, src)
+        aiPanel.value = AiPanel(d.source, d.thumbnailJpeg, d.log.comment, d.log.clarifyingQuestion, noFood = d.log.isEmpty)
+        stage.value = LogStage.CONFIRM
+    }
+
+    private fun ValidatedFoodItem.toDraft(source: FoodSource, callId: Long?) = DraftItem(
+        key = nextKey++, name = name, portion = portionDesc.ifBlank { null }, baseGrams = grams.takeIf { it > 0 },
+        base = FoodValues(kcal, proteinG, carbG, fatG), source = source,
+        confidence = confidence, assumptions = assumptions, flags = flags, aiCallId = callId,
+    )
+
+    /** Trả lời câu hỏi làm rõ (03 §3.4): món AI cũ được thay bằng kết quả mới, món người dùng tự thêm giữ nguyên. */
+    fun answer(text: String) = viewModelScope.launch {
+        val d = aiDraft ?: return@launch
+        val panel = aiPanel.value ?: return@launch
+        val q = panel.question ?: return@launch
+        if (text.isBlank()) return@launch
+        aiPanel.value = panel.copy(answering = true, answerError = null)
+        when (val r = aiService.clarify(aiLog ?: d.log, q, text.trim(), d.hadImage, d.defaultAt)) {
+            is AiOutcome.FoodLog -> {
+                aiLog = r.log
+                items.update { old -> old.filter { it.confidence == null } + AiReview.reviewOrder(r.log.items).map { it.toDraft(d.source, r.callId) } }
+                aiPanel.value = panel.copy(
+                    comment = r.log.comment ?: panel.comment, question = r.log.clarifyingQuestion,
+                    noFood = items.value.isEmpty(), answering = false,
+                )
+            }
+            is AiOutcome.Text -> aiPanel.value = panel.copy(question = null, answerNote = r.text, answering = false)
+            is AiOutcome.Failed -> aiPanel.value = panel.copy(answering = false, answerError = r.type)
+        }
+    }
+
+    fun skipQuestion() = aiPanel.update { it?.copy(question = null, answerError = null) }
+
     private val pickState = combine(stage, tab, query, search, recent) { st, tb, q, sr, rc -> PickPart(st, tb, q, sr, rc) }
 
-    val ui: StateFlow<LogUi?> = combine(pickState, mealTime, items, lists, combine(dayFlow, manual) { d, m -> d to m }) { p, mt, its, (freq, fav, count), (day, man) ->
-        LogUi(p.stage, p.tab, p.query, mt, diary.today(), day, its, p.recent, freq, fav, p.search, count, man.first, man.second)
+    val ui: StateFlow<LogUi?> = combine(pickState, mealTime, items, lists, combine(dayFlow, manual, aiPanel) { d, m, a -> Triple(d, m, a) }) { p, mt, its, (freq, fav, count), (day, man, ai) ->
+        LogUi(p.stage, p.tab, p.query, mt, diary.today(), day, its, p.recent, freq, fav, p.search, count, man.first, man.second, ai)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     private data class PickPart(val stage: LogStage, val tab: PickTab, val query: String, val search: List<PickRow>?, val recent: List<Pair<LocalDate, List<PickRow>>>)
@@ -225,7 +328,12 @@ class LogFoodViewModel @Inject constructor(
         val list = items.value
         if (list.isEmpty()) return@launch
         val mt = mealTime.value
-        diary.add(list.map { it.toNewFood() }, LocalDateTime.of(mt.date, mt.time), mt.meal, mt.mealManual).onSuccess {
+        val at = LocalDateTime.of(mt.date, mt.time)
+        // Ảnh gốc không bao giờ lưu; thumbnail 256 px chỉ khi bật ở S45 (03 §7).
+        val thumbPath = aiPanel.value?.thumbnail?.takeIf { settings.current().saveThumbnails }?.let { thumbs.save(it).getOrNull() }
+        val foods = list.map { i -> i.toNewFood().let { if (i.confidence != null) it.copy(thumbnailPath = thumbPath) else it } }
+        diary.add(foods, at, mt.meal, mt.mealManual).onSuccess {
+            aiDraft?.chatMessageId?.let { chat.markSaved(it, at, mt.meal, mt.mealManual) }
             undo.post(UiMessage(R.string.s10_logged, listOf(list.size, VnFormat.int(list.sumOf { it.values.kcal }.roundToInt()))))
             done.value = true
         }

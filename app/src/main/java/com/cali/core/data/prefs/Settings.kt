@@ -8,9 +8,10 @@ import java.time.LocalTime
 /** Toàn bộ khóa DataStore ở 04 §3. API key KHÔNG ở đây (xem SecureKeyStore). */
 data class Settings(
     val onboardingDone: Boolean = false,
-    val aiProvider: String = "anthropic",
-    val aiModelVision: String = "claude-sonnet-5-5",
-    val aiModelChat: String = "claude-haiku-5-5",
+    val aiProvider: String = "neuralwatt",
+    /** ID cụ thể, không dùng bí danh nw-large / nw-flash (09 §8). */
+    val aiModelVision: String = "kimi-k3.1-pro",
+    val aiModelChat: String = "deepseek-v4.1-flash",
     /** null = dùng bản mặc định trong assets. */
     val systemPromptOverride: String? = null,
     val systemPromptDefaultVersion: Int = 1,

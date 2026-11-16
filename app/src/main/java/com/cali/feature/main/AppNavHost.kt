@@ -68,7 +68,9 @@ import javax.inject.Inject
 @Serializable object QuickSetupDest
 @Serializable object MainDest
 @Serializable object ProfileDest
-@Serializable data class LogFoodDest(val date: String, val meal: String = "")
+/** [ai] = kết quả AI chờ trong AiDraftHolder; [chatId] = mở thẻ món của chat; [start] = "manual" | "myfoods". */
+@Serializable data class LogFoodDest(val date: String, val meal: String = "", val ai: Boolean = false, val chatId: Long = -1, val start: String = "")
+@Serializable object CaptureDest
 @Serializable data class EditFoodDest(val id: Long)
 @Serializable object MyFoodsDest
 @Serializable data class MyFoodEditDest(val id: Long = -1)
@@ -76,9 +78,11 @@ import javax.inject.Inject
 // GĐ5
 @Serializable data class WaterDest(val date: String)
 @Serializable object WaterSettingsDest
+@Serializable object AiSettingsDest
+@Serializable object SystemPromptDest
 
 @HiltViewModel
-class AppViewModel @Inject constructor(settings: SettingsRepository) : ViewModel() {
+class AppViewModel @Inject constructor(settings: SettingsRepository, val chatPrefill: com.cali.feature.chat.ChatPrefill) : ViewModel() {
     /** null = đang đọc DataStore. */
     val onboardingDone = settings.settings.map { it.onboardingDone }
         .stateIn(viewModelScope, SharingStarted.Eagerly, null)
@@ -118,15 +122,40 @@ fun AppNavHost(vm: AppViewModel = hiltViewModel()) {
                 onEditFood = { nav.navigate(EditFoodDest(it)) },
                 onOpenWater = { nav.navigate(WaterDest(it.toString())) },
                 onOpenWaterSettings = { nav.navigate(WaterSettingsDest) },
+                onOpenAi = { nav.navigate(AiSettingsDest) },
+                onCapture = { nav.navigate(CaptureDest) },
+                onOpenChatCard = { nav.navigate(LogFoodDest(java.time.LocalDate.now().toString(), chatId = it)) },
+                prefill = vm.chatPrefill,
             )
         }
         composable<WaterDest> { WaterRoute(onBack = { nav.popBackStack() }, onOpenSettings = { nav.navigate(WaterSettingsDest) }) }
         composable<WaterSettingsDest> { WaterSettingsRoute(onBack = { nav.popBackStack() }) }
         composable<ProfileDest> { ProfileRoute(onBack = { nav.popBackStack() }) }
-        composable<LogFoodDest> { LogFoodRoute(onClose = { nav.popBackStack() }) }
+        composable<LogFoodDest> {
+            LogFoodRoute(
+                onClose = { nav.popBackStack() },
+                onRetake = { nav.navigate(CaptureDest) { popUpTo<LogFoodDest> { inclusive = true } } },
+                onAskAi = { text ->
+                    vm.chatPrefill.text.value = text
+                    nav.popBackStack(MainDest, inclusive = false)
+                },
+            )
+        }
+        composable<CaptureDest> {
+            val today = java.time.LocalDate.now().toString()
+            com.cali.feature.capture.CaptureRoute(
+                onClose = { nav.popBackStack() },
+                onConfirm = { nav.navigate(LogFoodDest(today, ai = true)) { popUpTo<CaptureDest> { inclusive = true } } },
+                onOpenAiSettings = { nav.navigate(AiSettingsDest) },
+                onManual = { nav.navigate(LogFoodDest(today, start = "manual")) { popUpTo<CaptureDest> { inclusive = true } } },
+                onMyFoods = { nav.navigate(LogFoodDest(today, start = "myfoods")) { popUpTo<CaptureDest> { inclusive = true } } },
+            )
+        }
         composable<EditFoodDest> { EditFoodRoute(onClose = { nav.popBackStack() }) }
         composable<MyFoodsDest> { MyFoodsRoute(onBack = { nav.popBackStack() }, onOpen = { nav.navigate(MyFoodEditDest(it ?: -1)) }) }
         composable<MyFoodEditDest> { MyFoodEditRoute(onClose = { nav.popBackStack() }) }
+        composable<AiSettingsDest> { com.cali.feature.settings.AiSettingsRoute(onBack = { nav.popBackStack() }, onOpenPrompt = { nav.navigate(SystemPromptDest) }) }
+        composable<SystemPromptDest> { com.cali.feature.settings.SystemPromptRoute(onClose = { nav.popBackStack() }) }
         composable<DataDest> {
             DataRoute(
                 onBack = { nav.popBackStack() },
@@ -156,8 +185,15 @@ private fun MainShell(
     onEditFood: (Long) -> Unit,
     onOpenWater: (java.time.LocalDate) -> Unit,
     onOpenWaterSettings: () -> Unit,
+    onOpenAi: () -> Unit,
+    onCapture: () -> Unit,
+    onOpenChatCard: (Long) -> Unit,
+    prefill: com.cali.feature.chat.ChatPrefill,
 ) {
     var tab by rememberSaveable { mutableIntStateOf(Tab.TODAY.ordinal) }
+    // "Hỏi AI" từ S13 → sang tab Chat với chữ điền sẵn.
+    val pre by prefill.text.collectAsStateWithLifecycle()
+    androidx.compose.runtime.LaunchedEffect(pre) { if (pre != null) tab = Tab.CHAT.ordinal }
     val cs = MaterialTheme.colorScheme
     Scaffold(
         containerColor = cs.surface,
@@ -178,10 +214,10 @@ private fun MainShell(
     ) { pad ->
         Box(Modifier.padding(pad).fillMaxSize()) {
             when (Tab.entries[tab]) {
-                Tab.TODAY -> TodayRoute(onQuickAdd = onQuickAdd, onEditFood = onEditFood, onOpenWater = onOpenWater)
-                Tab.CHAT -> Placeholder(stringResource(R.string.placeholder_chat))
+                Tab.TODAY -> TodayRoute(onQuickAdd = onQuickAdd, onEditFood = onEditFood, onOpenWater = onOpenWater, onCapture = onCapture, onOpenChat = { tab = Tab.CHAT.ordinal })
+                Tab.CHAT -> com.cali.feature.chat.ChatRoute(onOpenCard = onOpenChatCard, onOpenAiSettings = onOpenAi, onOpenToday = { tab = Tab.TODAY.ordinal })
                 Tab.HISTORY -> Placeholder(stringResource(R.string.placeholder_history))
-                Tab.SETTINGS -> SettingsRoute(onOpenProfile = onOpenProfile, onOpenData = onOpenData, onOpenMyFoods = onOpenMyFoods, onOpenWater = onOpenWaterSettings)
+                Tab.SETTINGS -> SettingsRoute(onOpenProfile = onOpenProfile, onOpenData = onOpenData, onOpenMyFoods = onOpenMyFoods, onOpenWater = onOpenWaterSettings, onOpenAi = onOpenAi)
             }
         }
     }

@@ -86,7 +86,7 @@ fun CalorieRing(
 
 /** Tôn trọng "Xoá hiệu ứng" của hệ thống (animator duration scale = 0). */
 @Composable
-private fun rememberReducedMotion(): Boolean {
+fun rememberReducedMotion(): Boolean {
     val ctx = androidx.compose.ui.platform.LocalContext.current
     return remember {
         android.provider.Settings.Global.getFloat(ctx.contentResolver, android.provider.Settings.Global.ANIMATOR_DURATION_SCALE, 1f) == 0f

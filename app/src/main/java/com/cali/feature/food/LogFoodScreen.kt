@@ -72,6 +72,14 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.material.icons.automirrored.rounded.HelpOutline
+import androidx.compose.material.icons.automirrored.rounded.Send
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.NoFood
+import androidx.compose.material.icons.rounded.PhotoCamera
+import androidx.compose.material.icons.rounded.Warning
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cali.R
@@ -91,7 +99,7 @@ import java.time.LocalDate
 import kotlin.math.roundToInt
 
 @Composable
-fun LogFoodRoute(onClose: () -> Unit, vm: LogFoodViewModel = hiltViewModel()) {
+fun LogFoodRoute(onClose: () -> Unit, onRetake: () -> Unit = onClose, onAskAi: (String) -> Unit = {}, vm: LogFoodViewModel = hiltViewModel()) {
     val ui by vm.ui.collectAsStateWithLifecycle()
     val done by vm.done.collectAsStateWithLifecycle()
     LaunchedEffect(done) { if (done) onClose() }
@@ -101,9 +109,9 @@ fun LogFoodRoute(onClose: () -> Unit, vm: LogFoodViewModel = hiltViewModel()) {
     val snack = remember { SnackbarHostState() }
     Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface)) {
         when (s.stage) {
-            LogStage.PICK -> PickScreen(s, vm, onClose, onTime = { timeSheet = true })
+            LogStage.PICK -> PickScreen(s, vm, onClose, onTime = { timeSheet = true }, onAskAi = onAskAi)
             LogStage.MANUAL -> ManualScreen(s, vm, onTime = { timeSheet = true })
-            LogStage.CONFIRM -> ConfirmScreen(s, vm, snack, onClose, onTime = { timeSheet = true })
+            LogStage.CONFIRM -> ConfirmScreen(s, vm, snack, onClose, onTime = { timeSheet = true }, onRetake = onRetake)
         }
         SnackbarHost(snack, Modifier.align(Alignment.BottomCenter).padding(bottom = 96.dp))
     }
@@ -127,11 +135,9 @@ private fun subtitle(s: LogUi): String? {
 // ---------------- S13 ----------------
 
 @Composable
-private fun PickScreen(s: LogUi, vm: LogFoodViewModel, onClose: () -> Unit, onTime: () -> Unit) {
+private fun PickScreen(s: LogUi, vm: LogFoodViewModel, onClose: () -> Unit, onTime: () -> Unit, onAskAi: (String) -> Unit) {
     val cs = MaterialTheme.colorScheme
     val focus = LocalFocusManager.current
-    val ctx = LocalResources.current
-    val scope = rememberCoroutineScope()
     val snack = remember { SnackbarHostState() }
     Box(Modifier.fillMaxSize()) {
         Column(Modifier.fillMaxSize()) {
@@ -191,7 +197,7 @@ private fun PickScreen(s: LogUi, vm: LogFoodViewModel, onClose: () -> Unit, onTi
             }
             Box(Modifier.weight(1f)) {
                 if (results != null && results.isEmpty()) {
-                    NoMatch(s.query, onManual = vm::openManual, onAi = { scope.launch { snack.showSnackbar(ctx.getString(R.string.soon_ai)) } })
+                    NoMatch(s.query, onManual = vm::openManual, onAi = { onAskAi(s.query.trim()) })
                 } else {
                     LazyColumn(
                         Modifier.fillMaxSize().padding(horizontal = Spacing.md).clip(MaterialTheme.shapes.large).background(cs.surfaceContainerLow),
@@ -223,7 +229,7 @@ private fun PickScreen(s: LogUi, vm: LogFoodViewModel, onClose: () -> Unit, onTi
                     horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                 ) {
                     FilledTonalButton(
-                        onClick = { scope.launch { snack.showSnackbar(ctx.getString(R.string.soon_ai)) } },
+                        onClick = { onAskAi(s.query.trim()) },
                         modifier = Modifier.weight(1f).heightIn(min = 56.dp),
                     ) {
                         Icon(Icons.Rounded.AutoAwesome, null, Modifier.size(20.dp)); Spacer(Modifier.width(Spacing.sm))
@@ -329,7 +335,7 @@ private fun ManualScreen(s: LogUi, vm: LogFoodViewModel, onTime: () -> Unit) {
 // ---------------- S12 không AI ----------------
 
 @Composable
-private fun ConfirmScreen(s: LogUi, vm: LogFoodViewModel, snack: SnackbarHostState, onClose: () -> Unit, onTime: () -> Unit) {
+private fun ConfirmScreen(s: LogUi, vm: LogFoodViewModel, snack: SnackbarHostState, onClose: () -> Unit, onTime: () -> Unit, onRetake: () -> Unit) {
     val cs = MaterialTheme.colorScheme
     val cc = CaliTheme.colors
     val scope = rememberCoroutineScope()
@@ -340,10 +346,12 @@ private fun ConfirmScreen(s: LogUi, vm: LogFoodViewModel, snack: SnackbarHostSta
         SheetHeader(stringResource(R.string.s12_title), null, Icons.Rounded.Close, stringResource(R.string.action_close), onNav = onClose)
         LazyColumn(Modifier.weight(1f), contentPadding = PaddingValues(horizontal = Spacing.gutter, vertical = Spacing.sm), verticalArrangement = Arrangement.spacedBy(Spacing.sm)) {
             item(key = "head") {
+                if (s.ai?.noFood == true && s.items.isEmpty()) {
+                    NoFoodCard(s.ai.comment, onRetake = onRetake, onManual = vm::openManual)
+                    return@item
+                }
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Box(Modifier.size(72.dp).clip(MaterialTheme.shapes.large).background(cs.primaryContainer), contentAlignment = Alignment.Center) {
-                        Icon(Icons.Rounded.Restaurant, null, tint = cs.onPrimaryContainer, modifier = Modifier.size(32.dp))
-                    }
+                    ThumbOrIcon(s.ai?.thumbnail)
                     Spacer(Modifier.width(Spacing.lg))
                     Column {
                         Row(verticalAlignment = Alignment.Bottom) {
@@ -361,7 +369,13 @@ private fun ConfirmScreen(s: LogUi, vm: LogFoodViewModel, snack: SnackbarHostSta
                     }
                 }
             }
+            if (s.ai?.noFood == true && s.items.isEmpty()) return@LazyColumn
             item(key = "chip") { MealTimeChip(s.mealTime, s.today, onTime) }
+            s.ai?.let { ai ->
+                if (ai.question != null) item(key = "q") { QuestionCard(ai, onSend = vm::answer, onSkip = vm::skipQuestion) }
+                val note = ai.answerNote ?: ai.comment
+                if (note != null) item(key = "comment") { AiComment(note) }
+            }
             s.projection?.let { p ->
                 item(key = "proj") {
                     ProjectionBar(
@@ -386,7 +400,7 @@ private fun ConfirmScreen(s: LogUi, vm: LogFoodViewModel, snack: SnackbarHostSta
                         }
                     }
                 }, modifier = Modifier.clip(MaterialTheme.shapes.large)) {
-                    DraftCard(item, onFactor = { vm.setFactor(item.key, it) }, onBookmark = { vm.toggleBookmark(item.key) })
+                    DraftCard(item, onFactor = { vm.setFactor(item.key, it) }, onBookmark = { vm.toggleBookmark(item.key) }) { AiItemNotes(item) }
                 }
             }
             item(key = "add") {
@@ -402,6 +416,7 @@ private fun ConfirmScreen(s: LogUi, vm: LogFoodViewModel, snack: SnackbarHostSta
                 }
             }
         }
+        if (s.ai?.noFood == true && s.items.isEmpty()) return@Column
         BottomSaveBar(
             label = stringResource(R.string.s12_save_to_meal, mealName),
             trailing = VnFormat.int(total.roundToInt()) + " kcal",
@@ -419,4 +434,155 @@ private fun MacroLabel(name: String, g: Double, color: androidx.compose.ui.graph
     Text("$name ", style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant)
     Text(g.roundToInt().toString() + unit, style = MaterialTheme.typography.bodySmall.copy(fontWeight = FontWeight.Bold), color = cs.onSurface)
     Spacer(Modifier.width(Spacing.md))
+}
+
+
+// ---------------- S12 phần AI ----------------
+
+@Composable
+private fun ThumbOrIcon(jpeg: ByteArray?) {
+    val cs = MaterialTheme.colorScheme
+    val bmp = remember(jpeg) { jpeg?.let { runCatching { android.graphics.BitmapFactory.decodeByteArray(it, 0, it.size)?.asImageBitmap() }.getOrNull() } }
+    Box(Modifier.size(72.dp).clip(MaterialTheme.shapes.large).background(cs.primaryContainer), contentAlignment = Alignment.Center) {
+        if (bmp != null) {
+            androidx.compose.foundation.Image(bmp, null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
+        } else {
+            Icon(Icons.Rounded.Restaurant, null, tint = cs.onPrimaryContainer, modifier = Modifier.size(32.dp))
+        }
+    }
+}
+
+/** Câu hỏi làm rõ (s12 f3): hộp hổ phách, ô trả lời + gửi, dòng "bỏ qua và lưu luôn". */
+@Composable
+private fun QuestionCard(ai: AiPanel, onSend: (String) -> Unit, onSkip: () -> Unit) {
+    val cc = CaliTheme.colors
+    val cs = MaterialTheme.colorScheme
+    var answer by remember(ai.question) { mutableStateOf("") }
+    Column(Modifier.fillMaxWidth().clip(MaterialTheme.shapes.large).background(cc.warnContainer).padding(Spacing.lg)) {
+        Row(verticalAlignment = Alignment.Top) {
+            Icon(Icons.AutoMirrored.Rounded.HelpOutline, null, tint = cc.onWarnContainer, modifier = Modifier.size(20.dp))
+            Spacer(Modifier.width(Spacing.sm))
+            Text(ai.question.orEmpty(), style = MaterialTheme.typography.titleSmall, color = cc.onWarnContainer, modifier = Modifier.weight(1f))
+        }
+        Spacer(Modifier.height(Spacing.md))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            androidx.compose.material3.OutlinedTextField(
+                value = answer,
+                onValueChange = { answer = it.take(200) },
+                placeholder = { Text(stringResource(R.string.s12ai_answer_hint)) },
+                singleLine = true,
+                enabled = !ai.answering,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
+                keyboardActions = KeyboardActions(onSend = { onSend(answer) }),
+                textStyle = MaterialTheme.typography.bodyLarge,
+                colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(focusedContainerColor = cs.surface, unfocusedContainerColor = cs.surface),
+                modifier = Modifier.weight(1f),
+            )
+            Spacer(Modifier.width(Spacing.sm))
+            if (ai.answering) {
+                Box(Modifier.size(48.dp), contentAlignment = Alignment.Center) { androidx.compose.material3.CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp) }
+            } else {
+                androidx.compose.material3.FilledTonalIconButton(onClick = { onSend(answer) }, enabled = answer.isNotBlank(), modifier = Modifier.size(48.dp)) {
+                    Icon(Icons.AutoMirrored.Rounded.Send, stringResource(R.string.s12ai_send))
+                }
+            }
+        }
+        Spacer(Modifier.height(Spacing.sm))
+        if (ai.answerError != null) {
+            Text(stringResource(aiErrorText(ai.answerError)), style = MaterialTheme.typography.bodySmall, color = cc.onWarnContainer)
+        }
+        Text(
+            stringResource(R.string.s12ai_skip),
+            style = MaterialTheme.typography.bodySmall, color = cc.onWarnContainer,
+            modifier = Modifier.clickable(onClick = onSkip).padding(vertical = Spacing.xs),
+        )
+    }
+}
+
+@Composable
+private fun AiComment(text: String) {
+    val cs = MaterialTheme.colorScheme
+    Row(Modifier.fillMaxWidth().clip(MaterialTheme.shapes.large).background(cs.surfaceContainerLow).padding(Spacing.md), verticalAlignment = Alignment.Top) {
+        Icon(Icons.Rounded.AutoAwesome, null, tint = cs.primary, modifier = Modifier.size(18.dp))
+        Spacer(Modifier.width(Spacing.sm))
+        Text(text, style = MaterialTheme.typography.bodyMedium, color = cs.onSurface)
+    }
+}
+
+/** Nhãn "Cần kiểm tra" + giả định của AI + cờ số liệu (Amber Check, không chặn Lưu). */
+@Composable
+private fun AiItemNotes(item: DraftItem) {
+    if (item.confidence == null) return
+    val cc = CaliTheme.colors
+    val cs = MaterialTheme.colorScheme
+    val low = item.confidence < com.cali.core.ai.AiReview.LOW_CONFIDENCE
+    Column(Modifier.padding(top = Spacing.xs, end = Spacing.sm), verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+        if (low) Pill(Icons.AutoMirrored.Rounded.HelpOutline, stringResource(R.string.s12ai_needs_check))
+        if (com.cali.core.calc.AmberFlag.MACRO_MISMATCH in item.flags) Pill(Icons.Rounded.Warning, stringResource(R.string.amber_mismatch))
+        if (com.cali.core.calc.AmberFlag.VERY_HIGH in item.flags) Pill(Icons.Rounded.Warning, stringResource(R.string.s12ai_very_high))
+        if (com.cali.core.calc.AmberFlag.INVALID_NUMBER_FIXED in item.flags) Pill(Icons.Rounded.Warning, stringResource(R.string.s12ai_fixed))
+        val a = item.assumptions?.trim()
+        if (!a.isNullOrEmpty() && (low || item.flags.isNotEmpty())) {
+            Row {
+                Icon(Icons.Rounded.Info, null, tint = cc.warn, modifier = Modifier.size(16.dp).padding(top = 2.dp))
+                Spacer(Modifier.width(Spacing.xs))
+                Text(stringResource(R.string.s12ai_assumption, a), style = MaterialTheme.typography.bodySmall, color = cs.onSurface)
+            }
+        }
+    }
+}
+
+@Composable
+private fun Pill(icon: androidx.compose.ui.graphics.vector.ImageVector, text: String) {
+    val cc = CaliTheme.colors
+    Row(
+        Modifier.clip(MaterialTheme.shapes.small).background(cc.warnContainer).padding(horizontal = Spacing.sm, vertical = Spacing.xs),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(icon, null, tint = cc.onWarnContainer, modifier = Modifier.size(16.dp))
+        Spacer(Modifier.width(Spacing.xs))
+        Text(text, style = MaterialTheme.typography.labelLarge, color = cc.onWarnContainer)
+    }
+}
+
+/** s12 f7: không nhận ra món → nhận xét của AI + Chụp lại / Nhập tay. */
+@Composable
+private fun NoFoodCard(comment: String?, onRetake: () -> Unit, onManual: () -> Unit) {
+    val cs = MaterialTheme.colorScheme
+    Column(
+        Modifier.fillMaxWidth().clip(MaterialTheme.shapes.large).background(cs.surfaceContainerLow).padding(Spacing.lg),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Icon(Icons.Rounded.NoFood, null, tint = cs.onSurfaceVariant, modifier = Modifier.size(36.dp))
+        Spacer(Modifier.height(Spacing.sm))
+        Text(stringResource(R.string.s12ai_no_food), style = MaterialTheme.typography.titleMedium, color = cs.onSurface)
+        if (!comment.isNullOrBlank()) {
+            Spacer(Modifier.height(Spacing.xs))
+            Text(stringResource(R.string.s12ai_quote, comment), style = MaterialTheme.typography.bodyMedium, color = cs.onSurfaceVariant, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+        }
+        Spacer(Modifier.height(Spacing.lg))
+        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm)) {
+            FilledTonalButton(onClick = onRetake, modifier = Modifier.weight(1f).heightIn(min = 56.dp)) {
+                Icon(Icons.Rounded.PhotoCamera, null, Modifier.size(20.dp)); Spacer(Modifier.width(Spacing.sm))
+                Text(stringResource(R.string.s12ai_retake), style = MaterialTheme.typography.titleSmall)
+            }
+            OutlinedButton(onClick = onManual, modifier = Modifier.weight(1f).heightIn(min = 56.dp)) {
+                Icon(Icons.Rounded.EditNote, null, Modifier.size(20.dp)); Spacer(Modifier.width(Spacing.sm))
+                Text(stringResource(R.string.s13_manual), style = MaterialTheme.typography.titleSmall)
+            }
+        }
+    }
+}
+
+/** Câu báo lỗi AI dùng chung (S11, S12, S20). */
+fun aiErrorText(type: com.cali.core.ai.AiErrorType): Int = when (type) {
+    com.cali.core.ai.AiErrorType.NO_NETWORK -> R.string.ai_err_network
+    com.cali.core.ai.AiErrorType.TIMEOUT -> R.string.ai_err_timeout
+    com.cali.core.ai.AiErrorType.NO_KEY -> R.string.ai_err_no_key
+    com.cali.core.ai.AiErrorType.INVALID_KEY -> R.string.ai_err_key
+    com.cali.core.ai.AiErrorType.RATE_LIMITED, com.cali.core.ai.AiErrorType.OVERLOADED -> R.string.ai_err_busy
+    com.cali.core.ai.AiErrorType.QUOTA -> R.string.ai_err_quota
+    com.cali.core.ai.AiErrorType.REFUSED -> R.string.ai_err_refused
+    com.cali.core.ai.AiErrorType.INVALID_RESPONSE -> R.string.ai_err_invalid
+    com.cali.core.ai.AiErrorType.UNKNOWN -> R.string.ai_err_unknown
 }

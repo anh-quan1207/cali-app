@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ảnh chụp tạm cho chat (S20): ghi vào cache, đọc xong xoá ngay. -->
+<paths>
+    <cache-path name="capture" path="capture/" />
+</paths>

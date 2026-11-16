@@ -77,6 +77,11 @@ data class DraftItem(
     val source: FoodSource,
     val myFoodId: Long? = null,
     val bookmark: Boolean = false,
+    /** Chỉ món từ AI. */
+    val confidence: Double? = null,
+    val assumptions: String? = null,
+    val flags: Set<com.cali.core.calc.AmberFlag> = emptySet(),
+    val aiCallId: Long? = null,
 ) {
     val values: FoodValues get() = PortionScaler.scale(base, factor)
     val grams: Double? get() = baseGrams?.times(factor)
@@ -97,6 +102,8 @@ data class DraftItem(
         source = source,
         myFoodId = myFoodId,
         saveAsMyFood = bookmark && myFoodId == null,
+        aiConfidence = confidence,
+        aiCallId = aiCallId,
     )
 }
 
