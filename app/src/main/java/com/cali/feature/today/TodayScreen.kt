@@ -11,6 +11,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -34,6 +36,7 @@ import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.MonitorWeight
+import androidx.compose.material.icons.rounded.WaterDrop
 import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Button
@@ -106,6 +109,7 @@ import kotlin.math.roundToInt
 fun TodayRoute(
     onQuickAdd: (date: LocalDate, meal: MealType?) -> Unit,
     onEditFood: (id: Long) -> Unit,
+    onOpenWater: (date: LocalDate) -> Unit,
     vm: TodayViewModel = hiltViewModel(),
 ) {
     val s by vm.state.collectAsStateWithLifecycle()
@@ -113,7 +117,7 @@ fun TodayRoute(
     CollectMessages(vm.messages, snack)
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { vm.refreshToday() }
     val st = s ?: return
-    TodayScreen(st, vm, snack, onQuickAdd, onEditFood)
+    TodayScreen(st, vm, snack, onQuickAdd, onEditFood, onOpenWater)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -124,6 +128,7 @@ private fun TodayScreen(
     snack: SnackbarHostState,
     onQuickAdd: (LocalDate, MealType?) -> Unit,
     onEditFood: (Long) -> Unit,
+    onOpenWater: (LocalDate) -> Unit,
 ) {
     val cs = MaterialTheme.colorScheme
     val list = rememberLazyListState()
@@ -226,7 +231,16 @@ private fun TodayScreen(
                         }
                     }
                 }
-                item(key = "weight") { WeightTileView(s.weight, onLog = { weigh = true }) }
+                // GĐ5: ô Nước + ô Cân cạnh nhau (mockup s10 .tiles).
+                item(key = "tiles") {
+                    Row(
+                        Modifier.padding(start = Spacing.md, end = Spacing.md, top = Spacing.sm).height(IntrinsicSize.Max),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
+                    ) {
+                        WaterTileView(s.water, onOpen = { onOpenWater(date) }, onAdd = vm::addWater, modifier = Modifier.weight(1f).fillMaxHeight())
+                        WeightTileView(s.weight, onLog = { weigh = true }, modifier = Modifier.weight(1f).fillMaxHeight())
+                    }
+                }
                 item(key = "disclaimer") {
                     Text(
                         stringResource(R.string.disclaimer_kcal), style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant, textAlign = TextAlign.Center,
@@ -398,40 +412,77 @@ private fun EmptyHero(isToday: Boolean) {
     }
 }
 
-/** Thẻ cân (S10 mục 7). Thẻ nước bật ở GĐ5, nên thẻ cân chiếm cả hàng. Thay đổi cân luôn trung tính. */
+/** Ô Nước (S10 mục 6, bật ở GĐ5): đã uống / mục tiêu, thanh, +nhỏ / +lớn. Chạm ô mở S15. Vượt mục tiêu vẫn primary. */
 @Composable
-private fun WeightTileView(w: WeightTile?, onLog: () -> Unit) {
+private fun WaterTileView(w: WaterTile, onOpen: () -> Unit, onAdd: (Int) -> Unit, modifier: Modifier = Modifier) {
+    val cs = MaterialTheme.colorScheme
+    val openCd = stringResource(R.string.s10_water_open_cd, VnFormat.int(w.totalMl), VnFormat.int(w.goalMl))
+    Column(
+        modifier.clip(MaterialTheme.shapes.large).background(cs.surfaceContainerLow).clickable(onClick = onOpen)
+            .padding(start = 14.dp, end = 14.dp, top = 14.dp, bottom = Spacing.md),
+    ) {
+        Column(Modifier.semantics(mergeDescendants = true) { contentDescription = openCd }) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Rounded.WaterDrop, null, tint = cs.primary, modifier = Modifier.size(18.dp))
+                Spacer(Modifier.width(6.dp))
+                Text(stringResource(R.string.s10_water), style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold), color = cs.onSurfaceVariant)
+            }
+            Row(verticalAlignment = Alignment.Bottom, modifier = Modifier.padding(top = Spacing.sm)) {
+                Text(VnFormat.int(w.totalMl), style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight(650)), color = cs.onSurface)
+                Text(" " + stringResource(R.string.s10_water_of, VnFormat.int(w.goalMl)), style = MaterialTheme.typography.labelMedium, color = cs.onSurfaceVariant)
+            }
+            val frac = if (w.goalMl > 0) (w.totalMl.toFloat() / w.goalMl).coerceIn(0f, 1f) else 0f
+            Box(Modifier.padding(top = 6.dp).fillMaxWidth().height(6.dp).clip(MaterialTheme.shapes.extraSmall).background(cs.surfaceContainerHighest)) {
+                Box(Modifier.fillMaxWidth(frac).fillMaxHeight().clip(MaterialTheme.shapes.extraSmall).background(cs.primary))
+            }
+        }
+        Spacer(Modifier.weight(1f))
+        Row(Modifier.padding(top = 10.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            listOf(w.cupSmall, w.cupLarge).forEach { ml ->
+                val cd = stringResource(R.string.s10_water_add_cd, VnFormat.int(ml))
+                FilledTonalButton(
+                    onClick = { onAdd(ml) },
+                    shape = MaterialTheme.shapes.medium,
+                    contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
+                    modifier = Modifier.weight(1f).heightIn(min = 48.dp).semantics { contentDescription = cd },
+                ) { Text(stringResource(R.string.s10_water_add, VnFormat.int(ml)), style = MaterialTheme.typography.labelLarge) }
+            }
+        }
+    }
+}
+
+/** Ô cân (S10 mục 7). Từ GĐ5 nằm cạnh ô Nước, nút "Ghi cân" ở dưới như mockup. Thay đổi cân luôn trung tính. */
+@Composable
+private fun WeightTileView(w: WeightTile?, onLog: () -> Unit, modifier: Modifier = Modifier) {
     val cs = MaterialTheme.colorScheme
     Column(
-        Modifier.padding(start = Spacing.md, end = Spacing.md, top = Spacing.sm).fillMaxWidth()
-            .clip(MaterialTheme.shapes.large).background(cs.surfaceContainerLow).padding(start = 14.dp, end = 14.dp, top = 14.dp, bottom = Spacing.md),
+        modifier.clip(MaterialTheme.shapes.large).background(cs.surfaceContainerLow).padding(start = 14.dp, end = 14.dp, top = 14.dp, bottom = Spacing.md),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(Icons.Rounded.MonitorWeight, null, tint = cs.primary, modifier = Modifier.size(18.dp))
             Spacer(Modifier.width(6.dp))
             Text(stringResource(R.string.s10_weight), style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold), color = cs.onSurfaceVariant)
         }
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = Spacing.sm)) {
-            Column(Modifier.weight(1f)) {
-                if (w == null) {
-                    Text(stringResource(R.string.s10_weight_none), style = MaterialTheme.typography.titleLarge, color = cs.onSurfaceVariant)
-                } else {
-                    Row(verticalAlignment = Alignment.Bottom) {
-                        Text(VnFormat.kg(w.latest.weightKg), style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight(650)), color = cs.onSurface)
-                        Text(" kg", style = MaterialTheme.typography.labelMedium, color = cs.onSurfaceVariant)
-                    }
-                    val sub = w.previous?.let { p ->
-                        stringResource(R.string.s10_weight_vs_last, VnFormat.signedKg(w.latest.weightKg - p.weightKg), VnFormat.dayMonth(p.date))
-                    } ?: stringResource(R.string.s10_weight_last, VnFormat.dayMonth(w.latest.date))
-                    Text(sub, style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant, modifier = Modifier.padding(top = 2.dp))
+        Column(Modifier.padding(top = Spacing.sm)) {
+            if (w == null) {
+                Text(stringResource(R.string.s10_weight_none), style = MaterialTheme.typography.titleLarge, color = cs.onSurfaceVariant)
+            } else {
+                Row(verticalAlignment = Alignment.Bottom) {
+                    Text(VnFormat.kg(w.latest.weightKg), style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight(650)), color = cs.onSurface)
+                    Text(" kg", style = MaterialTheme.typography.labelMedium, color = cs.onSurfaceVariant)
                 }
+                val sub = w.previous?.let { p ->
+                    stringResource(R.string.s10_weight_vs_last, VnFormat.signedKg(w.latest.weightKg - p.weightKg), VnFormat.dayMonth(p.date))
+                } ?: stringResource(R.string.s10_weight_last, VnFormat.dayMonth(w.latest.date))
+                Text(sub, style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant, modifier = Modifier.padding(top = 2.dp))
             }
-            OutlinedButton(
-                onClick = onLog,
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.heightIn(min = 48.dp),
-                border = ButtonDefaults.outlinedButtonBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(cs.outlineVariant)),
-            ) { Text(stringResource(R.string.s10_log_weight), style = MaterialTheme.typography.labelLarge, color = cs.primary) }
         }
+        Spacer(Modifier.weight(1f))
+        OutlinedButton(
+            onClick = onLog,
+            shape = MaterialTheme.shapes.medium,
+            modifier = Modifier.padding(top = 10.dp).fillMaxWidth().heightIn(min = 48.dp),
+            border = ButtonDefaults.outlinedButtonBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(cs.outlineVariant)),
+        ) { Text(stringResource(R.string.s10_log_weight), style = MaterialTheme.typography.labelLarge, color = cs.primary) }
     }
 }
