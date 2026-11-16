@@ -30,10 +30,14 @@ class FakeAiProvider(
         }
 
         val today = LocalDate.now(clock)
-        val raw = if (request.userText?.contains("tối qua", ignoreCase = true) == true) {
-            yesterdayNoodles(today.minusDays(1))
-        } else {
-            SAMPLE_BREAKFAST
+        // So khớp không dấu để gõ được bằng adb khi thử tay.
+        val text = com.cali.core.data.db.TextNormalizer.normalize(request.userText.orEmpty())
+        val raw = when {
+            "toi qua" in text -> yesterdayNoodles(today.minusDays(1))
+            "nuoc mam" in text -> SAMPLE_UNSURE
+            "thuc don" in text -> SAMPLE_NO_FOOD
+            "bun bo" in text -> SAMPLE_LUNCH
+            else -> SAMPLE_BREAKFAST
         }
         return when (val v = FoodLogValidator.validate(raw, today)) {
             is FoodLogValidator.Outcome.Valid -> AiResult.FoodLog(v.log, USAGE)
@@ -55,6 +59,28 @@ class FakeAiProvider(
               {"name":"Cà phê sữa đá","portion_desc":"1 ly","grams":250,"kcal":140,"protein_g":3,"carb_g":24,"fat_g":3.5,
                "confidence":0.8,"assumptions":"sữa đặc mức phổ biến"}
             ],"comment":"Bữa sáng khoảng 520 kcal."}
+        """
+
+        /** Bữa trưa của bộ dữ liệu mẫu (s20 f1): bún bò 490 + trà đá 0. */
+        const val SAMPLE_LUNCH = """
+            {"items":[
+              {"name":"Bún bò Huế","portion_desc":"1 tô vừa","grams":550,"kcal":490,"protein_g":33,"carb_g":60,"fat_g":12,"confidence":0.85},
+              {"name":"Trà đá","portion_desc":"1 ly","grams":300,"kcal":0,"protein_g":0,"carb_g":0,"fat_g":0,"confidence":0.95}
+            ],"comment":"Bữa này vừa phải."}
+        """
+
+        /** s12 f3: một món độ tin cậy thấp + câu hỏi làm rõ. */
+        const val SAMPLE_UNSURE = """
+            {"items":[
+              {"name":"Cơm tấm sườn","portion_desc":"1 dĩa","grams":350,"kcal":650,"protein_g":32,"carb_g":80,"fat_g":20,"confidence":0.85},
+              {"name":"Mỡ hành + nước mắm","portion_desc":"2 thìa · 1 chén","grams":60,"kcal":140,"protein_g":1,"carb_g":8,"fat_g":12,
+               "confidence":0.4,"assumptions":"~2 thìa mỡ hành, chan hết 1 chén nước mắm pha đường"}
+            ],"clarifying_question":"Bạn có chan hết chén nước mắm không?"}
+        """
+
+        /** s12 f7: ảnh không có món ăn. */
+        const val SAMPLE_NO_FOOD = """
+            {"items":[],"comment":"Ảnh có vẻ là thực đơn quán, chưa thấy món ăn thật. Bạn chụp lại phần ăn nhé."}
         """
 
         private fun yesterdayNoodles(date: LocalDate) = """

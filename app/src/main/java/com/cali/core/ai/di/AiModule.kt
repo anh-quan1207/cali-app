@@ -60,5 +60,12 @@ object AiModule {
         config: NeuralwattConfig,
         promptBuilder: PromptBuilder,
         clock: Clock,
-    ): AiProvider = NeuralwattProvider(client, keySource, models, recorder, config, promptBuilder, clock)
+        @dagger.hilt.android.qualifiers.ApplicationContext context: android.content.Context,
+    ): AiProvider {
+        val real = NeuralwattProvider(client, keySource, models, recorder, config, promptBuilder, clock)
+        if (!BuildConfig.DEBUG) return real
+        // Chỉ bản debug: cờ do SeedActivity bật để thử luồng / chụp ảnh khi chưa có key (09 §8).
+        val flag = java.io.File(context.filesDir, com.cali.core.ai.SwitchingAiProvider.DEBUG_FLAG_FILE)
+        return com.cali.core.ai.SwitchingAiProvider(real, com.cali.core.ai.FakeAiProvider(clock, latencyMs = 2_500)) { flag.exists() }
+    }
 }
