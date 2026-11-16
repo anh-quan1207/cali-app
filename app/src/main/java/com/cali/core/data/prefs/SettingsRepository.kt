@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.cali.core.calc.MealBoundary
 import com.cali.core.calc.model.MacroPct
@@ -17,6 +18,13 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.booleanOrNull
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.int
+import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.long
 import java.io.IOException
 import java.time.LocalTime
 import javax.inject.Inject
@@ -43,6 +51,42 @@ class SettingsRepository @Inject constructor(
         result!!
     }
 
+    /**
+     * Toàn bộ khóa dạng JSON cho sao lưu (04 §5). Giữ nguyên kiểu (bool / số / chuỗi) để nhập lại đúng khóa.
+     * Kho này không chứa API key (key ở secure_prefs).
+     */
+    suspend fun exportRaw(): JsonObject = buildJsonObject {
+        store.data.first().asMap().entries.sortedBy { it.key.name }.forEach { (k, v) ->
+            when (v) {
+                is Boolean -> put(k.name, JsonPrimitive(v))
+                is Number -> put(k.name, JsonObject(mapOf(TYPE to JsonPrimitive(if (v is Long) "long" else "int"), VALUE to JsonPrimitive(v))))
+                is String -> put(k.name, JsonPrimitive(v))
+                else -> Unit
+            }
+        }
+    }
+
+    /** Thay toàn bộ khóa bằng [raw] (khôi phục). */
+    suspend fun replaceAll(raw: JsonObject): Result<Unit> = runCatching {
+        store.edit { p ->
+            p.clear()
+            raw.forEach { (name, el) ->
+                when {
+                    el is JsonObject -> {
+                        val v = el.getValue(VALUE).jsonPrimitive
+                        if (el[TYPE]?.jsonPrimitive?.content == "long") p[longPreferencesKey(name)] = v.long
+                        else p[intPreferencesKey(name)] = v.int
+                    }
+                    el is JsonPrimitive && el.isString -> p[stringPreferencesKey(name)] = el.content
+                    el is JsonPrimitive -> el.booleanOrNull?.let { p[booleanPreferencesKey(name)] = it }
+                }
+            }
+        }
+    }
+
+    /** Xoá mọi khóa (Xoá toàn bộ dữ liệu). */
+    suspend fun clear(): Result<Unit> = runCatching { store.edit { it.clear() } }
+
     private fun read(p: Preferences): Settings {
         val d = Settings()
         return Settings(
@@ -66,6 +110,8 @@ class SettingsRepository @Inject constructor(
             weeklyNotifyEnabled = p[K.weeklyNotifyEnabled] ?: d.weeklyNotifyEnabled,
             weeklyNotifyTime = p[K.weeklyNotifyTime]?.let(::parseTime) ?: d.weeklyNotifyTime,
             weeklyAiAuto = p[K.weeklyAiAuto] ?: d.weeklyAiAuto,
+            lastBackupAt = p[K.lastBackupAt],
+            lastBackupFile = p[K.lastBackupFile],
         )
     }
 
@@ -90,6 +136,8 @@ class SettingsRepository @Inject constructor(
         p[K.weeklyNotifyEnabled] = s.weeklyNotifyEnabled
         p[K.weeklyNotifyTime] = s.weeklyNotifyTime.toString()
         p[K.weeklyAiAuto] = s.weeklyAiAuto
+        p.setOrRemove(K.lastBackupAt, s.lastBackupAt)
+        p.setOrRemove(K.lastBackupFile, s.lastBackupFile)
     }
 
     private fun <T> MutablePreferences.setOrRemove(key: Preferences.Key<T>, value: T?) {
@@ -115,6 +163,11 @@ class SettingsRepository @Inject constructor(
     private fun parseTime(s: String): LocalTime? = runCatching { LocalTime.parse(s) }.getOrNull()
 
     /** Tên khóa đúng như 04 §3. */
+    private companion object {
+        const val TYPE = "type"
+        const val VALUE = "value"
+    }
+
     private object K {
         val onboardingDone = booleanPreferencesKey("onboarding_done")
         val aiProvider = stringPreferencesKey("ai_provider")
@@ -136,5 +189,7 @@ class SettingsRepository @Inject constructor(
         val weeklyNotifyEnabled = booleanPreferencesKey("weekly_notify_enabled")
         val weeklyNotifyTime = stringPreferencesKey("weekly_notify_time")
         val weeklyAiAuto = booleanPreferencesKey("weekly_ai_auto")
+        val lastBackupAt = longPreferencesKey("last_backup_at")
+        val lastBackupFile = stringPreferencesKey("last_backup_file")
     }
 }

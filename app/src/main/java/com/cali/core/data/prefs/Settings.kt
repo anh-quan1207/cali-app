@@ -28,4 +28,7 @@ data class Settings(
     val weeklyNotifyEnabled: Boolean = true,
     val weeklyNotifyTime: LocalTime = LocalTime.of(8, 0),
     val weeklyAiAuto: Boolean = true,
+    /** Lần xuất sao lưu gần nhất (S45). Khóa thêm ở GĐ3, ghi ở 09 §8. */
+    val lastBackupAt: Long? = null,
+    val lastBackupFile: String? = null,
 )

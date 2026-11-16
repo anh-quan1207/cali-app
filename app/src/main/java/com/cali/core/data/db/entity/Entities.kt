@@ -1,3 +1,5 @@
+@file:UseSerializers(LocalDateSerializer::class)
+
 package com.cali.core.data.db.entity
 
 import androidx.room.ColumnInfo
@@ -10,10 +12,14 @@ import com.cali.core.calc.model.ClampReason
 import com.cali.core.calc.model.GoalType
 import com.cali.core.calc.model.MealType
 import com.cali.core.calc.model.Sex
+import com.cali.core.data.backup.LocalDateSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseSerializers
 import java.time.LocalDate
 
 // Bảng theo 04 §2. Ngày: LocalDate → ISO yyyy-MM-dd; thời điểm: epoch millis.
 
+@Serializable
 @Entity(tableName = "user_profile")
 data class UserProfileEntity(
     @PrimaryKey val id: Int = 1,
@@ -29,6 +35,7 @@ data class UserProfileEntity(
     @ColumnInfo(name = "updated_at") val updatedAt: Long,
 )
 
+@Serializable
 @Entity(
     tableName = "goal_snapshot",
     indices = [Index(value = ["effective_from"], unique = true)],
@@ -50,6 +57,7 @@ data class GoalSnapshotEntity(
     @ColumnInfo(name = "created_at") val createdAt: Long,
 )
 
+@Serializable
 @Entity(
     tableName = "weight_entry",
     indices = [Index(value = ["date"], unique = true)],
@@ -62,6 +70,7 @@ data class WeightEntryEntity(
     @ColumnInfo(name = "created_at") val createdAt: Long,
 )
 
+@Serializable
 @Entity(
     tableName = "food_entry",
     foreignKeys = [
@@ -110,6 +119,7 @@ data class FoodEntryEntity(
     @ColumnInfo(name = "updated_at") val updatedAt: Long,
 )
 
+@Serializable
 @Entity(
     tableName = "my_food",
     indices = [Index("name"), Index("name_normalized")],
@@ -131,6 +141,7 @@ data class MyFoodEntity(
     @ColumnInfo(name = "updated_at") val updatedAt: Long,
 )
 
+@Serializable
 @Entity(tableName = "water_entry", indices = [Index("date")])
 data class WaterEntryEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
@@ -140,6 +151,7 @@ data class WaterEntryEntity(
     @ColumnInfo(name = "created_at") val createdAt: Long,
 )
 
+@Serializable
 @Entity(
     tableName = "chat_message",
     foreignKeys = [
@@ -164,6 +176,7 @@ data class ChatMessageEntity(
     @ColumnInfo(name = "created_at") val createdAt: Long,
 )
 
+@Serializable
 @Entity(tableName = "ai_call_log")
 data class AiCallLogEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
@@ -179,6 +192,7 @@ data class AiCallLogEntity(
     @ColumnInfo(name = "created_at") val createdAt: Long,
 )
 
+@Serializable
 @Entity(
     tableName = "weekly_review",
     foreignKeys = [

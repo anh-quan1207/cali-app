@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.cali.core.data.db.dao.AiCallLogDao
+import com.cali.core.data.db.dao.BackupDao
 import com.cali.core.data.db.dao.ChatMessageDao
 import com.cali.core.data.db.dao.FoodEntryDao
 import com.cali.core.data.db.dao.GoalSnapshotDao
@@ -48,6 +49,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun chatMessageDao(): ChatMessageDao
     abstract fun aiCallLogDao(): AiCallLogDao
     abstract fun weeklyReviewDao(): WeeklyReviewDao
+    abstract fun backupDao(): BackupDao
 
     companion object {
         const val NAME = "cali.db"
