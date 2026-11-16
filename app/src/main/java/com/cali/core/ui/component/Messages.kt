@@ -5,7 +5,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import com.cali.R
 import com.cali.core.ui.UiMessage
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 /** Thu thông báo từ [messages] và hiện snackbar; Hoàn tác chạy hàm undo kèm theo. */
 @Composable
 fun CollectMessages(messages: Flow<UiMessage>, host: SnackbarHostState) {
-    val ctx = LocalContext.current
+    val ctx = LocalResources.current
     LaunchedEffect(messages) {
         messages.collect { m ->
             launch {

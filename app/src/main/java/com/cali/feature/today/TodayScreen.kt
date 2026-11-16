@@ -421,7 +421,7 @@ private fun WeightTileView(w: WeightTile?, onLog: () -> Unit) {
                         Text(" kg", style = MaterialTheme.typography.labelMedium, color = cs.onSurfaceVariant)
                     }
                     val sub = w.previous?.let { p ->
-                        VnFormat.signedKg(w.latest.weightKg - p.weightKg) + " kg so với lần cân " + VnFormat.dayMonth(p.date)
+                        stringResource(R.string.s10_weight_vs_last, VnFormat.signedKg(w.latest.weightKg - p.weightKg), VnFormat.dayMonth(p.date))
                     } ?: stringResource(R.string.s10_weight_last, VnFormat.dayMonth(w.latest.date))
                     Text(sub, style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant, modifier = Modifier.padding(top = 2.dp))
                 }

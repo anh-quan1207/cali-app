@@ -158,6 +158,7 @@ fun DraftCard(
 @Composable
 private fun FactorChip(label: String, selected: Boolean, onClick: () -> Unit) {
     val cs = MaterialTheme.colorScheme
+    val cd = stringResource(R.string.s12_factor_cd, label)
     Box(
         Modifier
             .size(width = 52.dp, height = 48.dp)
@@ -165,7 +166,7 @@ private fun FactorChip(label: String, selected: Boolean, onClick: () -> Unit) {
             .clip(CircleShape)
             .background(if (selected) cs.secondaryContainer else androidx.compose.ui.graphics.Color.Transparent)
             .clickable(onClick = onClick)
-            .semantics { role = Role.RadioButton; this.selected = selected; contentDescription = "Khẩu phần $label" },
+            .semantics { role = Role.RadioButton; this.selected = selected; contentDescription = cd },
         contentAlignment = Alignment.Center,
     ) {
         Text(label, style = MaterialTheme.typography.labelLarge.copy(fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium), color = if (selected) cs.onSecondaryContainer else cs.onSurface)

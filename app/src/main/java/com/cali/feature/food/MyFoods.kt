@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -109,6 +110,7 @@ class MyFoodsViewModel @Inject constructor(
     private val repo: MyFoodRepository,
     private val undo: UndoCenter,
     private val clock: Clock,
+    @dagger.hilt.android.qualifiers.ApplicationContext private val app: android.content.Context,
 ) : ViewModel() {
     val query = MutableStateFlow("")
     val sort = MutableStateFlow(MyFoodSort.FREQUENT)
@@ -135,8 +137,8 @@ class MyFoodsViewModel @Inject constructor(
         val at = f.lastUsedAt ?: return null
         val t = LocalDateTime.ofInstant(Instant.ofEpochMilli(at), clock.zone)
         return when (t.toLocalDate()) {
-            today -> "hôm nay " + "%02d:%02d".format(t.hour, t.minute)
-            today.minusDays(1) -> "hôm qua"
+            today -> app.getString(R.string.s34_last_today, "%02d:%02d".format(t.hour, t.minute))
+            today.minusDays(1) -> app.getString(R.string.s34_last_yesterday)
             else -> VnFormat.dayMonth(t.toLocalDate())
         }
     }
@@ -218,9 +220,14 @@ fun MyFoodsRoute(onBack: () -> Unit, onOpen: (id: Long?) -> Unit, vm: MyFoodsVie
 }
 
 private fun androidx.compose.foundation.lazy.LazyListScope.groupItems(list: List<MyFoodEntity>, s: MyFoodsUi, vm: MyFoodsViewModel, onOpen: (Long?) -> Unit) {
-    items(list, key = { it.id }) { f ->
+    itemsIndexed(list, key = { _, f -> f.id }) { i, f ->
+        val r = 16.dp
+        val shape = androidx.compose.foundation.shape.RoundedCornerShape(
+            topStart = if (i == 0) r else 0.dp, topEnd = if (i == 0) r else 0.dp,
+            bottomStart = if (i == list.lastIndex) r else 0.dp, bottomEnd = if (i == list.lastIndex) r else 0.dp,
+        )
         Box(Modifier.padding(horizontal = Spacing.md)) {
-            SwipeToDelete(onDelete = { vm.delete(f) }, modifier = Modifier.clip(MaterialTheme.shapes.medium)) {
+            SwipeToDelete(onDelete = { vm.delete(f) }, modifier = Modifier.clip(shape)) {
                 MyFoodRow(f, s, vm, onClick = { onOpen(f.id) })
             }
         }

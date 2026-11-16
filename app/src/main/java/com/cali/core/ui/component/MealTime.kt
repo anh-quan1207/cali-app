@@ -83,13 +83,14 @@ fun MealTimeChip(value: MealTime, today: LocalDate, onClick: () -> Unit, modifie
     val cs = MaterialTheme.colorScheme
     val meal = stringResource(value.meal.label())
     val dayPart = if (value.date != today) " · " + VnFormat.dayMonth(value.date) else ""
+    val chipCd = stringResource(R.string.time_chip_cd, value.time.hm() + dayPart, meal)
     Row(modifier, verticalAlignment = Alignment.CenterVertically) {
         Row(
             Modifier
                 .clip(MaterialTheme.shapes.small)
                 .background(cs.secondaryContainer)
                 .clickable(role = Role.Button, onClick = onClick)
-                .semantics { contentDescription = "Giờ ăn ${value.time.hm()}$dayPart, bữa $meal. Chạm để đổi" }
+                .semantics { contentDescription = chipCd }
                 .heightIn(min = 40.dp)
                 .padding(start = Spacing.md, end = Spacing.xs),
             verticalAlignment = Alignment.CenterVertically,

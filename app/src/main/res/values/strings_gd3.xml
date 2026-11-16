@@ -6,12 +6,9 @@
     <string name="action_delete">Xoá</string>
     <string name="action_close">Đóng</string>
     <string name="action_continue">Tiếp</string>
-    <string name="action_edit">Sửa</string>
     <string name="soon_ai">Có ở bản sau (giai đoạn AI)</string>
     <string name="today">Hôm nay</string>
     <string name="yesterday">Hôm qua</string>
-    <string name="kcal_value">%1$s kcal</string>
-    <string name="g_value">%1$s g</string>
     <string name="disclaimer_kcal">Số calo là ước lượng, không thay thế tư vấn y tế.</string>
 
     <!-- S10 Hôm nay -->
@@ -38,10 +35,12 @@
     <string name="s10_empty_title">Chưa ghi món nào hôm nay</string>
     <string name="s10_empty_body">Chụp bữa ăn đầu tiên nhé. AI ước lượng calo, bạn xác nhận rồi lưu.</string>
     <string name="s10_empty_title_day">Chưa ghi món nào ngày này</string>
-    <string name="s10_empty_body_noai">Chạm + để thêm từ Món của tôi hoặc nhập tay.</string>
     <string name="s10_weight">Cân nặng</string>
     <string name="s10_weight_none">Chưa có số</string>
-    <string name="s10_weight_vs_week">%1$s kg so với tuần trước</string>
+    <string name="s10_weight_vs_last">%1$s kg so với lần cân %2$s</string>
+    <string name="s34_last_today">hôm nay %1$s</string>
+    <string name="s34_last_yesterday">hôm qua</string>
+    <string name="s12_factor_cd">Khẩu phần %1$s</string>
     <string name="s10_weight_last">Lần cân %1$s</string>
     <string name="s10_log_weight">Ghi cân</string>
     <string name="s10_menu_edit">Sửa</string>
@@ -52,9 +51,6 @@
     <string name="s10_saved_myfood">Đã lưu vào Món của tôi</string>
     <string name="s10_moved">Đã chuyển sang bữa %1$s</string>
     <string name="s10_logged">Đã lưu %1$d món · %2$s kcal</string>
-    <string name="s10_source_ai">Ghi bằng AI</string>
-    <string name="s10_source_saved">Từ Món của tôi</string>
-    <string name="s10_source_manual">Nhập tay</string>
 
     <!-- S13 Thêm nhanh -->
     <string name="s13_title">Thêm nhanh</string>
@@ -77,7 +73,6 @@
     <string name="s13_empty_recent">Chưa ghi món nào. Món đã ghi sẽ hiện ở đây để thêm lại một chạm.</string>
     <string name="s13_empty_frequent">Chưa có món đã lưu. Đánh dấu trang trên thẻ xác nhận để lưu món hay ăn.</string>
     <string name="s13_empty_favorite">Chưa có món yêu thích. Chạm ngôi sao trong Món của tôi để ghim.</string>
-    <string name="s13_uses">%1$d lần</string>
     <string name="manual_title">Nhập tay</string>
     <string name="field_food_name">Tên món</string>
     <string name="field_portion">Khẩu phần</string>
@@ -95,8 +90,6 @@
 
     <!-- Giờ ăn & bữa -->
     <string name="time_sheet_title">Giờ ăn &amp; bữa</string>
-    <string name="time_hour">Giờ</string>
-    <string name="time_minute">Phút</string>
     <string name="time_day">Ngày</string>
     <string name="time_auto_hint">Đang tự gán theo giờ ăn (%1$s là %2$s). Chọn bữa khác để giữ cố định.</string>
     <string name="time_manual_hint">Bữa đã chọn tay, đổi giờ không đổi bữa.</string>
@@ -107,12 +100,10 @@
     <string name="s12_after_save">Hôm nay sau khi lưu</string>
     <string name="s12_after_save_day">%1$s sau khi lưu</string>
     <string name="s12_left">còn %1$s kcal</string>
-    <string name="s12_over">vượt %1$s kcal</string>
     <string name="s12_count">%1$d món</string>
     <string name="s12_add_item">Thêm món</string>
     <string name="s12_from_my_foods">Từ Món của tôi</string>
     <string name="s12_save_to_meal">Lưu vào bữa %1$s</string>
-    <string name="s12_remove_item">Bỏ món %1$s</string>
     <string name="s12_bookmark">Lưu vào Món của tôi</string>
     <string name="s12_bookmarked">Sẽ lưu vào Món của tôi</string>
     <string name="s12_grams_title">Nhập gram</string>
@@ -121,7 +112,6 @@
     <string name="s12_over_light">Vượt nhẹ %1$d%% · +%2$s kcal</string>
     <string name="s12_over_much">Vượt %1$d%% · +%2$s kcal</string>
     <string name="s12_empty">Chưa có món nào. Thêm món để lưu.</string>
-    <string name="s12_portion_factor">Khẩu phần ×%1$s</string>
 
     <!-- S14 Sửa món -->
     <string name="s14_title">Sửa món</string>
@@ -130,7 +120,6 @@
     <string name="s14_delta">Món này %1$s kcal</string>
     <string name="s14_edit_values">Sửa tên, kcal, macro</string>
     <string name="s14_after_day">%1$s sau khi lưu</string>
-    <string name="s14_not_found">Món này không còn trong nhật ký.</string>
 
     <!-- S34 Món của tôi -->
     <string name="s34_title">Món của tôi</string>
@@ -172,7 +161,6 @@
     <string name="weigh_existing">%1$s đã có %2$s kg; lưu sẽ thay số này (1 bản ghi mỗi ngày).</string>
     <string name="weigh_saved">Đã ghi %1$s kg</string>
     <string name="weigh_goal_applied">Mục tiêu mới %1$s kcal từ hôm nay</string>
-    <string name="weigh_recalc_lead">Theo lần cân %1$s (%2$s kg). Đang dùng tính theo %3$s kg (%4$s).</string>
 
     <!-- S45 Dữ liệu -->
     <string name="s45_title">Dữ liệu</string>

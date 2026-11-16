@@ -64,7 +64,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
@@ -130,7 +130,7 @@ private fun subtitle(s: LogUi): String? {
 private fun PickScreen(s: LogUi, vm: LogFoodViewModel, onClose: () -> Unit, onTime: () -> Unit) {
     val cs = MaterialTheme.colorScheme
     val focus = LocalFocusManager.current
-    val ctx = LocalContext.current
+    val ctx = LocalResources.current
     val scope = rememberCoroutineScope()
     val snack = remember { SnackbarHostState() }
     Box(Modifier.fillMaxSize()) {
@@ -333,7 +333,7 @@ private fun ConfirmScreen(s: LogUi, vm: LogFoodViewModel, snack: SnackbarHostSta
     val cs = MaterialTheme.colorScheme
     val cc = CaliTheme.colors
     val scope = rememberCoroutineScope()
-    val ctx = LocalContext.current
+    val ctx = LocalResources.current
     val total = s.items.sumOf { it.values.kcal }
     val mealName = stringResource(s.mealTime.meal.label())
     Column(Modifier.fillMaxSize()) {
