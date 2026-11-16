@@ -156,4 +156,7 @@
     <string name="s20_image_only">[ảnh]</string>
     <string name="s20_typing_cd">AI đang trả lời</string>
     <string name="s20_today">Hôm nay</string>
+
+    <!-- Làn "sau khi lưu" khi ngày chưa có mục tiêu -->
+    <string name="proj_total_no_goal">Tổng %1$s kcal · chưa có mục tiêu ngày này</string>
 </resources>

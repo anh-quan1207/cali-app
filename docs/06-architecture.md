@@ -36,7 +36,7 @@ com.cali
  │   │   └─ repo      ProfileRepo, DiaryRepo, MyFoodRepo, WaterRepo, WeightRepo, ChatRepo, BackupRepo
  │   ├─ ai
  │   │   ├─ AiProvider, AiRequest, AiResult
- │   │   ├─ anthropic  AnthropicProvider (+ DTO)
+ │   │   ├─ neuralwatt NeuralwattProvider (+ DTO, Config)
  │   │   ├─ PromptBuilder   ghép system prompt + user_context
  │   │   ├─ FoodLogValidator
  │   │   └─ ImageCompressor
@@ -91,14 +91,16 @@ CaptureScreen ──(ảnh, ghi chú, bữa)──> CaptureViewModel
 - Không ghi log key; OkHttp logging interceptor chỉ bật ở debug và **che header** `x-api-key` / `Authorization`.
 - Loại trừ `secure_prefs` khỏi Auto Backup (`data_extraction_rules.xml`) — khóa Keystore không đi theo bản backup nên ciphertext cũng vô dụng ở máy khác.
 
-## 6. Gọi AI (Anthropic, giả định)
+## 6. Gọi AI (Neuralwatt, chốt 16/11/2026, 09 §8 G4-14…18)
 
-- Endpoint Messages API, header `x-api-key`, `anthropic-version`.
-- System prompt gửi dạng 2 khối: khối tĩnh (prompt + có `cache_control`) và khối động (`<user_context>`).
-- Ảnh gửi dạng `image` block base64 `image/jpeg`.
-- `tools = [record_food_items]`; PHOTO_LOG: `tool_choice = {type: tool, name: record_food_items}`; CHAT: `auto`.
-- Đọc `usage` để ghi `AiCallLog`.
-- Chi tiết tham số cụ thể kiểm tra lại theo tài liệu API hiện hành khi triển khai.
+- `POST /v1/chat/completions` (OpenAI-compatible), header `Authorization: Bearer <key>`.
+- Một system message: phần tĩnh (prompt) đứng đầu để prefix cache tự động, nối sau là `<user_context>`.
+- Ảnh gửi dạng phần `image_url` với `data:image/jpeg;base64,…` (cần xác nhận ở lần test tay đầu).
+- `tools = [record_food_items]` (`type: function`); PHOTO_LOG ép gọi theo tên; CHAT: `auto`. `reasoning_effort: "low"`.
+- `arguments` của tool call là chuỗi JSON → parse rồi qua `FoodLogValidator`.
+- 429 / 5xx retry 2 s → 5 s trừ khi body có `retryable: false`; 402 = hết số dư (`QUOTA`).
+- Kiểm tra kết nối: `GET /v1/models`, chỉ đạt khi `scope` khác `public`.
+- Đọc `usage` (`prompt_tokens`, `completion_tokens`, `prompt_tokens_details.cached_tokens`) và thời gian để ghi `AiCallLog`.
 
 ## 7. Xử lý lỗi & trạng thái UI
 
