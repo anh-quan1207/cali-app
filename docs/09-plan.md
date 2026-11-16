@@ -191,6 +191,17 @@ GĐ1 (16/11/2026):
 14. DESIGN.md không có token cho secondary/tertiary, surfaceContainerLowest/High, surfaceDim/Bright → gán theo token gần nhất (primary, surface-cont…) để không lọt màu tím mặc định của M3.
 15. DESIGN.md chỉ định nghĩa 12 kiểu chữ; headlineLarge/headlineSmall/titleSmall của M3 giữ cỡ mặc định nhưng dùng Roboto Flex.
 
+GĐ2 (16/11/2026):
+16. Biểu tượng: dùng Material Icons Rounded (`material-icons-extended`) thay cho font Material Symbols Rounded 15 MB (người dùng chọn). Nét hơi khác, không có trục FILL; biểu tượng đang chọn dùng bản Rounded, chưa chọn dùng Outlined.
+17. Nút "Kiểm tra" API key ở S03 (mockup khung 12–13) để GĐ4 theo quyết định của người dùng; S03 chỉ lưu key (mã hoá).
+18. S03 mockup ghi nhắc nước "08:00–21:00"; 04 §3 mặc định 07:00–22:00 → hiện theo DataStore (07:00–22:00). Mockup S43 cũng dùng 07:00–22:00.
+19. Link "Khôi phục từ bản sao lưu" ở S01 bước 1 chưa làm (sao lưu ở GĐ3, D2); thêm lại khi làm S45.
+20. Mockup S02 khi kẹp ghi "15/02/2027 · ~13 tuần" (94 ngày từ 13/11); 02 §9 làm tròn lên (ceil) ra 95 ngày → code theo đặc tả. "~N tuần" hiển thị là số tuần làm tròn thường (13,4 → 13).
+21. 02 §1 không nói giới hạn năm sinh / cân mục tiêu → năm sinh 15–100 tuổi, cân (cả mục tiêu) 30–250 kg như lỗi ở mockup bước 2; cân mục tiêu phải đúng hướng (giảm < hiện tại, tăng > hiện tại).
+22. Mockup S40 mục Giới thiệu ghi "CalCal 1.0" (tên cũ) → hiện "Cali" + versionName.
+23. S40 GĐ2: AI / Nước / Bữa ăn / Dữ liệu hiện giá trị đang dùng nhưng chưa mở được ("Có ở giai đoạn sau"); Hôm nay / Chat / Lịch sử là màn giữ chỗ.
+24. Ô ghi đè kcal hiện "1400" khi đang gõ (mockup "1.400"); số đã áp dụng ở mọi chỗ khác có dấu chấm nghìn.
+
 Môi trường (máy dev, không phải mâu thuẫn đặc tả): JDK không tạo được Unix socket trong `C:\Users\…\Temp` → Gradle không nói chuyện được với daemon/worker ("Unable to establish loopback connection"). Cách chạy: `JAVA_TOOL_OPTIONS=-Djdk.net.unixdomain.tmpdir=E:\Cali\.gradle\uds` (thư mục đã gitignore). Robolectric 4.18 chưa hỗ trợ SDK 36 → `robolectric.properties` ghim sdk=35.
 
 ## 9. Tiến độ
@@ -199,7 +210,7 @@ Môi trường (máy dev, không phải mâu thuẫn đặc tả): JDK không t�
 |---|---|---|---|---|
 | D1–D2 chốt | ☑ | 16/11/2026 | 16/11/2026 | D1: không iOS, Android thuần. D2: sao lưu JSON ở GĐ3 |
 | 1 | ☑ | 16/11/2026 | 16/11/2026 | Nhánh `gd1`. AGP 9.5.1 / Gradle 9.9.1 / Kotlin 2.4.21 / Compose BOM 2026.09.00, compileSdk 37 (Platform 37 cài 16/11), targetSdk 36. 62 unit test xanh (core.calc 48, Room 6, prefs 6, định dạng số 1, bỏ dấu 1) + 1 test thiết bị (Keystore thật, AVD Android 16). Lint 0 lỗi. Theme preview chụp sáng/tối ở `.impeccable/review/gd1-theme-preview/`, màu khớp s10 f0/f3. Còn: người dùng cài lên điện thoại thật; Material Symbols để GĐ3 |
-| 2 | ☐ | | | |
+| 2 | ☑ | 16/11/2026 | 16/11/2026 | Nhánh `gd2`. S01 (5 bước) → S02 → S03 → vỏ 4 tab; S40 vỏ; S41 sửa hồ sơ + sheet Tốc độ + sheet Đang dùng / Mới + ghi đè kcal/macro; `ProfileRepository` tạo `goal_snapshot` (cùng ngày thì ghi đè). 74 unit test xanh (thêm GoalPlanner 7 — viết trước, đỏ 7/7 rồi xanh; ProfileRepository 4; VnFormat 2). Lint 0 lỗi. Trên AVD: onboarding với bộ số mockup ra 1.740 kcal (122/196/52 g, BMI 26,0, BMR 1.668, TDEE 2.293, 2,6 L); đổi tốc độ 0,75 ở S41 → 1.720 (kẹp, 192 g tinh bột) và mục tiêu mới từ hôm nay; ghi đè 1.400 → 1.720 kèm hộp hổ phách. Ảnh ở `.impeccable/review/gd2-onboarding/` (sáng + tối). Còn: người dùng gỡ/cài lại trên điện thoại thật và dùng thử |
 | 3 | ☐ | | | |
 | 4 | ☐ | | | |
 | 5 | ☐ | | | |

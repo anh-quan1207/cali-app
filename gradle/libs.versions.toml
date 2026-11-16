@@ -16,6 +16,7 @@ coroutines = "1.11.0"
 coil = "3.6.3"
 okhttp = "5.5.1"
 camerax = "1.6.2"
+materialIcons = "1.7.8"
 junit = "4.13.2"
 mockk = "1.14.12"
 turbine = "1.2.1"
@@ -38,6 +39,7 @@ compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview"
 compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 compose-material3 = { module = "androidx.compose.material3:material3" }
+compose-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIcons" }
 
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
