@@ -32,6 +32,7 @@ abstract class AiBindingsModule {
     @Binds abstract fun apiKeySource(impl: SecureApiKeySource): ApiKeySource
     @Binds abstract fun modelSource(impl: SettingsModelSource): AiModelSource
     @Binds abstract fun callRecorder(impl: RoomAiCallRecorder): AiCallRecorder
+    @Binds abstract fun systemPrompt(impl: com.cali.core.ai.SystemPromptSource): com.cali.core.ai.SystemPromptProvider
 }
 
 @Module

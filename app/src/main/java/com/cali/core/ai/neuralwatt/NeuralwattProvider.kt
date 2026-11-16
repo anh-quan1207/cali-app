@@ -251,6 +251,7 @@ class NeuralwattProvider(
 
     private fun errorTypeFor(code: Int): AiErrorType = when (code) {
         401, 403 -> AiErrorType.INVALID_KEY
+        402 -> AiErrorType.QUOTA
         429 -> AiErrorType.RATE_LIMITED
         in 500..599 -> AiErrorType.OVERLOADED
         else -> AiErrorType.UNKNOWN

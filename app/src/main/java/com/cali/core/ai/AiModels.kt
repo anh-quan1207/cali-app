@@ -44,6 +44,8 @@ enum class AiErrorType {
     TIMEOUT,
     INVALID_RESPONSE,
     REFUSED,
+    /** 402: hết số dư / hạn mức ở trang quản lý của hãng (G4-17). */
+    QUOTA,
     UNKNOWN,
 }
 

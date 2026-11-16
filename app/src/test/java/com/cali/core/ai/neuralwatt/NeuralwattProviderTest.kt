@@ -313,10 +313,10 @@ class NeuralwattProviderTest {
         assertEquals(AiErrorType.INVALID_KEY, (provider().send(chat) as AiResult.Error).type)
     }
 
-    @Test fun `402 hết tiền báo kèm thông điệp, không retry`() = runBlocking {
+    @Test fun `402 hết tiền là QUOTA, kèm thông điệp, không retry`() = runBlocking {
         server.enqueue(err(402, "payment_required", "credit_balance_exhausted", "Hết số dư"))
         val r = provider().send(chat) as AiResult.Error
-        assertEquals(AiErrorType.UNKNOWN, r.type)
+        assertEquals(AiErrorType.QUOTA, r.type)
         assertTrue(r.message, "credit_balance_exhausted" in r.message)
         assertEquals(1, server.requestCount)
     }

@@ -13,11 +13,16 @@ import kotlinx.coroutines.withContext
  * `Settings.systemPromptOverride`. [DEFAULT_VERSION] tăng khi bản mặc định đổi, so với
  * `Settings.systemPromptDefaultVersion` để S42 báo "có bản mặc định mới".
  */
+/** Prompt đang dùng cho mỗi lần gọi; tách interface để test không cần assets. */
+fun interface SystemPromptProvider {
+    suspend fun current(): String
+}
+
 @Singleton
 class SystemPromptSource @Inject constructor(
     @ApplicationContext private val context: Context,
     private val settings: SettingsRepository,
-) {
+) : SystemPromptProvider {
     @Volatile private var cachedDefault: String? = null
 
     suspend fun defaultPrompt(): String = cachedDefault ?: withContext(Dispatchers.IO) {
@@ -25,7 +30,7 @@ class SystemPromptSource @Inject constructor(
     }.also { cachedDefault = it }
 
     /** Prompt đang dùng: bản sửa nếu có (không rỗng), không thì bản mặc định. */
-    suspend fun current(): String =
+    override suspend fun current(): String =
         settings.current().systemPromptOverride?.takeIf { it.isNotBlank() } ?: defaultPrompt()
 
     companion object {
