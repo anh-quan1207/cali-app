@@ -19,6 +19,7 @@ class CaliApp : Application() {
     override fun onCreate() {
         super.onCreate()
         waterNotifier.ensureChannel()
-        CoroutineScope(SupervisorJob() + Dispatchers.IO).launch { waterScheduler.reschedule() }
+        // Lỗi đặt lịch lúc mở app không được làm sập app (và không rò sang test Robolectric).
+        CoroutineScope(SupervisorJob() + Dispatchers.IO).launch { runCatching { waterScheduler.reschedule() } }
     }
 }
