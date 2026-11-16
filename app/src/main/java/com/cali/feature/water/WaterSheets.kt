@@ -3,6 +3,8 @@ package com.cali.feature.water
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -68,7 +70,7 @@ import java.time.LocalTime
 private fun parseMl(text: String): Int? = text.filter(Char::isDigit).takeIf { it.isNotEmpty() && it.length <= 6 }?.toInt()
 
 /** Sheet "Thêm lượng khác" / "Sửa lần uống" (s15 f4–f6): chip giờ, ô ml, lỗi khoảng khi rời ô. */
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
 internal fun AmountSheet(
     s: WaterUiState,
@@ -89,8 +91,11 @@ internal fun AmountSheet(
 
     val ml = parseMl(text)
     val valid = ml != null && ml in WaterViewModel.MIN_ML..WaterViewModel.MAX_ML
-    // Lỗi chỉ hiện khi rời ô (mockup f5); trong lúc gõ chỉ tắt nút.
-    val showError = touched && !focused && text.isNotEmpty() && !valid
+    // Lỗi chỉ hiện khi rời ô hoặc bàn phím đã đóng (mockup f5); trong lúc gõ chỉ tắt nút.
+    val imeOpen = WindowInsets.isImeVisible
+    var imeWasOpen by remember { mutableStateOf(false) }
+    LaunchedEffect(imeOpen) { if (imeOpen) imeWasOpen = true else if (imeWasOpen) touched = true }
+    val showError = touched && (!focused || !imeOpen) && text.isNotEmpty() && !valid
     val goal = s.day.goalMl
     val after = s.stats.total - (edit?.entry?.amountMl ?: 0) + (ml ?: 0)
 
