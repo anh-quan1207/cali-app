@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cali · S12 Thẻ xác nhận</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&display=swap" rel="stylesheet">
+<style>
+:root{ --page:#F3F2F7; --page-ink:#1B1B21; --page-muted:#5E5E68; --page-line:#DCDBE3; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; } }
+:root[data-theme="dark"]{ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; }
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--page);color:var(--page-ink);font-family:'Roboto Flex',Roboto,system-ui,sans-serif;font-variation-settings:"opsz" 14;line-height:1.5}
+::selection{background:#DEE0FF;color:#00105C}
+.wrap{max-width:1640px;margin:0 auto;padding:40px 16px 64px}
+header.doc{max-width:760px;margin:0 auto 32px;padding:0 4px}
+header.doc h1{font-size:28px;font-weight:600;letter-spacing:-.01em;font-variation-settings:"opsz" 32}
+header.doc p{color:var(--page-muted);margin-top:8px;font-size:15px;max-width:70ch}
+.frames{display:flex;flex-wrap:wrap;gap:44px 32px;justify-content:center}
+figure{display:flex;flex-direction:column;align-items:center;gap:14px}
+figcaption{font-size:13px;color:var(--page-muted);text-align:center;max-width:300px}
+figcaption b{display:block;color:var(--page-ink);font-weight:600;font-size:14px}
+
+/* ===== App tokens (DESIGN.md) ===== */
+.phone{
+  --primary:#4355B9; --on-primary:#FFFFFF; --primary-container:#DEE0FF; --on-primary-container:#00105C;
+  --secondary-container:#E0E1F9; --on-secondary-container:#181A2C;
+  --surface:#FBF8FF; --surface-low:#F5F2FA; --surface-cont:#EFEDF4; --surface-highest:#E4E1E9;
+  --on-surface:#1B1B21; --on-surface-var:#46464F; --outline:#767680; --outline-var:#C6C5D0;
+  --error:#BA1A1A; --error-container:#FFDAD6; --on-error-container:#410002;
+  --warn:#8A5100; --warn-container:#FFDCBE; --on-warn-container:#2C1600;
+  --inverse-surface:#303036; --inverse-on-surface:#F2EFF7; --inverse-primary:#BAC3FF;
+  --protein:#006780; --carb:#4C6700; --fat:#8E4585;
+  --meal-sang:#4355B9; --meal-trua:#5868C9; --meal-toi:#1E2A78; --meal-phu:#6C79D6;
+  --ring-track:var(--surface-cont); --scrim:rgba(0,0,0,.32);
+  width:360px;height:780px;border-radius:36px;overflow:hidden;position:relative;
+  background:#2B2A30;color:var(--on-surface);
+  outline:1px solid var(--page-line);
+  box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 32px -8px rgba(20,20,40,.18);
+  font-feature-settings:"tnum" 1;
+}
+.phone.dark{
+  --primary:#BAC3FF; --on-primary:#08218A; --primary-container:#293CA0; --on-primary-container:#DEE0FF;
+  --secondary-container:#43465A; --on-secondary-container:#E0E1F9;
+  --surface:#121318; --surface-low:#1B1B21; --surface-cont:#1F1F25; --surface-highest:#35343A;
+  --on-surface:#E4E1E9; --on-surface-var:#C6C5D0; --outline:#90909A; --outline-var:#46464F;
+  --error:#FFB4AB; --error-container:#93000A; --on-error-container:#FFDAD6;
+  --warn:#FFB86E; --warn-container:#693C00; --on-warn-container:#FFDCBE;
+  --inverse-surface:#E4E1E9; --inverse-on-surface:#303036; --inverse-primary:#4355B9;
+  --protein:#5FD4F6; --carb:#B1D46A; --fat:#FFAEE9;
+  --meal-sang:#BAC3FF; --meal-trua:#8E9BF5; --meal-toi:#E4E6FF; --meal-phu:#6B78C9;
+  --ring-track:var(--surface-highest); --scrim:rgba(0,0,0,.5);
+  background:#000;
+}
+/* M3 type roles */
+.t-display-m{font-size:45px;line-height:1.15;font-weight:600;letter-spacing:-.01em;font-variation-settings:"opsz" 48}
+.t-display-s{font-size:36px;line-height:1.1;font-weight:650;letter-spacing:-.02em;font-variation-settings:"opsz" 48,"wdth" 92}
+.t-title-l{font-size:22px;line-height:1.27;font-weight:600;font-variation-settings:"opsz" 22}
+.t-title-m{font-size:16px;line-height:1.5;font-weight:600}
+.t-body-m{font-size:14px;line-height:1.43;font-weight:500}
+.t-body-s{font-size:12px;line-height:1.33;font-weight:400}
+.t-label-l{font-size:14px;line-height:1.43;font-weight:600}
+.t-label-m{font-size:12px;line-height:1.33;font-weight:500}
+.ms{font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;font-size:24px;line-height:1;display:inline-block;font-variation-settings:"FILL" 0,"wght" 400,"opsz" 24;-webkit-font-smoothing:antialiased;user-select:none}
+.ms.fill{font-variation-settings:"FILL" 1,"wght" 400,"opsz" 24}
+.ms.s16{font-size:16px}.ms.s18{font-size:18px}.ms.s20{font-size:20px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+
+.status{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:500;color:#fff}
+.sheet{position:absolute;left:0;right:0;top:40px;bottom:0;background:var(--surface);border-radius:28px 28px 0 0;display:flex;flex-direction:column;overflow:hidden}
+.handle{width:32px;height:4px;border-radius:2px;background:var(--outline-var);margin:12px auto 0;flex:none}
+.bar{display:grid;grid-template-columns:48px 1fr 48px;align-items:center;padding:0 4px;height:52px;flex:none}
+.bar h2{text-align:center}
+.icon-btn{width:48px;height:48px;border-radius:24px;display:grid;place-items:center;color:var(--on-surface-var);flex:none}
+.body{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:16px}
+.body::-webkit-scrollbar{display:none}
+
+.summary{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:center;padding:4px 20px 0}
+.thumb{width:64px;height:64px;border-radius:16px;background:var(--surface-highest);display:grid;place-items:center;color:var(--on-surface-var)}
+.thumb.photo{background:var(--primary-container);color:var(--on-primary-container)}
+.total .row{display:flex;align-items:baseline;gap:6px}
+.total .row small{color:var(--on-surface-var)}
+.macro-inline{display:flex;gap:12px;margin-top:2px;color:var(--on-surface-var)}
+.macro-inline span{display:inline-flex;align-items:center;gap:5px}
+.macro-inline i{width:8px;height:8px;border-radius:4px;background:var(--c);display:inline-block}
+.macro-inline b{color:var(--on-surface);font-weight:600}
+
+.chips{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:14px 20px 0}
+.chip{height:32px;border-radius:8px;display:inline-flex;align-items:center;gap:6px;padding:0 6px 0 8px;background:var(--secondary-container);color:var(--on-secondary-container);position:relative}
+.chip::before{content:"";position:absolute;inset:-8px 0}
+.chip .tone{width:10px;height:10px;border-radius:2px;background:var(--tone)}
+.src{color:var(--on-surface-var);display:inline-flex;align-items:center;gap:4px}
+
+.daybar{margin:16px 12px 0;padding:12px 16px 14px;border-radius:16px;background:var(--surface-low)}
+.daybar .top{display:flex;justify-content:space-between;align-items:center;color:var(--on-surface-var);gap:8px}
+.daybar .top b{color:var(--on-surface);font-weight:600}
+.daybar .top b.st{color:var(--state);display:inline-flex;align-items:center;gap:4px}
+.lane{position:relative;height:10px;background:var(--ring-track);margin-top:10px;display:flex;gap:3px}
+.lane i{height:100%;background:var(--tone);display:block;flex:none}
+.lane i.new{background:color-mix(in srgb,var(--tone) 40%,var(--ring-track));box-shadow:inset 0 0 0 1.5px var(--tone);animation:grow .7s cubic-bezier(.2,0,0,1) both .15s;transform-origin:left}
+.lane .goal{position:absolute;top:-4px;bottom:-4px;right:-1px;width:2px;background:var(--on-surface)}
+.lane2{height:6px;margin-top:4px;background:color-mix(in srgb,var(--state) 18%,transparent);border-radius:3px;overflow:hidden}
+.lane2 i{display:block;height:100%;background:var(--state);border-radius:3px}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media (prefers-reduced-motion: reduce){ .lane i.new{animation:none} }
+
+.ai-note{display:flex;gap:10px;align-items:center;margin:12px 20px 0;color:var(--on-surface-var);white-space:nowrap;overflow:hidden}
+.ai-note .ms{color:var(--primary)}
+.ask{margin:12px 12px 0;padding:14px 8px 12px 16px;border-radius:16px;background:var(--warn-container);color:var(--on-warn-container)}
+.ask p{display:flex;gap:8px;align-items:flex-start;padding-right:8px}
+.ask .field{display:flex;gap:4px;margin-top:10px;align-items:center}
+.ask input{flex:1;min-width:0;height:48px;border-radius:12px;border:1px solid color-mix(in srgb,var(--on-warn-container) 35%,transparent);background:color-mix(in srgb,var(--surface) 70%,transparent);padding:0 12px;font:inherit;font-size:14px;color:var(--on-surface)}
+.ask input::placeholder{color:var(--on-surface-var)}
+.ask .send{width:48px;height:48px;border-radius:24px;display:grid;place-items:center;background:var(--secondary-container);color:var(--on-secondary-container)}
+.ask .skip{margin-top:6px}
+
+.list-h{margin:20px 20px 8px}
+.swipe-wrap{position:relative;margin:0 12px 8px;border-radius:16px;overflow:hidden}
+.swipe-bg{position:absolute;inset:0;background:var(--error-container);color:var(--on-error-container);display:flex;align-items:center;justify-content:flex-end;gap:6px;padding-right:20px}
+.item{position:relative;padding:12px 4px 2px 16px;border-radius:16px;background:var(--surface-low)}
+.swipe-wrap.swiped .item{transform:translateX(-112px);border-radius:16px 0 0 16px}
+.item .r1{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start;padding-right:12px}
+.item .name{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.item .k{text-align:right}
+.item .k small{color:var(--on-surface-var)}
+.item .meta{color:var(--on-surface-var);margin-top:2px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.item .meta .mac{display:inline-flex;gap:8px}
+.item .meta .mac span{display:inline-flex;align-items:center;gap:4px}
+.item .meta .mac i{width:6px;height:6px;border-radius:3px;background:var(--c)}
+.flag{height:24px;border-radius:8px;padding:0 8px;display:inline-flex;align-items:center;gap:4px;background:var(--warn-container);color:var(--on-warn-container)}
+.note{display:flex;gap:6px;margin-top:6px;padding-right:12px;color:var(--on-surface-var)}
+.note .ms{color:var(--warn);flex:none}
+.note.neutral .ms{color:var(--primary)}
+.r3{display:flex;align-items:center;margin-top:2px}
+.seg{display:flex}
+.seg button{width:48px;height:48px;display:grid;place-items:center;font-size:14px;font-weight:600;color:var(--on-surface-var);position:relative}
+.seg button span.v{width:40px;height:32px;border-radius:16px;display:grid;place-items:center}
+.seg button.on{color:var(--on-secondary-container)}
+.seg button.on span.v{background:var(--secondary-container)}
+.r3 .sp{flex:1}
+.r3 .icon-btn.on{color:var(--primary)}
+.add-row{display:flex;gap:8px;margin:4px 12px 0}
+.add-row button{flex:1;height:48px;border-radius:24px;display:inline-flex;align-items:center;justify-content:center;gap:6px;color:var(--primary);font-weight:600;font-size:14px;outline:1px solid var(--outline-var);outline-offset:-1px}
+
+.empty{margin:20px 12px 0;padding:20px;border-radius:16px;background:var(--surface-low);text-align:center}
+.empty .ms{font-size:32px;color:var(--on-surface-var)}
+.empty p{color:var(--on-surface-var);margin-top:6px}
+.empty .acts{display:flex;gap:8px;margin-top:16px}
+.empty .acts button{flex:1;height:48px;border-radius:24px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.empty .acts .tonal{background:var(--secondary-container);color:var(--on-secondary-container)}
+.empty .acts .out{outline:1px solid var(--outline-var);outline-offset:-1px;color:var(--primary)}
+
+.foot{flex:none;padding:12px 16px 28px;background:var(--surface-cont)}
+.save{width:100%;height:56px;border-radius:28px;background:var(--primary);color:var(--on-primary);display:flex;align-items:center;justify-content:space-between;padding:0 20px 0 18px;font-weight:600;font-size:16px}
+.save span{display:inline-flex;align-items:center;gap:8px}
+.save b{font-weight:650;font-size:16px}
+.save.off{background:color-mix(in srgb,var(--on-surface) 12%,transparent);color:color-mix(in srgb,var(--on-surface) 50%,transparent)}
+.snack{position:absolute;left:12px;right:12px;bottom:108px;min-height:48px;border-radius:4px;background:var(--inverse-surface);color:var(--inverse-on-surface);display:flex;align-items:center;justify-content:space-between;padding:0 4px 0 16px;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.snack button{height:48px;padding:0 12px;color:var(--inverse-primary);font-weight:600;font-size:14px}
+
+/* picker */
+.scrim{position:absolute;inset:0;background:var(--scrim)}
+.picker{position:absolute;left:0;right:0;bottom:0;background:var(--surface-low);border-radius:28px 28px 0 0;padding:0 20px 28px}
+.picker h3{margin-top:12px}
+.tin{display:flex;align-items:flex-start;gap:6px;margin-top:16px}
+.tin .f{display:flex;flex-direction:column;gap:6px;color:var(--on-surface-var)}
+.tin .box{width:96px;height:72px;border-radius:8px;display:grid;place-items:center;background:var(--surface-highest);color:var(--on-surface)}
+.tin .box.on{background:var(--primary-container);color:var(--on-primary-container);box-shadow:inset 0 0 0 2px var(--primary)}
+.tin .colon{height:72px;display:grid;place-items:center}
+.tin .src{margin:20px 0 0 8px;flex-direction:column;align-items:flex-start;gap:6px}
+.mealseg{display:grid;grid-template-columns:repeat(4,1fr);height:48px;border-radius:24px;outline:1px solid var(--outline);outline-offset:-1px;overflow:hidden;margin-top:18px}
+.mealseg button{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:600;font-size:14px;border-left:1px solid var(--outline)}
+.mealseg button:first-child{border-left:0}
+.mealseg button.on{background:var(--secondary-container);color:var(--on-secondary-container)}
+.mealseg .tone{width:10px;height:10px;border-radius:2px;background:var(--tone)}
+.hint{display:flex;gap:8px;margin-top:12px;color:var(--on-surface-var)}
+.hint .ms{color:var(--primary)}
+.picker .acts{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
+.picker .acts button{height:48px;padding:0 20px;border-radius:24px;font-weight:600;font-size:14px;color:var(--primary)}
+.picker .acts button.fill{background:var(--primary);color:var(--on-primary)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc">
+    <h1>S12 · Thẻ xác nhận</h1>
+    <p>Bottom sheet toàn màn hình sau khi AI phân tích, thiết kế cho thói quen “liếc rồi lưu”: tổng kcal, chip giờ ăn · bữa, tác động lên ngày và nút Lưu ở vùng ngón cái. Thanh “Hôm nay sau khi lưu” là vòng calo S10 duỗi thẳng: cùng tông bữa, đầu đoạn vuông, khe 3dp; phần sắp thêm nhạt có viền; phần vượt chạy trên một làn riêng màu trạng thái. Độ tin cậy chỉ hiện khi thấp; món nào cũng chạm được để mở giả định của AI. Đổi khẩu phần tính lại trên máy. Vuốt trái để xoá, có Hoàn tác. Lưu xong sheet đóng, S10 hiện snackbar “Đã lưu vào Trưa · Hoàn tác” và đoạn mới vẽ vào vòng. Ô ảnh là chỗ đặt thumbnail thật; số liệu là dữ liệu mẫu.</p>
+  </header>
+  <div class="frames" id="frames"></div>
+</div>
+<script>
+const TARGET = 1740;
+const fmt = n => n.toLocaleString('vi-VN');
+const MEAL = {sang:'Sáng', trua:'Trưa', toi:'Tối', phu:'Phụ'};
+const SEGS = [['½','½'],['1','×1'],['1½','1½'],['2','2']];
+
+function item(it){
+  const seg = SEGS.map(([v,l])=>`<button class="${it.x===v?'on':''}" aria-pressed="${it.x===v}" aria-label="Hệ số ${l}"><span class="v">${l}</span></button>`).join('')
+    + `<button class="${it.x==='g'?'on':''}" aria-label="Nhập gram"><span class="v"><span class="ms s18">edit</span></span></button>`;
+  const flags = (it.low?`<span class="flag t-label-m"><span class="ms s16">help</span>Cần kiểm tra</span>`:'')
+    + (it.mismatch?`<span class="flag t-label-m"><span class="ms s16">warning</span>Số liệu lệch</span>`:'')
+    + (it.high?`<span class="flag t-label-m"><span class="ms s16">warning</span>Có vẻ cao</span>`:'');
+  const notes = (it.assume?`<p class="note${it.low?'':' neutral'} t-body-s"><span class="ms s16">info</span><span>AI giả định: ${it.assume}</span></p>`:'')
+    + (it.mismatch?`<p class="note t-body-s"><span class="ms s16">warning</span><span>Kcal lệch hơn 20% so với 4·đạm + 4·tinh bột + 9·béo. Vẫn giữ số của AI.</span></p>`:'')
+    + (it.high?`<p class="note t-body-s"><span class="ms s16">warning</span><span>Số liệu có vẻ cao, kiểm tra lại khẩu phần.</span></p>`:'');
+  const card = `<div class="item">
+    <div class="r1"><div><div class="name"><span class="t-title-m">${it.n}</span>${flags}</div>
+      <div class="meta t-body-s"><span>${it.p}</span><span class="mac"><span style="--c:var(--protein)"><i></i>${it.m[0]}</span><span style="--c:var(--carb)"><i></i>${it.m[1]}</span><span style="--c:var(--fat)"><i></i>${it.m[2]} g</span></span></div></div>
+      <div class="k"><span class="t-title-m">${fmt(it.k)}</span> <small class="t-label-m">kcal</small></div></div>
+    ${notes}
+    <div class="r3"><div class="seg" role="group" aria-label="Hệ số khẩu phần">${seg}</div><span class="sp"></span>
+      <button class="icon-btn${it.saved?' on':''}" aria-label="Lưu vào Món của tôi" aria-pressed="${!!it.saved}"><span class="ms${it.saved?' fill':''}">${it.saved?'bookmark_added':'bookmark_add'}</span></button></div>
+  </div>`;
+  return `<div class="swipe-wrap${it.swiped?' swiped':''}">${it.swiped?`<div class="swipe-bg t-label-l"><span class="ms s20">delete</span>Xoá</div>`:''}${card}</div>`;
+}
+
+function phone(f){
+  const items = f.items || [];
+  const total = items.reduce((s,i)=>s+i.k,0);
+  const m = [0,1,2].map(j=>items.reduce((s,i)=>s+i.m[j],0));
+  const before = f.before.reduce((s,b)=>s+b.k,0), after = before + total;
+  const over = Math.max(0, after-TARGET), pct = over/TARGET;
+  const state = over<=0 ? null : (pct<=.10 ? 'warn' : 'error');
+  const w = k => `calc(${(k/TARGET*100).toFixed(2)}% - 3px)`;
+  let lane = f.before.map(b=>`<i style="--tone:var(--meal-${b.meal});width:${w(b.k)}"></i>`).join('');
+  const room = Math.max(0, TARGET-before);
+  if(total) lane += `<i class="new" style="--tone:var(--meal-${f.meal});width:${w(Math.min(total, room))}"></i>`;
+  lane += `<span class="goal" aria-hidden="true"></span>`;
+  const stateVars = state ? `--state:var(--${state});` : '';
+  const top = state
+    ? `<b class="st t-label-l"><span class="ms s18">${state==='warn'?'info':'warning'}</span>${state==='warn'?'Vượt nhẹ':'Vượt'} ${Math.max(1,Math.round(pct*100))}% · +${fmt(over)} kcal</b>`
+    : `<b class="t-label-l">còn ${fmt(TARGET-after)} kcal</b>`;
+  const thumb = f.photo ? `<div class="thumb photo" role="img" aria-label="Ô ảnh món (thumbnail 64dp)"><span class="ms">ramen_dining</span></div>` : `<div class="thumb"><span class="ms">chat</span></div>`;
+  let body;
+  if(!items.length){
+    body = `<div class="empty"><span class="ms">no_food</span><h3 class="t-title-m" style="margin-top:8px">Không nhận ra món ăn nào</h3><p class="t-body-s">AI: “Ảnh có vẻ là thực đơn quán, chưa thấy món ăn thật. Bạn chụp lại phần ăn nhé.”</p>
+      <div class="acts"><button class="tonal"><span class="ms s20">photo_camera</span>Chụp lại</button><button class="out"><span class="ms s20">edit_note</span>Nhập tay</button></div></div>`;
+  } else {
+    body = `
+    <div class="summary">${thumb}<div class="total"><div class="row"><span class="t-display-s">${fmt(total)}</span><small class="t-label-m">kcal</small></div>
+      <div class="macro-inline t-label-m"><span style="--c:var(--protein)"><i></i>Đạm <b>${m[0]}</b></span><span style="--c:var(--carb)"><i></i>Tinh bột <b>${m[1]}</b></span><span style="--c:var(--fat)"><i></i>Béo <b>${m[2]}</b> g</span></div></div></div>
+    <div class="chips"><button class="chip t-label-l" aria-label="Đổi giờ ăn và bữa"><span class="ms s18">schedule</span>${f.time} · <span class="tone" style="--tone:var(--meal-${f.meal})"></span>${MEAL[f.meal]}<span class="ms s20">arrow_drop_down</span></button>${f.src?`<span class="src t-body-s"><span class="ms s16">chat</span>Theo tin nhắn “${f.src}”</span>`:''}</div>
+    <div class="daybar"><div class="top t-label-m"><span>Hôm nay sau khi lưu</span>${top}</div>
+      <div class="lane">${lane}</div>${over?`<div class="lane2" aria-label="Phần vượt"><i style="width:${Math.min(100,pct*100).toFixed(1)}%"></i></div>`:''}</div>
+    ${f.comment?`<p class="ai-note t-body-s"><span class="ms s20">auto_awesome</span><span>${f.comment}</span></p>`:''}
+    ${f.ask?`<div class="ask"><p class="t-body-m"><span class="ms s20">help</span>${f.ask}</p><div class="field"><input placeholder="Ăn nửa chén thôi" aria-label="Trả lời AI"><button class="send" aria-label="Gửi câu trả lời"><span class="ms s20">send</span></button></div><p class="skip t-body-s">Hoặc bỏ qua và lưu luôn với ước lượng hiện tại.</p></div>`:''}
+    <h3 class="list-h t-title-m">${items.length} món</h3>
+    ${[...items].sort((a,b)=>((b.low||b.mismatch||b.high)?1:0)-((a.low||a.mismatch||a.high)?1:0)).map(item).join('')}
+    <div class="add-row"><button><span class="ms s20">add</span>Thêm món</button><button><span class="ms s20">menu_book</span>Từ Món của tôi</button></div>`;
+  }
+  const picker = f.picker ? `<div class="scrim"></div><div class="picker" role="dialog" aria-label="Giờ ăn và bữa"><div class="handle"></div>
+      <h3 class="t-title-l">Giờ ăn & bữa</h3>
+      <div class="tin"><label class="f t-label-m"><span class="box on t-display-m">12</span>Giờ</label><span class="colon t-display-m">:</span><label class="f t-label-m"><span class="box t-display-m">35</span>Phút</label>
+        <span class="src t-body-s"><span class="ms s18">photo_camera</span>Lúc bấm chụp</span></div>
+      <div class="mealseg" role="radiogroup" aria-label="Bữa">${['sang','trua','phu','toi'].map(k=>`<button class="${k==='trua'?'on':''}" role="radio" aria-checked="${k==='trua'}"><span class="tone" style="--tone:var(--meal-${k})"></span>${MEAL[k]}</button>`).join('')}</div>
+      <p class="hint t-body-s"><span class="ms s18">sync</span>Đang tự gán theo giờ ăn (10:00–13:59 là Trưa). Chọn bữa khác để giữ cố định.</p>
+      <div class="acts"><button>Huỷ</button><button class="fill">Xong</button></div></div>` : '';
+  const saveLbl = items.length ? `<span><span class="ms s20">check</span>Lưu vào bữa ${MEAL[f.meal]}</span><b>${fmt(total)} kcal</b>` : `<span><span class="ms s20">check</span>Chưa có món để lưu</span>`;
+  return `<div class="phone${f.dark?' dark':''}" style="${stateVars}">
+    <div class="status"><span>12:36</span><span><span class="ms s16">signal_cellular_alt</span> <span class="ms s16">wifi</span> <span class="ms s16">battery_5_bar</span></span></div>
+    <div class="sheet"><div class="handle"></div>
+      <div class="bar"><button class="icon-btn" aria-label="Huỷ, bỏ toàn bộ"><span class="ms">close</span></button><h2 class="t-title-m">Xác nhận món</h2><button class="icon-btn" aria-label="Thêm tuỳ chọn"><span class="ms">more_vert</span></button></div>
+      <div class="body">${body}</div>
+      ${items.length?`<div class="foot"><button class="save">${saveLbl}</button></div>`:''}
+      ${f.snack?`<div class="snack t-body-m"><span>Đã xoá “${f.snack}”</span><button>Hoàn tác</button></div>`:''}
+      ${picker}
+    </div>
+  </div>`;
+}
+
+const MORNING = [{meal:'sang',k:280}];
+const DAY = [{meal:'sang',k:280},{meal:'trua',k:490},{meal:'phu',k:50}];
+const BUNBO = [
+  {n:'Bún bò Huế', p:'1 tô vừa · ~550 g', k:490, m:[33,60,12], x:'1'},
+  {n:'Trà đá', p:'1 ly · 300 ml', k:0, m:[0,0,0], x:'1'},
+];
+const COMTAM = [
+  {n:'Cơm tấm', p:'1 dĩa · ~200 g', k:260, m:[5,57,1], x:'1'},
+  {n:'Sườn nướng', p:'1½ miếng · ~180 g', k:405, m:[38,9,24], x:'1½', saved:true},
+  {n:'Chả trứng', p:'1 miếng · ~70 g', k:150, m:[9,3,11], x:'1'},
+  {n:'Mỡ hành + nước mắm', p:'2 thìa · 1 chén', k:140, m:[1,8,12], x:'1', low:true, assume:'~2 thìa mỡ hành, chan hết 1 chén nước mắm pha đường.'},
+];
+const SANG = [
+  {n:'Bánh mì trứng', p:'1 ổ · 2 trứng', k:380, m:[16,42,15], x:'1'},
+  {n:'Cà phê sữa đá', p:'1 ly · ít đường', k:140, m:[2,22,4], x:'1', saved:true},
+];
+const LAU = [
+  {n:'Lẩu thái hải sản', p:'cả nồi 4 người · ~2,4 kg', k:2600, m:[160,120,150], x:'1', high:true},
+  {n:'Bia', p:'2 lon · 660 ml', k:290, m:[2,24,0], x:'1', mismatch:true, assume:'bia lager 4,5%, 145 kcal/lon.'},
+  {n:'Rau, nấm nhúng', p:'1 đĩa · ~200 g', k:60, m:[4,10,1], x:'1', assume:'không tính nước lẩu chan thêm.'},
+];
+const frames = [
+  {items:BUNBO, before:MORNING, meal:'trua', time:'12:35', photo:true, comment:'Bữa vừa phải, còn dư cho bữa tối.', cap:['Sáng · liếc rồi lưu','Độ tin cậy cao nên không hiện nhãn nào. Ngón cái chạm Lưu là xong.']},
+  {items:BUNBO, before:MORNING, meal:'trua', time:'12:35', photo:true, dark:true, comment:'Bữa vừa phải, còn dư cho bữa tối.', cap:['Tối · liếc rồi lưu','Cùng dữ liệu ở giao diện tối; đoạn mới nhạt có viền.']},
+  {items:COMTAM, before:DAY, meal:'toi', time:'19:05', photo:true, ask:'Bạn có chan hết chén nước mắm không?', cap:['Sáng · cần kiểm tra + câu hỏi làm rõ','Món độ tin cậy thấp lên đầu, kèm giả định. Lưu sẽ vượt nhẹ: biểu tượng, chữ và làn vượt riêng.']},
+  {items:BUNBO, before:MORNING, meal:'trua', time:'12:35', photo:true, picker:true, cap:['Sáng · chạm chip giờ ăn','Nhập giờ ngay trong sheet (TimeInput M3), chọn bữa bằng segmented.']},
+  {items:SANG, before:[], meal:'sang', time:'07:00', dark:true, src:'sáng nay 7h', cap:['Tối · ghi từ chat','AI đọc giờ từ tin nhắn; nguồn ghi bằng chữ cạnh chip.']},
+  {items:LAU, before:DAY, meal:'toi', time:'19:40', photo:true, cap:['Sáng · cảnh báo số liệu + vượt nhiều','Món > 2.500 kcal và món lệch macro được báo, không chặn Lưu. Món thường chạm vào cũng thấy giả định.']},
+  {items:[], before:DAY, meal:'toi', time:'19:40', photo:true, dark:true, cap:['Tối · không nhận ra món','Hiện nhận xét của AI và hai lối thoát: chụp lại hoặc nhập tay.']},
+  {items:[{...BUNBO[0]}, {...BUNBO[1], swiped:true}], before:MORNING, meal:'trua', time:'12:35', photo:true, cap:['Sáng · đang vuốt để xoá','Vuốt trái lộ nền Xoá màu error-container; thả quá ngưỡng là xoá.']},
+  {items:[{...BUNBO[0]}], before:MORNING, meal:'trua', time:'12:35', photo:true, snack:'Trà đá', cap:['Sáng · vừa xoá','Snackbar Hoàn tác thay cho hộp thoại xác nhận (05 §5).']},
+];
+document.getElementById('frames').innerHTML = frames.map(f=>`<figure>${phone(f)}<figcaption><b>${f.cap[0]}</b>${f.cap[1]}</figcaption></figure>`).join('');
+</script>
+</body>
+</html>

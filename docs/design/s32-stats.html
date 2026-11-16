@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cali · S32 Thống kê</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&display=swap" rel="stylesheet">
+<style>
+:root{ --page:#F3F2F7; --page-ink:#1B1B21; --page-muted:#5E5E68; --page-line:#DCDBE3; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; } }
+:root[data-theme="dark"]{ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; }
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--page);color:var(--page-ink);font-family:'Roboto Flex',Roboto,system-ui,sans-serif;font-variation-settings:"opsz" 14;line-height:1.5}
+::selection{background:#DEE0FF;color:#00105C}
+.wrap{max-width:1640px;margin:0 auto;padding:40px 16px 64px}
+header.doc{max-width:760px;margin:0 auto 32px;padding:0 4px}
+header.doc h1{font-size:28px;font-weight:600;letter-spacing:-.01em;font-variation-settings:"opsz" 32}
+header.doc p{color:var(--page-muted);margin-top:8px;font-size:15px;max-width:70ch}
+header.doc .toggle{margin-top:14px;height:40px;padding:0 16px;border-radius:20px;border:1px solid var(--page-line);color:var(--page-ink);font-size:14px;font-weight:600}
+.frames{display:flex;flex-wrap:wrap;gap:44px 32px;justify-content:center;align-items:flex-start}
+figure{display:flex;flex-direction:column;align-items:center;gap:14px}
+figcaption{font-size:13px;color:var(--page-muted);text-align:center;max-width:300px}
+figcaption b{display:block;color:var(--page-ink);font-weight:600;font-size:14px}
+
+/* ===== App tokens (DESIGN.md) ===== */
+.phone{
+  --primary:#4355B9; --on-primary:#FFFFFF; --primary-container:#DEE0FF; --on-primary-container:#00105C;
+  --secondary-container:#E0E1F9; --on-secondary-container:#181A2C;
+  --surface:#FBF8FF; --surface-low:#F5F2FA; --surface-cont:#EFEDF4; --surface-highest:#E4E1E9;
+  --on-surface:#1B1B21; --on-surface-var:#46464F; --outline:#767680; --outline-var:#C6C5D0;
+  --error:#BA1A1A; --error-container:#FFDAD6; --on-error-container:#410002;
+  --warn:#8A5100; --warn-container:#FFDCBE; --on-warn-container:#2C1600;
+  --protein:#006780; --carb:#4C6700; --fat:#8E4585;
+  --ring-track:var(--surface-cont); --under:color-mix(in srgb,var(--primary) 70%,var(--surface-low));
+  width:360px;height:780px;border-radius:36px;overflow:hidden;position:relative;
+  background:var(--surface);color:var(--on-surface);
+  outline:1px solid var(--page-line);
+  box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 32px -8px rgba(20,20,40,.18);
+  font-feature-settings:"tnum" 1;display:flex;flex-direction:column;
+}
+.phone.tall{height:auto}
+.phone.dark{
+  --primary:#BAC3FF; --on-primary:#08218A; --primary-container:#293CA0; --on-primary-container:#DEE0FF;
+  --secondary-container:#43465A; --on-secondary-container:#E0E1F9;
+  --surface:#121318; --surface-low:#1B1B21; --surface-cont:#1F1F25; --surface-highest:#35343A;
+  --on-surface:#E4E1E9; --on-surface-var:#C6C5D0; --outline:#90909A; --outline-var:#46464F;
+  --error:#FFB4AB; --error-container:#93000A; --on-error-container:#FFDAD6;
+  --warn:#FFB86E; --warn-container:#693C00; --on-warn-container:#FFDCBE;
+  --protein:#5FD4F6; --carb:#B1D46A; --fat:#FFAEE9;
+  --ring-track:var(--surface-highest);
+}
+.phone ::selection{background:var(--primary-container);color:var(--on-primary-container)}
+.t-display-l{font-size:57px;line-height:.9;font-weight:650;letter-spacing:-.03em;font-variation-settings:"opsz" 72,"wdth" 92}
+.t-title-l{font-size:22px;line-height:1.27;font-weight:600;font-variation-settings:"opsz" 22}
+.t-title-m{font-size:16px;line-height:1.5;font-weight:600}
+.t-body-l{font-size:16px;line-height:1.5;font-weight:400}
+.t-body-m{font-size:14px;line-height:1.43;font-weight:500}
+.t-body-s{font-size:12px;line-height:1.33;font-weight:400}
+.t-label-l{font-size:14px;line-height:1.43;font-weight:600}
+.t-label-m{font-size:12px;line-height:1.33;font-weight:500}
+.t-label-s{font-size:11px;line-height:1.45;font-weight:500}
+.ms{font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;font-size:24px;line-height:1;display:inline-block;font-variation-settings:"FILL" 0,"wght" 400,"opsz" 24;-webkit-font-smoothing:antialiased;user-select:none;flex:none}
+.ms.fill{font-variation-settings:"FILL" 1,"wght" 400,"opsz" 24}
+.ms.s14{font-size:14px}.ms.s16{font-size:16px}.ms.s18{font-size:18px}.ms.s20{font-size:20px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
+button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.muted{color:var(--on-surface-var)}
+.unit{color:var(--on-surface-var);font-weight:500}
+
+/* sticky header: status, app bar, Tuần / Tháng, period */
+.status,.appbar,.mode,.period{transition:background-color .2s cubic-bezier(.2,0,0,1)}
+.phone.scrolled .status,.phone.scrolled .appbar,.phone.scrolled .mode,.phone.scrolled .period{background:var(--surface-cont)}
+.status{height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:500;background:var(--surface)}
+.status .ms{font-size:16px}
+.appbar{height:64px;flex:none;display:flex;align-items:center;gap:4px;padding:0 4px;background:var(--surface)}
+.appbar h1{flex:1}
+.icon-btn{width:48px;height:48px;border-radius:24px;display:grid;place-items:center;color:var(--on-surface-var);flex:none}
+.icon-btn.off{color:color-mix(in srgb,var(--on-surface) 38%,transparent);cursor:default}
+.mode{flex:none;padding:0 0 4px;background:var(--surface)}
+.phone.scrolled .mode{background:transparent}
+.seg2{display:grid;grid-template-columns:repeat(2,1fr);height:48px;border-radius:24px;outline:1px solid var(--outline);outline-offset:-1px;overflow:hidden}
+.seg2 button{font-weight:600;font-size:14px;text-align:center;border-left:1px solid var(--outline);color:var(--on-surface);display:flex;align-items:center;justify-content:center;gap:6px}
+.seg2 button:first-child{border-left:0}
+.seg2 button.on{background:var(--secondary-container);color:var(--on-secondary-container)}
+.period{flex:none;display:grid;grid-template-columns:48px 1fr 48px;align-items:center;padding:0 4px 8px;margin:0 -12px;background:var(--surface);position:sticky;top:0;z-index:2}
+.avgl{position:absolute;left:0;right:0;height:0;border-top:1px solid var(--primary);pointer-events:none}
+.readout .nb{width:48px;height:48px;border-radius:24px;display:grid;place-items:center;color:var(--on-surface-var);flex:none}
+.readout .nb.off{color:color-mix(in srgb,var(--on-surface) 38%,transparent)}
+.readout .btn.text{padding:0 8px}
+.wnote{margin-top:10px;color:var(--on-surface-var)}
+.period .mid{text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
+.period .mid .t-label-m{color:var(--on-surface-var);display:inline-flex;align-items:center;gap:4px}
+.prov{height:24px;border-radius:8px;padding:0 8px;display:inline-flex;align-items:center;gap:4px;background:var(--secondary-container);color:var(--on-secondary-container)}
+.period .mid .prov{color:var(--on-secondary-container)}
+
+.body{flex:1;overflow-y:auto;scrollbar-width:none;padding:0 12px 16px;display:flex;flex-direction:column;gap:8px}
+.body::-webkit-scrollbar{display:none}
+.body>*{flex:none}
+.phone.tall .body{overflow:visible}
+.gesture{flex:none;height:24px;position:relative;background:var(--surface)}
+.gesture::after{content:"";position:absolute;left:50%;bottom:8px;width:108px;height:4px;border-radius:2px;background:var(--on-surface);opacity:.4;transform:translateX(-50%)}
+
+.card{background:var(--surface-low);border-radius:16px;padding:14px 16px 16px}
+.card .hd{display:flex;align-items:center;gap:8px;min-height:24px}
+.card .hd h2{flex:1}
+.card .hd .r{color:var(--on-surface-var)}
+.card .hd .r b{color:var(--on-surface);font-weight:600}
+.line{display:flex;gap:8px;align-items:flex-start;color:var(--on-surface-var)}
+.line .ms{color:var(--primary);margin-top:-1px}
+.line b{color:var(--on-surface);font-weight:600}
+.rows{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+hr.div{border:0;border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent);margin:12px 0 0}
+
+/* hero: TB kcal / ngày (the one Display Large) */
+.hero .nums{display:flex;align-items:flex-end;gap:6px;margin-top:10px}
+.hero .nums .u{padding-bottom:4px;color:var(--on-surface-var)}
+.hero .vs{margin-left:auto;text-align:right;padding-bottom:2px;display:flex;flex-direction:column;align-items:flex-end}
+.hero .vs b{font-weight:600}
+.hero .vs b.warn{color:var(--warn)} .hero .vs b.err{color:var(--error)}
+.hero .vs span{color:var(--on-surface-var)}
+.chip{height:32px;border-radius:8px;padding:0 12px 0 8px;display:inline-flex;align-items:center;gap:6px}
+.chip .ms{font-size:18px}
+.chip.warn{background:var(--warn-container);color:var(--on-warn-container)}
+.chip.err{background:var(--error-container);color:var(--on-error-container)}
+.sub{color:var(--on-surface-var);margin-top:8px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.newbie{display:flex;gap:10px;align-items:flex-start;margin-top:10px;color:var(--on-surface-var)}
+.newbie .ms{color:var(--primary)}
+.newbie b{color:var(--on-surface);font-weight:600}
+
+/* week chart: S35 grammar, 7 × 48dp */
+.chart{position:relative;margin:14px -16px 0}
+.plot{position:relative;height:var(--h);margin-top:22px}
+.band{position:absolute;left:0;right:0;background:color-mix(in srgb,var(--on-surface) 6%,transparent)}
+.goal{position:absolute;left:0;right:0;height:0;border-top:1px dashed var(--on-surface-var)}
+.cols{position:absolute;inset:0;display:grid;grid-template-columns:repeat(var(--n),1fr)}
+.col{position:relative;height:100%}
+.col .stack{position:absolute;left:50%;bottom:0;width:var(--bw,20px);transform:translateX(-50%);display:flex;flex-direction:column-reverse;gap:3px;transform-origin:bottom}
+.col .stack i{display:block;width:100%;background:var(--primary)}
+.col .stack i.light{background:var(--under)}
+.col .stack i.over{background:var(--error)}
+.col .stack i.pend{background:color-mix(in srgb,var(--primary) 40%,var(--ring-track));box-shadow:inset 0 0 0 1.5px var(--primary)}
+.col .stack i.hollow{background:transparent;box-shadow:inset 0 0 0 1.5px var(--primary)}
+.col .stub{position:absolute;left:50%;bottom:0;width:var(--sw,20px);height:8px;transform:translateX(-50%);outline:1.5px dashed var(--outline);outline-offset:-1.5px}
+.col .v{position:absolute;left:-6px;right:-6px;text-align:center;transform:translateY(-100%);padding-bottom:3px;color:var(--on-surface-var);display:flex;flex-direction:column;align-items:center;line-height:1.2;pointer-events:none}
+.col .v.err{color:var(--error);font-weight:650}
+.col .v.warn{color:var(--warn);font-weight:600}
+.col .v .ms{font-size:16px;color:var(--warn)}
+.col .v em{font-style:normal;background:var(--surface-low);padding:0 3px;border-radius:4px}
+.days{display:grid;grid-template-columns:repeat(7,1fr);border-top:1px solid var(--outline-var)}
+.days span{text-align:center;padding-top:6px;color:var(--on-surface-var);position:relative;height:26px}
+.days span.today{color:var(--on-surface);font-weight:700}
+.days span.today::after{content:"";position:absolute;left:50%;bottom:-2px;width:4px;height:4px;border-radius:2px;background:var(--primary);transform:translateX(-50%)}
+.days span.future{color:color-mix(in srgb,var(--on-surface) 38%,transparent)}
+
+/* month chart: 28–31 narrow columns, one continuous scrub surface */
+.mchart .plot{touch-action:pan-y}
+.mchart .col .v .ms{font-size:14px;font-variation-settings:"FILL" 1,"wght" 500,"opsz" 20}
+.mchart .col .dash{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);color:var(--on-surface-var);background:var(--surface-low);border-radius:4px;padding:0 1px;line-height:1.1}
+.mchart .sel{position:absolute;top:-22px;bottom:0;border-radius:4px;background:color-mix(in srgb,var(--on-surface) 8%,transparent)}
+.mchart .tag{position:absolute;top:-22px;transform:translateX(-50%);height:18px;padding:0 6px;border-radius:4px;background:var(--on-surface);color:var(--surface);display:flex;align-items:center;font-weight:600;white-space:nowrap}
+.axis{position:relative;height:26px;border-top:1px solid var(--outline-var)}
+.axis .tk{position:absolute;top:-1px;width:1px;height:5px;background:var(--outline-var)}
+.axis .lb{position:absolute;top:6px;transform:translateX(-50%);color:var(--on-surface-var);white-space:nowrap}
+.axis .dot{position:absolute;bottom:0;width:4px;height:4px;border-radius:2px;background:var(--primary);transform:translateX(-50%)}
+.axis .lb.future{color:color-mix(in srgb,var(--on-surface) 38%,transparent)}
+.readout{margin-top:8px;min-height:56px;border-radius:12px;background:var(--ring-track);display:flex;align-items:center;gap:0;padding:4px}
+.readout .tx{flex:1;min-width:0}
+.readout .tx b{display:block}
+.readout .tx>span{color:var(--on-surface-var);display:block}
+.readout .tx span .ms{vertical-align:-2px;margin-right:2px;color:var(--warn);font-variation-settings:"FILL" 1,"wght" 500,"opsz" 20}
+.readout.hint{color:var(--on-surface-var)}
+.readout.hint>span:not(.ms){flex:1}
+.readout.hint .ms{color:var(--on-surface-var)}
+
+/* the one authored motion: columns rise from the baseline when a period opens */
+.col .stack{animation:rise .5s cubic-bezier(.2,0,0,1) both;animation-delay:calc(.08s + var(--k) * var(--step,.04s))}
+@keyframes rise{from{transform:translateX(-50%) scaleY(0)}to{transform:translateX(-50%) scaleY(1)}}
+@media (prefers-reduced-motion: reduce){ .col .stack{animation:none} }
+body.still .col .stack{animation:none}
+
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;color:var(--on-surface-var)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;display:inline-block}
+.legend b{color:var(--on-surface);font-weight:600}
+.legend .ms{font-size:14px;color:var(--warn);font-variation-settings:"FILL" 1,"wght" 500,"opsz" 20}
+.note-warn{display:flex;gap:6px;align-items:flex-start;color:var(--on-surface-var);margin-top:8px}
+.note-warn .ms{color:var(--warn)}
+
+/* link rows (S30 history-link-row) */
+.links{background:var(--surface-low);border-radius:16px;overflow:hidden}
+.link{width:100%;min-height:64px;display:grid;grid-template-columns:40px 1fr 24px;gap:14px;align-items:center;padding:10px 14px}
+.link+.link{border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent)}
+.link .ic{width:40px;height:40px;border-radius:12px;background:var(--primary-container);color:var(--on-primary-container);display:grid;place-items:center}
+.link small{display:block;color:var(--on-surface-var);font-weight:400}
+.link .ms.go{color:var(--on-surface-var)}
+button.link:hover,button.wrow:hover{background:color-mix(in srgb,var(--on-surface) 8%,transparent)}
+
+/* weeks of the month */
+.wlist{margin:8px -16px -8px}
+.wrow{width:100%;min-height:56px;display:grid;grid-template-columns:1fr auto 24px;gap:12px;align-items:center;padding:6px 12px 6px 16px}
+.wrow+.wrow{border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent)}
+.wrow small{display:block;color:var(--on-surface-var);font-weight:400}
+.wrow .k{text-align:right}
+.wrow .k small{font-weight:500}
+.wrow .ms{color:var(--on-surface-var)}
+.wrow.now .rg{font-weight:600}
+
+/* macro */
+.mac{margin-top:14px;display:flex;flex-direction:column;gap:12px}
+.mac .r .t{display:flex;align-items:baseline;gap:6px}
+.mac .r .t .nm{display:inline-flex;align-items:center;gap:6px;flex:1}
+.mac .r .t .nm i{width:8px;height:8px;border-radius:4px;background:var(--c)}
+.mac .r .track{position:relative;height:6px;background:var(--surface-highest);margin-top:6px;display:flex;gap:3px}
+.mac .r .track i{display:block;height:100%;background:var(--c)}
+.mac .r .track i.ov{background:var(--error)}
+.mac .r .track .gl{position:absolute;left:80%;top:-3px;bottom:-3px;width:2px;margin-left:-1px;background:var(--on-surface)}
+.mac .r.over .t .val,.mac .r.over .foot{color:var(--error)}
+.mac .r .foot{margin-top:4px;display:flex;align-items:center;gap:4px;color:var(--on-surface-var)}
+.mix{margin-top:12px;display:grid;grid-template-columns:64px 1fr 92px;align-items:center;gap:8px 10px}
+.mix .bar{display:flex;gap:3px;height:10px}
+.mix .bar i{display:block;height:100%}
+.mix .pc{text-align:right;color:var(--on-surface-var)}
+.mix .lb{color:var(--on-surface-var)}
+
+/* water (S15 lane) */
+.wv{display:flex;align-items:baseline;gap:4px;margin-top:8px}
+.wv .of{margin-left:auto;color:var(--on-surface-var)}
+.lane{position:relative;height:10px;background:var(--surface-highest);margin:14px 0 0}
+.lane i{position:absolute;left:0;top:0;bottom:0;background:var(--primary)}
+.lane .gl{position:absolute;right:-1px;top:-4px;bottom:-4px;width:2px;background:var(--on-surface)}
+.lane-foot{margin-top:10px;color:var(--on-surface-var)}
+.lane-foot b{color:var(--on-surface);font-weight:600}
+
+/* weight */
+.wt{display:flex;align-items:baseline;gap:6px;margin-top:8px}
+.wt>b{white-space:nowrap}
+.wt .chg{margin-left:auto;text-align:right}
+.wt .chg span{display:block;color:var(--on-surface-var)}
+.wsvg{display:block;overflow:visible;margin-top:12px}
+.wl{position:relative;height:18px;margin-top:4px}
+.wl span{position:absolute;transform:translateX(-50%);color:var(--on-surface-var);white-space:nowrap}
+.wl span.cur{color:var(--on-surface);font-weight:700}
+.nowt{display:flex;gap:10px;align-items:center;margin-top:10px;color:var(--on-surface-var)}
+.nowt .stub{width:14px;height:10px;outline:1.5px dashed var(--outline);outline-offset:-1.5px;flex:none}
+.nowt p{flex:1}
+.btn{height:48px;border-radius:24px;padding:0 18px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:600;flex:none}
+.btn.text{color:var(--primary);padding:0 10px 0 12px}
+.btn .ms{font-size:18px}
+
+/* comparison: neutral, never coloured */
+.cmpt{margin-top:10px;display:grid;grid-template-columns:1fr 64px 64px 74px;align-items:stretch}
+.cmpt>*{display:flex;align-items:center;padding:8px 0;border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent)}
+.cmpt .h{border-top:0;padding:0 0 6px;color:var(--on-surface-var)}
+.cmpt .n{color:var(--on-surface)}
+.cmpt .a{justify-content:flex-end;align-items:baseline;font-weight:600}
+.cmpt .b{justify-content:flex-end;align-items:baseline;color:var(--on-surface-var)}
+.cmpt .h{justify-content:flex-end}
+.cmpt .d{text-align:right;color:var(--on-surface-var);display:flex;align-items:center;justify-content:flex-end;gap:1px}
+.cmpt .d .ms{font-size:16px}
+.cmpt small{font-size:11px;color:var(--on-surface-var);font-weight:500;margin-left:2px}
+.cmp-note{margin-top:8px;color:var(--on-surface-var)}
+.nodata{display:flex;gap:10px;align-items:flex-start;margin-top:10px;color:var(--on-surface-var)}
+.soon{margin-top:10px;display:flex;flex-direction:column}
+.soon li{list-style:none;display:grid;grid-template-columns:20px 1fr;gap:10px;padding:10px 0;color:var(--on-surface-var)}
+.soon li+li{border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent)}
+.soon .ms{color:var(--primary)}
+.soon b{color:var(--on-surface);font-weight:600}
+.foot-note{color:var(--on-surface-var);text-align:center;padding:8px 8px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc">
+    <h1>S32 · Thống kê</h1>
+    <p>Số liệu trung tính của một kỳ, Tuần hoặc Tháng: kcal trung bình mỗi ngày (con số lớn duy nhất), biểu đồ cột theo ngày có vạch mục tiêu và dải ±10%, số ngày Đạt / Vượt / Thiếu / Chưa ghi, macro trung bình (thanh chồng năng lượng và ba thanh tách tại vạch), nước trung bình (làn của S15), thay đổi cân trong kỳ (TB tuần, không màu) và so với kỳ trước. Không có điểm, không có xếp loại, không có chữ AI: đó là việc của S35, và chế độ Tuần chỉ đưa một hàng “Xem tổng kết tuần” để sang đó. Biểu đồ tháng có 28–31 cột hẹp nên không chạm từng cột: cả biểu đồ là một vùng chạm, chạm hoặc kéo để bắt dính vào một ngày, rồi hàng đọc số 48dp bên dưới mở ngày đó; các tuần mở được từ danh sách “Các tuần trong tháng”. Số ngày lấy nguyên bảng của S30; tuần 03/11 – 09/11 khớp S35. Số liệu là dữ liệu mẫu.</p>
+    <button class="toggle" id="toggle">Xem toàn bộ ở giao diện tối</button>
+  </header>
+  <div class="frames" id="frames"></div>
+</div>
+<script>
+const TARGET = 1740, WATER = 2600, MAC_T = [122,196,52];
+const fmt = n => Math.round(n).toLocaleString('vi-VN');
+const dec = (n,d=1) => n.toLocaleString('vi-VN',{minimumFractionDigits:d,maximumFractionDigits:d});
+const minus = s => String(s).replace('-','−');
+const ic = (n, cls='') => `<span class="ms ${cls}">${n}</span>`;
+const WD = ['Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy','Chủ Nhật'];
+const WS = ['T2','T3','T4','T5','T6','T7','CN'];
+
+/* kcal by date: S30's table, unchanged. null = app in use but nothing logged */
+const K = {
+  '2026-09-29':1820,'2026-09-30':1650,
+  '2026-10-01':1700,'2026-10-02':2150,'2026-10-03':2400,'2026-10-04':1980,'2026-10-05':1500,
+  '2026-10-06':1760,'2026-10-07':1690,'2026-10-08':800,'2026-10-09':1810,'2026-10-10':1720,'2026-10-11':2240,'2026-10-12':1900,
+  '2026-10-13':1700,'2026-10-14':1640,'2026-10-15':1520,'2026-10-16':1580,'2026-10-17':1530,'2026-10-18':2310,'2026-10-19':1998,
+  '2026-10-20':1690,'2026-10-21':1780,'2026-10-22':null,'2026-10-23':1720,'2026-10-24':2100,'2026-10-25':1600,'2026-10-26':1950,
+  '2026-10-27':1690,'2026-10-28':1720,'2026-10-29':1500,'2026-10-30':1540,'2026-10-31':2210,
+  '2026-11-01':1430,'2026-11-02':1910,
+  '2026-11-03':1710,'2026-11-04':1760,'2026-11-05':690,'2026-11-06':1800,'2026-11-07':1650,'2026-11-08':2360,'2026-11-09':2630,
+  '2026-11-10':1710,'2026-11-11':1690,'2026-11-12':1420,'2026-11-13':1310
+};
+/* water (ml) by date where a screen shows it per day: S35 / S15 weeks, plus 01–02/11 (mockup data) */
+const W = {
+  '2026-11-01':2400,'2026-11-02':2600,
+  '2026-11-03':2600,'2026-11-04':2700,'2026-11-05':2600,'2026-11-06':2800,'2026-11-07':2600,'2026-11-08':1100,'2026-11-09':800,
+  '2026-11-10':2600,'2026-11-11':2400,'2026-11-12':2700,'2026-11-13':1250
+};
+/* macro averages + protein-hit days. Weeks = S35; Oct and 01–02/11 are mockup data */
+const MAC = {
+  'w:2026-11-03':{m:[104,231,55],pd:3}, 'w:2026-11-10':{m:[98,186,49],pd:1}, 'w:2026-10-27':{m:[98,0,0],pd:0},
+  'm:2026-11':{m:[102,214,53],pd:4}, 'm:2026-10':{m:[105,216,57],pd:9}
+};
+const WATER_OCT = {sum:69300, n:30, hit:12};
+/* weekly weight averages (S31), keyed by Monday; weeks belong to the month that holds their Thursday */
+const WW = {'2026-09-29':76.0,'2026-10-06':75.7,'2026-10-13':75.4,'2026-10-20':75.0,'2026-10-27':74.6,'2026-11-03':74.1};
+const WN = {'2026-11-03':3};
+const SCORE = {'2026-11-03':[71,'Tốt'],'2026-11-10':[66,'tạm tính']};
+const TODAY = '2026-11-13';
+
+/* weekday layout follows the rest of the mockups (13/11 = Thứ Năm), so dates are laid out on the 2025 grid and labelled 2026 (as S30) */
+const iso = d => d.toISOString().slice(0,10).replace(/^2025/,'2026').replace(/^2024/,'2025');
+const GY = y => y-1;
+const toD = id => new Date(id.replace(/^2026/,'2025')+'T00:00:00Z');
+const add = (id,n) => iso(new Date(toD(id).getTime()+n*864e5));
+const dm = id => `${id.slice(8,10)}/${id.slice(5,7)}`;
+const wdi = id => (toD(id).getUTCDay()+6)%7;
+const cls = k => { const x=k-TARGET; return Math.abs(x)<=TARGET*.1?'hit':x>0?'over':'under'; };
+
+/* ---------- periods ---------- */
+function period(kind, key, start){
+  let ids;
+  if(kind==='week') ids = [...Array(7)].map((_,i)=>add(key,i));
+  else { const [y,m] = key.split('-').map(Number); const last = new Date(Date.UTC(GY(y),m,0)).getUTCDate(); ids = [...Array(last)].map((_,i)=>`${key}-${String(i+1).padStart(2,'0')}`); }
+  const days = ids.map(id=>{
+    const future = id > TODAY, pre = (start && id < start) || (!(id in K) && !future);
+    return {id, k: (future||pre) ? undefined : K[id], future, pre, today:id===TODAY, w:W[id]};
+  });
+  const live = ids[ids.length-1] >= TODAY && ids[0] <= TODAY;
+  return {kind, key, ids, days, live, start, left: days.filter(d=>d.future).length};
+}
+function stats(p){
+  const past = p.days.filter(d=>!d.future && !d.pre);
+  const logged = past.filter(d=>d.k!=null);
+  logged.forEach(d=>{ d.c = cls(d.k); d.sus = !d.today && d.k < TARGET*.5; });
+  const n = logged.length, sum = logged.reduce((s,d)=>s+d.k,0);
+  const cnt = {hit:0,over:0,under:0}; logged.forEach(d=>cnt[d.c]++);
+  const missed = past.filter(d=>d.k===null);
+  const done = logged.filter(d=>!d.today).length ? logged.filter(d=>!d.today) : logged;
+  const hi = done.reduce((a,b)=>b.k>a.k?b:a, done[0]), lo = done.reduce((a,b)=>b.k<a.k?b:a, done[0]);
+  const td = logged.find(d=>d.today);
+  return {past, logged, n, D:past.length, sum, avg:n?Math.round(sum/n):0, cnt, missed, hi, lo, sus:logged.filter(d=>d.sus), todayC: td?td.c:null};
+}
+function water(p, s){
+  if(p.kind==='month' && p.key==='2026-10') return {sum:WATER_OCT.sum, n:WATER_OCT.n, hit:WATER_OCT.hit};
+  const v = s.past.map(d=>d.w).filter(x=>x!=null);
+  return {sum:v.reduce((a,b)=>a+b,0), n:v.length, hit:v.filter(x=>x>=WATER).length};
+}
+const macOf = p => MAC[(p.kind==='week'?'w:':'m:')+p.key];
+const label = p => p.kind==='week'
+  ? (p.live ? `Tuần này · ${dm(p.ids[0])} – ${dm(p.ids[6])}` : `Tuần ${dm(p.ids[0])} – ${dm(p.ids[6])}`)
+  : `Tháng ${+p.key.slice(5)}, ${p.key.slice(0,4)}`;
+
+/* ---------- pieces ---------- */
+const status = `<div class="status"><span>13:02</span><span>${ic('signal_cellular_alt')} ${ic('wifi')} ${ic('battery_5_bar')}</span></div>`;
+const appbar = `<div class="appbar"><button class="icon-btn" aria-label="Quay lại">${ic('arrow_back')}</button><h1 class="t-title-l">Thống kê</h1></div>`;
+const mode = kind => `<div class="mode"><div class="seg2" role="radiogroup" aria-label="Kỳ thống kê">${[['week','Tuần'],['month','Tháng']].map(([k,t])=>`<button role="radio" aria-checked="${k===kind}" class="${k===kind?'on':''}">${t}</button>`).join('')}</div></div>`;
+function periodbar(p, s){
+  const sub = p.live
+    ? `<span class="prov t-label-m">${ic('hourglass_top','s16')}Tạm tính · còn ${p.left} ngày</span>`
+    : `<span class="t-label-m">${ic('event_available','s16')}Đã kết thúc · ghi ${s.n}/${s.D} ngày</span>`;
+  const unit = p.kind==='week'?'Tuần':'Tháng';
+  return `<div class="period"><button class="icon-btn" aria-label="${unit} trước">${ic('chevron_left')}</button><div class="mid"><b class="t-title-m">${label(p)}</b>${sub}</div><button class="icon-btn${p.live?' off':''}" aria-label="${unit} sau"${p.live?' aria-disabled="true"':''}>${ic('chevron_right')}</button></div>`;
+}
+const sw = c => c==='hit'?'background:var(--primary)':c==='over'?'background:var(--error)':c==='under'?'background:var(--under)':'outline:1.5px dashed var(--outline);outline-offset:-1.5px';
+function legend(s){
+  return `<div class="legend t-label-m">${[['hit','Đạt',s.cnt.hit],['over','Vượt',s.cnt.over],['under','Thiếu',s.cnt.under],['miss','Chưa ghi',s.missed.length]].map(([c,n,v])=>`<span><i style="${sw(c)}"></i>${n} <b>${v}</b>${c===s.todayC?' (gồm hôm nay)':''}</span>`).join('')}${s.sus.length?`<span><span class="ms">warning</span>Nghi ghi thiếu <b>${s.sus.length}</b></span>`:''}<span><i style="height:0;border-top:1px dashed var(--on-surface-var)"></i>Mục tiêu ${fmt(TARGET)} ± 10%</span>${s.n>=3?`<span><i style="height:0;border-top:1px solid var(--primary)"></i>TB ${fmt(s.avg)}</span>`:''}</div>`;
+}
+const yTop = s => Math.max(TARGET*1.25, ...s.logged.map(d=>d.k))*1.06;
+
+function weekChart(p, s){
+  const h = 120, top = yTop(s), y = v => v/top*h;
+  const cols = p.days.map((d,i)=>{
+    if(d.future || d.pre) return `<div class="col" aria-hidden="true"></div>`;
+    const lab = `${WD[i]}, ${dm(d.id)}`;
+    if(d.k===null) return `<button class="col" aria-label="${lab}: chưa ghi. Mở chi tiết ngày"><span class="stub"></span><span class="v t-label-s" style="top:${h-8}px"><em>—</em></span></button>`;
+    let parts;
+    if(d.today) parts = `<i class="hollow" style="height:${y(d.k)}px"></i>`;
+    else if(d.c==='over') parts = `<i style="height:${y(TARGET)}px"></i><i class="over" style="height:${Math.max(4,y(d.k-TARGET)-3)}px"></i>`;
+    else parts = `<i class="${d.c==='under'?'light':''}" style="height:${y(d.k)}px"></i>`;
+    const vc = (!d.today && d.c==='over')?'err':(d.sus?'warn':'');
+    const st = d.today?'hôm nay, đang ghi':d.c==='hit'?'đạt':d.c==='over'?`vượt ${fmt(d.k-TARGET)}`:`thiếu ${fmt(TARGET-d.k)}`;
+    return `<button class="col" aria-label="${lab}: ${fmt(d.k)} kcal, ${st}${d.sus?', nghi ghi thiếu':''}. Mở chi tiết ngày"><span class="stack" style="--k:${i}">${parts}</span><span class="v t-label-s ${vc}" style="top:${h-y(d.k)}px">${d.sus?ic('warning'):''}<em>${fmt(d.k)}</em></span></button>`;
+  }).join('');
+  return `<div class="chart"><div class="plot" style="--h:${h}px"><div class="band" style="bottom:${y(TARGET*.9)}px;height:${y(TARGET*.2)}px"></div><div class="goal" style="bottom:${y(TARGET)}px"></div>${s.n>=3?`<div class="avgl" style="bottom:${y(s.avg)}px" aria-hidden="true"></div>`:''}<div class="cols" style="--n:7">${cols}</div></div>
+    <div class="days t-label-m">${p.days.map((d,i)=>`<span class="${d.today?'today':(d.future||d.pre)?'future':''}">${WS[i]}</span>`).join('')}</div></div>`;
+}
+
+function monthChart(p, s, sel){
+  const h = 120, top = yTop(s), y = v => v/top*h, N = p.days.length, cw = 336/N;
+  const cols = p.days.map((d,i)=>{
+    if(d.future || d.pre) return `<div class="col"></div>`;
+    if(d.k===null) return `<div class="col" style="--sw:8px"><span class="stub"></span><span class="dash t-label-s">—</span></div>`;
+    let parts;
+    if(d.today) parts = `<i class="hollow" style="height:${y(d.k)}px"></i>`;
+    else if(d.c==='over') parts = `<i style="height:${y(TARGET)}px"></i><i class="over" style="height:${Math.max(3,y(d.k-TARGET)-3)}px"></i>`;
+    else parts = `<i class="${d.c==='under'?'light':''}" style="height:${y(d.k)}px"></i>`;
+    return `<div class="col"><span class="stack" style="--k:${i}">${parts}</span>${d.sus?`<span class="v" style="top:${h-y(d.k)}px">${ic('warning')}</span>`:''}</div>`;
+  }).join('');
+  const si = sel ? p.ids.indexOf(sel) : -1;
+  const selEl = si>=0 ? `<span class="sel" style="left:${si*cw}px;width:${cw}px"></span><span class="tag t-label-s" style="left:${(si+.5)*cw}px">${dm(sel)}</span>` : '';
+  const mons = p.days.map((d,i)=>[d,i]).filter(([d])=>wdi(d.id)===0);
+  const ti = p.ids.indexOf(TODAY);
+  const axis = `<div class="axis t-label-s">${mons.map(([d,i])=>`<span class="tk" style="left:${i*cw}px"></span><span class="lb${d.future?' future':''}" style="left:${(i+.5)*cw}px">${dm(d.id)}</span>`).join('')}${ti>=0?`<span class="dot" style="left:${(ti+.5)*cw}px"></span>`:''}</div>`;
+  const aria = `Biểu đồ kcal ${N} ngày của ${label(p)}: đạt ${s.cnt.hit}, vượt ${s.cnt.over}, thiếu ${s.cnt.under}, chưa ghi ${s.missed.length}. Chạm hoặc kéo để chọn một ngày; vuốt lên hoặc xuống để đổi ngày`;
+  return `<div class="chart mchart"><div class="plot" role="slider" tabindex="0" aria-label="${aria}" aria-valuemin="1" aria-valuemax="${p.days.filter(d=>!d.future).length}"${si>=0?` aria-valuenow="${si+1}"`:''} aria-valuetext="${si>=0?dayText(p,sel):'Chưa chọn ngày'}" style="--h:${h}px">${selEl}<div class="band" style="bottom:${y(TARGET*.9)}px;height:${y(TARGET*.2)}px"></div><div class="goal" style="bottom:${y(TARGET)}px"></div>${s.n>=3?`<div class="avgl" style="bottom:${y(s.avg)}px" aria-hidden="true"></div>`:''}<div class="cols" style="--n:${N};--bw:6px;--step:.014s">${cols}</div></div>${axis}</div>`;
+}
+function dayText(p, id){
+  const d = p.days.find(x=>x.id===id), lab = `${WD[wdi(id)]}, ${dm(id)}`;
+  if(d.k===null) return `${lab}: chưa ghi`;
+  if(d.today) return `${lab}: ${fmt(d.k)} kcal, hôm nay, đang ghi`;
+  const c = cls(d.k);
+  return `${lab}: ${fmt(d.k)} kcal, ${c==='hit'?'đạt':c==='over'?`vượt ${fmt(d.k-TARGET)}`:`thiếu ${fmt(TARGET-d.k)}`}${d.k<TARGET*.5?', nghi ghi thiếu':''}`;
+}
+function readout(p, sel){
+  const sel_ = p.days.filter(d=>!d.future && !d.pre).map(d=>d.id);
+  const nb = (dir, off, lab) => `<button class="nb${off?' off':''}" aria-label="${lab}"${off?' aria-disabled="true"':''}>${ic(dir)}</button>`;
+  if(!sel) return `<div class="readout hint t-body-s">${nb('chevron_left',false,'Chọn ngày cuối kỳ')}<span>Chạm, kéo trên biểu đồ hoặc dùng ‹ › để xem từng ngày; mở một tuần ở “Các tuần trong tháng”.</span>${nb('chevron_right',false,'Chọn ngày đầu kỳ')}</div>`;
+  const d = p.days.find(x=>x.id===sel), i = wdi(sel), k = sel_.indexOf(sel);
+  let sub;
+  if(d.k===null) sub = 'Chưa ghi · không tính vào TB';
+  else if(d.today) sub = `${fmt(d.k)} kcal · hôm nay, đang ghi`;
+  else { const c = cls(d.k); sub = `${fmt(d.k)} kcal · ${c==='hit'?'Đạt':c==='over'?`Vượt ${fmt(d.k-TARGET)}`:`Thiếu ${fmt(TARGET-d.k)}`}`; if(d.k<TARGET*.5) sub += `</span><span class="t-body-s" style="color:var(--warn)">${ic('warning','s14')}Nghi ghi thiếu`; }
+  return `<div class="readout" aria-live="polite">${nb('chevron_left',k<=0,'Ngày trước')}<div class="tx"><b class="t-label-l">${WD[i]}, ${dm(sel)}</b><span class="t-body-s">${sub}</span></div>${nb('chevron_right',k>=sel_.length-1,'Ngày sau')}<button class="btn text" aria-label="Mở chi tiết ngày ${dm(sel)}">Mở ngày</button></div>`;
+}
+
+function heroCard(p, s, f){
+  const month = p.kind==='month';
+  const enough = s.n >= 3;
+  const d = s.avg - TARGET, pct = Math.round(Math.abs(d)/TARGET*100);
+  const dc = d>TARGET*.1?'err':d>0?'warn':'';
+  const chip = d>TARGET*.1 ? `<span class="chip err t-label-l">${ic('warning')}Vượt ${pct}%</span>` : d>0 ? `<span class="chip warn t-label-l">${ic('info')}Vượt nhẹ ${pct}%</span>` : '';
+  const head = `<div class="hd"><h2 class="t-title-m">Calo · TB mỗi ngày</h2><span class="r t-label-m"><b>${s.n}</b>/${s.D} ngày ghi</span></div>`;
+  const nums = enough ? `<div class="nums"><span class="t-display-l">${fmt(s.avg)}</span><span class="u t-title-m">kcal</span>
+      <div class="vs"><b class="t-title-m ${dc}">${minus(d>0?'+'+fmt(d):fmt(d))}</b><span class="t-label-m">so với ${fmt(TARGET)}</span></div></div>
+    <p class="sub t-body-s">${chip}<span>Tổng ${fmt(s.sum)} kcal / ${s.n} ngày${s.todayC?' · gồm hôm nay (đang ghi)':''}</span></p>`
+    : `<p class="newbie t-body-s">${ic('flag','s20 fill')}<span>Bạn bắt đầu dùng Cali từ <b>${dm(p.start)}</b>. Trung bình, macro và nước có số khi đủ <b>3 ngày</b> ghi (sớm nhất ${dm(add(p.start,2))}); ngày trước đó không tính là chưa ghi.</span></p>`;
+  const chart = month ? monthChart(p, s, f.sel) + readout(p, f.sel) : weekChart(p, s);
+  const notes = `${s.missed.map(m=>`<p class="note-warn t-body-s"><span class="ms s16" style="color:var(--on-surface-var)">info</span><span>${dm(m.id)} chưa ghi: không tính vào tổng và trung bình.</span></p>`).join('')}${s.sus.map(m=>`<p class="note-warn t-body-s">${ic('warning','s16')}<span>${dm(m.id)} chỉ ghi ${fmt(m.k)} kcal, dưới một nửa mục tiêu: có thể còn sót món.</span></p>`).join('')}`;
+  const ext = enough ? `<hr class="div"><div class="rows t-body-s"><p class="line">${ic('swap_vert','s18')}<span>Nhiều nhất <b>${dm(s.hi.id)} ${fmt(s.hi.k)}</b> · ít nhất <b>${dm(s.lo.id)} ${fmt(s.lo.k)}</b> kcal</span></p></div>` : '';
+  return `<section class="card hero" aria-label="Calo trung bình mỗi ngày ${enough?fmt(s.avg)+' kcal':'chưa đủ dữ liệu'}">${head}${nums}${chart}${legend(s)}${notes}${ext}</section>`;
+}
+
+function reviewLink(p){
+  const sc = SCORE[p.key];
+  const sub = p.live ? `${sc[0]} điểm, tạm tính · món ăn và nhận xét AI` : `${sc[0]} điểm · ${sc[1]} · món ăn và nhận xét AI`;
+  return `<div class="links"><button class="link"><span class="ic">${ic('insights')}</span><span class="t-title-m">Xem tổng kết tuần<small class="t-body-s">${sub}</small></span>${ic('chevron_right','go')}</button></div>`;
+}
+
+function weeksCard(p){
+  const mons = []; let m = add(p.ids[0], -wdi(p.ids[0]));
+  while(m <= p.ids[p.ids.length-1]){ mons.push(m); m = add(m,7); }
+  const rows = mons.filter(m=>m<=TODAY).map(mon=>{
+    const ids = [...Array(7)].map((_,i)=>add(mon,i)).filter(id=>p.ids.includes(id) && id<=TODAY);
+    const lg = ids.filter(id=>K[id]!=null), sum = lg.reduce((a,id)=>a+K[id],0), hit = lg.filter(id=>cls(K[id])==='hit').length;
+    const now = ids.includes(TODAY), inM = [...Array(7)].map((_,i)=>add(mon,i)).filter(id=>p.ids.includes(id)).length;
+    const rg = `${dm(ids[0])} – ${dm(ids[ids.length-1])}`;
+    const sub = now ? `Tuần này · ${ids.length} ngày, tạm tính · đạt ${hit}` : `${inM<7?`${inM} ngày trong tháng`:'7 ngày'}${lg.length<ids.length?` · ${ids.length-lg.length} chưa ghi`:''} · đạt ${hit}`;
+    return `<button class="wrow${now?' now':''}" aria-label="Tuần ${rg}: trung bình ${fmt(sum/lg.length)} kcal, đạt ${hit} ngày. Mở thống kê tuần"><span><span class="rg t-body-m">${rg}</span><small class="t-body-s">${sub}</small></span><span class="k"><b class="t-title-m">${fmt(sum/lg.length)}</b><small class="t-label-m unit"> kcal TB</small></span>${ic('chevron_right','s20')}</button>`;
+  }).join('');
+  return `<section class="card"><div class="hd"><h2 class="t-title-m">Các tuần trong tháng</h2><span class="r t-label-m">chạm để xem tuần</span></div><div class="wlist">${rows}</div></section>`;
+}
+
+function macroCard(p, s){
+  const M = macOf(p), N = ['Đạm','Tinh bột','Béo'], C=['protein','carb','fat'];
+  const kc = [M.m[0]*4,M.m[1]*4,M.m[2]*9], tot=kc.reduce((a,b)=>a+b,0), act=kc.map(k=>Math.round(k/tot*100));
+  const tk = [MAC_T[0]*4,MAC_T[1]*4,MAC_T[2]*9], tt=tk.reduce((a,b)=>a+b,0), tg=tk.map(k=>Math.round(k/tt*100));
+  const bar = q => `<div class="bar">${q.map((x,i)=>`<i style="flex:${x};background:var(--${C[i]})"></i>`).join('')}</div>`;
+  const rows = M.m.map((v,i)=>{ const t=MAC_T[i], r=v/t, over=r>1;
+    return `<div class="r${over?' over':''}" style="--c:var(--${C[i]})"><div class="t"><span class="nm t-label-m"><i></i>${N[i]}</span><span class="val t-title-m">${v}</span><span class="unit t-label-m">/ ${t} g · ${Math.round(r*100)}%</span></div><div class="track">${over?`<i style="width:calc(80% - 1.5px)"></i><i class="ov" style="width:calc(${Math.min(r-1,.25)/1.25*100}% - 1.5px)"></i>`:`<i style="width:${r/1.25*100}%"></i>`}<span class="gl" aria-hidden="true"></span></div>${over?`<div class="foot t-label-s">${ic('warning','s16')}vượt ${v-t} g mỗi ngày</div>`:''}</div>`; }).join('');
+  return `<section class="card"><div class="hd"><h2 class="t-title-m">Macro · TB mỗi ngày</h2><span class="r t-label-m">đạt đạm <b>${M.pd}</b>/${s.n} ngày</span></div>
+    <div class="mix t-label-m"><span class="lb">Thực tế</span>${bar(act)}<span class="pc">${act.join(' · ')} %</span><span class="lb">Mục tiêu</span>${bar(tg)}<span class="pc">${tg.join(' · ')} %</span></div>
+    <div class="mac">${rows}</div></section>`;
+}
+
+function waterCard(p, s){
+  const w = water(p, s), avg = w.sum/w.n, tgt = w.n*WATER;
+  return `<section class="card"><div class="hd"><h2 class="t-title-m">Nước · TB mỗi ngày</h2><span class="r t-label-m">đạt <b>${w.hit}</b>/${w.n} ngày</span></div>
+    <div class="wv"><b class="t-title-l">${dec(avg/1000,2)}</b><span class="unit t-label-m">L</span><span class="of t-label-m">của ${dec(WATER/1000)} L</span></div>
+    <div class="lane" role="img" aria-label="Nước trung bình ${fmt(avg)} trên ${fmt(WATER)} ml mỗi ngày"><i style="width:${Math.min(1,avg/WATER)*100}%"></i><span class="gl"></span></div>
+    <p class="lane-foot t-label-m">Tổng <b>${dec(w.sum/1000)}</b> / ${dec(tgt/1000)} L · thiếu ${dec(Math.max(0,tgt-w.sum)/1000)} L${p.live?' · gồm hôm nay':''}</p></section>`;
+}
+
+function weightCard(p){
+  const hd = `<div class="hd"><h2 class="t-title-m">Cân nặng</h2><button class="icon-btn" style="margin:-12px -12px -12px 0" aria-label="Mở Cân nặng">${ic('chevron_right','s20')}</button></div>`;
+  const sg = n => (n>0?'+':'−') + dec(Math.abs(n)) + ' kg';
+  if(p.kind==='week'){
+    const avg = WW[p.key], prev = WW[add(p.key,-7)];
+    if(avg==null) return `<section class="card">${hd}<div class="nowt"><span class="stub" aria-hidden="true"></span><p class="t-body-s">Chưa cân tuần này. TB tuần gần nhất <b style="color:var(--on-surface)">${dec(prev)} kg</b> (${dm(add(p.key,-7))} – ${dm(add(p.key,-1))}).</p><button class="btn text">${ic('add')}Ghi cân</button></div></section>`;
+    return `<section class="card">${hd}<div class="wt"><b class="t-title-l">${dec(avg)}</b><span class="unit t-label-m">kg TB tuần · ${WN[p.key]} lần cân</span><div class="chg"><b class="t-title-m">${sg(avg-prev)}</b><span class="t-label-m">so với tuần trước ${dec(prev)}</span></div></div></section>`;
+  }
+  /* month: weeks whose Thursday is in the month; baseline = last week of previous month, else first week */
+  const mons = Object.keys(WW).concat(['2026-11-10']).filter(m=>add(m,3).slice(0,7)===p.key).sort();
+  const before = Object.keys(WW).filter(m=>add(m,3).slice(0,7) < p.key).sort().pop();
+  const pts = (before?[before]:[]).concat(mons).map(m=>({m, v:WW[m], base:m===before}));
+  const val = pts.filter(x=>x.v!=null), first = val[0], last = val[val.length-1];
+  const Wd = 304, H = 56, vs = val.map(x=>x.v), lo = Math.min(...vs)-.3, hi = Math.max(...vs)+.3;
+  const X = i => Wd/(pts.length*2) + i*Wd/pts.length, Y = v => 4+(hi-v)/(hi-lo)*(H-8);
+  const line = val.map(x=>`${X(pts.indexOf(x))},${Y(x.v)}`).join(' ');
+  const svg = `<svg class="wsvg" width="${Wd}" height="${H}" viewBox="0 0 ${Wd} ${H}" role="img" aria-label="Cân trung bình theo tuần: ${val.map(x=>`${dm(x.m)} ${dec(x.v)} kg`).join(', ')}">
+    <polyline points="${line}" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linejoin="round"/>
+    ${pts.map((x,i)=>x.v==null?`<rect x="${X(i)-7}" y="${H-12}" width="14" height="10" fill="none" stroke="var(--outline)" stroke-width="1.5" stroke-dasharray="3 2"/>`:`<rect x="${X(i)-3.5}" y="${Y(x.v)-3.5}" width="7" height="7" fill="${x===last?'var(--primary)':'var(--surface-low)'}" stroke="var(--primary)" stroke-width="1.5"/>`).join('')}
+  </svg><div class="wl t-label-s">${pts.map((x,i)=>`<span style="left:${X(i)}px"${x===last?' class="cur"':''}>${x.v==null?'chưa cân':dm(x.m)}</span>`).join('')}</div>`;
+  const how = before ? `so với TB tuần ${dm(before)}` : `từ tuần đầu ${dm(first.m)}`;
+  return `<section class="card">${hd}<div class="wt"><b class="t-title-l">${dec(first.v)} → ${dec(last.v)}</b><span class="unit t-label-m">kg TB tuần</span><div class="chg"><b class="t-title-m">${sg(last.v-first.v)}</b><span class="t-label-m">${how}</span></div></div>${svg}<p class="wnote t-body-s">Tuần tính theo ngày Thứ Năm: ${p.key==='2026-10'?'tuần 29/09 – 05/10 thuộc tháng 10':'tuần 27/10 – 02/11 thuộc tháng 10, nên là mốc so'}.</p></section>`;
+}
+
+const ARROW = (n, unit, digits=0) => n===0 ? `<span class="d t-label-m">=</span>` : `<span class="d t-label-m">${ic(n>0?'arrow_upward':'arrow_downward')}${digits?dec(Math.abs(n),digits):fmt(Math.abs(n))}${unit}</span>`;
+function compareCard(p, s){
+  const title = p.kind==='week' ? 'So với tuần trước' : 'So với tháng trước';
+  if(p.kind==='month' && p.key==='2026-10') return `<section class="card" id="cmp"><div class="hd"><h2 class="t-title-m">${title}</h2></div><p class="nodata t-body-s">${ic('info','s18')}<span>Tháng 9 chỉ có 2 ngày ghi trong 01–30/09 (29–30/09), chưa đủ để so. Chỉ so khi kỳ trước đủ dữ liệu: tuần cần ≥3 ngày ghi ở các thứ tương ứng (đều sau ngày bắt đầu dùng app), tháng cần ≥7 ngày ghi trong cùng khoảng ngày.</span></p></section>`;
+  let A, B, sub, cols;
+  if(p.kind==='week' && !p.live){        /* 03–09/11 vs 27/10–02/11 (S35 numbers) */
+    const q = stats(period('week','2026-10-27'));
+    A = {k:s.avg, hit:`${s.cnt.hit}/7`, dh:s.cnt.hit, p:104, w:15200/7, kg:74.1};
+    B = {k:q.avg, hit:`${q.cnt.hit}/7`, dh:q.cnt.hit, p:98, w:16600/7, kg:74.6};
+    sub = 'Tuần trước 27/10 – 02/11, cả 7 ngày'; cols = ['Tuần này','Trước'];
+  } else if(p.kind==='week'){            /* live week: same weekdays of last week (T2–T5) */
+    const ids = ['2026-11-03','2026-11-04','2026-11-05','2026-11-06'], ks = ids.map(i=>K[i]);
+    A = {k:s.avg, hit:`${s.cnt.hit}/4`, dh:s.cnt.hit, p:98, w:(2600+2400+2700+1250)/4, kg:null};
+    B = {k:Math.round(ks.reduce((a,b)=>a+b,0)/4), hit:`${ks.filter(k=>cls(k)==='hit').length}/4`, dh:ks.filter(k=>cls(k)==='hit').length, p:100, w:(2600+2700+2600+2800)/4, kg:74.1};
+    sub = 'Cùng 4 ngày đầu: T2–T5 tuần trước (03–06/11)'; cols = ['Tuần này','Trước'];
+  } else {                               /* Nov 1–13 vs Oct 1–13 */
+    const ids = [...Array(13)].map((_,i)=>`2026-10-${String(i+1).padStart(2,'0')}`), ks = ids.map(i=>K[i]);
+    const w = water(p, s);
+    A = {k:s.avg, hit:`${s.cnt.hit}/13`, dh:s.cnt.hit, p:102, w:w.sum/w.n, kg:74.1};
+    B = {k:Math.round(ks.reduce((a,b)=>a+b,0)/13), hit:`${ks.filter(k=>cls(k)==='hit').length}/13`, dh:ks.filter(k=>cls(k)==='hit').length, p:104, w:2280, kg:75.7};
+    sub = 'Cùng 13 ngày đầu: 01–13/10 · cân là TB tuần gần nhất (03/11 và 06/10)'; cols = ['Th. 11','Th. 10'];
+  }
+  const R = (n, a, b, d) => `<span class="n t-body-m">${n}</span><span class="a t-body-m">${a}</span><span class="b t-body-m">${b}</span>${d}`;
+  const rows = [
+    R('TB kcal/ngày', fmt(A.k), fmt(B.k), ARROW(A.k-B.k,'')),
+    R('Ngày đạt', A.hit, B.hit, ARROW(A.dh-B.dh,' ngày')),
+    R('Đạm TB', `${A.p}<small>g</small>`, `${B.p}<small>g</small>`, ARROW(A.p-B.p,' g')),
+    R('Nước TB', `${dec(A.w/1000,2)}<small>L</small>`, `${dec(B.w/1000,2)}<small>L</small>`, ARROW(Math.round((A.w-B.w)/10)*10,' ml')),
+    R('Cân TB tuần', A.kg==null?'—':`${dec(A.kg)}<small>kg</small>`, `${dec(B.kg)}<small>kg</small>`, A.kg==null?`<span class="d t-label-m">chưa cân</span>`:ARROW(Math.round((A.kg-B.kg)*10)/10,' kg',1))
+  ].join('');
+  return `<section class="card" id="cmp"><div class="hd"><h2 class="t-title-m">${title}</h2></div><p class="t-label-m muted" style="margin-top:2px">${sub}</p>
+    <div class="cmpt"><span class="h t-label-m"></span><span class="h t-label-m" style="text-align:right">${cols[0]}</span><span class="h t-label-m" style="text-align:right">${cols[1]}</span><span class="h t-label-m" style="text-align:right">Chênh</span>${rows}</div>
+    <p class="cmp-note t-body-s">Mũi tên chỉ tăng hay giảm, không phải tốt hay xấu. Chỉ so khi kỳ trước đủ dữ liệu: tuần cần ≥3 ngày ghi ở các thứ tương ứng (đều sau ngày bắt đầu dùng app), tháng cần ≥7 ngày ghi trong cùng khoảng ngày.</p></section>`;
+}
+
+function soonCard(p){
+  return `<section class="card"><div class="hd"><h2 class="t-title-m">Sắp có số</h2></div><ul class="soon t-body-s">
+    <li>${ic('pie_chart','s20')}<span>Macro và nước trung bình: khi đủ <b>3 ngày</b> ghi, sớm nhất <b>14/11</b>.</span></li>
+    <li>${ic('monitor_weight','s20')}<span>Cân TB tuần: lần cân đầu <b>74,8 kg</b> (12/11). Cân thêm 1 lần trong tuần này để có TB tuần đầu tiên.</span></li>
+    <li>${ic('compare_arrows','s20')}<span>So với kỳ trước: tuần từ <b>Thứ Tư 26/11</b> (so với 17–19/11, đủ 3 ngày ghi); tháng từ <b>18/12</b> (so với 01–18/11, đủ 7 ngày ghi).</span></li></ul></section>`;
+}
+
+function phone(f){
+  const p = period(f.kind, f.key, f.start), s = stats(p);
+  const newbie = s.n < 3;
+  let cards;
+  if(newbie) cards = [heroCard(p,s,f), soonCard(p)];
+  else if(p.kind==='week') cards = [heroCard(p,s,f), reviewLink(p), macroCard(p,s), waterCard(p,s), weightCard(p), compareCard(p,s)];
+  else cards = [heroCard(p,s,f), weeksCard(p), macroCard(p,s), waterCard(p,s), weightCard(p), compareCard(p,s)];
+  cards.push(`<p class="foot-note t-body-s">Ngày chưa ghi không tính vào tổng và trung bình. Điểm tuần và nhận xét AI ở Tổng kết tuần.</p>`);
+  return `<div class="phone${f.dark?' dark':''}${f.tall?' tall':''}${f.scroll?' scrolled':''}">${status}${appbar}<div class="body">${mode(p.kind)}${periodbar(p,s)}${cards.join('')}</div><div class="gesture"></div></div>`;
+}
+
+const frames = [
+  {kind:'week', key:'2026-11-10', cap:['Sáng · Tuần này, tạm tính','TB 1.533 kcal của 4 ngày (gồm hôm nay), −207 so với 1.740; ba ngày tới để trống. Hôm nay chỉ có viền, như S30 và biểu đồ tháng: nền chờ 40% đọc giống Thiếu. Vạch liền chàm là TB của kỳ, cạnh vạch mục tiêu nét đứt. Ngay dưới là một hàng sang S35, điểm chỉ ở dòng phụ.']},
+  {kind:'week', key:'2026-11-03', dark:true, tall:true, cap:['Tối · Tuần 03/11 – 09/11, toàn trang','Cùng số với S35: TB 1.800 (vượt nhẹ 3%), Đạt 4 · Vượt 2 · Thiếu 1, macro 104 / 231 / 55 g, nước 2,17 L TB, cân 74,1 kg (−0,5). Không có thẻ điểm: “Xem tổng kết tuần” mở S35.']},
+  {kind:'month', key:'2026-11', sel:TODAY, cap:['Sáng · Tháng 11, đang diễn ra','30 cột hẹp (6dp) cùng ngữ pháp Đạt / Thiếu / Vượt; 14–30/11 để trống. Hôm nay được chọn sẵn ở hàng đọc số; chạm hoặc kéo trên biểu đồ, hoặc ‹ › 48dp, để đổi ngày (› tắt ở hôm nay). Bộ chọn Tuần / Tháng cuộn đi, chỉ hàng kỳ ‹ › được ghim.']},
+  {kind:'month', key:'2026-10', tall:true, cap:['Sáng · Tháng 10, toàn trang','30/31 ngày ghi: 22/10 là ô nét đứt, 08/10 có cờ nghi ghi thiếu. Các tuần trong tháng là lối 56dp sang từng tuần; cân 76,0 → 74,6 kg theo TB tuần; tháng 9 không đủ dữ liệu để so.']},
+  {kind:'month', key:'2026-11', sel:TODAY, dark:true, scroll:true, cap:['Tối · So với cùng kỳ tháng trước','Tháng đang diễn ra so với đúng 13 ngày đầu tháng 10, không so với cả tháng. Mũi tên trung tính, không xanh, không đỏ (The No-Judgement Scale Rule).']},
+  {kind:'week', key:'2026-11-10', start:'2026-11-12', cap:['Sáng · Người mới, chưa đủ dữ liệu','Bắt đầu từ 12/11: hai cột thật (T4, T5), T2–T3 trước đó không cột và không tính là chưa ghi. Không có Display Large giả; thẻ “Sắp có số” nói khi nào có từng phần.']},
+  {kind:'month', key:'2026-10', sel:'2026-10-08', dark:true, cap:['Tối · Đang chọn một ngày trên biểu đồ tháng','Ngón tay đặt lên 08/10: cột được phủ lớp chọn và nhãn ngày; hàng đọc số cố định dưới biểu đồ (không bị ngón tay che) nói 800 kcal, Thiếu 940, nghi ghi thiếu; ‹ › 48dp bước từng ngày, “Mở ngày” sang S33. Biểu đồ là slider với valuemin / max / now / text.']},
+  {kind:'week', key:'2026-11-10', scroll:true, cap:['Sáng · Tuần này, so với cùng kỳ tuần trước','Tuần đang diễn ra so với T2–T5 tuần trước (03–06/11), đủ ≥3 ngày ghi: 1.533 / 1.490 kcal, đạt 2/4 / 3/4, nước ↓440 ml (làm tròn 10 ml). Hàng kỳ ‹ › vẫn ghim và chuyển tonal khi cuộn.']},
+];
+
+const only = new URLSearchParams(location.search).get('f');
+if(only!==null){ document.body.innerHTML = phone(frames[+only]); document.body.style.cssText='margin:0;background:transparent'; document.body.classList.add('still'); const ph=document.querySelector('.phone'); ph.style.cssText+=';box-shadow:none;outline:none;border-radius:0'; }
+else document.getElementById('frames').innerHTML = frames.map(f=>`<figure>${phone(f)}<figcaption><b>${f.cap[0]}</b>${f.cap[1]}</figcaption></figure>`).join('');
+function settle(){
+  const list = only!==null ? [frames[+only]] : frames;
+  document.querySelectorAll('.phone').forEach((ph,i)=>{ if(list[i]&&list[i].scroll){ const b=ph.querySelector('.body'), a=ph.querySelector('#cmp'); b.scrollTop = a.offsetTop - b.offsetTop - 150; } });
+}
+settle(); document.fonts && document.fonts.ready.then(settle);
+const tg = document.getElementById('toggle');
+if(tg){ let all=false; const orig=[...document.querySelectorAll('.phone')].map(p=>p.classList.contains('dark'));
+  tg.onclick=()=>{ all=!all; document.querySelectorAll('.phone').forEach((p,i)=>p.classList.toggle('dark', all||orig[i])); tg.textContent = all?'Về giao diện gốc của từng khung':'Xem toàn bộ ở giao diện tối'; }; }
+</script>
+</body>
+</html>

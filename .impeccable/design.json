@@ -1,0 +1,1684 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-15T15:41:05.928Z",
+  "title": "Design System: Cali",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Chàm Seed",
+        "canonical": "#4355B9",
+        "compose": "ColorScheme.primary",
+        "tonalRamp": [
+          "#00105C",
+          "#08218A",
+          "#293CA0",
+          "#4355B9",
+          "#5D6FD4",
+          "#7789EF",
+          "#BAC3FF",
+          "#DEE0FF"
+        ]
+      },
+      "primary-container": {
+        "role": "primary",
+        "displayName": "Chàm Sương",
+        "canonical": "#DEE0FF",
+        "compose": "ColorScheme.primaryContainer",
+        "tonalRamp": [
+          "#00105C",
+          "#08218A",
+          "#293CA0",
+          "#4355B9",
+          "#5D6FD4",
+          "#7789EF",
+          "#BAC3FF",
+          "#DEE0FF"
+        ]
+      },
+      "secondary-container": {
+        "role": "secondary",
+        "displayName": "Chàm Lam Nhạt",
+        "canonical": "#E0E1F9",
+        "compose": "ColorScheme.secondaryContainer",
+        "tonalRamp": [
+          "#181A2C",
+          "#2D2F42",
+          "#43465A",
+          "#5B5D72",
+          "#74768B",
+          "#A9AAC1",
+          "#C4C5DD",
+          "#E0E1F9"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Giấy Tím Nhạt",
+        "canonical": "#FBF8FF",
+        "compose": "ColorScheme.surface",
+        "tonalRamp": [
+          "#121318",
+          "#1B1B21",
+          "#1F1F25",
+          "#35343A",
+          "#46464F",
+          "#E4E1E9",
+          "#EFEDF4",
+          "#FBF8FF"
+        ]
+      },
+      "surface-low": {
+        "role": "neutral",
+        "displayName": "Tầng Thấp",
+        "canonical": "#F5F2FA",
+        "compose": "ColorScheme.surfaceContainerLow"
+      },
+      "surface-cont": {
+        "role": "neutral",
+        "displayName": "Tầng Giữa",
+        "canonical": "#EFEDF4",
+        "compose": "ColorScheme.surfaceContainer"
+      },
+      "surface-highest": {
+        "role": "neutral",
+        "displayName": "Tầng Cao Nhất",
+        "canonical": "#E4E1E9",
+        "compose": "ColorScheme.surfaceContainerHighest"
+      },
+      "on-surface": {
+        "role": "neutral",
+        "displayName": "Mực",
+        "canonical": "#1B1B21",
+        "compose": "ColorScheme.onSurface"
+      },
+      "on-surface-var": {
+        "role": "neutral",
+        "displayName": "Mực Phụ",
+        "canonical": "#46464F",
+        "compose": "ColorScheme.onSurfaceVariant"
+      },
+      "outline-var": {
+        "role": "neutral",
+        "displayName": "Viền Nhạt",
+        "canonical": "#C6C5D0",
+        "compose": "ColorScheme.outlineVariant"
+      },
+      "error": {
+        "role": "error",
+        "displayName": "Đỏ Error",
+        "canonical": "#BA1A1A",
+        "compose": "ColorScheme.error",
+        "tonalRamp": [
+          "#410002",
+          "#690005",
+          "#93000A",
+          "#BA1A1A",
+          "#DE3730",
+          "#FF897D",
+          "#FFB4AB",
+          "#FFDAD6"
+        ],
+        "note": "Overrun >10%, macro over target, and outlined text-field input errors (shown on blur / IME Done only). Also: chat send-failure bubble (error-container) and \"Chưa gửi\" marker on the unsent user message, always with icon and text. S35: overflow part of day columns and S35 macro bars (after a 3dp gap at the goal), over-column value labels, weekly 'Vượt X%' chip, AI review error box. S40–S45: 401 API-key field (input error), TimeInput meal-window overlap error line (S44), and the background of the only filled error button, \"Xoá vĩnh viễn\" (S45 delete-all step 2). The delete-all row and dialog step 1 are not red."
+      },
+      "on-error": {
+        "role": "error",
+        "displayName": "Chữ Trên Đỏ",
+        "canonical": "#FFFFFF",
+        "dark": "#690005",
+        "compose": "ColorScheme.onError",
+        "tonalRamp": [
+          "#410002",
+          "#690005",
+          "#93000A",
+          "#BA1A1A",
+          "#DE3730",
+          "#FF897D",
+          "#FFDAD6",
+          "#FFFFFF"
+        ],
+        "note": "Single permitted use: text and delete_forever icon on the filled error button \"Xoá vĩnh viễn\" (S45 delete-all dialog, step 2). ≈6.5:1 light, ≈7.7:1 dark. Never used elsewhere; text on error-container stays on-error-container."
+      },
+      "warn": {
+        "role": "tertiary",
+        "displayName": "Hổ Phách",
+        "canonical": "#8A5100",
+        "compose": "CaliColors.warn (extended)",
+        "tonalRamp": [
+          "#2C1600",
+          "#4A2800",
+          "#693C00",
+          "#8A5100",
+          "#AD6800",
+          "#E28A1A",
+          "#FFB86E",
+          "#FFDCBE"
+        ],
+        "note": "Three meanings only: slight overrun (<=10%); 'cần kiểm tra' validation flags (low confidence, kcal/macro mismatch >20%, >2500 kcal); 'đã điều chỉnh' safety clamp of the target and low target-BMI (<18.5) warning, always with `info` icon and the real value, never blocking. Red never used for validation or clamps. S35: the suspected under-logging flag (`warning` + warn value label on a day under 50% of target) is a 'cần kiểm tra' use; under-target days ('Thiếu') are never amber. S41: clamped speed rows \"Đã chỉnh · ~0,52 kg/tuần\" (warn, ≥4.5:1 on the selected secondary-container row: ≈5.0:1 light, ≈5.4:1 dark) and the Amber Adjust box naming the 25% TDEE cap on override / recalc sheet."
+      },
+      "protein": {
+        "role": "tertiary",
+        "displayName": "Đạm, Xanh Mòng Két",
+        "canonical": "#006780",
+        "compose": "CaliColors.protein (extended)",
+        "tonalRamp": [
+          "#001F28",
+          "#003544",
+          "#004D61",
+          "#006780",
+          "#0083A2",
+          "#2FA9CB",
+          "#5FD4F6",
+          "#B9EAFF"
+        ]
+      },
+      "carb": {
+        "role": "tertiary",
+        "displayName": "Tinh Bột, Xanh Ô Liu",
+        "canonical": "#4C6700",
+        "compose": "CaliColors.carb (extended)",
+        "tonalRamp": [
+          "#131F00",
+          "#233600",
+          "#364E00",
+          "#4C6700",
+          "#628400",
+          "#7DA21E",
+          "#B1D46A",
+          "#CCF183"
+        ]
+      },
+      "fat": {
+        "role": "tertiary",
+        "displayName": "Béo, Mận Chín",
+        "canonical": "#8E4585",
+        "compose": "CaliColors.fat (extended)",
+        "tonalRamp": [
+          "#3A0035",
+          "#551550",
+          "#712D6B",
+          "#8E4585",
+          "#AB5E9F",
+          "#E08FD4",
+          "#FFAEE9",
+          "#FFD7F2"
+        ]
+      },
+      "meal-sang": {
+        "role": "tertiary",
+        "displayName": "Bữa Sáng, Chàm",
+        "canonical": "#4355B9",
+        "compose": "CaliColors.mealSang (extended)"
+      },
+      "meal-trua": {
+        "role": "tertiary",
+        "displayName": "Bữa Trưa, Chàm Sáng",
+        "canonical": "#5868C9",
+        "compose": "CaliColors.mealTrua (extended)"
+      },
+      "meal-toi": {
+        "role": "tertiary",
+        "displayName": "Bữa Tối, Chàm Đêm",
+        "canonical": "#1E2A78",
+        "compose": "CaliColors.mealToi (extended)"
+      },
+      "meal-phu": {
+        "role": "tertiary",
+        "displayName": "Bữa Phụ, Chàm Phấn",
+        "canonical": "#6C79D6",
+        "compose": "CaliColors.mealPhu (extended)",
+        "note": "Light-mode neighbours meal-sang/trua/phu are ~1.3:1 apart; separate by hue, not lightness, keeping >=3:1 against the ring track."
+      },
+      "inverse-surface": {
+        "role": "neutral",
+        "displayName": "Mực Đảo",
+        "canonical": "#303036",
+        "compose": "ColorScheme.inverseSurface",
+        "note": "Snackbar only. Dark: #E4E1E9."
+      },
+      "inverse-on-surface": {
+        "role": "neutral",
+        "displayName": "Chữ Trên Mực Đảo",
+        "canonical": "#F2EFF7",
+        "compose": "ColorScheme.inverseOnSurface",
+        "note": "Dark: #303036."
+      },
+      "inverse-primary": {
+        "role": "primary",
+        "displayName": "Chàm Đảo",
+        "canonical": "#BAC3FF",
+        "compose": "ColorScheme.inversePrimary",
+        "note": "Snackbar action Hoàn tác. Dark: #4355B9."
+      },
+      "scrim": {
+        "role": "neutral",
+        "displayName": "Màn Che",
+        "canonical": "rgba(0,0,0,0.32)",
+        "compose": "ColorScheme.scrim + alpha 0.32 (dark 0.5)"
+      },
+      "under": {
+        "role": "primary",
+        "displayName": "Chàm Thiếu",
+        "canonical": "color-mix(in srgb, #4355B9 70%, #F5F2FA)",
+        "compose": "lerp(surfaceContainerLow, primary, 0.7) (derived, not a new token)",
+        "note": "S35 'Thiếu' day columns, below-goal water columns and their legend swatch. Dark: #BAC3FF 70% over #1B1B21. Never amber, never red."
+      }
+    },
+    "typographyMeta": {
+      "display-large": {
+        "displayName": "Display Large",
+        "purpose": "Một chỗ duy nhất trên màn: tâm vòng calo (số kcal còn lại / +N trên S10; mục tiêu kcal/ngày trong vòng trống trên S02 và cho ngày chưa ghi trên S33; Δ có dấu của ngày đã qua trên S33), hoặc điểm tuần trong thẻ điểm S35, hoặc cân trung bình tuần trên S31 (hai màn không có vòng calo); trên S32 là kcal TB mỗi ngày của kỳ, chỉ khi kỳ có ≥3 ngày ghi.",
+        "compose": "Typography.displayLarge, 57.sp / 60.sp, FontWeight(650), opsz 72, wdth 92"
+      },
+      "display-medium": {
+        "displayName": "Display Medium",
+        "purpose": "Chỉ giờ và phút trong ô TimeInput của sheet giờ ăn & bữa.",
+        "compose": "Typography.displayMedium, 45.sp / 52.sp, W600, opsz 48"
+      },
+      "display-small": {
+        "displayName": "Display Small",
+        "purpose": "Tổng kcal trên thẻ xác nhận; mục tiêu kcal mới trên sheet tính lại mục tiêu (S31, F09).",
+        "compose": "Typography.displaySmall, 36.sp / 40.sp, FontWeight(650), opsz 48, wdth 92"
+      },
+      "headline-medium": {
+        "displayName": "Headline Medium",
+        "purpose": "Tiêu đề mỗi bước onboarding và màn thiết lập; chữ, không bao giờ là số liệu.",
+        "compose": "Typography.headlineMedium, 28.sp / 35.sp, W600, -0.01em, opsz 32"
+      },
+      "title-large": {
+        "displayName": "Title Large",
+        "purpose": "Tiêu đề thanh trên, số trong ô dữ liệu, giá trị trong ô nhập outlined. S35: xếp loại điểm, cân TB tuần, câu chính thẻ Calo / Nước (500, số 650). S31: 'Cân nặng', tiêu đề sheet Ghi cân / tính lại, mục tiêu đang dùng (on-surface-var). S33: ngày trên thanh trên.",
+        "compose": "Typography.titleLarge, 22.sp / 28.sp, W600"
+      },
+      "title-medium": {
+        "displayName": "Title Medium",
+        "purpose": "Tên bữa, tổng kcal, giá trị macro, nhãn thẻ chọn, chữ nút bước 56dp.",
+        "compose": "Typography.titleMedium, 16.sp / 24.sp, W600"
+      },
+      "body-large": {
+        "displayName": "Body Large",
+        "purpose": "Chỉ số kg của hàng bản ghi S31, on-surface-var: từng lần cân nhỏ và nhạt hơn TB tuần.",
+        "compose": "Typography.bodyLarge, 16.sp / 24.sp, W400"
+      },
+      "body-medium": {
+        "displayName": "Body Medium",
+        "purpose": "Tên món, kcal từng món.",
+        "compose": "Typography.bodyMedium, 14.sp / 20.sp, W500"
+      },
+      "body-small": {
+        "displayName": "Body Small",
+        "purpose": "Khẩu phần, lời dẫn, ghi chú.",
+        "compose": "Typography.bodySmall, 12.sp / 16.sp, W400"
+      },
+      "label-large": {
+        "displayName": "Label Large",
+        "purpose": "Nút, chip trạng thái, nhãn tâm vòng.",
+        "compose": "Typography.labelLarge, 14.sp / 20.sp, W600"
+      },
+      "label-medium": {
+        "displayName": "Label Medium",
+        "purpose": "Đơn vị, ngày, giờ ăn, nhãn tab.",
+        "compose": "Typography.labelMedium, 12.sp / 16.sp, W500"
+      },
+      "label-small": {
+        "displayName": "Label Small",
+        "purpose": "Còn / vượt X g dưới macro. S35: nhãn giá trị trên cột (nền surface-low che vạch), nhãn tuần sparkline, thời điểm tạo nhận xét. S31: nhãn trục biểu đồ xu hướng, nhãn phụ hàng bản ghi. S33: 'thiếu X g' / 'đạt' / 'vượt X g' dưới macro ngày đã qua.",
+        "compose": "Typography.labelSmall, 11.sp / 16.sp, W500"
+      }
+    },
+    "shapeMap": {
+      "small": "MaterialTheme.shapes.small (8.dp)",
+      "medium": "MaterialTheme.shapes.medium (12.dp)",
+      "large": "MaterialTheme.shapes.large (16.dp)",
+      "full": "CircleShape / RoundedCornerShape(50)",
+      "extra-large": "RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp) for sheets (MaterialTheme.shapes.extraLarge)",
+      "extra-small": "RoundedCornerShape(4.dp) for snackbar and OutlinedTextField (MaterialTheme.shapes.extraSmall)"
+    },
+    "unitMap": "1px in the HTML mockup = 1.sp for type, 1.dp for size and spacing; --fs mirrors system font scale, which sp handles natively; the 220dp ring does not scale.",
+    "shadows": [
+      {
+        "name": "fab",
+        "value": "0 1px 3px rgba(0,0,0,.18), 0 4px 10px -2px rgba(0,0,0,.16)",
+        "purpose": "Chỉ FAB mở rộng nổi trên nội dung cuộn. Compose: độ nổi mặc định của ExtendedFloatingActionButton."
+      },
+      {
+        "name": "snackbar",
+        "value": "0 2px 6px rgba(0,0,0,.2)",
+        "purpose": "Chỉ snackbar Hoàn tác. Compose: độ nổi mặc định của Snackbar."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-emphasized",
+        "value": "cubic-bezier(.2,0,0,1)",
+        "purpose": "Vẽ đoạn vòng calo và FAB xuất hiện. Làn điểm S35."
+      },
+      {
+        "name": "ring-draw",
+        "value": "700ms, delay 120ms + 140ms per segment",
+        "purpose": "Các đoạn vòng vẽ lần lượt theo giờ ăn; tắt khi giảm chuyển động. Cũng chạy trên S33 (ngày đã qua)."
+      },
+      {
+        "name": "fab-enter",
+        "value": "opacity 200ms; translateY(12px) scale(.92) to none 250ms",
+        "purpose": "FAB hiện khi hàng nút cuộn khuất."
+      },
+      {
+        "name": "appbar-tint",
+        "value": "background-color 200ms",
+        "purpose": "Thanh trên đổi surface sang surface-cont khi cuộn. Trên S35 thanh trạng thái, thanh trên và hàng chọn tuần cùng đổi. Trên S30 thanh trạng thái, thanh trên và hàng thứ T2…CN cùng đổi. Trên S31 và S33 thanh trạng thái và thanh trên cùng đổi. Trên S32 thanh trạng thái, thanh trên và hàng chọn kỳ ‹ › cùng đổi (bộ chọn Tuần / Tháng cuộn đi)."
+      },
+      {
+        "name": "lane-grow",
+        "value": "transform scaleX 0 to 1, 700ms cubic-bezier(.2,0,0,1), delay 150ms, origin left",
+        "purpose": "Đoạn sắp thêm mọc trên thanh làn Hôm nay sau khi lưu; tắt khi giảm chuyển động."
+      },
+      {
+        "name": "target-arrive",
+        "value": "600ms cubic-bezier(.2,0,0,1), delay 100ms; opacity 0 + translateY(8px) scale(.96) to none",
+        "purpose": "Mục tiêu kcal/ngày đến một lần trong vòng trống S02; tắt khi giảm chuyển động."
+      },
+      {
+        "name": "step-shared-axis-x",
+        "value": "M3 shared axis X (forward slides left, back slides right); Compose: MaterialSharedAxisX / AnimatedContent",
+        "purpose": "Chuyển giữa các bước onboarding; Back hệ thống về bước trước. Mockup tĩnh không định thời lượng: dùng mặc định M3."
+      },
+      {
+        "name": "typing-dots",
+        "value": "3 dots 7dp, 1.2s infinite ease-in-out, 150ms stagger, opacity .3 to 1, translateY 0 to -3px",
+        "purpose": "Bong bóng đang gõ của S20 (đặc tả S20 yêu cầu); prefers-reduced-motion: đứng yên opacity .6. Cảnh báo detector về animation vô hạn được chấp nhận."
+      },
+      {
+        "name": "score-lane-fill",
+        "value": "transform scaleX 0 to 1, 700ms cubic-bezier(.2,0,0,1), delay 120ms + 140ms per segment, origin left",
+        "purpose": "Chuyển động duy nhất được dàn dựng của S35: bốn đoạn làn điểm đầy lần lượt; tắt khi giảm chuyển động."
+      },
+      {
+        "name": "trend-line-draw",
+        "value": "stroke-dashoffset 1 to 0 (pathLength 1), 700ms cubic-bezier(.2,0,0,1), delay 120ms",
+        "purpose": "Đường TB tuần của biểu đồ xu hướng S31 vẽ một lần khi mở; tắt khi giảm chuyển động."
+      },
+      {
+        "name": "camera-scan-line",
+        "value": "top 6% to 94%, 2.8s cubic-bezier(.4,0,.2,1), infinite alternate",
+        "purpose": "Chuyển động duy nhất của Camera (S11): vạch quét 2dp primary trên ảnh lúc phân tích; tắt khi giảm chuyển động."
+      },
+      {
+        "name": "stats-bars-rise",
+        "value": "transform scaleY 0 to 1, 500ms cubic-bezier(.2,0,0,1), delay 80ms + 40ms per column (week) / 14ms per column (month), origin bottom",
+        "purpose": "Chuyển động duy nhất được dàn dựng của S32: các cột mọc từ đường đáy khi mở một kỳ; tắt khi giảm chuyển động."
+      }
+    ],
+    "ring": {
+      "diameter": "220dp",
+      "radius": "98dp",
+      "stroke": "14dp",
+      "cap": "butt",
+      "gap": "3dp",
+      "minArc": "4dp",
+      "overflowStroke": "6dp",
+      "overflowCap": "round",
+      "overflowTrackOpacity": 0.18,
+      "track": {
+        "light": "surface-cont",
+        "dark": "surface-highest"
+      },
+      "targetState": {
+        "segments": "none",
+        "ticks": "none",
+        "center": "display-large target + 'kcal mỗi ngày' label-large on-surface-var",
+        "motion": "target-arrive"
+      },
+      "pastDayCenter": {
+        "screen": "S33",
+        "label": "label-large; 08 §2 class: 'Thiếu mục tiêu' / 'Đạt mục tiêu' (on-surface-var, number on-surface), 'Vượt mục tiêu' (>10%, label + number error), 'Đạt · vượt nhẹ' (≤10% over, label + number warn)",
+        "number": "display-large signed Δ vs target ('−320', '−50', '+620', '+10')",
+        "unit": "'kcal' label-medium on-surface-var",
+        "unlogged": "empty ring (S02 target state), centre 'Mục tiêu ngày' + target"
+      }
+    },
+    "dayLane": {
+      "height": "10dp",
+      "cap": "butt",
+      "gap": "3dp",
+      "track": {
+        "light": "surface-cont",
+        "dark": "surface-highest"
+      },
+      "length": "daily target",
+      "pending": {
+        "fill": "color-mix(tone 40%, track)",
+        "insetOutline": "1.5dp tone"
+      },
+      "goalTick": {
+        "width": "2dp",
+        "color": "on-surface",
+        "overhang": "4dp"
+      },
+      "overflow": {
+        "height": "6dp",
+        "offset": "4dp",
+        "cap": "round",
+        "trackOpacity": 0.18,
+        "color": "warn (<=10%) | error (>10%)"
+      },
+      "label": {
+        "today": "'Hôm nay sau khi lưu'",
+        "otherDay": "'dd/mm sau khi lưu' (S33); chat S20 card: 'Ngày này'",
+        "insertion": "pending segment inserted in eating-time order, not appended",
+        "outcome": "only when the day changes class: divider 1dp outline-var 55% + event_available 18dp primary + body-small 'Lưu xong, ngày dd/mm chuyển từ X sang Y (…)'"
+      },
+      "edit": {
+        "kept": "other entries and the edited entry's old value stay solid segments",
+        "increase": "difference is a pending segment (tone 40% + 1.5dp inset) appended right after the entry's old segment",
+        "overTarget": "pending stops at the goal tick; excess on the 6dp over-lane (warn <=10% + info, error >10% + warning); header 'Vượt nhẹ 3% · +60 kcal', never 'còn −60'",
+        "decrease": "removed kcal = unfilled segment, 1.5dp dashed outline (outline color, drawn inside), right after the kept part",
+        "deltaLine": "label-medium on-surface-var, 10dp below: 'Trước khi sửa N kcal' / 'Món này ±Δ kcal' (numbers 600 on-surface, true minus sign)",
+        "pastDay": "chip 'hh:mm · Bữa · dd/mm', lane label 'dd/mm sau khi lưu', outcome line from the after-save day class"
+      }
+    },
+    "sheet": {
+      "top": "40dp from screen top",
+      "corner": "28dp top",
+      "handle": "32x4dp outline-var, 12dp from top",
+      "bar": "52dp, 48/1fr/48",
+      "footer": "surface-cont, padding 12/16/28, Save 56dp full width"
+    },
+    "bmiScale": {
+      "range": "15-35",
+      "bands": [
+        15,
+        18.5,
+        23,
+        25,
+        30,
+        35
+      ],
+      "ticks": [
+        18.5,
+        23,
+        25,
+        30
+      ],
+      "height": "8dp",
+      "gap": "3dp",
+      "cap": "butt",
+      "track": "surface-highest",
+      "current": "primary",
+      "categoryColors": "none",
+      "marker": "4x18dp, radius 2dp, on-surface, 5dp overhang"
+    },
+    "energyMix": {
+      "height": "10dp",
+      "gap": "3dp",
+      "cap": "butt",
+      "order": [
+        "protein",
+        "carb",
+        "fat"
+      ],
+      "proportion": "kcal share"
+    },
+    "selection": {
+      "rest": "surface-low + inset 1dp outline-var; icon tile surface-highest / on-surface-var",
+      "selected": "secondary-container + inset 2dp primary; text on-secondary-container; icon tile primary / on-primary",
+      "checkMark": "none",
+      "autoAdvance": "never",
+      "corner": "16dp",
+      "iconTileCorner": "12dp"
+    },
+    "stepProgress": {
+      "height": "6dp",
+      "track": "surface-highest",
+      "fill": "primary",
+      "label": "Bước n/5, label-medium on-surface-var",
+      "topBar": "56dp, 48/1fr/48"
+    },
+    "chat": {
+      "bubbleMe": {
+        "fill": "secondary-container / on-secondary-container",
+        "radius": "20/20/6/20",
+        "align": "right",
+        "maxWidth": "86%"
+      },
+      "bubbleAi": {
+        "fill": "surface-cont",
+        "radius": "20/20/20/6",
+        "align": "left",
+        "maxWidth": "96%",
+        "lightSeparation": "~1.1:1; optional 1dp outline-var edge"
+      },
+      "stamp": "label-small on-surface-var; auto_awesome 16dp on AI messages",
+      "daymark": "label-small centered",
+      "foodCard": {
+        "width": "304dp (same in pending/saved/skipped)",
+        "radius": "20/20/20/6",
+        "fill": "surface-low + inset 1dp outline-var (transparent when saved)",
+        "padding": "14/14/6",
+        "chip": "28dp r8 secondary-container, tone swatch 10dp r2, 'Bữa · giờ' | 'Bữa · Hôm qua · giờ'",
+        "lane": "S12 day-lane grammar, 10dp, 3dp gap, goal tick 2dp overhang 3dp; 'Hôm nay' | 'Ngày này' sau khi lưu",
+        "actions": "Xem & lưu tonal 48dp + Bỏ qua text 48dp",
+        "saved": "Đã lưu vào Bữa + Xem lại",
+        "skipped": "Đã bỏ qua + Hoàn tác, on-surface-var text, no opacity"
+      },
+      "typing": "surface-cont bubble, 3 dots 7dp",
+      "error": "error-container bubble, cloud_off, outlined 48dp Thử lại; user message marked 'Chưa gửi'",
+      "empty": "badge 48dp r16 primary-container + 3 suggestion rows >=48dp r16 outline-var 1dp",
+      "composer": "add_photo_alternate 48dp, field 48dp r24 surface-cont, send 48dp primary / disabled on-surface 12%/50%",
+      "attachSheet": "surface-low, top r28, camera / library rows 56dp, each states where eaten_at comes from",
+      "topBar": "'còn N kcal' primary label-medium 600 in subtitle",
+      "ledgerRule": "A pending card never changes the top-bar remaining; only saving does. Messages grouped by eaten day."
+    },
+    "weekly": {
+      "screen": "S35 Tổng kết tuần; child screen: back arrow, no navigation bar",
+      "topBar": "64dp, back + 'Tổng kết tuần' title-large",
+      "weekSwitcher": {
+        "grid": "48/1fr/48",
+        "padding": "0 4 8dp",
+        "title": "'Tuần dd/mm – dd/mm' | 'Tuần này · dd/mm – dd/mm' title-medium",
+        "stateDone": "event_available 16dp + 'Đã kết thúc · ghi n/7 ngày' label-medium on-surface-var",
+        "stateLive": "chip 24dp r8 secondary-container, hourglass_top + 'Tạm tính · còn N ngày'",
+        "nextDisabled": "current week, on-surface 38%, aria-disabled"
+      },
+      "scroll": "status + top bar + week row turn surface-cont, 200ms cubic-bezier(.2,0,0,1)",
+      "body": "margin 12dp, cards 8dp apart; order: score, Calo, Nước, Macro, Cân nặng, Món nhiều calo nhất, Nhận xét của AI, footnote",
+      "scoreCard": {
+        "fill": "primary-container / on-primary-container",
+        "radius": "16dp",
+        "padding": "14/16/16",
+        "score": "display-large, line-height .9",
+        "of": "'/100 điểm' title-medium at 72%",
+        "grade": "title-large: Xuất sắc >=85, Tốt >=70, Cần cố gắng >=50, Chưa tốt",
+        "compare": "arrow_upward/arrow_downward 16dp + label-medium at 80%"
+      },
+      "scoreLane": {
+        "height": "10dp",
+        "segments": [
+          "Calo 40",
+          "Đạm 20",
+          "Nước 20",
+          "Ghi chép 20"
+        ],
+        "flex": [
+          40,
+          20,
+          20,
+          20
+        ],
+        "gap": "3dp",
+        "cap": "butt",
+        "earned": "primary",
+        "track": "color-mix(primary 16%, primary-container)",
+        "labels": "label-medium name at 76% + label-large 'n/max', 8dp below",
+        "motion": "score-lane-fill"
+      },
+      "reportCard": {
+        "fill": "surface-low",
+        "radius": "16dp",
+        "padding": "14/16/16",
+        "head": "title-medium + compare arrow label-medium on-surface-var",
+        "headline": "title-large 500, numbers 650, + weekly state chip",
+        "rows": "icon 18dp primary + body-small, divider 1dp outline-var 55%"
+      },
+      "dayColumnChart": {
+        "width": "card-wide (−16dp margins), 7 × 48dp columns, each a button → S33",
+        "bar": "20dp, square",
+        "plotHeight": "120dp calo / 96dp nước",
+        "goalLine": "1dp dashed on-surface-var",
+        "band": "±10%, on-surface 6% (calo only)",
+        "hit": "primary",
+        "under": "--under (primary 70% over surface-low)",
+        "over": "primary to goal + 3dp gap + error overflow (min 4dp)",
+        "today": "pending grammar: primary 40% over ring track + 1.5dp inset primary",
+        "unlogged": "20×8dp stub, 1.5dp dashed outline + '—'",
+        "future": "no column, label on-surface 38%",
+        "valueLabel": "label-small on-surface-var, surface-low knockout r4; over = error 650; suspected under-log (<50% target) = warning 16dp + warn",
+        "dayLabels": "label-medium on 1dp outline-var baseline; today 700 on-surface + 4dp primary dot"
+      },
+      "legend": "10dp square swatches + name + bold count (doubles as day counts); 'Chưa ghi' dashed; '(gồm hôm nay)'; dashed goal sample 'Mục tiêu N ± 10%'",
+      "macroBar": {
+        "height": "6dp",
+        "track": "surface-highest",
+        "cap": "butt",
+        "scale": "125% of target",
+        "goalTick": "2dp on-surface at 80%, 3dp overhang",
+        "over": "in-target data color + 3dp gap + error overflow; value and 'vượt X g mỗi ngày' turn error",
+        "energyMix": "two 10dp stacked bars Thực tế / Mục tiêu, grid 64/1fr/92"
+      },
+      "weightCard": {
+        "value": "title-large average + 'kg TB tuần' label-medium",
+        "sparkline": "132×56dp, 2dp primary line, 7dp square markers 1.5dp primary stroke, current filled",
+        "weekLabels": "HTML label-small, current 700",
+        "empty": "40dp r12 surface-highest icon tile + body-small + full-width outlined 'Ghi cân nặng'"
+      },
+      "topFoods": "numbered list of 5; rank label-medium, name body-medium + '×n', kcal 600; 4dp primary share bar on surface-highest relative to #1; dividers outline-var 55%",
+      "aiReview": {
+        "head": "auto_awesome 20dp primary + title-medium + label-small timestamp",
+        "lead": "title-medium",
+        "sections": [
+          "Làm tốt (check_circle)",
+          "Cần cải thiện (flag)",
+          "Quy luật (insights)",
+          "3 việc cho tuần sau (lightbulb)"
+        ],
+        "sectionTitle": "label-large + 20dp primary icon; bullets 4dp dots, body-medium",
+        "steps": "24dp round secondary-container numbered badges, 1dp outline-var 55% dividers",
+        "nesting": "none: whitespace and dividers, no nested boxes",
+        "disclaimer": "body-small on-surface-var",
+        "states": {
+          "loading": "chat typing bubble + line saying the cards above are complete",
+          "error": "error-container box r16, cloud_off 20dp, outlined 48dp Thử lại",
+          "stale": "secondary-container strip r12 (sync + text + 'Tạo lại'); old review stays readable in on-surface-var",
+          "notCreated": "body-small + tonal 'Tạo nhận xét tạm tính'",
+          "noApiKey": "card hidden"
+        }
+      }
+    },
+    "history": {
+      "screen": "S30 Lịch sử; top-level tab, navigation bar with Lịch sử active",
+      "topBar": "64dp, grid 48/1fr/48: chevron_left / title button r12 ('Lịch sử' title-large + 'Tháng N, YYYY' label-medium on-surface-var + arrow_drop_down 18dp, opens month picker) / chevron_right; next disabled on current month (on-surface 38%, aria-disabled)",
+      "weekdayRow": "sticky, T2…CN label-medium on-surface-var, grid 7×48dp, margin 12dp, bottom padding 6dp",
+      "scroll": "status + top bar + weekday row turn surface-cont, 200ms cubic-bezier(.2,0,0,1)",
+      "body": "margin 12dp, bottom 16dp, blocks 8dp apart; order: week cards (Monday-start, weeks spanning the month), legend, summary, 'Xem thêm'",
+      "summary": {
+        "currentMonth": "'Tuần này · tạm tính' stat grid: TB mỗi ngày (kcal), Ngày đạt n / days so far incl. today, Nước TB (L)",
+        "pastMonth": "'Tháng N · tóm tắt' stat grid: TB mỗi ngày (kcal), Ngày đạt n / days in month, Cân TB (kg)",
+        "newUser": "note card replaces stat grid",
+        "grid": "stat-grid: surface-low r16, padding 12/4, 3 columns, 1dp outline-var 60% dividers; label-medium on-surface-var, value title-medium with 12sp 500 on-surface-var unit",
+        "sectionTitle": "title-medium, margin 12dp top, 8dp sides"
+      },
+      "weekCard": {
+        "fill": "surface-low",
+        "radius": "16dp",
+        "width": "7 × 48dp",
+        "header": "48dp button → S35, padding 0 4 0 14, gap 8; range label-medium on-surface-var; score label-large 650 on-surface + '· grade' label-medium on-surface-var; chevron_right 20dp on-surface-var",
+        "current": "1.5dp inset primary outline; label 'Tuần này · range' 600 on-surface; chip 24dp r8 secondary-container 'Tạm tính · N' ('Tạm tính' when no score yet) replaces the score",
+        "collapsed": "future weeks and weeks wholly before first use: plain 40dp row of dim dates, no card, no header, no goal line"
+      },
+      "dayCell": {
+        "size": "48×72dp button → S33, full aria-label ('Thứ Ba, 11/11: 1.690 kcal, đạt. Mở chi tiết ngày')",
+        "date": "28dp circle, label-large 600, 4dp top padding",
+        "today": "1.5dp inset primary outline on the circle, primary 700",
+        "outOfMonth": "on-surface-var 500, still has a bar",
+        "futureOrPreStart": "on-surface 38% 500, no bar, not interactive"
+      },
+      "miniBar": {
+        "width": "14dp",
+        "cap": "butt",
+        "baseline": "8dp above cell bottom",
+        "scale": "30dp = 155% of goal",
+        "goalLine": "one per week row: 1dp dashed on-surface-var 70%, inset 8dp, only when the row has a bar",
+        "classes": "hit (within ±10%) primary; under --under; over primary to goal + 3dp gap + error overflow (min 3dp, gap subtracted)",
+        "today": "outline-only: transparent + 1.5dp inset primary; differs from S35's 40% pending fill because at 14dp, especially in dark, the fill reads as --under",
+        "unlogged": "14×10dp 1.5dp dashed outline stub + '—' label-small on-surface-var, surface-low r4 knockout, 20dp above bottom",
+        "suspectedUnderLog": "<50% of goal, not today: filled warning 14dp warn at date's top-right (top -3, right -7)",
+        "startOfUse": "filled flag 16dp primary at date's top-left (top -2, left -8)"
+      },
+      "legend": "label-medium on-surface-var, gap 6/14, padding 4 6 0; 10dp square swatches + name + 600 on-surface count over month days up to today; '(gồm hôm nay)' on today's class; 'Nghi ghi thiếu N' with warning 14dp when N>0; dashed sample 'Mục tiêu 1.740' (no ±10% band on the calendar)",
+      "links": "surface-low r16 block of four ≥64dp buttons (grid 40/1fr/24, gap 14, padding 10/14), 1dp outline-var 55% dividers; 40dp r12 primary-container icon tile (insights, monitor_weight, bar_chart, menu_book); title-medium + body-small 400 on-surface-var sub-line; chevron_right on-surface-var; present in every state",
+      "newUserNote": "surface-low r16, padding 12/14, gap 10; flag 20dp primary + body-small on-surface-var, start date bold on-surface",
+      "stateLayers": "on-surface 8% hover / 12% pressed on day cells, week headers, link rows; focus 2dp primary ring, 2dp offset",
+      "dataNote": "mockups use a fictional calendar (13/11/2026 = Thứ Năm; real calendar: Thứ Sáu); code uses the real calendar"
+    },
+    "weight": {
+      "screen": "S31 Cân nặng; child screen from S10 weight tile or S30 'Cân nặng' row; back + 'Cân nặng' title-large; no navigation bar",
+      "body": "margin 12dp, cards 8dp apart, bottom padding 96dp; order: weekly-average card, Xu hướng, BMI, Bản ghi, footnote",
+      "fab": "extended FAB 'Ghi cân' (add), always visible (no button row); lifts above snackbar",
+      "heroCard": {
+        "meta": "label-medium on-surface-var 'TB tuần dd/mm – dd/mm · n lần cân' | prov chip 'Tuần này · tạm tính' (hourglass_top 16dp) | flag 'Lần cân đầu'",
+        "number": "display-large weekly average, line-height .9, 'kg' title-medium on-surface-var",
+        "change": "title-medium on-surface '−0,5 kg' + label-medium 'so với tuần trước'; never coloured",
+        "weeklyPointRule": "current week becomes a weekly point only with ≥2 weigh-ins; otherwise headline stays on last full week + body-small 'Tuần này (tạm tính) X kg · 1 lần cân · cần 2 lần để thành TB tuần'",
+        "goalLane": "10dp, track surface-highest, fill primary, butt, single segment; labels 'Tuần đầu X kg' / 'Mục tiêu X kg' label-medium",
+        "progressLine": "flag 18dp primary + body-small 'Đã giảm · Còn · dự kiến ~dd/mm/yyyy'; uses latest record (02 §1) + '(theo lần cân dd/mm)' when it differs from the average, else '(~N tuần)'; ETA counted from today (02 §9)"
+      },
+      "rangeSegmented": "48dp pill, 4 equal parts 7 ngày / 30 ngày / 90 ngày / Tất cả, 1dp outline border + dividers, label-large; selected secondary-container; default 30 ngày",
+      "trendChart": {
+        "size": "full card width (−16dp bleed) × 172dp",
+        "grid": "outline-var 55%; y labels label-small on-surface-var at right; step .5/1/2/5 kg, ≤6 lines",
+        "xTicks": "7: weekday letters; 30: Mondays dd/mm; 90: every 14 days; Tất cả: 'thg N'",
+        "weeklyLine": "2dp primary, round join, point at Thursday of week (capped at today); 7dp square markers 1.5dp primary on surface-low, last filled",
+        "dailyDots": "5dp square on-surface-var; hidden in Tất cả",
+        "outOfWindow": "nearest out-of-window weekly point carried in, line clipped at plot edge",
+        "noPointInWindow": "week average drawn as a 2dp primary horizontal segment over the in-window part of that week, labelled",
+        "goalLine": "1dp dashed (4 3) on-surface-var + 'Mục tiêu X kg', only at its true value; otherwise legend '· dưới khung' + south 14dp",
+        "allRange": "frame extends to goal; 'Hôm nay' 1dp outline vertical with 700 on-surface label; projection 1.5dp dashed (3 4) primary to ETA, dashed 7dp target square, '~dd/mm'",
+        "empty": "<2 weekly points: no line; surface-low r8 note with info primary saying when the line appears"
+      },
+      "records": {
+        "weekHeader": "label-medium on-surface-var range ('Tuần này · …' 600 on-surface) + 'TB <title-medium on-surface> kg · −0,5 kg' (strongest number of the group)",
+        "row": "min 48dp, full card width, padding 4/16, 1dp outline-var 55% dividers; date body-medium on-surface; kg body-large on-surface-var + 12sp unit; optional label-small tag",
+        "emptyWeek": "dashed 14×10dp stub + 'Chưa cân tuần này' body-small",
+        "delete": "swipe left, error-container 112dp, snackbar Hoàn tác; week average recomputed"
+      },
+      "logSheet": {
+        "container": "secondary sheet surface-low, top r28, padding 0 20 28 (12 with keyboard), handle, title-large 'Ghi cân nặng'",
+        "dateChip": "32dp r8 secondary-container, calendar_today 18dp + 'Hôm nay · Thứ Năm, 13/11' + arrow_drop_down, 48dp touch",
+        "existing": "info 16dp body-small note; save label becomes 'Thay bản ghi' (one record per day)",
+        "field": "OutlinedTextField 'Cân nặng', suffix kg, numeric keyboard; supporting 'BMI · class · ±X kg so với lần cân dd/mm'",
+        "error": "range error on blur + tonal 48dp pill 'edit Có phải 74,1 kg?' one-tap correction",
+        "actions": "text 'Huỷ' + filled 'Lưu' 48dp right-aligned; disabled on error"
+      },
+      "recalcSheet": {
+        "compare": "grid 1fr/24dp/1fr: old title-large on-surface-var → arrow_forward → new display-small + delta primary 600",
+        "table": "columns name / Đang dùng / Mới (1fr/80/88), label-medium headers, body-medium rows, 1dp outline-var 55% dividers; changed new values 650 on-surface, unchanged 500 on-surface-var",
+        "safety": "neutral verified_user 18dp primary + body-small; amber-adjust box only when clamped",
+        "switch": "48dp row 'Tự tính lại khi ghi cân' + M3 switch 52×32",
+        "actions": "'Giữ nguyên' text + filled 'Cập nhật mục tiêu'"
+      }
+    },
+    "dayDetail": {
+      "screen": "S33 Chi tiết ngày; S10 reused for a past day; child screen, no navigation bar",
+      "topBar": "64dp grid 48/1fr/48/48: back / title button r12 (date title-large + relative label label-medium on-surface-var + arrow_drop_down 18dp) / chevron_left / chevron_right (from yesterday → S10)",
+      "statsRow": "'Đã ăn' / 'Mục tiêu' label-medium over title-medium, 40dp apart; hidden when unlogged",
+      "dayClassChip": "min 32dp, r8, padding 4/12, surface-cont (dark surface-highest), label-large on-surface, suffix 500 on-surface-var; 10dp square swatch: primary Đạt, --under Thiếu, 1.5dp dashed outline Chưa ghi; replaced by state chip when over",
+      "underLogging": "<50% of target: still Thiếu; chip adds warning 16dp filled warn; warn-container r16 box (padding 12 8 8 14) + quick-add pills 48dp surface/primary 'add Tối · 19:45' for each empty meal",
+      "macroSubline": "'thiếu X g' / 'đạt' (protein ≥90%) / 'vượt X g' (error); never 'còn'",
+      "actions": "filled 'Thêm món' (1.25) / tonal 'Chat AI' (1) / outlined 48dp add_photo_alternate",
+      "emptyMeal": "default mid-window time (schedule 14dp + 'hh:mm' label-medium on-surface-var) beside +",
+      "weekCard": "S10 weekly card reused; live week: chip 24dp r8 secondary-container 'Tạm tính · còn N ngày'; stale AI review: divided row (1dp outline-var 55%, inset 12dp) sync 20dp primary + body-small + 48dp text 'Tạo lại'",
+      "addToPastDay": "S12 unchanged; chip 'hh:mm · Bữa · dd/mm' + source 'history Giữa khung bữa'; lane 'dd/mm sau khi lưu'; save 'Lưu vào Bữa · dd/mm'",
+      "fab": "extended 'Thêm món' (add) when button row scrolls away"
+    },
+    "calendar": "All mockups share a fictional calendar: 13/11/2026 = Thứ Năm = today (real: Friday). Code uses the real calendar.",
+    "camera": {
+      "screen": "S11 Camera; S10 Chụp món → S11 → S12 confirm sheet; full-screen, no navigation bar",
+      "forcedDark": "Always darkColorScheme (and dark CaliColors) regardless of system theme; the only such screen (The Forced-Dark Camera Rule)",
+      "base": "#000 (ColorScheme.scrim, opaque) for viewfinder and bottom panel; documented exception, not a palette colour",
+      "veil": "color-mix(in srgb, #000 62%, transparent) under every control and text drawn over the live feed; on-surface-dark #E4E1E9 over veil-on-white ≈ 4.8:1",
+      "topBar": "top 32dp, 64dp, padding 0 8dp: close 48dp on veil / flash pill 48dp (padding 0 16 0 12, gap 6, label-large, flash_auto \"Tự động\" · flash_on FILL1 \"Bật\" · flash_off \"Tắt\"; \"Bật\" = secondary-container-dark) + cameraswitch 48dp on veil, gap 8",
+      "plateGuide": "264dp circle, 2dp on-surface stroke + 1.5dp #000 60% outer contrast stroke (stroke, not shadow); no corner brackets, no grid",
+      "hint": "one pill, top 100dp, min 32dp, r full, padding 6/14, veil, 16dp icon + label-medium: center_focus_weak \"Chụp từ trên xuống, thấy cả đĩa\"; low light + flash on: brightness_low \"Thiếu sáng · đèn đã bật, đưa món lại gần nguồn sáng\"",
+      "lowLight": "neutral, never amber (Amber Check is closed). Flash off or auto-not-fired: bar on veil just above panel, inset 12dp, min 56dp, r full, padding 4 4 4 16, brightness_low 20dp + body-medium + tonal 48dp \"Bật đèn\" (flash_on 18dp, secondary-container-dark); never blocks capture",
+      "panel": "#000, top corners 28dp, padding 16 16 0; S12 time · meal chip (expand_more, opens S12 time sheet) centred directly above shutter row; row 72dp grid 1fr/72dp/1fr, 12dp above; then 12dp + gesture area",
+      "shutter": "72dp circle, 4dp on-surface ring around 54dp solid on-surface core",
+      "sideTiles": "Thư viện (photo_library, left) / Ghi chú (edit_note, right): 48dp surface-highest-dark tile (r 14dp, off-scale), on-surface icon, label-small on-surface-var label, 56dp column",
+      "permission": "solid surface-dark; 72dp surface-highest tile (r 24dp, off-scale) no_photography 36dp; title-large + body-large on-surface-var; filled 56dp \"Cho phép\" (system dialog) or \"Mở Cài đặt\" after don't-ask-again; outlined 56dp \"Chọn từ thư viện\"",
+      "review": "title \"Xem lại ảnh\"; photo r16 surface-low inset 12dp; time · meal chip + source text (\"Lúc bấm chụp\" / \"Giờ chụp ảnh\"); note = S20 chat-field (min 48dp, r24, surface-cont, body-large, 2dp primary caret) with label \"Ghi chú cho AI (không bắt buộc)\"; empty: three 32dp r8 1dp-outline suggestion chips; footer surface-cont: tonal 56dp \"Chụp lại\" + filled 56dp grow \"Phân tích\" (auto_awesome)",
+      "gallery": "time from EXIF (read before strip), source \"Giờ chụp ảnh\"; other day: chip carries the day (\"Hôm qua 19:05 · Tối\") + event 18dp line naming target day and meal; no EXIF: time of picking; one photo per capture",
+      "analysing": "close only; photo 240dp at 55% under 2dp primary scan line; title-large status \"Đang nhận diện món ăn…\" + elapsed \"Đã chờ 0:07\"; two real steps, 24dp badges (done primary + check, now secondary-container + 2dp primary ring, todo 1dp outline-var); no percentage; outlined 56dp \"Hủy\" + \"Hủy thì không lưu gì cả.\"",
+      "errors": "offline (cloud_off) and 60 s timeout (hourglass_disabled): photo kept, not dimmed; note quoted; ai-error-box dark (error-container-dark, r16, inset 12, padding 14/16); filled 56dp \"Thử lại\" + two outlined 48dp \"Nhập tay\" / \"Món của tôi\"",
+      "shadows": "none on the viewfinder or any camera step"
+    },
+    "food": {
+      "screens": "S13 Thêm nhanh (full-screen S12 sheet), S14 Sửa món (S12 card reopened), S34 Món của tôi (child screen, no nav bar)",
+      "sheetBar": "52dp 48/1fr/48: close | title-medium + label-medium 600 primary 'Hôm nay · còn N kcal' | empty or delete",
+      "search": "56dp full-round, surface-highest both modes (no new token), search icon on-surface-var, body-large, caret 2dp primary, close 48dp when filled; margin 8/12",
+      "match": "accent-insensitive via name_normalized (đ=d), highlight per character on the original name: primary, weight 700, underline 1.5dp offset 3dp; results by use_count",
+      "filter": "S31 range-segmented 48dp, 3 parts: S13 Gần đây / Hay dùng / Yêu thích; S34 Hay dùng / Gần đây / A–Z",
+      "timeChip": "S12 chip; source body-small on-surface-var + 16dp icon: from S10 '+' → touch_app 'Lúc bấm thêm'; from a meal card '+' → meal mid-window time + history 'Theo bữa X'",
+      "row": {
+        "quickAdd": "min 64dp, grid 1fr/auto/48dp, padding 6 4 6 16: name body-medium, portion body-small + 6dp macro dots, kcal 600 right, chevron_right on-surface-var; whole row opens S12 at ×1, no instant add",
+        "saved": "min 72dp, grid 1fr/48dp: main (padding 8 4 8 16) adds 'N lần · lần cuối …' label-small; trailing 48dp star (FILL 1 primary when on)",
+        "list": "surface-low r16, margin 0 12, rows divided by 1dp outline-var 55%, hover on-surface 8%"
+      },
+      "escapes": "tonal auto_awesome 'Hỏi AI' then outlined edit_note 'Nhập tay', 48dp, equal, 8dp gap; pinned footer, or inside the no-match card (footer hidden), both prefilled with the query",
+      "manual": "fields: Tên món (required), Khẩu phần 1fr / Gram 112dp, Kcal (required), Macro optional 3 equal columns; mismatch check on leaving the last macro; pinned step 56dp 'Tiếp' + arrow_forward → S12 (not a save)",
+      "mismatch": "|kcal − (4P+4C+9F)| / (4P+4C+9F) > 0.20 → amber flag 'Số liệu lệch' + body-small note with the arithmetic; never blocks",
+      "edit": "S14: delete in bar (no dialog, undo snackbar on S10); 48dp expander 'Sửa tên, kcal, macro'; Kcal/Đạm/Tinh bột/Béo row 1.2fr/1fr/1fr/1fr; save 'Lưu thay đổi' + new kcal",
+      "savedFoods": "S34: favourites pinned first; swipe-delete error-container 112dp + undo snackbar, my_food_id → null on logged entries; FAB 'Thêm món' creates without logging (bookmark_add 'Lưu vào Món của tôi', info box 'không ghi vào nhật ký hôm nay'); edit sheet notes past entries keep their values; empty = FAB only + copy pointing at the bookmark icon"
+    },
+    "water": {
+      "screen": "S15 Nước trong ngày; child screen from S10 water tile or S33 water tile 'Sửa'; no navigation bar, no FAB",
+      "topBar": "S33 grammar, 64dp grid 48/1fr/48/48: back / title button r12 ('Nước · Hôm nay' | 'Nước · dd/mm' title-large + 'Thứ Năm, 13/11' | 'Thứ Tư · Hôm qua' label-medium on-surface-var + arrow_drop_down 18dp) / chevron_left / chevron_right (disabled today: on-surface 38%, aria-disabled)",
+      "body": "margin 12dp, bottom padding 16dp, cards 8dp apart; order: day-total card, 'Các lần uống', week chart, centred body-small footnote",
+      "heroCard": {
+        "meta": "label-medium on-surface-var water_drop 16dp FILL 1 primary 'Đã uống hôm nay · N lần' | met: label-large 600 on-surface check_circle 18dp FILL 1 'Đạt mục tiêu · +N ml'",
+        "number": "display-large day total, line-height .9, 'ml' title-medium on-surface-var (Remaining-First: never a single drink)",
+        "goalButton": "48dp r12 right-aligned: 'N%' title-medium over 'của 2.600 ml' label-medium on-surface-var + info 14dp; opens goal sheet; the only place the goal is said in words",
+        "laneLabel": "label-medium on-surface-var 8dp below lane: 'Còn N ml · ~k cốc 250 ml' | met: 'Đạt lúc hh:mm'"
+      },
+      "lane": {
+        "grammar": "S12 day lane without meal tones",
+        "height": "10dp",
+        "cap": "butt",
+        "gap": "3dp between drinks, none at the goal",
+        "minSegment": "4dp",
+        "segment": "one primary segment per water_entry, time order",
+        "track": "surface-highest (both modes; diverges from S12 ring-track surface-cont in light, which is near-invisible on surface-low)",
+        "length": "water goal",
+        "goalTick": {
+          "width": "2dp",
+          "color": "on-surface",
+          "overhang": "4dp"
+        },
+        "overflow": {
+          "height": "6dp",
+          "offset": "4dp",
+          "cap": "round 3dp",
+          "track": "primary 18%",
+          "color": "primary (water has no over state, 08 §2)"
+        },
+        "motion": "scaleX 700ms cubic-bezier(.2,0,0,1), delay 120ms + 90ms per segment; off under reduced motion"
+      },
+      "reminderRow": {
+        "layout": "48dp divided row of the hero (1dp outline-var 55%, 12dp above), grid 20/1fr/20 gap 12, r12; body-medium on-surface-var, time 600 on-surface; leading icon primary, chevron_right 20dp; whole row → S43",
+        "variants": [
+          "notifications 'Nhắc tiếp lúc hh:mm'",
+          "notifications_paused 'Đủ mục tiêu · nhắc lại 07:00 mai'",
+          "notifications_off 'Không nhắc được · chưa có quyền' (neutral, never amber)"
+        ],
+        "pastDay": "no row",
+        "rule": "06 §4: next = max(last drink, last reminder) + interval, clamped to window; outside window or goal met → window start tomorrow (mock: interval 90 min, window 07:00–22:00)"
+      },
+      "drinkList": {
+        "title": "'Các lần uống' title-medium",
+        "row": "min 48dp, full card width, padding 4/16, grid 48/1fr/auto gap 8, divider 1dp outline-var 55%: time body-medium 600 wdth 90 / source body-small on-surface-var + 16dp icon / amount body-large on-surface-var + 'ml' 12sp 500",
+        "source": {
+          "app": "water_drop 'Trong app'",
+          "noti": "notifications 'Từ thông báo'",
+          "widget": "widgets 'Từ widget'"
+        },
+        "crossingTag": "label-small 600 primary check_circle 14dp FILL 1 'Đạt mục tiêu · N ml' on the row whose running total reaches the goal",
+        "tap": "edit sheet",
+        "swipe": "error-container 112dp, delete 20dp + 'Xoá' label-large; release past threshold deletes, no dialog; snackbar 'Đã xoá N ml · hh:mm' / Hoàn tác; totals, %, lane, today column recompute when the row is gone"
+      },
+      "dock": {
+        "background": "surface-cont",
+        "padding": "12px 16px 32px",
+        "grid": "1.25fr 1fr 48px, gap 8",
+        "buttons": "filled '+250 ml' water_drop 20dp FILL 1 / tonal '+500 ml' / outlined 48dp add 20dp primary ('Thêm lượng khác'); pencil reserved for Sửa",
+        "pastDay": "body-small history 16dp 'Ghi cho dd/mm lúc 14:30 · chạm lần uống để đổi giờ'; default time 14:30",
+        "snackbar": "floats above the dock, inset 12dp"
+      },
+      "amountSheet": {
+        "base": "S31 secondary sheet: surface-low, r28 top, padding 0/20/28 (12 bottom with keyboard), handle, title-large",
+        "timeChip": "32dp r8 secondary-container schedule 18dp 'Bây giờ · hh:mm' + arrow_drop_down → S12 TimeInput",
+        "field": "OutlinedTextField 'Lượng nước', value 22sp 600, suffix 'ml' body-medium, numeric keyboard",
+        "helper": "body-small '10–3.000 ml · sau khi lưu N / 2.600 ml' (edit adds '(±Δ)')",
+        "error": "on blur only: 2dp error outline, error label, error 18dp 'Nhập từ 10 đến 3.000 ml'; primary action disabled and reads 'Thêm'",
+        "actions": "'Huỷ' text + filled 'Thêm N ml' | edit: primary text 'Xoá' (delete 20dp) left, 'Huỷ', filled 'Lưu'",
+        "edit": "title 'Sửa lần uống'; chip carries the entry's time; source + the entry's own date in body-small beside it"
+      },
+      "goalSheet": "title 'Mục tiêu nước'; '2.600' title-large + 'ml mỗi ngày · tự tính'; three body-small lines with 18dp primary icons (calculate formula kg × 35 rounded to 100 ml, monitor_weight source weigh-in, event_available goal-day meaning); 'Đóng' + filled 'Đổi mục tiêu' (→ S43)",
+      "weekChart": "S35 water chart reused (7 × 48dp, 20dp columns, 96dp tall): Đạt primary (no split above goal), Chưa đạt --under, today pending, legend 'Đạt N' / 'Chưa đạt N' / 'Hôm nay' / 'Mục tiêu 2,6 L'; values in litres"
+    },
+    "settings": {
+      "screens": "S40 Cài đặt (top-level tab, nav bar, Cài đặt selected); child screens S41 Hồ sơ & mục tiêu, S42 AI, S43 Nước & nhắc nhở, S44 Bữa ăn, S45 Dữ liệu (S31 child frame: 64dp bar arrow_back + title-large, no nav bar, no FAB, surface-cont on scroll 200ms)",
+      "s40TopBar": "64dp, 'Cài đặt' title-large centred, no buttons",
+      "body": "margin 12dp, bottom 20dp, blocks 8dp apart; section titles title-medium (margin 12dp top, 8dp sides); groups surface-low r16, rows divided by 1dp outline-var 55%",
+      "navRow": {
+        "grammar": "S30 'Xem thêm' link row",
+        "minHeight": "64dp",
+        "grid": "40dp / 1fr / 24dp, gap 14dp",
+        "padding": "10dp 14dp",
+        "icon": "40dp r12 primary-container / on-primary-container (neutral: surface-highest / on-surface-var for Giới thiệu and Xoá toàn bộ dữ liệu)",
+        "title": "title-medium",
+        "subtitle": "body-small on-surface-var = current value; meal subtitle keeps each 'Bữa hh:mm' unbroken (white-space:nowrap per pair), wraps only at ' · '",
+        "trailing": "chevron_right on-surface-var",
+        "about": "non-interactive 'Cali 1.0' + medical note, no chevron",
+        "later": "'Để sau' from S03: key_off 16dp + 'Chưa có API key · cần để chụp món và chat', 'nhắc đang tắt', 'Chưa sao lưu lần nào' — neutral words, never error/warn"
+      },
+      "row": {
+        "minHeight": "56dp",
+        "grid": "1fr / auto / 20dp, gap 10dp",
+        "padding": "8dp 12dp 8dp 16dp",
+        "label": "body-large (+ body-small on-surface-var subtitle)",
+        "value": "right-aligned nowrap: number title-medium tabular, unit label-medium on-surface-var 3dp after; text values body-large 400",
+        "chevron": "chevron_right 20dp on-surface-var; omitted when the row opens nothing",
+        "hover": "on-surface 8%"
+      },
+      "switchRow": {
+        "minHeight": "64dp",
+        "grid": "1fr / 52dp",
+        "paddingRight": "16dp",
+        "role": "whole row is role=switch"
+      },
+      "switch": {
+        "size": "52×32dp",
+        "on": "track primary, thumb 24dp on-primary right (inset 4dp)",
+        "off": "track surface-highest + inset 2dp outline border, thumb 16dp outline left (inset 8dp)"
+      },
+      "goalCard": "surface-low r16 pad 14/16/16: 'Mục tiêu đang dùng · từ 21/10' label-medium on-surface-var; kcal display-small + 'kcal/ngày' label-medium; macro dots 8dp + water; divider; flag line (primary) + info line (on-surface-var) 'Tính theo 75,0 kg (lần cân 21/10)'",
+      "speedSheet": {
+        "rows": "selection grammar, min 60dp, r16, pad 10/14, two lines: 'N kg' title-medium + name body-small over '~N tuần' label-medium | kcal 600 over clamp line",
+        "clamp": "warn info 14dp 'Đã chỉnh · ~0,52 kg/tuần'; unclamped rows reserve the line (visibility hidden)",
+        "actions": "Huỷ text + Xong filled → recalc sheet"
+      },
+      "recalc": "every calorie change (profile, speed, override) goes through the S31 Đang dùng / Mới sheet: 'Áp dụng mục tiêu mới?', Đang dùng title-large on-surface-var → Mới display-small + Δ primary, table TDEE/Đạm/Tinh bột/Béo/Nước, Amber Adjust box when clamped, 'Áp dụng từ hôm nay 13/11; các ngày trước vẫn so với …'",
+      "override": {
+        "switches": [
+          "Tự đặt calo mục tiêu",
+          "Tự đặt tỉ lệ macro"
+        ],
+        "range": "1.000–5.000 kcal (out of range = red input error on blur)",
+        "clampOrder": "02 §5: 25% TDEE deficit cap first, then floor max(1.500, BMR), round to 10",
+        "clampBox": "warn-container info 20dp naming the cap and the real value",
+        "macro": "three % fields (3-col, gap 8dp); must sum to 100: check_circle 18dp FILL 1 primary 'Tổng 100% · theo N kcal/ngày' + S02 energy mix bar 10dp + gram legend",
+        "label": "Hôm nay / Tổng kết tuần show 'Tùy chỉnh'"
+      },
+      "ai": {
+        "provider": "read-only OutlinedTextField + arrow_drop_down",
+        "key": "masked dots + last 4, 15sp 500 letter-spacing .12em; trailing visibility / content_paste; never re-shown in full once saved; supporting 'Chỉ hiện 4 ký tự cuối. Mã hoá trên máy, không vào bản sao lưu.'",
+        "test": "tonal 'Kiểm tra kết nối'; success check_circle FILL 1 primary line; 401 = field error (2dp error outline, error label + supporting with error icon); network / 429 = text line under the button only",
+        "models": "two editable text fields with 'Mặc định · …' supporting",
+        "prompt": "row 'System prompt' (subtitle state) → full-screen editor: 64dp bar close / title / text 'Lưu'; state row chip 'Đã sửa' (24dp r8 secondary-container, edit 16dp) + text 'Khôi phục mặc định' (no confirm, snackbar Hoàn tác); 14sp/1.55 body; surface-cont footer on <user_context>",
+        "notes": "multiline OutlinedTextField min 112dp, counter N/500",
+        "weeklyPointer": "one body-small insights line pointing to S43"
+      },
+      "water": {
+        "permissionStrip": "S35 ai-stale-strip grammar: secondary-container r12, grid 20/1fr/auto gap 10, pad 6/6/6/12, notifications_off 20dp, text button 'Cho phép' (→ 'Mở Cài đặt' when permanently denied); never warn/error",
+        "goal": "segmented 48dp Tự động / Tùy chỉnh; title-large ml + formula line",
+        "cups": "pair of ml fields 250 / 500",
+        "window": "time chips 07:00 – 22:00",
+        "interval": "segmented 45 / 60 / 90 / 120 phút",
+        "weekly": "switch 'Thông báo sáng Thứ Hai', row 'Giờ gửi' chip 08:00, switch 'Tự tạo nhận xét tuần khi mở' (tốn 1 lượt model chat)"
+      },
+      "meals": {
+        "lane24": "10dp, meal-* tones, butt ends, 3dp gaps, segment length = minutes; Phụ appears in several runs (00:00–04:59, 14:00–17:29, 22:00–23:59)",
+        "now": "2×18dp on-surface tick, protrudes 4dp",
+        "ticks": "label-small 00/06/12/18/24",
+        "rows": "tone 10dp + title-medium name + start–end time chips; auto Phụ row on-surface-var 'Giờ không thuộc bữa nào 22:00 – 04:59' not editable",
+        "overlap": "S12 TimeInput; red error line, Xong disabled, tonal one-tap fix 'Dời Phụ bắt đầu từ 14:31'",
+        "scope": "changes apply to future entries only"
+      },
+      "data": {
+        "backup": "card: backup tile 40dp, last export + file name, what's in/out, tonal Xuất file + outlined Nhập từ file",
+        "counts": "S02 stat grid (Ngày đã ghi / Lần cân / Món đã lưu)",
+        "thumbnails": "switch 'Lưu ảnh thu nhỏ' + size",
+        "autoBackup": "cloud_done line, excludes API key",
+        "deleteRow": "neutral nav row (surface-highest tile, delete_forever), never red"
+      },
+      "dialog": {
+        "scope": "the ONLY confirmation dialog in the app (05 §5): Xoá toàn bộ dữ liệu",
+        "box": "312dp, surface-low, r28, padding 24/24/16, centred on scrim, no shadow",
+        "icon": "delete_forever 24dp on-surface-var centred",
+        "title": "title-large centred",
+        "step1": "loss list with real counts (18dp icons), divider, last-backup line + text 'Xuất bản sao lưu trước'; actions text Huỷ / Tiếp tục",
+        "step2": "type 'XOÁ' (or 'XOA') in OutlinedTextField to enable filled error 'Xoá vĩnh viễn' (error / on-error, delete_forever 20dp, 48dp pill); step only in aria-label"
+      }
+    },
+    "stats": {
+      "screen": "S32 Thống kê; child screen from Lịch sử › Xem thêm › Thống kê; no navigation bar, no FAB",
+      "topBar": "64dp, back + 'Thống kê' title-large",
+      "modeSegmented": "Tuần / Tháng, 48dp pill, 2 parts, 1dp outline border + divider, 14sp 600; selected secondary-container; role=radiogroup; scrolls away with the body (bottom padding 4dp)",
+      "periodBar": {
+        "sticky": "only this row is pinned (position sticky, top 0)",
+        "grid": "48/1fr/48, full body width, padding 0 4 8dp",
+        "title": "'Tuần này · dd/mm – dd/mm' | 'Tuần dd/mm – dd/mm' | 'Tháng N, YYYY' title-medium",
+        "stateLive": "chip 24dp r8 secondary-container, hourglass_top 16dp + 'Tạm tính · còn N ngày'",
+        "stateDone": "event_available 16dp + 'Đã kết thúc · ghi n/N ngày' label-medium on-surface-var",
+        "nextDisabled": "current period, on-surface 38%, aria-disabled"
+      },
+      "scroll": "status + top bar + period row turn surface-cont, 200ms cubic-bezier(.2,0,0,1)",
+      "body": "margin 12dp, bottom 16dp, cards 8dp apart; order: Calo, (week: link row to S35 | month: 'Các tuần trong tháng'), Macro, Nước, Cân nặng, So với kỳ trước, centred body-small footnote; new user (<3 logged days): Calo + 'Sắp có số' only",
+      "hero": {
+        "head": "'Calo · TB mỗi ngày' title-medium + 'n/N ngày ghi' label-medium",
+        "number": "average kcal/day display-large (line-height .9) + kcal title-medium on-surface-var; only with >=3 logged days",
+        "delta": "title-medium, real minus; on-surface when under/equal, warn <=10% over, error >10% over; over carries chip 32dp r8 ('Vượt nhẹ X%' info warn-container | 'Vượt X%' warning error-container)",
+        "highLow": "swap_vert 18dp primary + body-small, excludes today while the period is in progress",
+        "notes": "body-small per unlogged day (info on-surface-var) and per suspected under-log (warning warn)"
+      },
+      "weekChart": "S35 day column chart (7 × 48dp buttons → S33, 20dp bars, 120dp) except today = 1.5dp inset primary outline only (as S30); overflow min 4dp",
+      "monthChart": {
+        "slots": "N slots of 336/N dp, bars 6dp, 120dp plot",
+        "split": "Goal-Line Split, overflow min 3dp",
+        "unlogged": "8×8dp 1.5dp dashed outline + '—' label-small knockout",
+        "suspect": "warning 14dp FILL 1 warn above the bar; no value labels",
+        "axis": "1dp outline-var baseline, 1×5dp ticks + dd/mm label-small on Mondays (future on-surface 38%), 4dp primary today dot",
+        "today": "outline only"
+      },
+      "averageLine": "solid 1dp primary at period average, both charts, beside the 1dp dashed goal line; legend '— TB N'; only with >=3 logged days",
+      "monthScrub": {
+        "role": "whole plot is one role=slider (aria-valuemin 1, aria-valuemax days to today, aria-valuenow, aria-valuetext), touch-action pan-y",
+        "select": "tap or drag snaps to a day: slot overlay on-surface 8% r4 + date tag 18dp r4 (on-surface fill, surface text, label-small 600)"
+      },
+      "readout": {
+        "size": "min 56dp, r12, padding 4dp, ring-track fill (surface-cont light / surface-highest dark), aria-live polite",
+        "layout": "‹ 48dp / date label-large over body-small ('800 kcal · Thiếu 940', 'Vượt 660', no double sign; warning 14dp 'Nghi ghi thiếu') / › 48dp / text button 48dp 'Mở ngày' → S33",
+        "edges": "‹ › disabled at period edges (on-surface 38%, aria-disabled)",
+        "empty": "body-small hint between ‹ ›"
+      },
+      "reviewLink": "week only: S30 history-link-row (64dp), insights 40dp primary-container, 'Xem tổng kết tuần' + '66 điểm, tạm tính · món ăn và nhận xét AI'",
+      "weekList": "month only: 'Các tuần trong tháng' card, 56dp button rows (1fr/auto/24dp, padding 6 12 6 16), 1dp outline-var 55% dividers, range body-medium + body-small sub, average title-medium + 'kcal TB'; opens week mode",
+      "macro": "S35 energy-mix bars (Thực tế / Mục tiêu) + S35 macro bars; head \"đạt đạm n/N ngày\"",
+      "water": "one S15-style average lane: 10dp surface-highest, single primary segment, full length = goal, 2dp on-surface tick at the end; value title-large L; no per-day columns, no over state",
+      "weight": "week: S31 weekly average title-large + neutral change; month: S31 trend grammar per week (2dp primary line, 7dp squares, last filled, 14×10 dashed for no weigh-in), week belongs to the month holding its Thursday (body-small line says so); change never coloured",
+      "compare": {
+        "rule": "The Same-Days Rule",
+        "table": "grid 1fr/64/64/74dp; this period 600 on-surface, previous on-surface-var, 'Chênh' label-medium on-surface-var with arrow_upward/arrow_downward 16dp, '=' when equal; water delta rounded to 10 ml",
+        "note": "'Mũi tên chỉ tăng hay giảm, không phải tốt hay xấu.'",
+        "eligibility": "week >=3 logged matched weekdays after app start; month >=7 logged days in the matched range; otherwise info 18dp + reason, no table"
+      },
+      "newUser": "no display-large; flag 20dp FILL 1 note with start date and earliest date (start + 2); 'Sắp có số' list (pie_chart, monitor_weight, compare_arrows 20dp primary) with dates derived from the rules",
+      "motion": "stats-bars-rise"
+    }
+  },
+  "components": [
+    {
+      "name": "Filled Button",
+      "kind": "button",
+      "refersTo": "button-filled",
+      "description": "Thao tác chính Chụp món.",
+      "html": "<button class=\"ds-btn-filled\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M12 17.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9M4 21a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3.2L9 3h6l1.8 2H20a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2z\"/></svg>Chụp món</button>",
+      "css": ".ds-btn-filled{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 16px;border:0;border-radius:24px;background:#4355B9;color:#fff;font:600 14px/20px 'Roboto Flex',Roboto,sans-serif;cursor:pointer}.ds-btn-filled:hover{background:color-mix(in srgb,#fff 8%,#4355B9)}.ds-btn-filled:focus-visible{outline:2px solid #4355B9;outline-offset:2px}"
+    },
+    {
+      "name": "Tonal Button",
+      "kind": "button",
+      "refersTo": "button-tonal",
+      "description": "Thao tác phụ Chat AI.",
+      "html": "<button class=\"ds-btn-tonal\">Chat AI</button>",
+      "css": ".ds-btn-tonal{display:inline-flex;align-items:center;gap:6px;min-height:48px;padding:0 14px;border:0;border-radius:24px;background:#E0E1F9;color:#181A2C;font:600 14px/20px 'Roboto Flex',Roboto,sans-serif;cursor:pointer}.ds-btn-tonal:hover{background:color-mix(in srgb,#181A2C 8%,#E0E1F9)}.ds-btn-tonal:focus-visible{outline:2px solid #4355B9;outline-offset:2px}"
+    },
+    {
+      "name": "Outlined Icon Button",
+      "kind": "button",
+      "refersTo": "button-outlined-icon",
+      "description": "Thêm nhanh, vuông 48dp.",
+      "html": "<button class=\"ds-btn-outlined\" aria-label=\"Thêm nhanh\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M11 13H5v-2h6V5h2v6h6v2h-6v6h-2z\"/></svg></button>",
+      "css": ".ds-btn-outlined{display:grid;place-items:center;width:48px;height:48px;border-radius:24px;border:0;background:none;color:#4355B9;outline:1px solid #C6C5D0;outline-offset:-1px;cursor:pointer}.ds-btn-outlined:hover{background:color-mix(in srgb,#4355B9 8%,transparent)}.ds-btn-outlined:focus-visible{outline:2px solid #4355B9;outline-offset:2px}"
+    },
+    {
+      "name": "Extended FAB",
+      "kind": "button",
+      "refersTo": "fab-extended",
+      "description": "Chụp món khi hàng nút đã cuộn khuất.",
+      "html": "<button class=\"ds-fab\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M12 17.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9M4 21a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3.2L9 3h6l1.8 2H20a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2z\"/></svg>Chụp món</button>",
+      "css": ".ds-fab{display:inline-flex;align-items:center;gap:10px;height:56px;padding:0 20px 0 16px;border:0;border-radius:16px;background:#DEE0FF;color:#00105C;font:600 14px/20px 'Roboto Flex',Roboto,sans-serif;box-shadow:0 1px 3px rgba(0,0,0,.18),0 4px 10px -2px rgba(0,0,0,.16);cursor:pointer}.ds-fab:hover{background:color-mix(in srgb,#00105C 8%,#DEE0FF)}.ds-fab:focus-visible{outline:2px solid #4355B9;outline-offset:2px}"
+    },
+    {
+      "name": "State Chip (warn)",
+      "kind": "chip",
+      "refersTo": "chip-state-warn",
+      "description": "Vượt nhẹ ≤10%, luôn có biểu tượng và chữ.",
+      "html": "<span class=\"ds-chip-warn\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M11 17h2v-6h-2zm0-8h2V7h-2zm1 13a10 10 0 1 1 0-20 10 10 0 0 1 0 20\"/></svg>Vượt nhẹ 3% so với mục tiêu</span>",
+      "css": ".ds-chip-warn{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:4px 12px;border-radius:8px;background:#FFDCBE;color:#2C1600;font:600 14px/20px 'Roboto Flex',Roboto,sans-serif}"
+    },
+    {
+      "name": "Meal Card",
+      "kind": "card",
+      "refersTo": "meal-card",
+      "description": "Thẻ bữa với ô tông chàm khớp đoạn vòng, món xếp theo giờ ăn.",
+      "html": "<div class=\"ds-meal\"><div class=\"ds-meal-h\"><span class=\"ds-meal-badge\"></span><b>Trưa</b><span>490 kcal</span></div><div class=\"ds-meal-item\"><span class=\"ds-meal-t\">12:35</span><span>Bún bò Huế</span><span>490</span></div></div>",
+      "css": ".ds-meal{width:336px;background:#F5F2FA;border-radius:16px;padding:4px 0;font:500 14px/20px 'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1;color:#1B1B21}.ds-meal-h{display:grid;grid-template-columns:36px 1fr auto;align-items:center;min-height:52px;padding:0 20px 0 16px;font-weight:600;font-size:16px}.ds-meal-badge{width:24px;height:24px;border-radius:8px;background:#5868C9}.ds-meal-item{display:grid;grid-template-columns:44px 1fr auto;gap:8px;align-items:center;min-height:52px;padding:0 20px 0 16px;border-top:1px solid color-mix(in srgb,#C6C5D0 55%,transparent)}.ds-meal-t{color:#46464F;font-size:12px;font-weight:600}"
+    },
+    {
+      "name": "Macro Bar",
+      "kind": "custom",
+      "refersTo": "progress-track",
+      "description": "Macro với chấm màu cố định, thanh 6dp, còn/vượt X g.",
+      "html": "<div class=\"ds-macro\"><div class=\"ds-macro-n\"><i></i>Đạm</div><div class=\"ds-macro-v\">51 <small>/ 122 g</small></div><div class=\"ds-track\"><i style=\"width:42%\"></i></div><div class=\"ds-macro-l\">còn 71 g</div></div>",
+      "css": ".ds-macro{width:100px;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1;color:#1B1B21}.ds-macro-n{display:flex;align-items:center;gap:6px;font-size:12px;line-height:16px;font-weight:600;color:#46464F}.ds-macro-n i{width:8px;height:8px;border-radius:4px;background:#006780}.ds-macro-v{font-weight:600;font-size:16px;line-height:24px}.ds-macro-v small{font-size:12px;font-weight:500;color:#46464F}.ds-track{height:6px;border-radius:3px;background:#E4E1E9;margin-top:6px;overflow:hidden}.ds-track i{display:block;height:100%;border-radius:3px;background:#006780}.ds-macro-l{font-size:11px;font-weight:500;color:#46464F;margin-top:3px}"
+    },
+    {
+      "name": "Navigation Bar",
+      "kind": "nav",
+      "refersTo": "nav-bar",
+      "description": "4 tab, chỉ báo viên thuốc secondary-container cho tab đang chọn.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-i on\" href=\"#\"><span class=\"ds-pill\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M5 22a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1V2h2v2h8V2h2v2h1a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2zm0-2h14V10H5z\"/></svg></span>Hôm nay</a><a class=\"ds-nav-i\" href=\"#\"><span class=\"ds-pill\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M4 5h12v9H8l-4 4z\"/></svg></span>Chat AI</a><a class=\"ds-nav-i\" href=\"#\"><span class=\"ds-pill\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><rect x=\"4\" y=\"5\" width=\"16\" height=\"15\" rx=\"2\"/><path d=\"M4 10h16\"/></svg></span>Lịch sử</a><a class=\"ds-nav-i\" href=\"#\"><span class=\"ds-pill\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"8\"/></svg></span>Cài đặt</a></nav>",
+      "css": ".ds-nav{display:grid;grid-template-columns:repeat(4,1fr);width:360px;height:80px;padding-top:12px;background:#EFEDF4;font:500 12px/16px 'Roboto Flex',Roboto,sans-serif}.ds-nav-i{display:flex;flex-direction:column;align-items:center;gap:4px;color:#46464F;text-decoration:none}.ds-nav-i:hover .ds-pill{background:color-mix(in srgb,#1B1B21 8%,transparent)}.ds-nav-i:focus-visible{outline:2px solid #4355B9;outline-offset:2px}.ds-nav-i.on{color:#1B1B21;font-weight:700}.ds-pill{width:64px;height:32px;border-radius:16px;display:grid;place-items:center}.ds-nav-i.on .ds-pill{background:#E0E1F9;color:#181A2C}"
+    },
+    {
+      "name": "Save Pill (sheet footer)",
+      "kind": "button",
+      "refersTo": "button-save",
+      "description": "Nút Lưu ghim đáy, nêu tên bữa và tổng kcal.",
+      "html": "<div class=\"ds-foot\"><button class=\"ds-save\"><span><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M9.55 18 3.85 12.3l1.42-1.42 4.28 4.27 9.18-9.17 1.42 1.42z\"/></svg>Lưu vào bữa Trưa</span><b>490 kcal</b></button></div>",
+      "css": ".ds-foot{width:360px;padding:12px 16px 28px;background:#EFEDF4}.ds-save{width:100%;height:56px;border:0;border-radius:28px;background:#4355B9;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 20px 0 18px;font:600 14px/20px 'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1;cursor:pointer}.ds-save span{display:inline-flex;align-items:center;gap:8px}.ds-save b{font-weight:650;font-size:16px}.ds-save:hover{background:color-mix(in srgb,#fff 8%,#4355B9)}.ds-save:focus-visible{outline:2px solid #4355B9;outline-offset:2px}"
+    },
+    {
+      "name": "Portion Segment",
+      "kind": "custom",
+      "refersTo": "portion-segment-selected",
+      "description": "½ ×1 1½ 2 ✎, 48dp mỗi ô, chỉ ô đang chọn có viên thuốc 40×32.",
+      "html": "<div class=\"ds-seg\" role=\"group\" aria-label=\"Hệ số khẩu phần\"><button aria-pressed=\"false\"><span>½</span></button><button class=\"on\" aria-pressed=\"true\"><span>×1</span></button><button aria-pressed=\"false\"><span>1½</span></button><button aria-pressed=\"false\"><span>2</span></button><button aria-label=\"Nhập gram\"><span><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M3 21v-4.25L17.2 2.57l4.24 4.24L7.25 21zM17.2 6.8l1.4-1.4-1.4-1.4-1.4 1.4z\"/></svg></span></button></div>",
+      "css": ".ds-seg{display:flex}.ds-seg button{width:48px;height:48px;display:grid;place-items:center;border:0;background:none;color:#46464F;font:600 14px/20px 'Roboto Flex',Roboto,sans-serif;cursor:pointer}.ds-seg button span{width:40px;height:32px;border-radius:16px;display:grid;place-items:center}.ds-seg button:hover span{background:color-mix(in srgb,#1B1B21 8%,transparent)}.ds-seg button.on{color:#181A2C}.ds-seg button.on span{background:#E0E1F9}.ds-seg button:focus-visible{outline:2px solid #4355B9;outline-offset:2px}"
+    },
+    {
+      "name": "Day Lane (Hôm nay sau khi lưu)",
+      "kind": "custom",
+      "refersTo": "day-lane-track",
+      "description": "Vòng calo duỗi thẳng: tông bữa, đầu vuông, khe 3dp, đoạn mới 40% có viền 1.5dp, vạch mục tiêu, làn vượt riêng.",
+      "html": "<div class=\"ds-day\"><div class=\"ds-day-top\"><span>Hôm nay sau khi lưu</span><b>còn 970 kcal</b></div><div class=\"ds-lane\"><i style=\"width:calc(16.09% - 3px);background:#4355B9\"></i><i class=\"new\" style=\"--tone:#5868C9;width:calc(28.16% - 3px)\"></i><span class=\"ds-goal\"></span></div></div>",
+      "css": ".ds-day{width:304px;padding:12px 16px 14px;border-radius:16px;background:#F5F2FA;font:500 12px/16px 'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1;color:#46464F}.ds-day-top{display:flex;justify-content:space-between}.ds-day-top b{color:#1B1B21;font-weight:600;font-size:14px;line-height:20px}.ds-lane{position:relative;height:10px;background:#EFEDF4;margin-top:10px;display:flex;gap:3px}.ds-lane i{display:block;height:100%;flex:none}.ds-lane i.new{background:color-mix(in srgb,var(--tone) 40%,#EFEDF4);box-shadow:inset 0 0 0 1.5px var(--tone)}.ds-goal{position:absolute;top:-4px;bottom:-4px;right:-1px;width:2px;background:#1B1B21}"
+    },
+    {
+      "name": "Validation Flag",
+      "kind": "chip",
+      "refersTo": "flag-check",
+      "description": "Cờ cần kiểm tra, luôn hổ phách, có biểu tượng và chữ.",
+      "html": "<span class=\"ds-flag\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M11 18h2v-2h-2zm1-16a10 10 0 1 0 0 20 10 10 0 0 0 0-20m0 4a4 4 0 0 0-4 4h2a2 2 0 1 1 4 0c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5a4 4 0 0 0-4-4\"/></svg>Cần kiểm tra</span>",
+      "css": ".ds-flag{display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 8px;border-radius:8px;background:#FFDCBE;color:#2C1600;font:500 12px/16px 'Roboto Flex',Roboto,sans-serif}"
+    },
+    {
+      "name": "Snackbar (Hoàn tác)",
+      "kind": "custom",
+      "refersTo": "snackbar",
+      "description": "Sau khi vuốt xoá; inverse-surface, hành động inverse-primary.",
+      "html": "<div class=\"ds-snack\"><span>Đã xoá “Trà đá”</span><button>Hoàn tác</button></div>",
+      "css": ".ds-snack{width:336px;min-height:48px;border-radius:4px;background:#303036;color:#F2EFF7;display:flex;align-items:center;justify-content:space-between;padding:0 4px 0 16px;box-shadow:0 2px 6px rgba(0,0,0,.2);font:500 14px/20px 'Roboto Flex',Roboto,sans-serif}.ds-snack button{height:48px;padding:0 12px;border:0;background:none;color:#BAC3FF;font:600 14px/20px 'Roboto Flex',Roboto,sans-serif;cursor:pointer;border-radius:24px}.ds-snack button:hover{background:color-mix(in srgb,#BAC3FF 8%,transparent)}.ds-snack button:focus-visible{outline:2px solid #BAC3FF;outline-offset:2px}"
+    },
+    {
+      "name": "Choice Row",
+      "kind": "custom",
+      "refersTo": "choice-row-selected",
+      "description": "Ngữ pháp chọn duy nhất: viền 1dp outline-var, khi chọn secondary-container + viền 2dp primary, ô biểu tượng chuyển primary; không tick, không tự sang bước.",
+      "html": "<div class=\"ds-choices\" role=\"radiogroup\" aria-label=\"Mức vận động\"><button class=\"ds-choice\" role=\"radio\" aria-checked=\"false\"><span class=\"ds-ic\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M13.5 5.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4M9.8 8.9 7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3A7.3 7.3 0 0 0 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6a2 2 0 0 0-2.5-.8L6 8.3V13h2V9.6z\"/></svg></span><span class=\"ds-t\">Vận động nhẹ<small>Đi lại nhiều hoặc tập 1–3 buổi/tuần</small></span><span class=\"ds-end\">×1,375</span></button><button class=\"ds-choice on\" role=\"radio\" aria-checked=\"true\"><span class=\"ds-ic\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M13.5 5.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4M9.8 8.9 7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3A7.3 7.3 0 0 0 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6a2 2 0 0 0-2.5-.8L6 8.3V13h2V9.6z\"/></svg></span><span class=\"ds-t\">Vận động vừa<small>Tập 3–5 buổi/tuần</small></span><span class=\"ds-end\">×1,55</span></button></div>",
+      "css": ".ds-choices{display:flex;flex-direction:column;gap:8px;width:320px;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-choice{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;min-height:64px;padding:10px 14px;border:0;border-radius:16px;background:#F5F2FA;outline:1px solid #C6C5D0;outline-offset:-1px;color:#1B1B21;text-align:left;cursor:pointer;font:600 16px/24px 'Roboto Flex',Roboto,sans-serif}.ds-choice:hover{background:color-mix(in srgb,#1B1B21 8%,#F5F2FA)}.ds-choice:focus-visible{outline:2px solid #4355B9;outline-offset:2px}.ds-ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#E4E1E9;color:#46464F}.ds-t small{display:block;font:400 12px/16px 'Roboto Flex',Roboto,sans-serif;color:#46464F}.ds-end{font:500 12px/16px 'Roboto Flex',Roboto,sans-serif;color:#46464F}.ds-choice.on{background:#E0E1F9;outline:2px solid #4355B9;outline-offset:-2px;color:#181A2C}.ds-choice.on .ds-ic{background:#4355B9;color:#fff}.ds-choice.on small,.ds-choice.on .ds-end{color:#181A2C}"
+    },
+    {
+      "name": "Step CTA",
+      "kind": "button",
+      "refersTo": "button-step",
+      "description": "Nút bước 56dp toàn chiều rộng, ghim đáy; tắt khi bước chưa hợp lệ.",
+      "html": "<div class=\"ds-stepfoot\"><button class=\"ds-step\">Tiếp</button><button class=\"ds-step\" aria-disabled=\"true\">Tiếp</button></div>",
+      "css": ".ds-stepfoot{width:360px;padding:12px 20px 28px;display:flex;flex-direction:column;gap:8px}.ds-step{height:56px;border:0;border-radius:28px;background:#4355B9;color:#fff;font:600 16px/24px 'Roboto Flex',Roboto,sans-serif;cursor:pointer}.ds-step:hover{background:color-mix(in srgb,#fff 8%,#4355B9)}.ds-step:focus-visible{outline:2px solid #4355B9;outline-offset:2px}.ds-step[aria-disabled=\"true\"]{background:color-mix(in srgb,#1B1B21 12%,transparent);color:color-mix(in srgb,#1B1B21 50%,transparent);cursor:default}"
+    },
+    {
+      "name": "Outlined Text Field",
+      "kind": "input",
+      "refersTo": "text-field-outlined",
+      "description": "M3 OutlinedTextField: nhãn trong khe viền, hậu tố đơn vị, dòng hỗ trợ; lỗi chỉ khi rời ô.",
+      "html": "<label class=\"ds-otf\"><span class=\"ds-otf-box\"><span class=\"ds-otf-l\">Cân nặng hiện tại</span><input inputmode=\"decimal\" value=\"75\"><span class=\"ds-otf-s\">kg</span></span><span class=\"ds-otf-sup\">BMI mục tiêu 23,5 · Thừa cân</span></label>",
+      "css": ".ds-otf{display:block;width:320px;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-otf-box{position:relative;display:flex;align-items:center;gap:8px;height:56px;padding:0 16px;border-radius:4px;outline:1px solid #767680;outline-offset:-1px;background:#FBF8FF}.ds-otf-box:hover{outline-color:#1B1B21}.ds-otf-box:focus-within{outline:2px solid #4355B9;outline-offset:-2px}.ds-otf-l{position:absolute;top:-9px;left:12px;padding:0 4px;background:#FBF8FF;color:#46464F;font:500 12px/18px 'Roboto Flex',Roboto,sans-serif}.ds-otf-box:focus-within .ds-otf-l{color:#4355B9}.ds-otf input{flex:1;min-width:0;border:0;background:none;outline:none;color:#1B1B21;font:600 22px/28px 'Roboto Flex',Roboto,sans-serif;letter-spacing:-.01em}.ds-otf-s{color:#46464F;font:500 14px/20px 'Roboto Flex',Roboto,sans-serif}.ds-otf-sup{display:block;margin:4px 16px 0;color:#46464F;font:400 12px/16px 'Roboto Flex',Roboto,sans-serif}"
+    },
+    {
+      "name": "BMI Scale (ngưỡng châu Á)",
+      "kind": "custom",
+      "refersTo": "bmi-scale-current",
+      "description": "Thang 15–35, vạch 18,5/23/25/30, chỉ đoạn hiện tại primary; không màu phân loại.",
+      "html": "<div class=\"ds-bmi\"><div class=\"ds-bmi-h\"><b>BMI 26,0</b><span>Béo phì độ I · ngưỡng châu Á</span></div><div class=\"ds-scale\"><i style=\"flex:3.5\"></i><i style=\"flex:4.5\"></i><i style=\"flex:2\"></i><i class=\"on\" style=\"flex:5\"></i><i style=\"flex:5\"></i><span class=\"ds-mk\" style=\"left:55%\"></span></div><div class=\"ds-ticks\"><span style=\"left:17.5%\">18,5</span><span style=\"left:40%\">23</span><span style=\"left:50%\">25</span><span style=\"left:75%\">30</span></div></div>",
+      "css": ".ds-bmi{width:288px;padding:14px 16px;border-radius:16px;background:#F5F2FA;color:#1B1B21;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-bmi-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.ds-bmi-h b{font:600 16px/24px 'Roboto Flex',Roboto,sans-serif}.ds-bmi-h span{font:500 12px/16px 'Roboto Flex',Roboto,sans-serif;color:#46464F}.ds-scale{position:relative;display:flex;gap:3px;height:8px;margin-top:12px}.ds-scale i{background:#E4E1E9}.ds-scale i.on{background:#4355B9}.ds-mk{position:absolute;top:-5px;width:4px;height:18px;border-radius:2px;background:#1B1B21;transform:translateX(-2px)}.ds-ticks{position:relative;height:16px;margin-top:6px;font:500 12px/16px 'Roboto Flex',Roboto,sans-serif;color:#46464F}.ds-ticks span{position:absolute;transform:translateX(-50%)}"
+    },
+    {
+      "name": "Energy Mix Bar",
+      "kind": "custom",
+      "refersTo": "energy-mix-bar",
+      "description": "Thanh chồng tỉ lệ năng lượng đạm / tinh bột / béo, khe 3dp, đầu vuông, màu dữ liệu cố định.",
+      "html": "<div class=\"ds-mix\"><div class=\"ds-stack\"><i style=\"width:28%;background:#006780\"></i><i style=\"width:45%;background:#4C6700\"></i><i style=\"width:27%;background:#8E4585\"></i></div><div class=\"ds-leg\"><div><span><i style=\"background:#006780\"></i>Đạm</span><b>122 <small>g · 28%</small></b></div><div><span><i style=\"background:#4C6700\"></i>Tinh bột</span><b>196 <small>g · 45%</small></b></div><div><span><i style=\"background:#8E4585\"></i>Béo</span><b>52 <small>g · 27%</small></b></div></div></div>",
+      "css": ".ds-mix{width:320px;color:#1B1B21;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-stack{display:flex;gap:3px;height:10px}.ds-leg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.ds-leg span{display:flex;align-items:center;gap:6px;font:500 12px/16px 'Roboto Flex',Roboto,sans-serif;color:#46464F}.ds-leg span i{width:8px;height:8px;border-radius:4px}.ds-leg b{display:block;font:600 16px/24px 'Roboto Flex',Roboto,sans-serif}.ds-leg small{font-size:12px;font-weight:500;color:#46464F}"
+    },
+    {
+      "name": "Amber Adjust Box",
+      "kind": "custom",
+      "refersTo": "warn-box",
+      "description": "Điều chỉnh an toàn / BMI mục tiêu thấp: hổ phách, `info`, nêu giá trị thực, không chặn.",
+      "html": "<div class=\"ds-warnbox\" role=\"note\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M11 17h2v-6h-2zm0-8h2V7h-2zm1 13a10 10 0 1 1 0-20 10 10 0 0 1 0 20\"/></svg><span>Tốc độ 1 kg/tuần cần ăn dưới mức an toàn. App đã điều chỉnh về 1.720 kcal/ngày (~0,52 kg/tuần).</span></div>",
+      "css": ".ds-warnbox{display:flex;gap:10px;width:320px;padding:12px 14px;border-radius:16px;background:#FFDCBE;color:#2C1600;font:400 12px/16px 'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-warnbox svg{flex:none}"
+    },
+    {
+      "name": "Chat Bubbles",
+      "kind": "custom",
+      "refersTo": "chat-bubble-ai",
+      "description": "Bong bóng của bạn (secondary-container, 20/20/6/20) và AI (surface-cont, 20/20/20/6) kèm giờ.",
+      "html": "<div class=\"ds-chat\"><div class=\"ds-me\">Trưa nay ăn bún bò Huế</div><span class=\"ds-st ds-r\">12:35</span><div class=\"ds-ai\">Mình ghi một tô bún bò khoảng 490 kcal.</div><span class=\"ds-st\">12:35</span></div>",
+      "css": ".ds-chat{display:flex;flex-direction:column;gap:4px;width:304px;font:500 14px/20px 'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1;color:#1B1B21}.ds-me{align-self:flex-end;padding:10px 14px;border-radius:20px 20px 6px 20px;background:#E0E1F9;color:#181A2C}.ds-ai{align-self:flex-start;padding:10px 14px;border-radius:20px 20px 20px 6px;background:#EFEDF4}.ds-st{font-size:11px;line-height:16px;color:#46464F;padding:0 6px;align-self:flex-start}.ds-st.ds-r{align-self:flex-end}"
+    },
+    {
+      "name": "Chat Food Card",
+      "kind": "card",
+      "refersTo": "chat-food-card",
+      "description": "Thẻ món thu gọn 304dp: chip bữa, món, làn sau khi lưu, Xem & lưu / Bỏ qua.",
+      "html": "<div class=\"ds-fc\"><div class=\"ds-fh\"><span class=\"ds-fchip\"><i></i>Trưa · 12:35</span><b>490 <small>kcal</small></b></div><div class=\"ds-fl\">Bún bò Huế <small>1 tô</small></div><div class=\"ds-fa\"><span>Hôm nay sau khi lưu</span><b>còn 970 kcal</b></div><div class=\"ds-flane\"><i style=\"width:calc(16% - 3px);background:#4355B9\"></i><i class=\"n\" style=\"width:calc(28% - 3px)\"></i></div><div class=\"ds-fb\"><button class=\"t\">Xem &amp; lưu</button><button class=\"x\">Bỏ qua</button></div></div>",
+      "css": ".ds-fc{width:304px;padding:14px 14px 6px;border-radius:20px 20px 20px 6px;background:#F5F2FA;outline:1px solid #C6C5D0;outline-offset:-1px;font:500 14px/20px 'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1;color:#1B1B21}.ds-fh{display:flex;align-items:center}.ds-fh b{margin-left:auto;font-size:16px;line-height:24px;font-weight:600}.ds-fh small{font-size:12px;color:#46464F}.ds-fchip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#E0E1F9;color:#181A2C;font-size:12px;font-weight:500}.ds-fchip i{width:10px;height:10px;border-radius:2px;background:#5868C9}.ds-fl{margin-top:10px}.ds-fl small{margin-left:6px;color:#46464F}.ds-fa{display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:#46464F}.ds-fa b{color:#1B1B21;font-weight:600;font-size:14px}.ds-flane{display:flex;gap:3px;height:10px;margin-top:6px;background:#EFEDF4}.ds-flane i{display:block;height:100%}.ds-flane i.n{background:color-mix(in srgb,#5868C9 40%,#EFEDF4);box-shadow:inset 0 0 0 1.5px #5868C9}.ds-fb{display:flex;gap:4px;margin:6px -6px 0}.ds-fb button{height:48px;padding:0 18px;border:0;border-radius:24px;font:600 14px/20px 'Roboto Flex',Roboto,sans-serif;cursor:pointer}.ds-fb .t{background:#E0E1F9;color:#181A2C}.ds-fb .x{background:none;color:#4355B9}.ds-fb button:focus-visible{outline:2px solid #4355B9;outline-offset:2px}"
+    },
+    {
+      "name": "Chat Error Bubble",
+      "kind": "custom",
+      "refersTo": "chat-bubble-error",
+      "description": "Lỗi gửi: error-container, biểu tượng, chữ, Thử lại 48dp viền.",
+      "html": "<div class=\"ds-eb\"><div class=\"ds-er\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M11 17h2v-6h-2zm0-8h2V7h-2zm1 13a10 10 0 1 1 0-20 10 10 0 0 1 0 20\"/></svg><span>Không có kết nối. Tin nhắn chưa được gửi.</span></div><button>Thử lại</button></div>",
+      "css": ".ds-eb{width:288px;padding:12px 14px;border-radius:20px 20px 20px 6px;background:#FFDAD6;color:#410002;font:500 14px/20px 'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1;}.ds-er{display:flex;gap:8px;align-items:flex-start}.ds-eb button{margin:8px 0 -2px;height:48px;padding:0 18px;border:0;border-radius:24px;background:none;color:#410002;outline:1px solid color-mix(in srgb,#410002 45%,transparent);outline-offset:-1px;font:600 14px/20px 'Roboto Flex',Roboto,sans-serif;cursor:pointer}.ds-eb button:focus-visible{outline:2px solid #4355B9;outline-offset:2px}"
+    },
+    {
+      "name": "Chat Composer",
+      "kind": "input",
+      "refersTo": "chat-field",
+      "description": "Đính ảnh 48dp, ô chữ 24dp, gửi 48dp (tắt khi trống).",
+      "html": "<div class=\"ds-cmp\"><span class=\"ds-ci\"></span><span class=\"ds-cf\">Nhắn món bạn vừa ăn</span><button class=\"ds-cs\" aria-disabled=\"true\" aria-label=\"Gửi\"></button></div>",
+      "css": ".ds-cmp{display:flex;align-items:flex-end;gap:4px;width:360px;padding:8px 8px 8px 4px;background:#FBF8FF;font:500 14px/20px 'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1;}.ds-ci{width:48px;height:48px;border-radius:24px;flex:none}.ds-cf{flex:1;min-height:48px;display:flex;align-items:center;padding:0 16px;border-radius:24px;background:#EFEDF4;color:#46464F}.ds-cs{width:48px;height:48px;border:0;border-radius:24px;background:#4355B9;flex:none;cursor:pointer}.ds-cs[aria-disabled=\"true\"]{background:color-mix(in srgb,#1B1B21 12%,transparent);cursor:default}.ds-cs:focus-visible{outline:2px solid #4355B9;outline-offset:2px}"
+    },
+    {
+      "name": "Week Switcher",
+      "kind": "nav",
+      "refersTo": "week-switcher",
+      "description": "‹ / tuần + trạng thái / ›; tuần đang diễn ra có chip Tạm tính, › tắt.",
+      "html": "<div class=\"ds-wk\"><button aria-label=\"Tuần trước\">‹</button><div><b>Tuần này · 10/11 – 16/11</b><span class=\"ds-prov\">Tạm tính · còn 3 ngày</span></div><button aria-label=\"Tuần sau\" aria-disabled=\"true\">›</button></div>",
+      "css": ".ds-wk{display:grid;grid-template-columns:48px 1fr 48px;align-items:center;width:360px;padding:0 4px 8px;background:#FBF8FF;color:#1B1B21;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-wk button{width:48px;height:48px;border:0;border-radius:24px;background:none;color:#46464F;font-size:22px;cursor:pointer}.ds-wk button[aria-disabled=\"true\"]{color:color-mix(in srgb,#1B1B21 38%,transparent);cursor:default}.ds-wk button:focus-visible{outline:2px solid #4355B9;outline-offset:2px}.ds-wk div{display:flex;flex-direction:column;align-items:center;gap:2px}.ds-wk b{font:600 16px/24px 'Roboto Flex',Roboto,sans-serif}.ds-prov{height:24px;padding:0 8px;border-radius:8px;display:inline-flex;align-items:center;background:#E0E1F9;color:#181A2C;font:500 12px/16px 'Roboto Flex',Roboto,sans-serif}"
+    },
+    {
+      "name": "Score Card + Score Lane",
+      "kind": "card",
+      "refersTo": "score-card",
+      "description": "Điểm tuần Display Large trên primary-container, /100 điểm, xếp loại, làn 4 đoạn 40/20/20/20.",
+      "html": "<section class=\"ds-score\"><div class=\"ds-sc-top\"><span class=\"ds-sc-n\">71</span><span class=\"ds-sc-of\">/100 điểm</span><span class=\"ds-sc-g\">Tốt<small>↑ 7 so với tuần trước</small></span></div><div class=\"ds-sl\"><div style=\"flex:40\"><i><b style=\"width:70%\"></b></i><span>Calo</span></div><div style=\"flex:20\"><i><b style=\"width:85%\"></b></i><span>Đạm</span></div><div style=\"flex:20\"><i><b style=\"width:71%\"></b></i><span>Nước</span></div><div style=\"flex:20\"><i><b style=\"width:86%\"></b></i><span>Ghi chép</span></div></div></section>",
+      "css": ".ds-score{width:336px;padding:14px 16px 16px;border-radius:16px;background:#DEE0FF;color:#00105C;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-sc-top{display:flex;align-items:flex-end;gap:6px}.ds-sc-n{font-size:57px;line-height:.9;font-weight:650;letter-spacing:-.03em;font-variation-settings:'opsz' 72,'wdth' 92}.ds-sc-of{padding-bottom:6px;font:600 16px/24px 'Roboto Flex',Roboto,sans-serif;color:color-mix(in srgb,#00105C 72%,transparent)}.ds-sc-g{margin-left:auto;text-align:right;padding-bottom:4px;font:600 22px/28px 'Roboto Flex',Roboto,sans-serif}.ds-sc-g small{display:block;font:500 12px/16px 'Roboto Flex',Roboto,sans-serif;color:color-mix(in srgb,#00105C 80%,transparent)}.ds-sl{display:flex;gap:3px;margin-top:16px}.ds-sl div{min-width:0}.ds-sl i{display:block;height:10px;background:color-mix(in srgb,#4355B9 16%,#DEE0FF)}.ds-sl b{display:block;height:100%;background:#4355B9}.ds-sl span{display:block;margin-top:8px;font:500 12px/16px 'Roboto Flex',Roboto,sans-serif;color:color-mix(in srgb,#00105C 76%,transparent)}"
+    },
+    {
+      "name": "Day Column Chart",
+      "kind": "custom",
+      "refersTo": "day-column-bar",
+      "description": "7 cột 48dp, cột 20dp vuông; Đạt primary, Thiếu --under, Vượt tách tại vạch bằng khe 3dp + error; hôm nay kiểu đoạn chờ; chưa ghi nét đứt.",
+      "html": "<div class=\"ds-cc\"><div class=\"ds-cc-p\"><span class=\"ds-cc-band\"></span><span class=\"ds-cc-goal\"></span><div class=\"ds-cc-cols\"><button aria-label=\"T2: 1.710 kcal, đạt\"><span class=\"st\"><i style=\"height:73px\"></i></span></button><button aria-label=\"T3: 1.300 kcal, thiếu\"><span class=\"st\"><i class=\"u\" style=\"height:56px\"></i></span></button><button aria-label=\"T4: chưa ghi\"><span class=\"stub\"></span></button><button aria-label=\"T5: 2.360 kcal, vượt\"><span class=\"st\"><i style=\"height:75px\"></i><i class=\"o\" style=\"height:24px\"></i></span></button><button aria-label=\"T6: hôm nay\"><span class=\"st\"><i class=\"p\" style=\"height:50px\"></i></span></button><span></span><span></span></div></div></div>",
+      "css": ".ds-cc{width:336px;font-family:'Roboto Flex',Roboto,sans-serif}.ds-cc-p{position:relative;height:120px;border-bottom:1px solid #C6C5D0}.ds-cc-band{position:absolute;left:0;right:0;bottom:67px;height:15px;background:color-mix(in srgb,#1B1B21 6%,transparent)}.ds-cc-goal{position:absolute;left:0;right:0;bottom:75px;border-top:1px dashed #46464F}.ds-cc-cols{position:absolute;inset:0;display:grid;grid-template-columns:repeat(7,48px)}.ds-cc-cols button{position:relative;height:100%;border:0;background:none;cursor:pointer}.ds-cc-cols button:focus-visible{outline:2px solid #4355B9;outline-offset:-2px}.ds-cc .st{position:absolute;left:14px;bottom:0;width:20px;display:flex;flex-direction:column-reverse;gap:3px}.ds-cc .st i{display:block;background:#4355B9}.ds-cc .st i.u{background:color-mix(in srgb,#4355B9 70%,#F5F2FA)}.ds-cc .st i.o{background:#BA1A1A}.ds-cc .st i.p{background:color-mix(in srgb,#4355B9 40%,#EFEDF4);box-shadow:inset 0 0 0 1.5px #4355B9}.ds-cc .stub{position:absolute;left:14px;bottom:0;width:20px;height:8px;outline:1.5px dashed #767680;outline-offset:-1.5px}"
+    },
+    {
+      "name": "AI Review Card",
+      "kind": "card",
+      "refersTo": "ai-step-badge",
+      "description": "Nhận xét tuần: mục phân bằng tiêu đề và đường ngăn, 3 việc với huy hiệu số 24dp; không lồng hộp.",
+      "html": "<section class=\"ds-air\"><h2>Nhận xét của AI <small>Tạo 10/11 · 08:02</small></h2><p class=\"ds-air-l\">Ngày thường đều tay, cuối tuần kéo tổng calo vượt 420 kcal.</p><h3>Làm tốt</h3><ul><li>4/7 ngày trong mục tiêu.</li></ul><h3>3 việc cho tuần sau</h3><ol><li>Trà sữa gọi 50% đường.</li><li>Thêm 2 quả trứng vào bữa sáng.</li></ol></section>",
+      "css": ".ds-air{width:336px;padding:14px 16px 16px;border-radius:16px;background:#F5F2FA;color:#1B1B21;font:500 14px/20px 'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-air h2{font:600 16px/24px 'Roboto Flex',Roboto,sans-serif}.ds-air h2 small{font:500 11px/16px 'Roboto Flex',Roboto,sans-serif;color:#46464F;margin-left:6px}.ds-air-l{margin-top:10px;font:600 16px/24px 'Roboto Flex',Roboto,sans-serif}.ds-air h3{margin-top:14px;font:600 14px/20px 'Roboto Flex',Roboto,sans-serif}.ds-air ul{list-style:none;margin:6px 0 0 28px}.ds-air ul li{position:relative}.ds-air ul li::before{content:'';position:absolute;left:-14px;top:8px;width:4px;height:4px;border-radius:2px;background:#46464F}.ds-air ol{list-style:none;counter-reset:s;margin-top:8px}.ds-air ol li{display:grid;grid-template-columns:24px 1fr;gap:12px;padding:10px 0;counter-increment:s}.ds-air ol li+li{border-top:1px solid color-mix(in srgb,#C6C5D0 55%,transparent)}.ds-air ol li::before{content:counter(s);width:24px;height:24px;border-radius:12px;background:#E0E1F9;color:#181A2C;display:grid;place-items:center;font-size:12px;font-weight:700}"
+    },
+    {
+      "name": "History Week Card",
+      "kind": "custom",
+      "refersTo": "history-week-card",
+      "description": "Thẻ tuần S30: đầu thẻ 48dp mở S35, bảy ô 48dp là cột mini 14dp trên một vạch mục tiêu chung; hôm nay chỉ viền, chưa ghi nét đứt, nghi ghi thiếu cờ warning.",
+      "html": "<section class=\"ds-hw\"><button class=\"ds-hw-h\"><span class=\"rg\">Tuần này · 10/11 – 16/11</span><span class=\"ds-hw-p\">Tạm tính · 66</span><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M9.3 6.7a1 1 0 0 1 1.4 0l4.6 4.6a1 1 0 0 1 0 1.4l-4.6 4.6a1 1 0 0 1-1.4-1.4l3.9-3.9-3.9-3.9a1 1 0 0 1 0-1.4z\"/></svg></button><div class=\"ds-hw-d\" style=\"--g:19.4px\"><span class=\"gl\"></span><button class=\"d\" aria-label=\"Thứ Hai, 10/11: 1.710 kcal, đạt\"><span class=\"n\">10</span><span class=\"b\"><i style=\"height:19.0px\"></i></span></button><button class=\"d\" aria-label=\"Thứ Ba, 11/11: 1.300 kcal, thiếu\"><span class=\"n\">11</span><span class=\"b\"><i class=\"u\" style=\"height:14.5px\"></i></span></button><button class=\"d\" aria-label=\"Thứ Tư, 12/11: 690 kcal, thiếu, nghi ghi thiếu\"><span class=\"n\">12<svg class=\"w\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M2.7 20.5h18.6a1 1 0 0 0 .9-1.5L12.9 3a1 1 0 0 0-1.8 0L1.8 19a1 1 0 0 0 .9 1.5zM13 17.5h-2v-2h2zm0-4h-2v-5h2z\"/></svg></span><span class=\"b\"><i class=\"u\" style=\"height:7.7px\"></i></span></button><button class=\"d\" aria-label=\"Thứ Năm, 13/11: 2.360 kcal, vượt\"><span class=\"n\">13</span><span class=\"b\"><i style=\"height:19.4px\"></i><i class=\"o\" style=\"height:3.9px\"></i></span></button><button class=\"d\" aria-label=\"Thứ Sáu, 14/11: chưa ghi\"><span class=\"n\">14</span><span class=\"dash\">—</span><span class=\"stub\"></span></button><button class=\"d t\" aria-label=\"Thứ Bảy, 15/11: 1.310 kcal, hôm nay, đang ghi\"><span class=\"n\">15</span><span class=\"b\"><i class=\"p\" style=\"height:14.6px\"></i></span></button><div class=\"d f\" aria-hidden=\"true\"><span class=\"n\">16</span></div></div></section>",
+      "css": ".ds-hw{width:336px;background:#F5F2FA;color:#1B1B21;border-radius:16px;overflow:hidden;outline:1.5px solid #4355B9;outline-offset:-1.5px;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-hw button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}.ds-hw-h{width:100%;height:48px;display:flex;align-items:center;gap:8px;padding:0 4px 0 14px;color:#46464F;font-size:12px;line-height:16px;font-weight:500}.ds-hw-h .rg{flex:1;text-align:left;color:#1B1B21;font-weight:600}.ds-hw-p{height:24px;border-radius:8px;padding:0 8px;display:inline-flex;align-items:center;background:#E0E1F9;color:#181A2C}.ds-hw-d{position:relative;display:grid;grid-template-columns:repeat(7,48px)}.ds-hw-d .gl{position:absolute;left:8px;right:8px;bottom:calc(8px + var(--g));border-top:1px dashed color-mix(in srgb,#46464F 70%,transparent)}.ds-hw .d{position:relative;height:72px;display:flex;flex-direction:column;align-items:center;padding-top:4px}.ds-hw .n{position:relative;width:28px;height:28px;border-radius:14px;display:grid;place-items:center;font-size:14px;line-height:20px;font-weight:600}.ds-hw .t .n{outline:1.5px solid #4355B9;outline-offset:-1.5px;color:#4355B9;font-weight:700}.ds-hw .f .n{color:color-mix(in srgb,#1B1B21 38%,transparent);font-weight:500}.ds-hw .w{position:absolute;top:-3px;right:-7px;width:14px;height:14px;color:#8A5100}.ds-hw .b{position:absolute;left:50%;bottom:8px;width:14px;transform:translateX(-50%);display:flex;flex-direction:column-reverse;gap:3px}.ds-hw .b i{display:block;background:#4355B9}.ds-hw .b i.u{background:color-mix(in srgb,#4355B9 70%,#F5F2FA)}.ds-hw .b i.o{background:#BA1A1A}.ds-hw .b i.p{background:transparent;box-shadow:inset 0 0 0 1.5px #4355B9}.ds-hw .stub{position:absolute;left:50%;bottom:8px;width:14px;height:10px;transform:translateX(-50%);outline:1.5px dashed #767680;outline-offset:-1.5px}.ds-hw .dash{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);padding:0 4px;border-radius:4px;background:#F5F2FA;color:#46464F;font-size:11px;line-height:16px;font-weight:500}.ds-hw button.d:hover,.ds-hw-h:hover{background:color-mix(in srgb,#1B1B21 8%,transparent)}.ds-hw button.d:active,.ds-hw-h:active{background:color-mix(in srgb,#1B1B21 12%,transparent)}.ds-hw button:focus-visible{outline:2px solid #4355B9;outline-offset:2px}"
+    },
+    {
+      "name": "History Link Rows",
+      "kind": "card",
+      "refersTo": "history-link-row",
+      "description": "Khối \"Xem thêm\" S30: bốn hàng 64dp, ô biểu tượng 40dp góc 12dp primary-container, tên Title Medium + dòng phụ Body Small; có ở mọi trạng thái.",
+      "html": "<div class=\"ds-hl\"><button class=\"ds-hl-r\"><span class=\"ic\"><svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M4 19h16v2H4zm1-3 4-5 3 3 5-7 2 1.4-6.6 9.2-3-3L6.6 17.2z\"/></svg></span><span class=\"tx\">Tổng kết tuần<small>Tuần trước 71 điểm · Tốt</small></span><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M9.3 6.7a1 1 0 0 1 1.4 0l4.6 4.6a1 1 0 0 1 0 1.4l-4.6 4.6a1 1 0 0 1-1.4-1.4l3.9-3.9-3.9-3.9a1 1 0 0 1 0-1.4z\"/></svg></button><button class=\"ds-hl-r\"><span class=\"ic\"><svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm0 2v14h14V5zm7 2a4 4 0 0 1 4 4h-3l-1 2-1-2H8a4 4 0 0 1 4-4z\"/></svg></span><span class=\"tx\">Cân nặng<small>74,1 kg · −0,5 kg so với tuần trước</small></span><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M9.3 6.7a1 1 0 0 1 1.4 0l4.6 4.6a1 1 0 0 1 0 1.4l-4.6 4.6a1 1 0 0 1-1.4-1.4l3.9-3.9-3.9-3.9a1 1 0 0 1 0-1.4z\"/></svg></button></div>",
+      "css": ".ds-hl{width:336px;background:#F5F2FA;border-radius:16px;overflow:hidden;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-hl-r{width:100%;min-height:64px;display:grid;grid-template-columns:40px 1fr 24px;gap:14px;align-items:center;padding:10px 14px;border:0;background:none;color:#1B1B21;text-align:left;cursor:pointer;font:600 16px/24px 'Roboto Flex',Roboto,sans-serif}.ds-hl-r+.ds-hl-r{border-top:1px solid color-mix(in srgb,#C6C5D0 55%,transparent)}.ds-hl-r .ic{width:40px;height:40px;border-radius:12px;background:#DEE0FF;color:#00105C;display:grid;place-items:center}.ds-hl-r small{display:block;color:#46464F;font:400 12px/16px 'Roboto Flex',Roboto,sans-serif}.ds-hl-r>svg{color:#46464F}.ds-hl-r:hover{background:color-mix(in srgb,#1B1B21 8%,transparent)}.ds-hl-r:active{background:color-mix(in srgb,#1B1B21 12%,transparent)}.ds-hl-r:focus-visible{outline:2px solid #4355B9;outline-offset:-2px}"
+    },
+    {
+      "name": "Weight Average Card",
+      "kind": "card",
+      "refersTo": "weight-hero-card",
+      "description": "Thẻ đầu S31: cân TB tuần Display Large, thay đổi trung tính, làn tiến độ 10dp tới mục tiêu.",
+      "html": "<section class=\"ds-wh\"><p class=\"m\">TB tuần 03/11 – 09/11 · 3 lần cân</p><div class=\"t\"><span class=\"n\">74,1</span><span class=\"kg\">kg</span><span class=\"c\"><b>−0,5 kg</b><small>so với tuần trước</small></span></div><div class=\"ln\"><i style=\"width:24%\"></i></div><div class=\"lb\"><span>Tuần đầu <b>76,0</b> kg</span><span>Mục tiêu <b>68,0</b> kg</span></div></section>",
+      "css": ".ds-wh{width:336px;background:#F5F2FA;border-radius:16px;padding:14px 16px 16px;color:#1B1B21;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-wh .m{margin:0;font:500 12px/16px inherit;color:#46464F}.ds-wh .t{display:flex;align-items:flex-end;gap:6px;margin-top:8px}.ds-wh .n{font-size:57px;line-height:.9;font-weight:650;letter-spacing:-.03em;font-variation-settings:'opsz' 72,'wdth' 92}.ds-wh .kg{font:600 16px/24px inherit;color:#46464F;padding-bottom:4px}.ds-wh .c{margin-left:auto;text-align:right;display:flex;flex-direction:column}.ds-wh .c b{font:600 16px/24px inherit}.ds-wh .c small{font:500 12px/16px inherit;color:#46464F}.ds-wh .ln{margin-top:18px;height:10px;background:#E4E1E9}.ds-wh .ln i{display:block;height:100%;background:#4355B9}.ds-wh .lb{display:flex;justify-content:space-between;margin-top:8px;font:500 12px/16px inherit;color:#46464F}.ds-wh .lb b{color:#1B1B21;font-weight:600}"
+    },
+    {
+      "name": "Range Segmented",
+      "kind": "chip",
+      "refersTo": "range-segmented",
+      "description": "Bộ chọn khoảng S31: viên thuốc 48dp bốn phần, phần đang chọn secondary-container.",
+      "html": "<div class=\"ds-rs\" role=\"radiogroup\"><button>7 ngày</button><button class=\"on\" aria-checked=\"true\">30 ngày</button><button>90 ngày</button><button>Tất cả</button></div>",
+      "css": ".ds-rs{display:grid;grid-template-columns:repeat(4,1fr);width:304px;height:48px;border-radius:24px;outline:1px solid #767680;outline-offset:-1px;overflow:hidden;font-family:'Roboto Flex',Roboto,sans-serif}.ds-rs button{border:0;border-left:1px solid #767680;background:none;color:#1B1B21;font:600 14px/20px inherit;cursor:pointer}.ds-rs button:first-child{border-left:0}.ds-rs button:hover{background:color-mix(in srgb,#1B1B21 8%,transparent)}.ds-rs button.on{background:#E0E1F9;color:#181A2C}.ds-rs button:focus-visible{outline:2px solid #4355B9;outline-offset:-2px}"
+    },
+    {
+      "name": "Day Class Chip",
+      "kind": "chip",
+      "refersTo": "day-class-chip",
+      "description": "Chip loại ngày S33: ô chú giải 10dp của biểu đồ tuần + chữ; Thiếu là Chàm Thiếu, không bao giờ hổ phách; nghi ghi thiếu thêm warning 16dp.",
+      "html": "<div class=\"ds-dc-w\"><span class=\"ds-dc\"><i style=\"background:#4355B9\"></i>Đạt<span>· trong ±10% mục tiêu</span></span><span class=\"ds-dc\"><i style=\"background:color-mix(in srgb,#4355B9 70%,#F5F2FA)\"></i>Thiếu<span>60% mục tiêu</span><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" aria-label=\"Nghi ghi thiếu\"><path fill=\"#8A5100\" d=\"M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z\"/></svg></span><span class=\"ds-dc\"><i class=\"d\"></i>Chưa ghi<span>không tính vào tổng tuần</span></span></div>",
+      "css": ".ds-dc-w{display:flex;flex-direction:column;align-items:flex-start;gap:8px}.ds-dc{display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:4px 12px;border-radius:8px;background:#EFEDF4;color:#1B1B21;font:600 14px/20px 'Roboto Flex',Roboto,sans-serif}.ds-dc i{width:10px;height:10px;flex:none}.ds-dc i.d{outline:1.5px dashed #767680;outline-offset:-1.5px}.ds-dc span{color:#46464F;font-weight:500}"
+    },
+    {
+      "name": "Week Card Stale Row",
+      "kind": "card",
+      "refersTo": "week-card-stale-row",
+      "description": "Thẻ tuần S33 (thẻ tuần trước của S10 dùng lại) với hàng 'dữ liệu đã đổi' ngăn bằng đường 1dp, không lồng hộp.",
+      "html": "<div class=\"ds-wk\"><button class=\"w\"><span class=\"sc\">71</span><span class=\"tx\">Tuần 03/11 – 09/11<small>Tốt · vượt 20 kcal · 4/7 ngày đạt</small></span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M9.3 6.7a1 1 0 0 1 1.4 0l4.6 4.6a1 1 0 0 1 0 1.4l-4.6 4.6a1 1 0 0 1-1.4-1.4l3.9-3.9-3.9-3.9a1 1 0 0 1 0-1.4z\"/></svg></button><div class=\"f\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"#4355B9\" d=\"M12 4V1L8 5l4 4V6a6 6 0 0 1 5.2 9l1.5 1.5A8 8 0 0 0 12 4zm0 14a6 6 0 0 1-5.2-9L5.3 7.5A8 8 0 0 0 12 20v3l4-4-4-4z\"/></svg><p>Dữ liệu tuần đã thay đổi sau nhận xét AI (10/11 · 08:02).</p><button>Tạo lại</button></div></div>",
+      "css": ".ds-wk{width:336px;background:#F5F2FA;border-radius:16px;font-family:'Roboto Flex',Roboto,sans-serif;color:#1B1B21}.ds-wk .w{display:grid;grid-template-columns:48px 1fr 48px;gap:12px;align-items:center;width:100%;min-height:72px;padding:12px 0 12px 12px;border:0;background:none;border-radius:16px;text-align:left;color:inherit;cursor:pointer}.ds-wk .w:hover{background:color-mix(in srgb,#1B1B21 8%,transparent)}.ds-wk .w:focus-visible{outline:2px solid #4355B9;outline-offset:2px}.ds-wk .sc{width:48px;height:48px;border-radius:12px;background:#DEE0FF;color:#00105C;display:grid;place-items:center;font-size:22px;font-weight:650}.ds-wk .tx{display:flex;flex-direction:column;font:600 16px/24px inherit}.ds-wk .tx small{font:400 12px/16px inherit;color:#46464F}.ds-wk .w svg{justify-self:center;color:#46464F}.ds-wk .f{display:flex;align-items:center;gap:12px;margin-left:12px;padding:4px 4px 4px 0;border-top:1px solid color-mix(in srgb,#C6C5D0 55%,transparent);color:#46464F}.ds-wk .f svg{width:48px;flex:none}.ds-wk .f p{flex:1;margin:0;font:400 12px/16px inherit}.ds-wk .f button{height:48px;padding:0 12px;border:0;border-radius:24px;background:none;color:#4355B9;font:600 14px/20px inherit;cursor:pointer}.ds-wk .f button:hover{background:color-mix(in srgb,#4355B9 8%,transparent)}"
+    },
+    {
+      "name": "Camera Overlay Controls (S11)",
+      "kind": "custom",
+      "refersTo": "camera-flash-pill",
+      "description": "Thanh trên của viewfinder ép tối: nút 48dp và viên thuốc flash có chữ trạng thái, tất cả trên lớp che #000 62%; \"Bật\" dùng secondary-container tối.",
+      "html": "<div class=\"ds-cam-top\"><button class=\"ds-cam-v\" aria-label=\"Đóng\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12 19 6.4 17.6 5 12 10.6z\"/></svg></button><div class=\"ds-cam-g\"><button class=\"ds-cam-f\" aria-label=\"Đèn flash: Tự động\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M7 2v11h3v9l7-12h-4l4-8z\"/></svg>Tự động</button><button class=\"ds-cam-f on\" aria-label=\"Đèn flash: Bật\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M7 2v11h3v9l7-12h-4l4-8z\"/></svg>Bật</button><button class=\"ds-cam-v\" aria-label=\"Đổi camera trước / sau\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M17.65 6.35A7.96 7.96 0 0 0 12 4a8 8 0 1 0 7.75 10h-2.08A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4z\"/></svg></button></div></div>",
+      "css": ".ds-cam-top{width:360px;height:64px;padding:0 8px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#f4f1ea,#d9d2c4);font-family:'Roboto Flex',Roboto,sans-serif}.ds-cam-g{display:flex;gap:8px}.ds-cam-v,.ds-cam-f{height:48px;border:0;border-radius:24px;display:inline-flex;align-items:center;justify-content:center;background:color-mix(in srgb,#000 62%,transparent);color:#E4E1E9;cursor:pointer}.ds-cam-v{width:48px}.ds-cam-f{gap:6px;padding:0 16px 0 12px;font:600 14px/20px 'Roboto Flex',Roboto,sans-serif}.ds-cam-f svg{width:20px;height:20px}.ds-cam-f.on{background:#43465A;color:#E0E1F9}.ds-cam-v:hover,.ds-cam-f:hover{background:color-mix(in srgb,#000 54%,transparent)}.ds-cam-f.on:hover{background:color-mix(in srgb,#E0E1F9 8%,#43465A)}.ds-cam-v:focus-visible,.ds-cam-f:focus-visible{outline:2px solid #BAC3FF;outline-offset:2px}"
+    },
+    {
+      "name": "Camera Bottom Panel (S11)",
+      "kind": "custom",
+      "refersTo": "camera-panel",
+      "description": "Panel #000 góc trên 28dp: chip giờ ăn · bữa của S12 ngay trên nút chụp 72dp (vòng 4dp, lõi 54dp), hai ô 48dp có nhãn Thư viện / Ghi chú.",
+      "html": "<div class=\"ds-cam-p\"><div class=\"ds-cam-c\"><button class=\"ds-cam-chip\" aria-label=\"Đổi giờ ăn và bữa\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7z\"/></svg>12:35 · <span class=\"t\"></span>Trưa<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M16.6 8.6 12 13.2 7.4 8.6 6 10l6 6 6-6z\"/></svg></button></div><div class=\"ds-cam-r\"><button class=\"ds-cam-s\" aria-label=\"Chọn từ thư viện\"><span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M20 4H8a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm-11 13 3-4 2 2.5 3-4 4 5.5zM2 8v12a2 2 0 0 0 2 2h12v-2H4V8z\"/></svg></span>Thư viện</button><button class=\"ds-cam-sh\" aria-label=\"Chụp\"><i></i></button><button class=\"ds-cam-s r\" aria-label=\"Thêm ghi chú cho AI\"><span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M3 17.25V21h3.75L17.8 9.94l-3.75-3.75zM20.7 7.04a1 1 0 0 0 0-1.41l-2.33-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z\"/></svg></span>Ghi chú</button></div></div>",
+      "css": ".ds-cam-p{width:360px;background:#000;border-radius:28px 28px 0 0;padding:16px 16px 24px;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1;color:#E4E1E9}.ds-cam-c{display:flex;justify-content:center}.ds-cam-chip{height:32px;border:0;border-radius:8px;display:inline-flex;align-items:center;gap:6px;padding:0 6px 0 8px;background:#43465A;color:#E0E1F9;font:600 14px/20px 'Roboto Flex',Roboto,sans-serif;cursor:pointer}.ds-cam-chip svg{width:18px;height:18px}.ds-cam-chip .t{width:10px;height:10px;border-radius:2px;background:#8E9BF5}.ds-cam-r{display:grid;grid-template-columns:1fr 72px 1fr;align-items:center;height:72px;margin-top:12px}.ds-cam-s{justify-self:start;width:56px;display:flex;flex-direction:column;align-items:center;gap:2px;border:0;background:none;color:#C6C5D0;font:500 11px/16px 'Roboto Flex',Roboto,sans-serif;cursor:pointer}.ds-cam-s.r{justify-self:end}.ds-cam-s span{width:48px;height:48px;border-radius:14px;background:#35343A;color:#E4E1E9;display:grid;place-items:center}.ds-cam-sh{width:72px;height:72px;border-radius:50%;border:4px solid #E4E1E9;background:none;display:grid;place-items:center;cursor:pointer}.ds-cam-sh i{width:54px;height:54px;border-radius:50%;background:#E4E1E9}.ds-cam-s:hover span,.ds-cam-chip:hover{filter:brightness(1.08)}.ds-cam-chip:focus-visible,.ds-cam-s:focus-visible,.ds-cam-sh:focus-visible{outline:2px solid #BAC3FF;outline-offset:2px}"
+    },
+    {
+      "name": "Search Field (S13 / S34)",
+      "kind": "input",
+      "refersTo": "search-field",
+      "description": "Ô tìm 56dp tròn hết cỡ, surface-highest ở cả hai chế độ, tìm không dấu trong Món của tôi.",
+      "html": "<div class=\"ds-sf\" role=\"search\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14\"/></svg><input aria-label=\"Tìm món đã lưu\" placeholder=\"Tìm trong 18 món đã lưu\" value=\"tra\"><button aria-label=\"Xoá ô tìm\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/></svg></button></div>",
+      "css": ".ds-sf{width:336px;height:56px;border-radius:28px;background:#E4E1E9;display:flex;align-items:center;gap:4px;padding:0 4px 0 16px;color:#46464F;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-sf input{flex:1;min-width:0;margin-left:8px;border:0;background:none;font:400 16px/24px inherit;color:#1B1B21;caret-color:#4355B9;outline:none}.ds-sf input::placeholder{color:#46464F}.ds-sf button{width:48px;height:48px;border-radius:24px;border:0;background:none;color:#46464F;display:grid;place-items:center;cursor:pointer}.ds-sf button:hover{background:color-mix(in srgb,#1B1B21 8%,transparent)}.ds-sf:focus-within{outline:2px solid #4355B9;outline-offset:2px}.ds-sf button:focus-visible{outline:2px solid #4355B9;outline-offset:2px}"
+    },
+    {
+      "name": "Quick-Add Food Row (S13)",
+      "kind": "custom",
+      "refersTo": "food-row",
+      "description": "Dòng thẻ xác nhận S12 thu gọn: tên Body Medium (phần khớp primary 700 gạch chân), khẩu phần + chấm macro 6dp, kcal 600, chevron; chạm mở S12 ở ×1.",
+      "html": "<div class=\"ds-fl\"><div class=\"gh\">Hôm nay</div><button class=\"fr\"><span><span class=\"nm\"><mark>Trà</mark> sữa trân châu</span><span class=\"sub\"><span>1 ly size M</span><span class=\"mac\"><span><i style=\"background:#006780\"></i>2</span><span><i style=\"background:#4C6700\"></i>22</span><span><i style=\"background:#8E4585\"></i>4 g</span></span></span></span><span class=\"kc\">400 <small>kcal</small></span><span class=\"go\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z\"/></svg></span></button><button class=\"fr\"><span><span class=\"nm\">Cà phê sữa đá</span><span class=\"sub\"><span>1 ly · ít đường</span><span class=\"mac\"><span><i style=\"background:#006780\"></i>2</span><span><i style=\"background:#4C6700\"></i>22</span><span><i style=\"background:#8E4585\"></i>4 g</span></span></span></span><span class=\"kc\">140 <small>kcal</small></span><span class=\"go\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z\"/></svg></span></button></div>",
+      "css": ".ds-fl{width:336px;background:#F5F2FA;border-radius:16px;overflow:hidden;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1;color:#1B1B21}.ds-fl .gh{padding:10px 16px 2px;font:500 12px/16px inherit;color:#46464F}.ds-fl .fr{width:100%;min-height:64px;display:grid;grid-template-columns:1fr auto 48px;align-items:center;gap:8px;padding:6px 4px 6px 16px;background:none;border:0;color:inherit;text-align:left;cursor:pointer;font:inherit}.ds-fl .fr+.fr{box-shadow:inset 0 1px 0 color-mix(in srgb,#C6C5D0 55%,transparent)}.ds-fl .fr:hover{background:color-mix(in srgb,#1B1B21 8%,#F5F2FA)}.ds-fl .fr:focus-visible{outline:2px solid #4355B9;outline-offset:-2px}.ds-fl .nm{display:block;font:500 14px/20px inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ds-fl mark{background:none;color:#4355B9;font-weight:700;text-decoration:underline 1.5px;text-underline-offset:3px}.ds-fl .sub{display:flex;gap:8px;font:400 12px/16px inherit;color:#46464F;white-space:nowrap}.ds-fl .mac{display:inline-flex;gap:8px}.ds-fl .mac span{display:inline-flex;align-items:center;gap:4px}.ds-fl .mac i{width:6px;height:6px;border-radius:3px}.ds-fl .kc{font:600 14px/20px inherit}.ds-fl .kc small{font:500 12px/16px inherit;color:#46464F}.ds-fl .go{display:grid;place-items:center;color:#46464F}"
+    },
+    {
+      "name": "Saved Food Row (S34)",
+      "kind": "custom",
+      "refersTo": "food-row-saved",
+      "description": "Hàng S13 thêm dòng \"N lần · lần cuối …\" Label Small, tối thiểu 72dp, ngôi sao yêu thích 48dp (FILL 1 primary khi bật).",
+      "html": "<div class=\"ds-sr\"><button class=\"main\"><span><span class=\"nm\">Cơm tấm sườn</span><span class=\"sub\"><span>1 dĩa · ~350 g</span><span class=\"mac\"><span><i style=\"background:#006780\"></i>2</span><span><i style=\"background:#4C6700\"></i>22</span><span><i style=\"background:#8E4585\"></i>4 g</span></span></span><span class=\"use\">21 lần · lần cuối 11/11</span></span><span class=\"kc\">650 <small>kcal</small></span></button><button class=\"star on\" aria-pressed=\"true\" aria-label=\"Bỏ yêu thích\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z\"/></svg></button></div><div class=\"ds-sr\"><button class=\"main\"><span><span class=\"nm\">Trà sữa trân châu</span><span class=\"sub\"><span>1 ly size M</span><span class=\"mac\"><span><i style=\"background:#006780\"></i>2</span><span><i style=\"background:#4C6700\"></i>22</span><span><i style=\"background:#8E4585\"></i>4 g</span></span></span><span class=\"use\">12 lần · lần cuối 11/11</span></span><span class=\"kc\">400 <small>kcal</small></span></button><button class=\"star\" aria-pressed=\"false\" aria-label=\"Đánh dấu yêu thích\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"m22 9.24-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28z\"/></svg></button></div>",
+      "css": ".ds-sr{width:336px;display:grid;grid-template-columns:1fr 48px;align-items:center;padding-right:4px;background:#F5F2FA;color:#1B1B21;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-sr:first-child{border-radius:16px 16px 0 0}.ds-sr:last-child{border-radius:0 0 16px 16px}.ds-sr+.ds-sr{box-shadow:inset 0 1px 0 color-mix(in srgb,#C6C5D0 55%,transparent)}.ds-sr .main{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;min-height:72px;padding:8px 4px 8px 16px;border:0;background:none;text-align:left;color:inherit;font:inherit;cursor:pointer}.ds-sr .main:hover{background:color-mix(in srgb,#1B1B21 8%,#F5F2FA)}.ds-sr .nm{display:block;font:500 14px/20px inherit}.ds-sr .sub{display:flex;gap:8px;font:400 12px/16px inherit;color:#46464F;white-space:nowrap}.ds-sr .use{display:block;font:500 11px/16px inherit;color:#46464F;margin-top:1px}.ds-sr .mac{display:inline-flex;gap:8px}.ds-sr .mac span{display:inline-flex;align-items:center;gap:4px}.ds-sr .mac i{width:6px;height:6px;border-radius:3px}.ds-sr .kc{font:600 14px/20px inherit}.ds-sr .kc small{font:500 12px/16px inherit;color:#46464F}.ds-sr .star{width:48px;height:48px;border-radius:24px;border:0;background:none;color:#46464F;display:grid;place-items:center;cursor:pointer}.ds-sr .star.on{color:#4355B9}.ds-sr .star:hover{background:color-mix(in srgb,#1B1B21 8%,transparent)}.ds-sr button:focus-visible{outline:2px solid #4355B9;outline-offset:-2px}"
+    },
+    {
+      "name": "Escape Pair (Hỏi AI / Nhập tay)",
+      "kind": "button",
+      "refersTo": "button-tonal",
+      "description": "Chân ghim của S13 (hoặc trong thẻ không khớp): tonal Hỏi AI trước, outlined Nhập tay sau, 48dp chia đều.",
+      "html": "<div class=\"ds-ep\"><button class=\"t\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"m19 9 1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25z\"/></svg>Hỏi AI</button><button class=\"o\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M3 10h11v2H3zm0-2h11V6H3zm0 8h7v-2H3zm15.01-3.13.71-.71a1 1 0 0 1 1.41 0l.71.71a1 1 0 0 1 0 1.41l-.71.71zm-.71.71-5.3 5.3V21h2.12l5.3-5.3z\"/></svg>Nhập tay</button></div>",
+      "css": ".ds-ep{width:328px;display:flex;gap:8px;padding:12px 16px 28px;background:#EFEDF4;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-ep button{flex:1;height:48px;border-radius:24px;border:0;display:inline-flex;align-items:center;justify-content:center;gap:6px;font:600 14px/20px inherit;cursor:pointer}.ds-ep .t{background:#E0E1F9;color:#181A2C}.ds-ep .o{background:none;outline:1px solid #C6C5D0;outline-offset:-1px;color:#4355B9}.ds-ep .t:hover{background:color-mix(in srgb,#181A2C 8%,#E0E1F9)}.ds-ep .o:hover{background:color-mix(in srgb,#4355B9 8%,transparent)}.ds-ep button:focus-visible{outline:2px solid #4355B9;outline-offset:2px}"
+    },
+    {
+      "name": "Day Lane Edit (S14, giảm khẩu phần)",
+      "kind": "custom",
+      "refersTo": "day-lane-removed",
+      "description": "Sửa giảm: đoạn cũ đặc, phần bị bỏ là đoạn rỗng nét đứt 1.5dp outline ngay sau phần giữ lại; dòng \"Trước khi sửa · Món này −N\".",
+      "html": "<div class=\"ds-dl\"><div class=\"top\"><span>Hôm nay sau khi lưu</span><b>còn 675 kcal</b></div><div class=\"lane\" role=\"img\" aria-label=\"Ngày sau khi lưu: 1.065 trên 1.740 kcal\"><i style=\"width:calc(47.13% - 3px);background:#4355B9\"></i><i style=\"width:calc(14.08% - 3px);background:#5868C9\"></i><i class=\"gone\" style=\"width:calc(14.08% - 3px)\"></i><span class=\"goal\"></span></div><p class=\"delta\"><span>Trước khi sửa <b>1.310</b> kcal</span><span>Món này <b>−245</b> kcal</span></p></div>",
+      "css": ".ds-dl{width:336px;padding:12px 16px 14px;border-radius:16px;background:#F5F2FA;color:#46464F;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1;font-size:12px;line-height:16px;font-weight:500}.ds-dl .top{display:flex;justify-content:space-between}.ds-dl .top b{font:600 14px/20px inherit;color:#1B1B21}.ds-dl .lane{position:relative;height:10px;background:#EFEDF4;margin-top:10px;display:flex;gap:3px}.ds-dl .lane i{height:100%;display:block;flex:none}.ds-dl .lane i.gone{background:transparent;outline:1.5px dashed #767680;outline-offset:-1.5px}.ds-dl .goal{position:absolute;top:-4px;bottom:-4px;right:-1px;width:2px;background:#1B1B21}.ds-dl .delta{display:flex;justify-content:space-between;margin-top:10px}.ds-dl .delta b{color:#1B1B21;font-weight:600}"
+    },
+    {
+      "name": "Water Lane (S15)",
+      "kind": "custom",
+      "refersTo": "water-lane",
+      "description": "Tổng ngày Display Large + nút mục tiêu 48dp; làn S12 một đoạn primary mỗi lần uống, khe 3dp, dài bằng mục tiêu; phần trên mục tiêu ở làn 6dp vẫn primary trên rãnh primary 18%.",
+      "html": "<div class=\"ds-wl\"><div class=\"top\"><span class=\"n\">2.850</span><span class=\"u\">ml</span><button class=\"g\" aria-label=\"110% của mục tiêu 2.600 ml. Xem cách tính mục tiêu\"><b>110%</b><span>của 2.600 ml</span></button></div><div role=\"img\" aria-label=\"9 lần uống, tổng 2.850 trên 2.600 ml, trên mục tiêu 250 ml\"><div class=\"lane\"><i style=\"left:0;width:26px\"></i><i style=\"left:29px;width:55px\"></i><i style=\"left:87px;width:26px\"></i><i style=\"left:116px;width:26px\"></i><i style=\"left:145px;width:26px\"></i><i style=\"left:174px;width:26px\"></i><i style=\"left:203px;width:55px\"></i><i style=\"left:261px;width:43px\"></i><span class=\"gm\"></span></div><div class=\"over\"><i style=\"width:29px\"></i><span class=\"gm\"></span></div></div><p class=\"lab\">Đạt lúc <b>21:10</b></p></div>",
+      "css": ".ds-wl{width:336px;padding:14px 16px 16px;border-radius:16px;background:#F5F2FA;color:#1B1B21;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-wl .top{display:flex;align-items:flex-end;gap:6px}.ds-wl .n{font-size:57px;line-height:.9;font-weight:650;letter-spacing:-.03em;font-variation-settings:'opsz' 72,'wdth' 92}.ds-wl .u{padding-bottom:4px;font:600 16px/24px inherit;color:#46464F}.ds-wl .g{margin-left:auto;min-height:48px;display:flex;flex-direction:column;align-items:flex-end;justify-content:flex-end;padding:0 4px 2px;border:0;border-radius:12px;background:none;color:inherit;cursor:pointer}.ds-wl .g b{font:600 16px/24px inherit}.ds-wl .g span{font:500 12px/16px inherit;color:#46464F}.ds-wl .g:hover{background:color-mix(in srgb,#1B1B21 8%,transparent)}.ds-wl .g:focus-visible{outline:2px solid #4355B9;outline-offset:2px}.ds-wl .lane{position:relative;width:304px;height:10px;margin-top:18px;background:#E4E1E9}.ds-wl .lane i{position:absolute;top:0;bottom:0;background:#4355B9}.ds-wl .over{position:relative;width:304px;height:6px;margin-top:4px;border-radius:3px;background:color-mix(in srgb,#4355B9 18%,transparent)}.ds-wl .over i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:#4355B9}.ds-wl .gm{position:absolute;right:-1px;top:-4px;bottom:-4px;width:2px;background:#1B1B21}.ds-wl .over .gm{bottom:0}.ds-wl .lab{margin:8px 0 0;font:500 12px/16px inherit;color:#46464F}.ds-wl .lab b{color:#1B1B21;font-weight:600}"
+    },
+    {
+      "name": "Water Reminder Row (S15)",
+      "kind": "custom",
+      "refersTo": "water-reminder-row",
+      "description": "Hàng 48dp có đường ngăn của thẻ tổng ngày, mở S43: giờ nhắc tiếp theo 06 §4, hoặc trung tính khi thiếu quyền; không lồng hộp, không hổ phách.",
+      "html": "<div class=\"ds-wr\"><button aria-label=\"Nhắc tiếp lúc 14:05. Mở Nước và nhắc nhở\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"#4355B9\" d=\"M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4a1.5 1.5 0 0 0-3 0v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1z\"/></svg><span>Nhắc tiếp lúc <b>14:05</b></span><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z\"/></svg></button><button aria-label=\"Không nhắc được, chưa có quyền. Mở Nước và nhắc nhở\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"#4355B9\" d=\"M20 18.69 7.84 6.14 5.27 3.49 4 4.76l2.8 2.8v.01c-.52.99-.8 2.16-.8 3.42v5l-2 2v1h13.73l2 2L21 19.72zM12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2zm6-7.32V11c0-3.08-1.64-5.64-4.5-6.32V4a1.5 1.5 0 0 0-3 0v.68c-.15.03-.29.08-.42.12z\"/></svg><span>Không nhắc được · <b>chưa có quyền</b></span><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z\"/></svg></button></div>",
+      "css": ".ds-wr{width:336px;padding:0 8px;background:#F5F2FA;border-radius:16px;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-wr button{display:grid;grid-template-columns:20px 1fr 20px;gap:12px;align-items:center;width:100%;min-height:48px;padding:0 8px;border:0;border-radius:12px;background:none;text-align:left;color:#46464F;font:500 14px/20px inherit;cursor:pointer}.ds-wr button+button{box-shadow:inset 0 1px 0 color-mix(in srgb,#C6C5D0 55%,transparent)}.ds-wr b{color:#1B1B21;font-weight:600}.ds-wr button:hover{background:color-mix(in srgb,#1B1B21 8%,transparent)}.ds-wr button:focus-visible{outline:2px solid #4355B9;outline-offset:2px}"
+    },
+    {
+      "name": "Water Drink Row (S15)",
+      "kind": "custom",
+      "refersTo": "water-drink-row",
+      "description": "Hàng lần uống ≥48dp: giờ 600, nguồn bằng chữ, lượng Body Large on-surface-var; hàng chạm mục tiêu mang \"Đạt mục tiêu · N ml\" primary.",
+      "html": "<div class=\"ds-wd\"><button class=\"r\" aria-label=\"17:30: 500 ml, trong app. Sửa lần uống\"><span class=\"tm\">17:30</span><span class=\"src\"><span>Trong app</span></span><span class=\"v\">500<small>ml</small></span></button><button class=\"r\" aria-label=\"21:10: 350 ml, trong app. Sửa lần uống\"><span class=\"tm\">21:10</span><span class=\"src\"><span>Trong app</span><small>Đạt mục tiêu · 2.850 ml</small></span><span class=\"v\">350<small>ml</small></span></button><button class=\"r\" aria-label=\"10:20: 250 ml, từ thông báo. Sửa lần uống\"><span class=\"tm\">10:20</span><span class=\"src\"><span>Từ thông báo</span></span><span class=\"v\">250<small>ml</small></span></button></div>",
+      "css": ".ds-wd{width:336px;background:#F5F2FA;border-radius:16px;overflow:hidden;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1;color:#1B1B21}.ds-wd .r{width:100%;min-height:48px;display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:8px;padding:4px 16px;border:0;background:#F5F2FA;text-align:left;color:inherit;font:inherit;cursor:pointer}.ds-wd .r+.r{box-shadow:inset 0 1px 0 color-mix(in srgb,#C6C5D0 55%,transparent)}.ds-wd .r:hover{background:color-mix(in srgb,#1B1B21 8%,#F5F2FA)}.ds-wd .r:focus-visible{outline:2px solid #4355B9;outline-offset:-2px}.ds-wd .tm{font:600 14px/20px inherit;font-variation-settings:'wdth' 90}.ds-wd .src{display:flex;flex-direction:column;color:#46464F;font:400 12px/16px inherit}.ds-wd .src small{color:#4355B9;font:600 11px/16px inherit}.ds-wd .v{font:400 16px/24px inherit;color:#46464F}.ds-wd .v small{margin-left:3px;font:500 12px/16px inherit}"
+    },
+    {
+      "name": "Water Quick-Add Dock (S15)",
+      "kind": "button",
+      "refersTo": "water-quick-add-dock",
+      "description": "Chân ghim surface-cont: filled +250 ml (water_drop FILL 1, 1.25), tonal +500 ml (1), outlined 48dp add \"Thêm lượng khác\"; không FAB.",
+      "html": "<div class=\"ds-wq\"><button class=\"f\" aria-label=\"Thêm 250 ml\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M12 2.7s-7 7.4-7 12.3a7 7 0 0 0 14 0c0-4.9-7-12.3-7-12.3z\"/></svg>+250 ml</button><button class=\"t\" aria-label=\"Thêm 500 ml\">+500 ml</button><button class=\"o\" aria-label=\"Thêm lượng khác\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z\"/></svg></button></div>",
+      "css": ".ds-wq{width:328px;display:grid;grid-template-columns:1.25fr 1fr 48px;gap:8px;padding:12px 16px 32px;background:#EFEDF4;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-wq button{height:48px;border:0;border-radius:24px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 14px/20px inherit;cursor:pointer}.ds-wq .f{background:#4355B9;color:#fff}.ds-wq .t{background:#E0E1F9;color:#181A2C}.ds-wq .o{width:48px;padding:0;background:none;color:#4355B9;outline:1px solid #C6C5D0;outline-offset:-1px}.ds-wq .f:hover{background:color-mix(in srgb,#fff 8%,#4355B9)}.ds-wq .t:hover{background:color-mix(in srgb,#181A2C 8%,#E0E1F9)}.ds-wq .o:hover{background:color-mix(in srgb,#4355B9 8%,transparent)}.ds-wq button:focus-visible{outline:2px solid #4355B9;outline-offset:2px}"
+    },
+    {
+      "name": "Settings Nav Row (S40)",
+      "kind": "nav",
+      "refersTo": "settings-nav-row",
+      "description": "Hàng 64dp ngữ pháp \"Xem thêm\" của S30: ô 40dp primary-container, tiêu đề, dòng phụ là giá trị đang dùng, chevron.",
+      "html": "<div class=\"ds-sn\"><button class=\"r\"><span class=\"ic\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" d=\"M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-7 8c0-3.3 3.1-5 7-5s7 1.7 7 5\"/></svg></span><span class=\"t\">Hồ sơ &amp; mục tiêu<small><span class=\"nw\">1.740 kcal/ngày</span> · <span class=\"nw\">giảm còn 68 kg</span></small></span><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M9.3 6.7 14.6 12l-5.3 5.3 1.4 1.4L17.4 12l-6.7-6.7z\"/></svg></button><button class=\"r\"><span class=\"ic\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" d=\"M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-7 8c0-3.3 3.1-5 7-5s7 1.7 7 5\"/></svg></span><span class=\"t\">Bữa ăn<small><span class=\"nw\">Sáng 05:00</span> · <span class=\"nw\">Trưa 10:00</span> · <span class=\"nw\">Phụ 14:00</span> · <span class=\"nw\">Tối 17:30</span></small></span><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M9.3 6.7 14.6 12l-5.3 5.3 1.4 1.4L17.4 12l-6.7-6.7z\"/></svg></button></div>",
+      "css": ".ds-sn{width:336px;background:#F5F2FA;border-radius:16px;overflow:hidden;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-sn .r{width:100%;min-height:64px;display:grid;grid-template-columns:40px 1fr 24px;gap:14px;align-items:center;padding:10px 14px;border:0;background:none;text-align:left;color:#1B1B21;cursor:pointer}.ds-sn .r+.r{border-top:1px solid color-mix(in srgb,#C6C5D0 55%,transparent)}.ds-sn .r:hover{background:color-mix(in srgb,#1B1B21 8%,transparent)}.ds-sn .r:focus-visible{outline:2px solid #4355B9;outline-offset:-2px}.ds-sn .ic{width:40px;height:40px;border-radius:12px;background:#DEE0FF;color:#00105C;display:grid;place-items:center}.ds-sn .t{font:600 16px/24px inherit}.ds-sn small{display:block;font:400 12px/16px inherit;color:#46464F}.ds-sn .nw{white-space:nowrap}.ds-sn svg:last-child{color:#46464F}"
+    },
+    {
+      "name": "Settings Row + Switch (S41–S45)",
+      "kind": "custom",
+      "refersTo": "settings-row",
+      "description": "Nhãn ← giá trị: nhãn Body Large, số Title Medium tabular canh phải, đơn vị Label Medium on-surface-var, chevron 20dp; hàng công tắc 64dp với Switch M3 52×32.",
+      "html": "<div class=\"ds-sr\"><button class=\"li\"><span>Chiều cao</span><span class=\"v\"><b>170</b><u>cm</u></span><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M9.3 6.7 14.6 12l-5.3 5.3 1.4 1.4L17.4 12l-6.7-6.7z\"/></svg></button><button class=\"li\"><span>Tốc độ<small>Khuyên dùng · bớt 550 kcal/ngày</small></span><span class=\"v\"><b>0,5</b><u>kg/tuần</u></span><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M9.3 6.7 14.6 12l-5.3 5.3 1.4 1.4L17.4 12l-6.7-6.7z\"/></svg></button><button class=\"li sw\" role=\"switch\" aria-checked=\"true\"><span>Tự tính lại khi ghi cân<small>Bật: tính lại ngay sau mỗi lần ghi cân</small></span><span class=\"s\"></span></button><button class=\"li sw\" role=\"switch\" aria-checked=\"false\"><span>Tự đặt calo mục tiêu<small>Đang tự tính: 1.740 kcal/ngày</small></span><span class=\"s off\"></span></button></div>",
+      "css": ".ds-sr{width:336px;background:#F5F2FA;border-radius:16px;overflow:hidden;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-sr .li{width:100%;min-height:56px;display:grid;grid-template-columns:1fr auto 20px;gap:10px;align-items:center;padding:8px 12px 8px 16px;border:0;background:none;text-align:left;color:#1B1B21;font:400 16px/24px inherit;cursor:pointer}.ds-sr .li+.li{border-top:1px solid color-mix(in srgb,#C6C5D0 55%,transparent)}.ds-sr .li:hover{background:color-mix(in srgb,#1B1B21 8%,transparent)}.ds-sr .li:focus-visible{outline:2px solid #4355B9;outline-offset:-2px}.ds-sr small{display:block;font:400 12px/16px inherit;color:#46464F}.ds-sr .v{white-space:nowrap;text-align:right}.ds-sr .v b{font-weight:600}.ds-sr .v u{text-decoration:none;font:500 12px/16px inherit;color:#46464F;margin-left:3px}.ds-sr svg{color:#46464F}.ds-sr .sw{grid-template-columns:1fr 52px;min-height:64px;padding-right:16px}.ds-sr .s{width:52px;height:32px;border-radius:16px;background:#4355B9;position:relative}.ds-sr .s::after{content:'';position:absolute;right:4px;top:4px;width:24px;height:24px;border-radius:12px;background:#FFFFFF;transition:all .2s cubic-bezier(.2,0,0,1)}.ds-sr .s.off{background:#E4E1E9;box-shadow:inset 0 0 0 2px #767680}.ds-sr .s.off::after{right:auto;left:8px;top:8px;width:16px;height:16px;border-radius:8px;background:#767680}"
+    },
+    {
+      "name": "Meal Lane 24h (S44)",
+      "kind": "custom",
+      "refersTo": "meal-lane-24",
+      "description": "Bốn khung giờ bữa vẽ thành làn 24 giờ cùng ngữ pháp đoạn của vòng calo: tông meal-*, đầu vuông, khe 3dp, Phụ nhiều đoạn, vạch bây giờ.",
+      "html": "<div class=\"ds-ml\" aria-label=\"Một ngày 24 giờ\"><div class=\"b\"><i style=\"background:#6C79D6;flex-grow:300\"></i><i style=\"background:#4355B9;flex-grow:300\"></i><i style=\"background:#5868C9;flex-grow:240\"></i><i style=\"background:#6C79D6;flex-grow:210\"></i><i style=\"background:#1E2A78;flex-grow:270\"></i><i style=\"background:#6C79D6;flex-grow:120\"></i><span class=\"now\" style=\"left:84.38%\"></span></div><div class=\"t\"><span>00:00</span><span>12:00</span><span>24:00</span></div></div>",
+      "css": ".ds-ml{width:304px;padding:14px 16px 16px;background:#F5F2FA;border-radius:16px;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-ml .b{position:relative;display:flex;gap:3px;height:10px}.ds-ml .b i{flex-basis:0}.ds-ml .now{position:absolute;top:-4px;width:2px;height:18px;background:#1B1B21;transform:translateX(-1px)}.ds-ml .t{display:flex;justify-content:space-between;margin-top:6px;font:500 11px/16px inherit;color:#46464F}"
+    },
+    {
+      "name": "Delete-All Dialog (S45)",
+      "kind": "card",
+      "refersTo": "confirm-dialog",
+      "description": "Hộp thoại xác nhận duy nhất của app, bước 2: gõ XOÁ mới bật nút filled error \"Xoá vĩnh viễn\" (error / on-error).",
+      "html": "<div class=\"ds-dlg\" role=\"alertdialog\" aria-label=\"Xoá toàn bộ dữ liệu, bước 2 trên 2\"><span class=\"hi\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M7 21q-.8 0-1.4-.6T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .8-.6 1.4T17 21zm2.4-4 2.6-2.6 2.6 2.6 1.4-1.4-2.6-2.6 2.6-2.6-1.4-1.4L12 11.6 9.4 9 8 10.4l2.6 2.6L8 15.6z\"/></svg></span><h3>Gõ XOÁ để xác nhận</h3><p>45 ngày nhật ký, 16 lần cân và 18 món đã lưu sẽ bị xoá vĩnh viễn. App mở lại ở màn chào.</p><label class=\"f\"><span>Gõ XOÁ</span>XOÁ</label><div class=\"a\"><button class=\"tx\">Huỷ</button><button class=\"dg\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M7 21q-.8 0-1.4-.6T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .8-.6 1.4T17 21zm2.4-4 2.6-2.6 2.6 2.6 1.4-1.4-2.6-2.6 2.6-2.6-1.4-1.4L12 11.6 9.4 9 8 10.4l2.6 2.6L8 15.6z\"/></svg>Xoá vĩnh viễn</button></div></div>",
+      "css": ".ds-dlg{width:312px;background:#F5F2FA;color:#1B1B21;border-radius:28px;padding:24px 24px 16px;font-family:'Roboto Flex',Roboto,sans-serif;font-feature-settings:'tnum' 1}.ds-dlg .hi{display:block;width:24px;margin:0 auto;color:#46464F}.ds-dlg h3{margin:14px 0 0;text-align:center;font:600 22px/28px inherit}.ds-dlg p{margin:14px 0 0;font:500 14px/20px inherit;color:#46464F}.ds-dlg .f{position:relative;display:flex;align-items:center;height:56px;margin-top:20px;padding:0 16px;border-radius:4px;box-shadow:inset 0 0 0 2px #4355B9;font:500 16px/24px inherit}.ds-dlg .f span{position:absolute;top:-9px;left:12px;padding:0 4px;background:#F5F2FA;color:#4355B9;font:500 12px/18px inherit}.ds-dlg .a{display:flex;justify-content:flex-end;gap:8px;margin:18px -8px 0 0}.ds-dlg button{height:48px;border:0;border-radius:24px;display:inline-flex;align-items:center;gap:8px;font:600 14px/20px inherit;cursor:pointer}.ds-dlg .tx{background:none;color:#4355B9;padding:0 16px}.ds-dlg .tx:hover{background:color-mix(in srgb,#4355B9 8%,transparent)}.ds-dlg .dg{background:#BA1A1A;color:#FFFFFF;padding:0 20px}.ds-dlg .dg:hover{background:color-mix(in srgb,#FFFFFF 8%,#BA1A1A)}.ds-dlg button:focus-visible{outline:2px solid #4355B9;outline-offset:2px}"
+    },
+    {
+      "name": "Period Mode + Pinned Period Bar (S32)",
+      "kind": "nav",
+      "refersTo": "range-segmented",
+      "description": "Bộ chọn Tuần / Tháng 48dp hai phần cuộn đi; chỉ hàng chọn kỳ ‹ › được ghim, chip \"Tạm tính · còn N ngày\" cho kỳ đang diễn ra.",
+      "html": "<div class=\"ds-sp\"><div class=\"ds-sp-seg\" role=\"radiogroup\" aria-label=\"Kỳ thống kê\"><button role=\"radio\" aria-checked=\"true\" class=\"on\">Tuần</button><button role=\"radio\" aria-checked=\"false\">Tháng</button></div><div class=\"ds-sp-bar\"><button aria-label=\"Tuần trước\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M15.4 7.4 14 6l-6 6 6 6 1.4-1.4L10.8 12z\"/></svg></button><div class=\"mid\"><b>Tuần này · 10/11 – 16/11</b><span class=\"prov\">Tạm tính · còn 3 ngày</span></div><button aria-label=\"Tuần sau\" aria-disabled=\"true\" class=\"off\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M8.6 16.6 10 18l6-6-6-6-1.4 1.4 4.6 4.6z\"/></svg></button></div></div>",
+      "css": ".ds-sp{width:336px;font-family:\"Roboto Flex\",Roboto,sans-serif;color:#1B1B21}.ds-sp button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}.ds-sp-seg{display:grid;grid-template-columns:1fr 1fr;height:48px;border-radius:24px;outline:1px solid #767680;outline-offset:-1px;overflow:hidden}.ds-sp-seg button{font-size:14px;font-weight:600;border-left:1px solid #767680}.ds-sp-seg button:first-child{border-left:0}.ds-sp-seg button.on{background:#E0E1F9;color:#181A2C}.ds-sp-seg button:hover:not(.on){background:rgba(27,27,33,.08)}.ds-sp-bar{display:grid;grid-template-columns:48px 1fr 48px;align-items:center;padding:4px 0 8px;transition:background-color .2s cubic-bezier(.2,0,0,1)}.ds-sp-bar:hover{background:#EFEDF4}.ds-sp-bar>button{width:48px;height:48px;border-radius:24px;display:grid;place-items:center;color:#46464F}.ds-sp-bar>button.off{color:rgba(27,27,33,.38);cursor:default}.ds-sp-bar .mid{display:flex;flex-direction:column;align-items:center;gap:2px}.ds-sp-bar b{font-size:16px;font-weight:600;line-height:24px}.ds-sp-bar .prov{height:24px;border-radius:8px;padding:0 8px;display:inline-flex;align-items:center;background:#E0E1F9;color:#181A2C;font-size:12px;font-weight:500}.ds-sp button:focus-visible{outline:2px solid #4355B9;outline-offset:2px}"
+    },
+    {
+      "name": "Month Chart Scrub + Readout (S32)",
+      "kind": "custom",
+      "refersTo": "stats-day-readout",
+      "description": "Biểu đồ tháng cột 6dp trong khe 336/N dp, vạch TB liền 1dp primary cạnh vạch mục tiêu nét đứt; cả biểu đồ là một slider, ngày chọn có lớp 8% và nhãn ngày; hàng đọc số 56dp cố định bên dưới với ‹ › 48dp và \"Mở ngày\".",
+      "html": "<div class=\"ds-mc\"><div class=\"plot\" role=\"slider\" tabindex=\"0\" aria-label=\"Biểu đồ kcal tháng 10\" aria-valuemin=\"1\" aria-valuemax=\"31\" aria-valuenow=\"8\" aria-valuetext=\"Thứ Tư, 08/10: 800 kcal, thiếu 940, nghi ghi thiếu\"><span class=\"sel\" style=\"left:77px\"></span><span class=\"tag\" style=\"left:82px\">08/10</span><span class=\"goal\"></span><span class=\"avg\"></span><i style=\"left:8px;height:80px\"></i><i style=\"left:19px;height:70px\" class=\"u\"></i><i style=\"left:30px;height:80px\"></i><i style=\"left:41px;height:80px\"></i><i style=\"left:52px;height:68px\" class=\"u\"></i><i style=\"left:63px;height:80px\"></i><i style=\"left:74px;height:84px\"></i><i style=\"left:85px;height:37px\" class=\"u\"></i><i style=\"left:96px;height:80px\"></i><i style=\"left:107px;height:80px\"></i><i style=\"left:118px;height:80px\"></i></div><div class=\"ds-ro\" aria-live=\"polite\"><button aria-label=\"Ngày trước\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M15.4 7.4 14 6l-6 6 6 6 1.4-1.4L10.8 12z\"/></svg></button><div class=\"tx\"><b>Thứ Tư, 08/10</b><span>800 kcal · Thiếu 940</span></div><button aria-label=\"Ngày sau\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M8.6 16.6 10 18l6-6-6-6-1.4 1.4 4.6 4.6z\"/></svg></button><button class=\"open\">Mở ngày</button></div></div>",
+      "css": ".ds-mc{width:336px;font-family:\"Roboto Flex\",Roboto,sans-serif;color:#1B1B21;font-feature-settings:\"tnum\" 1}.ds-mc .plot{position:relative;height:120px;margin-top:22px;border-bottom:1px solid #C6C5D0;touch-action:pan-y}.ds-mc .plot:focus-visible{outline:2px solid #4355B9;outline-offset:2px}.ds-mc .plot i{position:absolute;bottom:0;width:6px;background:#4355B9}.ds-mc .plot i.u{background:color-mix(in srgb,#4355B9 70%,#F5F2FA)}.ds-mc .goal{position:absolute;left:0;right:0;bottom:80px;border-top:1px dashed #46464F}.ds-mc .avg{position:absolute;left:0;right:0;bottom:75px;border-top:1px solid #4355B9}.ds-mc .sel{position:absolute;top:-22px;bottom:0;width:11px;border-radius:4px;background:rgba(27,27,33,.08)}.ds-mc .tag{position:absolute;top:-22px;transform:translateX(-50%);height:18px;padding:0 6px;border-radius:4px;background:#1B1B21;color:#FBF8FF;font-size:11px;font-weight:600;display:flex;align-items:center}.ds-ro{margin-top:8px;min-height:56px;border-radius:12px;background:#EFEDF4;display:flex;align-items:center;padding:4px}.ds-ro button{font:inherit;background:none;border:0;cursor:pointer;color:#46464F;width:48px;height:48px;border-radius:24px;display:grid;place-items:center}.ds-ro button:hover{background:rgba(27,27,33,.08)}.ds-ro button:focus-visible{outline:2px solid #4355B9;outline-offset:2px}.ds-ro .tx{flex:1}.ds-ro .tx b{display:block;font-size:14px;font-weight:600}.ds-ro .tx span{font-size:12px;color:#46464F}.ds-ro .open{width:auto;padding:0 8px;color:#4355B9;font-size:14px;font-weight:600}"
+    },
+    {
+      "name": "Period Compare Table (S32)",
+      "kind": "card",
+      "refersTo": "stats-compare-delta",
+      "description": "So với kỳ trước theo The Same-Days Rule: bảng 1fr / 64 / 64 / 74dp, mũi tên trung tính on-surface-var, câu \"Mũi tên chỉ tăng hay giảm, không phải tốt hay xấu.\"",
+      "html": "<section class=\"ds-cmp\"><h3>So với tuần trước</h3><p class=\"sub\">Cùng 4 ngày đầu: T2–T5 tuần trước (03–06/11)</p><div class=\"t\"><span></span><span class=\"h\">Tuần này</span><span class=\"h\">Trước</span><span class=\"h\">Chênh</span><span class=\"n\">TB kcal/ngày</span><span class=\"a\">1.533</span><span class=\"b\">1.490</span><span class=\"d\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M11 20V7.8l-5.6 5.6L4 12l8-8 8 8-1.4 1.4L13 7.8V20z\"/></svg>43</span><span class=\"n\">Nước TB</span><span class=\"a\">2,24<small>L</small></span><span class=\"b\">2,68<small>L</small></span><span class=\"d\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M11 4v12.2l-5.6-5.6L4 12l8 8 8-8-1.4-1.4-5.6 5.6V4z\"/></svg>440 ml</span></div><p class=\"note\">Mũi tên chỉ tăng hay giảm, không phải tốt hay xấu.</p></section>",
+      "css": ".ds-cmp{width:336px;background:#F5F2FA;border-radius:16px;padding:14px 16px 16px;font-family:\"Roboto Flex\",Roboto,sans-serif;color:#1B1B21;font-feature-settings:\"tnum\" 1}.ds-cmp h3{margin:0;font-size:16px;font-weight:600;line-height:24px}.ds-cmp .sub{margin:2px 0 0;font-size:12px;font-weight:500;color:#46464F}.ds-cmp .t{margin-top:10px;display:grid;grid-template-columns:1fr 64px 64px 74px}.ds-cmp .t>span{display:flex;align-items:center;padding:8px 0;border-top:1px solid color-mix(in srgb,#C6C5D0 55%,transparent);font-size:14px;font-weight:500}.ds-cmp .t>span:nth-child(-n+4){border-top:0;padding:0 0 6px;font-size:12px;color:#46464F}.ds-cmp .h,.ds-cmp .a,.ds-cmp .b,.ds-cmp .d{justify-content:flex-end}.ds-cmp .a{font-weight:600}.ds-cmp .b{color:#46464F}.ds-cmp .d{color:#46464F;font-size:12px!important;gap:1px}.ds-cmp small{font-size:11px;color:#46464F;margin-left:2px}.ds-cmp .note{margin:8px 0 0;font-size:12px;color:#46464F}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Đồng hồ đo của Pixel",
+    "overview": "Cali là Material 3 chuẩn của thể loại đếm calo, làm ở độ tinh xảo của app Pixel. Bảng màu Material You tonal sinh từ seed chàm, chiều sâu bằng các tầng surface container chứ không bằng bóng đổ, chữ Roboto Flex với số tabular ở mọi nơi, biểu tượng Material Symbols Rounded. Cá tính không đến từ trang trí mà từ độ chính xác của số liệu: mỗi con số canh cột, mỗi đơn vị đặt nhỏ hơn và nhạt hơn con số nó đi kèm, mỗi trạng thái vượt mục tiêu được nói rõ bằng chữ, biểu tượng và màu cùng lúc.\n\nMật độ vừa phải, thiên về đọc nhanh: một màn hình đọc được trong một cái liếc, số kcal còn lại luôn nổi nhất. Thao tác chính nằm trong vùng ngón cái, mọi vùng chạm từ 48dp. Giao diện sáng và tối là hai bản đầy đủ của cùng một scheme, không phải bản đảo màu. Ngoại lệ duy nhất là Camera (S11): màn đó luôn dùng scheme tối, bất kể giao diện hệ thống (The Forced-Dark Camera Rule).\n\nNgười dùng đã loại ba hướng: xanh lá Material tươi mát, ấm áp kem/serif, và số liệu nền tối kiểu mono. Màu thương hiệu là chàm; xanh lá chỉ xuất hiện như một chuỗi dữ liệu (tinh bột), không bao giờ như màu chủ đạo.",
+    "keyCharacteristics": [
+      "Material You tonal scheme, seed chàm #4355B9, sáng/tối đầy đủ.",
+      "Tonal surface thay bóng đổ; chỉ thứ nổi trên nội dung (FAB, snackbar) có bóng.",
+      "Một font Roboto Flex cho mọi chữ, số tabular toàn cục.",
+      "Ba màu dữ liệu cố định cho đạm / tinh bột / béo, tách khỏi chàm, hổ phách và đỏ.",
+      "Ba trạng thái mục tiêu: trong mục tiêu / vượt nhẹ (≤10%, hổ phách) / vượt nhiều (error), luôn kèm chữ và biểu tượng.",
+      "Vòng calo chia đoạn theo bữa, theo thứ tự giờ ăn, là chữ ký thị giác.",
+      "Hổ phách còn có nghĩa thứ hai, \"cần kiểm tra\" (số liệu AI cần xem lại), và nghĩa thứ ba, \"đã điều chỉnh\" (mục tiêu bị kẹp về mức an toàn, BMI mục tiêu thấp); đỏ chỉ cho vượt >10%, macro vượt, lỗi nhập của ô nhập, lỗi gửi tin nhắn và nút xoá cuối cùng \"Xoá vĩnh viễn\" (S45).",
+      "Một ngữ pháp chọn duy nhất: thẻ / hàng viền 1dp chuyển sang secondary-container với viền 2dp primary, không dấu tick, không tự sang bước.",
+      "Thanh làn \"Hôm nay sau khi lưu\" là vòng calo duỗi thẳng: cùng tông bữa, cùng ngữ pháp đoạn.",
+      "Chat AI là một luồng tin nhắn: kết quả AI là bong bóng, thẻ món thu gọn mang theo làn \"còn lại\"; sổ chỉ đổi khi lưu (The Ledger Rule).",
+      "Tổng kết tuần (S35) là bảy ngày của vòng calo xếp cạnh nhau: làn điểm, cột ngày và thanh macro cùng ngữ pháp đoạn (đầu vuông, khe 3dp), phần vượt tách khỏi phần trong mục tiêu ngay tại vạch (The Goal-Line Split Rule).",
+      "Lịch sử (S30) là các hàng S35 thu nhỏ: mỗi tuần một thẻ có điểm, bảy ô ngày là bảy cột calo mini trên một vạch mục tiêu chung của cả hàng, cùng ngữ pháp Đạt / Thiếu / Vượt tách tại vạch.",
+      "Cân nặng (S31) đọc theo tuần, cùng đơn vị với S35: số lớn là cân trung bình tuần, đường đậm nối trung bình các tuần, từng lần cân chỉ là ô nhỏ nhạt; thay đổi cân không bao giờ mang màu đánh giá (The No-Judgement Scale Rule).",
+      "Chi tiết ngày (S33) là S10 dùng lại cho một ngày đã qua: cùng vòng, thẻ bữa và macro, nhưng tâm vòng nói kết quả của ngày (Δ có dấu và loại ngày của 08 §2) thay cho số còn lại.",
+      "Nước (S15) là thanh làn của S12 duỗi theo mục tiêu nước: mỗi lần uống là một đoạn primary đầu vuông, khe 3dp, toàn chiều dài làn là mục tiêu; số lớn là tổng ngày, từng lần uống đọc nhỏ và nhạt như từng lần cân của S31. Nước không có trạng thái vượt: phần trên mục tiêu tách sang làn riêng 6dp nhưng vẫn primary, chữ trung tính (The Goal-Line Split Rule).",
+      "Camera (S11) là màn duy nhất bị ép tối: viewfinder và panel dưới là #000 (gốc của `ColorScheme.scrim`), mọi nút và chữ đè lên ảnh trực tiếp nằm trên lớp che #000 62%; chip giờ ăn · bữa của S12 đứng ngay trên nút chụp để thấy giờ sẽ ghi trước khi bấm. Một lần chụp là một ảnh.",
+      "Món đã lưu đọc giống nhau ở S12, S13, S14 và S34: một hàng món là dòng thẻ xác nhận thu gọn (tên, khẩu phần, chấm macro 6dp, kcal canh phải). Thêm nhanh (S13) và Sửa món (S14) là S12 thu gọn hoặc mở lại, nói tác động lên ngày bằng cùng làn \"sau khi lưu\" (The One Food Row Rule).",
+      "Cài đặt (S40–S45) là bảng thông số của chính đồng hồ đo: mỗi hàng nói giá trị đang dùng (nhãn ← số tabular canh phải), mọi thay đổi chạm tới mục tiêu calo đi qua sheet Đang dùng / Mới của S31 và áp dụng từ hôm nay, khung giờ bốn bữa là một làn 24 giờ cùng ngữ pháp đoạn của vòng calo, và hộp thoại xác nhận duy nhất của app là Xoá toàn bộ dữ liệu (The One Dialog Rule).",
+      "Thống kê (S32) là các ngày của vòng calo xếp cạnh nhau, đọc bằng trung bình của một kỳ Tuần hoặc Tháng: số lớn duy nhất là kcal TB mỗi ngày, cột ngày, thanh macro và làn nước dùng lại ngữ pháp của S35 / S15, cộng một vạch TB của kỳ liền 1dp primary cạnh vạch mục tiêu nét đứt. Không điểm, không xếp loại, không AI: những thứ đó ở S35, sau một hàng 64dp. Mọi so sánh với kỳ trước là mũi tên trung tính, và kỳ đang diễn ra chỉ so với cùng số ngày của kỳ trước (The Same-Days Rule)."
+    ],
+    "rules": [
+      {
+        "name": "The Data-Series Lock Rule",
+        "body": "Đạm, tinh bột, béo luôn là ba màu đó, ở mọi màn hình. Không màu dữ liệu nào được dùng cho thương hiệu, trạng thái hay bữa ăn, và chúng được giữ xa chàm, hổ phách và đỏ.",
+        "section": "colors"
+      },
+      {
+        "name": "The Three States Rule",
+        "body": "Trong mục tiêu = primary, vượt ≤10% = warn, vượt >10% = error. Trạng thái không bao giờ chỉ là màu: luôn có chip với biểu tượng (`info` / `warning`) và chữ \"Vượt nhẹ X%\" / \"Vượt X%\", và số ở tâm vòng đổi thành \"+N\" (trên S33, nhãn và Δ ở tâm cùng mang màu trạng thái). Trên S32, TB kcal/ngày của kỳ theo cùng ba trạng thái: Δ so với mục tiêu là on-surface khi thiếu hoặc bằng, warn khi vượt ≤10%, error khi vượt >10%, và khi vượt luôn có chip ngay dưới số.",
+        "section": "colors"
+      },
+      {
+        "name": "The Amber Check Rule",
+        "body": "Hổ phách có đúng ba nghĩa: vượt nhẹ (≤10%), cần kiểm tra, và đã điều chỉnh (The Amber Adjust Rule). Mọi cờ kiểm tra số liệu (độ tin cậy thấp, kcal lệch macro, món trên 2.500 kcal) và thẻ câu hỏi làm rõ đều là hổ phách, luôn kèm biểu tượng (`help` cho độ tin cậy thấp, `warning` cho số liệu lệch hoặc cao) và chữ, và không bao giờ chặn Lưu. \"Số liệu lệch\" dùng đúng một công thức ở mọi nơi (S12, Nhập tay của S13, món đã lưu của S34; đặc tả 03): |kcal − (4P+4C+9F)| / (4P+4C+9F) > 20%. Chỉ kiểm tra khi có macro, hiện khi rời ô macro cuối (không trong lúc gõ), kèm một dòng Body Small nêu phép tính (\"Macro cộng lại ~362 kcal (4·28 + 4·40 + 9·10), 520 kcal lệch 44% …\"), và không bao giờ chặn Lưu hay Tiếp. Đỏ không bao giờ dùng để kiểm tra số liệu: đỏ chỉ là vượt >10%, macro vượt mục tiêu, lỗi nhập không hợp lệ của ô nhập, và lỗi gửi tin nhắn trong chat (luôn kèm biểu tượng và chữ). Trên biểu đồ tuần, hổ phách chỉ là cờ nghi ghi thiếu (một dạng \"cần kiểm tra\"); ngày \"Thiếu\" không bao giờ hổ phách, nó là Chàm Thiếu (`--under`). Danh sách ba nghĩa là đóng: thiếu sáng trên Camera (S11) không phải \"cần kiểm tra\" số liệu, nên nó là gợi ý trung tính (`brightness_low` trên lớp che), không bao giờ hổ phách. Nước (S15) không mang hổ phách ở đâu cả: uống quá mục tiêu không phải trạng thái (xem The Goal-Line Split Rule), nhắc không chạy được vì thiếu quyền là một hàng trung tính, và lỗi khoảng của ô ml là lỗi nhập nên là đỏ.",
+        "section": "colors"
+      },
+      {
+        "name": "The Amber Adjust Rule",
+        "body": "Khi app tự kẹp mục tiêu về mức an toàn, hoặc cân nặng mục tiêu cho BMI dưới 18,5, báo bằng hổ phách với biểu tượng `info` và chữ nêu giá trị thực (\"Đã chỉnh · ~0,52 kg/tuần\", \"App đã điều chỉnh về 1.720 kcal/ngày (~0,52 kg/tuần)\"). Trong hàng chọn là chữ warn kèm `info` 14dp; ở mức màn là hộp warn-container. Không bao giờ chặn Tiếp hay Bắt đầu.",
+        "section": "colors"
+      },
+      {
+        "name": "The No-Judgement Scale Rule",
+        "body": "Thang BMI không tô màu theo phân loại: các đoạn là rãnh surface-highest, chỉ đoạn chứa giá trị hiện tại là primary; tên phân loại (\"Béo phì độ I\", \"Bình thường\") là chữ on-surface-var. Không đỏ, không hổ phách, không xanh trên thang. Cùng luật cho thay đổi cân (S31, S35, S30): \"−0,5 kg\", \"+0,3 kg\" luôn là chữ trung tính (on-surface cho số, on-surface-var cho lời), dù tăng hay giảm, dù nhanh hay chậm hơn kế hoạch; đường xu hướng luôn là primary. Trên S32 cũng vậy, và luật mở rộng sang mọi so sánh với kỳ trước (S32, S35): mũi tên `arrow_upward` / `arrow_downward` 16dp và phần chênh là on-surface-var cho kcal, ngày đạt, đạm, nước và cân như nhau, kèm câu \"Mũi tên chỉ tăng hay giảm, không phải tốt hay xấu.\"",
+        "section": "colors"
+      },
+      {
+        "name": "The Goal-Line Split Rule",
+        "body": "Thanh nào chạy qua mục tiêu thì tách tại mục tiêu: phần trong mục tiêu giữ màu của nó, khe 3dp, rồi phần vượt mang màu trạng thái. Trên S35 là cột ngày (primary đến vạch + khe + error), trên S30 là cột mini 14dp của lịch (cùng cách tách, phần vượt tối thiểu 3dp); trên S32 là cột tuần 20dp (như S35) và cột tháng 6dp (phần vượt tối thiểu 3dp); thanh macro trên S10 và S35 (màu dữ liệu đến vạch + khe + error). Vòng calo và thanh làn ngày theo cùng ý nhưng đưa phần vượt sang vòng / làn riêng 6dp. Không bao giờ tô cả thanh sang màu trạng thái khi chỉ phần dư là vượt. Nước (S15) tách hình nhưng không đổi màu: nước không có trạng thái vượt (08 §2: từ mục tiêu trở lên là Đạt), nên làn nước dừng ở vạch, phần trên mục tiêu chạy làn riêng 6dp trên rãnh primary 18% và vẫn là primary; chữ trung tính \"Đạt mục tiêu · +N ml\", không bao giờ hổ phách hay đỏ, không bao giờ \"vượt\". Cột nước trên biểu đồ 7 ngày cũng không tách: ngày trên mục tiêu là một cột primary liền.",
+        "section": "colors"
+      },
+      {
+        "name": "The Indigo Meal Rule",
+        "body": "Bữa ăn chỉ dùng tông chàm; đoạn vòng và ô màu đầu thẻ bữa luôn cùng một token. Bữa còn được nhận diện bằng tên và biểu tượng, không chỉ bằng tông. Ở chế độ sáng, các tông kề nhau (meal-sang / meal-trua / meal-phu) chỉ cách nhau khoảng 1.3:1; nếu cần tách rõ hơn trong Compose, dịch sắc độ (hue), không dịch độ sáng, để mỗi tông vẫn đạt ≥3:1 so với rãnh vòng.",
+        "section": "colors"
+      },
+      {
+        "name": "The Forced-Dark Camera Rule",
+        "body": "Camera (S11: viewfinder, xin quyền, xem lại, phân tích, lỗi) luôn dùng scheme tối, bất kể giao diện hệ thống; đây là màn duy nhất như vậy, vì camera tối theo bản chất. Viewfinder và panel dưới là #000 (gốc `ColorScheme.scrim`); mọi nút và chữ đè lên ảnh trực tiếp nằm trên lớp che #000 62% để chữ ≥4.5:1 kể cả trên ảnh trắng. #000 và lớp che là ngoại lệ có ghi chép của scrim, không phải màu bảng màu: không dùng ở màn nào khác, và mọi màu khác trên Camera vẫn là token `-dark` của frontmatter.",
+        "section": "colors"
+      },
+      {
+        "name": "The Remaining-First Rule",
+        "body": "Display Large chỉ có một chỗ trên màn. Khi màn có vòng calo, nó luôn ở tâm vòng: số calo còn lại trên S10 (hôm nay), hoặc mục tiêu kcal/ngày khi vòng còn trống trên S02 và trên S33 cho ngày chưa ghi (chính con số người dùng sẽ thấy mỗi sáng). Ngày đã qua (S33) không còn gì để \"còn lại\", nên tâm là Δ có dấu so với mục tiêu kèm loại ngày. Tổng kết tuần (S35) không có vòng calo, nên chỗ duy nhất đó là điểm tuần trong thẻ điểm; Cân nặng (S31) cũng không có vòng, chỗ đó là cân trung bình tuần, không bao giờ là một lần cân lẻ. Nước (S15) cũng không có vòng: chỗ đó là tổng nước của ngày, không bao giờ một lần uống lẻ; mục tiêu chỉ nói một lần (vạch cuối làn + \"của 2.600 ml\"). Thống kê (S32) cũng không có vòng: chỗ đó là kcal TB mỗi ngày của kỳ đang xem, không bao giờ một ngày lẻ hay tổng kỳ, và chỉ hiện khi kỳ có ≥3 ngày ghi; dưới mức đó không có số lớn giả mà là ghi chú `flag` của người mới. Không con số nào khác được lớn ngang nó. Thẻ xác nhận không có số còn lại, nên số lớn nhất của nó là tổng kcal ở Display Small, một bậc dưới; Display Medium chỉ sống trong ô nhập giờ. Headline Medium là chữ, không bao giờ là số liệu.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "`tnum` bật cho toàn app; số và đơn vị luôn tách cỡ: số ở vai trò lớn hơn, đơn vị ở Label Medium màu Mực Phụ.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tonal-Not-Shadow Rule",
+        "body": "Phân tầng bằng surface container. Bóng chỉ dành cho thứ trôi trên nội dung cuộn (FAB, snackbar); không thẻ, không sheet nào có bóng. Trên Camera (S11), lớp che 62% và viền tương phản 1dp của vòng căn đĩa là màu và nét, không phải bóng; không thứ gì trên viewfinder có bóng.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Ledger Rule",
+        "body": "Thẻ món đang chờ không bao giờ đổi \"còn N kcal\" trên thanh trên; chỉ khi lưu mới đổi. Làn trong thẻ nói trước điều sẽ xảy ra, thanh trên nói điều đã xảy ra. Tin nhắn nhóm theo ngày ăn, và nhãn làn theo ngày của bữa: \"Hôm nay sau khi lưu\" cho hôm nay; cho ngày khác, làn ghi đúng ngày \"dd/mm sau khi lưu\" (S33; thẻ món chat S20 dùng \"Ngày này\").",
+        "section": "components"
+      },
+      {
+        "name": "The One Food Row Rule",
+        "body": "Một món đọc giống nhau ở mọi chỗ: tên Body Medium (Title Medium trên thẻ đầy đủ), khẩu phần, ba chấm macro 6dp, kcal canh phải với đơn vị Mực Phụ. Hàng Thêm nhanh (S13) và hàng Món của tôi (S34) là dòng thẻ xác nhận S12 thu gọn; Sửa món (S14) là thẻ S12 mở lại. Không dựng kiểu hàng món thứ hai.",
+        "section": "components"
+      },
+      {
+        "name": "The Absolute Log Rule",
+        "body": "Nhật ký lưu giá trị tuyệt đối của từng lần ăn. Sửa hay xoá một món đã lưu không bao giờ đổi các lần đã ghi, và màn phải nói điều đó ngay chỗ người dùng sửa (hộp `history`, chú thích xoá). Tạo món đã lưu từ S34 không ghi nhật ký, và nút nói rõ \"Lưu vào Món của tôi\".",
+        "section": "components"
+      },
+      {
+        "name": "The Spec-Sheet Row Rule",
+        "body": "Mỗi hàng cài đặt nói giá trị đang dùng ngay trên hàng: trên S40 bằng dòng phụ, trên S41–S45 bằng số tabular canh phải với đơn vị Label Medium on-surface-var. Không phải mở một mục chỉ để biết app đang chạy với số gì.",
+        "section": "components"
+      },
+      {
+        "name": "The One Dialog Rule",
+        "body": "Hộp thoại xác nhận chỉ có ở một chỗ: Xoá toàn bộ dữ liệu (S45), hai bước, bước 2 phải gõ \"XOÁ\". Mọi xoá khác là vuốt hoặc nút + snackbar Hoàn tác, và \"Khôi phục mặc định\" cũng không hỏi lại. Nút filled error (error / on-error) chỉ có ở \"Xoá vĩnh viễn\".",
+        "section": "components"
+      },
+      {
+        "name": "The Same-Days Rule",
+        "body": "Kỳ đang diễn ra chỉ so với cùng số ngày của kỳ trước: tuần so với đúng các thứ tương ứng của tuần trước (T2–T5 với T2–T5), tháng so với đúng khoảng ngày đó của tháng trước (01–13/11 với 01–13/10), không bao giờ với cả kỳ trước. Chỉ so khi kỳ trước đủ dữ liệu trong lịch sử của người dùng: tuần cần ≥3 ngày ghi ở các thứ tương ứng (đều sau ngày bắt đầu dùng app), tháng cần ≥7 ngày ghi trong cùng khoảng ngày; không đủ thì nói vì sao bằng một dòng `info`, không vẽ bảng. Luật áp cho S32 và cho tuần đang diễn ra của S35, nơi dòng so sánh ghi \"Cùng kỳ tuần trước\".",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do để số ở tâm vòng calo (kcal còn lại trên S10, mục tiêu kcal/ngày trên S02, Δ có dấu của ngày đã qua trên S33) là thứ lớn nhất trên màn (Display Large 57sp), một lần duy nhất; trên S35, màn không có vòng, chỗ đó là điểm tuần trong thẻ điểm; trên S31 là cân trung bình tuần; trên S15 là tổng nước của ngày. Trên S32 là kcal TB mỗi ngày của kỳ, chỉ khi kỳ có ≥3 ngày ghi.",
+      "Do bật số tabular cho mọi chữ và đặt đơn vị ở Label Medium màu on-surface-var.",
+      "Do phân tầng bằng surface, surface-low, surface-cont, surface-highest thay cho bóng (trên viewfinder của Camera: #000 và lớp che #000 62%, cũng không bóng).",
+      "Do báo vượt mục tiêu bằng cả chữ, biểu tượng và màu: warn khi ≤10%, error khi >10%.",
+      "Do giữ đoạn vòng và ô màu thẻ bữa cùng một token meal-*, xếp theo giờ ăn.",
+      "Do giữ mọi vùng chạm từ 48dp và giữ \"Chụp món\" cách tối đa một chạm (hàng nút hoặc FAB).",
+      "Do khi tách các tông bữa ở chế độ sáng, dịch sắc độ chứ không dịch độ sáng, giữ ≥3:1 so với rãnh vòng.",
+      "Do dùng hổ phách cho mọi cờ cần kiểm tra số liệu, luôn kèm biểu tượng và chữ, và để Lưu vẫn bấm được.",
+      "Do vẽ tác động lên ngày bằng ngữ pháp của vòng calo: tông bữa, đầu vuông, khe 3dp, đoạn sắp thêm 40% có viền trong 1.5dp, phần vượt trên làn riêng 6dp.",
+      "Do ghim nút Lưu 56dp toàn chiều rộng ở đáy sheet và ghi rõ tên bữa cùng tổng kcal.",
+      "Do xoá bằng vuốt + snackbar Hoàn tác, không bằng hộp thoại xác nhận; ngoại lệ duy nhất là Xoá toàn bộ dữ liệu (S45, 05 §5).",
+      "Do dùng một ngữ pháp chọn cho mọi câu hỏi một lựa chọn: viền 1dp outline-var → secondary-container + viền 2dp primary, ô biểu tượng chuyển primary.",
+      "Do ghim nút bước 56dp toàn chiều rộng ở đáy và chỉ bật khi dữ liệu bước hợp lệ.",
+      "Do báo mục tiêu đã bị kẹp về mức an toàn bằng hổ phách, biểu tượng `info` và giá trị thực, và vẫn cho đi tiếp.",
+      "Do hiện lỗi khoảng của ô nhập khi rời ô hoặc bấm Xong; trong lúc gõ chỉ tắt nút bước.",
+      "Do giữ thẻ món trong chat rộng 304dp ở mọi trạng thái, đổi chờ / đã lưu / đã bỏ qua tại chỗ, và chỉ đổi \"còn N kcal\" trên thanh trên khi lưu.",
+      "Do để bong bóng AI tách khỏi nền bằng tầng tonal; nếu cần tách rõ hơn ở chế độ sáng (hiện ~1.1:1), thêm viền 1dp outline-var, không thêm bóng.",
+      "Do tách mọi thanh vượt mục tiêu ngay tại vạch: phần trong mục tiêu, khe 3dp, phần vượt màu trạng thái (The Goal-Line Split Rule).",
+      "Do vẽ ngày \"Thiếu\" bằng Chàm Thiếu (`--under`), và để chú giải biểu đồ kiêm luôn bảng đếm ngày.",
+      "Do để mỗi cột ngày là vùng chạm 48dp mở chi tiết ngày, và vẽ ngày chưa ghi bằng ô nét đứt + \"—\", không bằng cột 0.",
+      "Do để thẻ số liệu không bao giờ chờ AI; mọi trạng thái của thẻ AI nói rõ số liệu phía trên vẫn đủ.",
+      "Do vẽ mỗi tuần trên lịch S30 như biểu đồ 7 cột S35 thu nhỏ: cột mini 14dp trên một vạch mục tiêu chung của cả hàng, cùng màu Đạt / Thiếu / Vượt.",
+      "Do đánh dấu hôm nay trên lịch S30 chỉ bằng viền 1.5dp primary (vòng số ngày và cột), không tô nền, để ở chế độ tối nó không lẫn với Thiếu.",
+      "Do để ngày trước khi bắt đầu dùng app là số mờ không cột; không bao giờ tính là \"chưa ghi\".",
+      "Do đọc cân theo tuần: Display Large là TB tuần, đường đậm nối TB tuần, từng lần cân là ô 5dp on-surface-var; tuần này chỉ thành điểm tuần khi có ≥2 lần cân.",
+      "Do tính đã giảm / còn lại / dự kiến theo lần cân mới nhất, ghi \"(theo lần cân dd/mm)\" khi nó khác TB tuần, và tính ngày dự kiến từ hôm nay dạng \"~dd/mm/yyyy\".",
+      "Do vẽ vạch mục tiêu cân chỉ ở đúng giá trị của nó; khi nằm ngoài khung, nói \"dưới khung\" trong chú giải.",
+      "Do đưa lỗi nhập có cách sửa rõ ràng kèm nút sửa một chạm 48dp (\"Có phải 74,1 kg?\"), và đổi nút lưu thành \"Thay bản ghi\" khi ngày đó đã có số.",
+      "Do cho ngày đã qua nói kết quả ở tâm vòng (loại ngày + Δ có dấu) và dùng ô chú giải của biểu đồ tuần trong chip loại ngày.",
+      "Do viết macro của ngày đã qua bằng \"thiếu X g\" / \"đạt\" / \"vượt X g\", và ghi nhãn làn bằng ngày (\"12/11 sau khi lưu\") khi thêm món cho ngày khác hôm nay.",
+      "Do để hộp nghi ghi thiếu đưa thẳng tới các bữa trống bằng nút thêm nhanh có giờ giữa khung bữa.",
+      "Do ép Camera (S11) về scheme tối bất kể giao diện hệ thống; viewfinder và panel dưới #000, mọi nút và chữ đè lên ảnh đặt trên lớp che #000 62%.",
+      "Do đặt chip giờ ăn · bữa của S12 ngay trên nút chụp 72dp, chạm để sửa, để thấy giờ sẽ ghi trước khi bấm.",
+      "Do ghi chữ trạng thái trên nút flash (\"Tự động\" / \"Bật\" / \"Tắt\") và ghi nhãn chữ cho hai ô 48dp Thư viện / Ghi chú.",
+      "Do cho bước phân tích nói thật: các bước quan sát được, đồng hồ \"Đã chờ\", và Hủy luôn có.",
+      "Do giữ nguyên ảnh (không làm mờ) và ghi chú khi phân tích lỗi, kèm \"Thử lại\", \"Nhập tay\" và \"Món của tôi\".",
+      "Do lấy giờ của ảnh thư viện từ EXIF, ghi nguồn \"Giờ chụp ảnh\", và nêu rõ ngày và bữa sẽ ghi khi giờ đó rơi vào ngày khác.",
+      "Do đổi nút xin quyền thành \"Mở Cài đặt\" khi người dùng đã chọn \"Không hỏi lại\".",
+      "Do dựng Thêm nhanh (S13) như sheet S12: thanh 52dp với dòng phụ \"Hôm nay · còn N kcal\" primary, chip giờ ăn · bữa có nguồn bằng chữ (\"Lúc bấm thêm\" khi mở từ \"+\" của S10; giờ giữa khung với `history` \"Theo bữa X\" khi mở từ \"+\" của thẻ bữa), và chân ghim tonal \"Hỏi AI\" trước outlined \"Nhập tay\".",
+      "Do để một chạm vào hàng món đã lưu mở S12 với món đó ở ×1 (`chevron_right` cuối hàng); S12 mới là chỗ lưu.",
+      "Do tìm không dấu và tô phần khớp trên tên có dấu bằng primary 700 gạch chân 1.5dp; khi không khớp, đưa hai lối thoát Hỏi AI / Nhập tay điền sẵn chuỗi tìm.",
+      "Do kiểm tra \"Số liệu lệch\" bằng đúng |kcal − (4P+4C+9F)| / (4P+4C+9F) > 20%, hiện khi rời ô macro cuối, kèm phép tính, không chặn.",
+      "Do vẽ một lần sửa món lên làn ngày: đoạn cũ giữ nguyên, phần tăng là đoạn chờ, phần giảm là đoạn rỗng nét đứt 1.5dp outline, kèm dòng \"Trước khi sửa N kcal · Món này ±Δ kcal\".",
+      "Do xoá món đã ghi bằng `delete` trên thanh của Sửa món, không hộp thoại, và Hoàn tác trên S10.",
+      "Do ghim Yêu thích lên đầu Món của tôi, và nói rõ trong form tạo / sửa món đã lưu rằng nhật ký không đổi.",
+      "Do vẽ một ngày nước bằng thanh làn của S12: mỗi lần uống một đoạn primary đầu vuông, khe 3dp, làn dài bằng mục tiêu, vạch 2dp; mục tiêu chỉ nói bằng chữ một lần (\"của 2.600 ml\"), cách tính nằm sau một chạm.",
+      "Do đưa nước trên mục tiêu sang làn riêng 6dp trên rãnh primary 18%, vẫn primary, với chữ trung tính \"Đạt mục tiêu · +N ml\".",
+      "Do tính giờ nhắc nước theo 06 §4 (max(lần uống gần nhất, lần nhắc trước) + khoảng nhắc, kẹp trong khung; ngoài khung hoặc đã đạt thì đầu khung hôm sau), và để cả hàng nhắc 48dp mở S43; ngày đã qua không có hàng nhắc.",
+      "Do ghi nguồn lần uống bằng chữ (\"Trong app\" / \"Từ thông báo\" / \"Từ widget\") và gắn \"Đạt mục tiêu · N ml\" vào đúng hàng làm tổng chạm mục tiêu.",
+      "Do ghim +250 / +500 / lượng khác ở chân surface-cont trong vùng ngón cái, và với ngày đã qua nói rõ trên chân rằng lần thêm ghi lúc 14:30.",
+      "Do để mỗi hàng cài đặt nói giá trị đang dùng: dòng phụ trên S40, số Title Medium tabular canh phải với đơn vị Label Medium on-surface-var trên S41–S45 (The Spec-Sheet Row Rule).",
+      "Do đưa mọi thay đổi chạm tới mục tiêu calo (sửa hồ sơ, đổi tốc độ, ghi đè) qua sheet Đang dùng / Mới của S31, áp dụng từ hôm nay; ngày trước vẫn so với mục tiêu cũ.",
+      "Do kẹp calo ghi đè theo thứ tự 02 §5: trần thâm hụt 25% TDEE trước, rồi sàn max(1.500, BMR); hộp hổ phách nêu giới hạn và giá trị thực, không chặn; ô ngoài 1.000–5.000 kcal hay macro tổng ≠ 100% mới là lỗi đỏ.",
+      "Do giữ key đã lưu ở dạng che với 4 ký tự cuối; chỉ 401 tô đỏ ô API key, mất mạng hay 429 chỉ báo bằng dòng chữ dưới nút.",
+      "Do báo thiếu quyền thông báo bằng dải secondary-container trung tính với nút \"Cho phép\", và nói chưa cấu hình (\"Để sau\") bằng lời trung tính trong dòng phụ.",
+      "Do vẽ khung giờ bốn bữa thành làn 24 giờ cùng ngữ pháp đoạn của vòng calo (tông meal-*, đầu vuông, khe 3dp, vạch bây giờ), và sửa khung trùng bằng nút một chạm cạnh dòng lỗi.",
+      "Do dùng hộp thoại xác nhận chỉ cho Xoá toàn bộ dữ liệu: bước 1 nói mất gì bằng số thật và đưa \"Xuất bản sao lưu trước\", bước 2 gõ \"XOÁ\" mới bật nút filled error \"Xoá vĩnh viễn\" (The One Dialog Rule).",
+      "Do ghim trên S32 chỉ hàng chọn kỳ ‹ › (chuyển surface-cont khi cuộn); bộ chọn Tuần / Tháng cuộn đi cùng thân.",
+      "Do báo chênh của TB kỳ so với mục tiêu theo The Three States Rule, có chip khi vượt, và bỏ qua hôm nay khi tìm ngày nhiều nhất / ít nhất của kỳ đang diễn ra.",
+      "Do vẽ biểu đồ tháng bằng cột 6dp trong khe 336/N dp cùng ngữ pháp Đạt / Thiếu / Vượt, hôm nay chỉ viền, và để cả biểu đồ là một slider: chạm hoặc kéo bắt dính một ngày, hàng đọc số cố định bên dưới với ‹ › 48dp và \"Mở ngày\".",
+      "Do vẽ TB của kỳ bằng đường liền 1dp primary cạnh vạch mục tiêu nét đứt, kèm \"TB N\" trong chú giải, chỉ khi có ≥3 ngày ghi.",
+      "Do so kỳ đang diễn ra với cùng số ngày của kỳ trước, chỉ khi kỳ trước đủ ngày ghi, bằng mũi tên trung tính on-surface-var và câu \"Mũi tên chỉ tăng hay giảm, không phải tốt hay xấu.\" (The Same-Days Rule).",
+      "Do xếp một tuần vào tháng chứa ngày Thứ Năm của nó, và nói điều đó bằng một dòng Body Small dưới cân của tháng.",
+      "Do cho người mới trên S32 thấy ngày cụ thể từng phần sẽ có số (\"Sắp có số\"), suy từ chính các luật đủ dữ liệu."
+    ],
+    "donts": [
+      "Don't dùng xanh lá làm màu chủ đạo, nền kem/serif ấm, hay giao diện số liệu nền tối kiểu mono: người dùng đã loại cả ba. Camera ép tối (S11) không phải hướng đó: nó vẫn là scheme tối chàm của app, chỉ khoá ở một màn.",
+      "Don't dùng màu đạm / tinh bột / béo cho thương hiệu, trạng thái hay bữa ăn.",
+      "Don't đặt bóng đổ lên thẻ, ô, nút hay sheet; chỉ FAB và snackbar có bóng.",
+      "Don't báo trạng thái chỉ bằng màu.",
+      "Don't thêm trang trí không mang dữ liệu; độ tinh xảo đến từ độ chính xác số liệu.",
+      "Don't dùng đỏ cho cờ kiểm tra số liệu hay cho điều chỉnh an toàn; đỏ chỉ là vượt >10%, macro vượt mục tiêu, lỗi nhập của ô nhập, lỗi gửi tin nhắn và nút \"Xoá vĩnh viễn\" (S45).",
+      "Don't đánh dấu đoạn sắp thêm bằng sọc hay vạch chéo; dùng tông nhạt có viền.",
+      "Don't tô nền hay viền cho ô khẩu phần chưa chọn; chỉ ô đang chọn có viên thuốc.",
+      "Don't dùng `menu_book` cho lưu món hay `bookmark_*` cho thêm từ Món của tôi.",
+      "Don't thêm dấu tick hay radio tròn vào thẻ chọn, và không tự sang bước khi chọn.",
+      "Don't tô thang BMI theo màu phân loại; chỉ đoạn hiện tại là primary.",
+      "Don't làm mờ thẻ món đã bỏ qua bằng opacity; đổi sang on-surface-var và giữ nút \"Hoàn tác\" 48dp.",
+      "Don't tô ngày \"Thiếu\" bằng hổ phách hay đỏ; hổ phách trên biểu đồ tuần chỉ là cờ nghi ghi thiếu.",
+      "Don't lồng hộp trong thẻ nhận xét AI; phân mục bằng tiêu đề, khoảng trắng và đường ngăn.",
+      "Don't dựng thẻ cho tuần tương lai hay tuần trước khi dùng app; chúng chỉ là một hàng số ngày mờ 40dp.",
+      "Don't tô thay đổi cân bằng xanh, đỏ hay hổ phách, dù tăng hay giảm; thay đổi cân là chữ trung tính.",
+      "Don't đặt một lần cân lẻ vào chỗ Display Large, và không vẽ đường xu hướng giả khi chưa có 2 tuần có số.",
+      "Don't kéo vạch mục tiêu cân vào mép khung khi giá trị thật nằm ngoài khung.",
+      "Don't viết \"còn\" cho ngày đã qua, ở tâm vòng hay dưới macro.",
+      "Don't dùng hổ phách cho chip \"Thiếu\" trên S33; hổ phách chỉ là cờ `warning` và hộp nghi ghi thiếu.",
+      "Don't lồng hộp cho \"dữ liệu đã đổi\" trong thẻ tuần S33; đó là một hàng có đường ngăn.",
+      "Don't dùng hổ phách cho thiếu sáng trên Camera; đó là gợi ý trung tính `brightness_low`, không phải \"cần kiểm tra\".",
+      "Don't hiện phần trăm hay thanh tiến độ giả khi chờ AI; chỉ các bước thật và thời gian đã chờ.",
+      "Don't mang #000 hay lớp che 62% của Camera sang màn khác; chúng là ngoại lệ của scrim, không phải màu bảng màu.",
+      "Don't đặt bóng cho nút hay vòng căn đĩa trên viewfinder; tương phản đến từ lớp che và viền 1.5dp #000 60%.",
+      "Don't cho chọn nhiều ảnh trong một lần chụp; một lần chụp là một ảnh.",
+      "Don't thêm món ngay khi chạm một hàng của Thêm nhanh; hàng chỉ mở S12, không có nút thêm tức thì.",
+      "Don't dùng nét đứt cho đoạn chờ, hay tô màu phần bị bỏ khi sửa giảm; nét đứt chỉ là thứ không có trong sổ.",
+      "Don't để sửa hay xoá một món đã lưu đổi các lần đã ghi; nhật ký giữ giá trị tuyệt đối (xoá chỉ đưa `my_food_id` về null).",
+      "Don't gọi nút \"Tiếp\" của Nhập tay là lưu, và không để FAB \"Thêm món\" của S34 ghi vào nhật ký.",
+      "Don't thêm token cho ô tìm; nó là surface-highest ở cả hai chế độ.",
+      "Don't tô nước uống quá mục tiêu bằng hổ phách hay đỏ, hay viết \"vượt\"; nước không có trạng thái vượt (08 §2), từ mục tiêu trở lên là Đạt.",
+      "Don't dùng bút chì cho \"Thêm lượng khác\"; bút chì dành cho \"Sửa\", lượng khác là `add`.",
+      "Don't tô \"Xoá\" đỏ trong sheet sửa lần uống; đỏ của xoá chỉ là nền vuốt xoá và nút filled error \"Xoá vĩnh viễn\" ở bước 2 xoá toàn bộ (S45).",
+      "Don't thêm FAB trên S15, và không lồng hộp cho hàng nhắc (kể cả khi thiếu quyền); đó là một hàng có đường ngăn của thẻ tổng ngày.",
+      "Don't đặt một lần uống lẻ vào chỗ Display Large; từng lần uống là Body Large on-surface-var.",
+      "Don't dùng hộp thoại xác nhận ở chỗ nào khác ngoài Xoá toàn bộ dữ liệu (S45); \"Khôi phục mặc định\" dùng snackbar Hoàn tác.",
+      "Don't dùng on-error hay nút filled error ở đâu khác ngoài \"Xoá vĩnh viễn\"; hàng \"Xoá toàn bộ dữ liệu\" và bước 1 của hộp thoại không đỏ.",
+      "Don't tô đỏ hay hổ phách cho trạng thái chưa cấu hình (chưa có key, nhắc tắt, chưa sao lưu) hay cho dải thiếu quyền thông báo.",
+      "Don't áp dụng thay đổi calo thẳng từ một hàng cài đặt, và không để đổi giờ bữa ghi lại bữa của món đã ghi.",
+      "Don't ngắt dòng giữa tên bữa và giờ trong dòng phụ Bữa ăn của S40.",
+      "Don't đặt điểm, xếp loại, chữ AI hay top món lên S32; điểm chỉ ở dòng phụ của hàng \"Xem tổng kết tuần\".",
+      "Don't biến từng cột 6dp của biểu đồ tháng thành nút riêng, hay đặt ô đọc số nổi dưới ngón tay; hàng đọc số nằm cố định dưới biểu đồ.",
+      "Don't viết dấu kép trong hàng đọc số (\"Thiếu −940\"); chữ đã nói chiều: \"Thiếu 940\", \"Vượt 660\".",
+      "Don't so một tuần hay tháng đang diễn ra với cả kỳ trước, và không tô màu mũi tên so sánh.",
+      "Don't hiện Display Large, vạch TB hay bảng so sánh khi chưa đủ dữ liệu; người mới có ghi chú `flag` và \"Sắp có số\".",
+      "Don't vẽ nước của S32 thành cột theo ngày; đó là một làn TB một đoạn."
+    ]
+  }
+}

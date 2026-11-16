@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cali · S01–S03 Onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&display=swap" rel="stylesheet">
+<style>
+:root{ --page:#F3F2F7; --page-ink:#1B1B21; --page-muted:#5E5E68; --page-line:#DCDBE3; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; } }
+:root[data-theme="dark"]{ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; }
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--page);color:var(--page-ink);font-family:'Roboto Flex',Roboto,system-ui,sans-serif;font-variation-settings:"opsz" 14;line-height:1.5}
+::selection{background:#DEE0FF;color:#00105C}
+.wrap{max-width:1640px;margin:0 auto;padding:40px 16px 64px}
+header.doc{max-width:760px;margin:0 auto 20px;padding:0 4px}
+header.doc h1{font-size:28px;font-weight:600;letter-spacing:-.01em;font-variation-settings:"opsz" 32}
+header.doc p{color:var(--page-muted);margin-top:8px;font-size:15px;max-width:70ch}
+.toolbar{display:flex;justify-content:center;gap:8px;margin:0 auto 32px}
+.toolbar button{height:40px;padding:0 16px;border-radius:20px;border:1px solid var(--page-line);background:none;color:var(--page-ink);font:inherit;font-size:14px;font-weight:500;cursor:pointer}
+.toolbar button[aria-pressed="true"]{background:var(--page-ink);color:var(--page)}
+.frames{display:flex;flex-wrap:wrap;gap:44px 32px;justify-content:center}
+figure{display:flex;flex-direction:column;align-items:center;gap:14px}
+figcaption{font-size:13px;color:var(--page-muted);text-align:center;max-width:300px}
+figcaption b{display:block;color:var(--page-ink);font-weight:600;font-size:14px}
+
+/* ===== App tokens (DESIGN.md) ===== */
+.phone{
+  --primary:#4355B9; --on-primary:#FFFFFF; --primary-container:#DEE0FF; --on-primary-container:#00105C;
+  --secondary-container:#E0E1F9; --on-secondary-container:#181A2C;
+  --surface:#FBF8FF; --surface-low:#F5F2FA; --surface-cont:#EFEDF4; --surface-highest:#E4E1E9;
+  --on-surface:#1B1B21; --on-surface-var:#46464F; --outline:#767680; --outline-var:#C6C5D0;
+  --error:#BA1A1A; --error-container:#FFDAD6; --on-error-container:#410002;
+  --warn:#8A5100; --warn-container:#FFDCBE; --on-warn-container:#2C1600;
+  --protein:#006780; --carb:#4C6700; --fat:#8E4585;
+  --ring-track:var(--surface-cont);
+  width:360px;height:780px;border-radius:36px;overflow:hidden;position:relative;
+  background:var(--surface);color:var(--on-surface);
+  outline:1px solid var(--page-line);
+  box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 32px -8px rgba(20,20,40,.18);
+  font-feature-settings:"tnum" 1;display:flex;flex-direction:column;
+}
+.phone.dark{
+  --primary:#BAC3FF; --on-primary:#08218A; --primary-container:#293CA0; --on-primary-container:#DEE0FF;
+  --secondary-container:#43465A; --on-secondary-container:#E0E1F9;
+  --surface:#121318; --surface-low:#1B1B21; --surface-cont:#1F1F25; --surface-highest:#35343A;
+  --on-surface:#E4E1E9; --on-surface-var:#C6C5D0; --outline:#90909A; --outline-var:#46464F;
+  --error:#FFB4AB; --error-container:#93000A; --on-error-container:#FFDAD6;
+  --warn:#FFB86E; --warn-container:#693C00; --on-warn-container:#FFDCBE;
+  --protein:#5FD4F6; --carb:#B1D46A; --fat:#FFAEE9;
+  --ring-track:var(--surface-highest);
+}
+.t-display-l{font-size:57px;line-height:1.05;font-weight:650;letter-spacing:-.03em;font-variation-settings:"opsz" 72,"wdth" 92}
+.t-headline{font-size:28px;line-height:1.25;font-weight:600;letter-spacing:-.01em;font-variation-settings:"opsz" 32}
+.t-title-l{font-size:22px;line-height:1.27;font-weight:600;font-variation-settings:"opsz" 22}
+.t-title-m{font-size:16px;line-height:1.5;font-weight:600}
+.t-body-m{font-size:14px;line-height:1.43;font-weight:500}
+.t-body-s{font-size:12px;line-height:1.33;font-weight:400}
+.t-label-l{font-size:14px;line-height:1.43;font-weight:600}
+.t-label-m{font-size:12px;line-height:1.33;font-weight:500}
+.ms{font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;font-size:24px;line-height:1;display:inline-block;font-variation-settings:"FILL" 0,"wght" 400,"opsz" 24;-webkit-font-smoothing:antialiased;user-select:none;flex:none}
+.ms.fill{font-variation-settings:"FILL" 1,"wght" 400,"opsz" 24}
+.ms.s18{font-size:18px}.ms.s20{font-size:20px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+button:focus-visible,.opt:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+
+.status{height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:500}
+.status .ms{font-size:16px}
+.top{height:56px;flex:none;display:grid;grid-template-columns:48px 1fr 48px;align-items:center;padding:0 4px}
+.icon-btn{width:48px;height:48px;border-radius:24px;display:grid;place-items:center;color:var(--on-surface-var)}
+.prog{display:flex;flex-direction:column;gap:6px;padding:0 8px}
+.prog .bar{height:6px;border-radius:3px;background:var(--surface-highest);overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--primary);border-radius:3px}
+.prog span{color:var(--on-surface-var);text-align:center}
+.content{flex:1;overflow:hidden;padding:8px 20px 0;display:flex;flex-direction:column}
+.content .lead{color:var(--on-surface-var);margin-top:6px}
+.foot{flex:none;padding:12px 20px 28px;display:flex;flex-direction:column;gap:4px}
+.cta{height:56px;border-radius:28px;background:var(--primary);color:var(--on-primary);display:flex;align-items:center;justify-content:center;gap:8px;font-size:16px;font-weight:600}
+.cta.off{background:color-mix(in srgb,var(--on-surface) 12%,transparent);color:color-mix(in srgb,var(--on-surface) 50%,transparent)}
+.cta.ghost{background:none;color:var(--primary);height:48px}
+.link{color:var(--primary);display:inline-flex;align-items:center;gap:6px;height:48px}
+
+/* one selection grammar: outline → secondary-container + 2dp primary border, no check */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.opt{border-radius:16px;background:var(--surface-low);outline:1px solid var(--outline-var);outline-offset:-1px;padding:16px;display:flex;flex-direction:column;gap:10px;text-align:left}
+.opt .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--surface-highest);color:var(--on-surface-var)}
+.on{background:var(--secondary-container)!important;outline:2px solid var(--primary)!important;outline-offset:-2px!important;color:var(--on-secondary-container)}
+.on .ic{background:var(--primary)!important;color:var(--on-primary)!important}
+.list{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.row{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;min-height:64px;padding:10px 14px;border-radius:16px;background:var(--surface-low);outline:1px solid var(--outline-var);outline-offset:-1px;text-align:left}
+.row .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--surface-highest);color:var(--on-surface-var)}
+.row p small{display:block;color:var(--on-surface-var);font-weight:400;margin-top:1px}
+.row.on p small{color:var(--on-secondary-container)}
+.row .end{color:var(--on-surface-var);text-align:right}
+.row.on .end{color:var(--on-secondary-container)}
+
+.field-l{margin-top:24px;color:var(--on-surface-var)}
+.wheel{margin-top:8px;border-radius:16px;background:var(--surface-low);position:relative;height:144px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.wheel .sel{position:absolute;left:12px;right:12px;top:50%;height:48px;transform:translateY(-50%);border-radius:12px;background:var(--secondary-container)}
+.wheel div{position:relative;height:48px;display:grid;place-items:center;color:var(--on-surface-var);font-size:16px;font-weight:500}
+.wheel div.c{color:var(--on-secondary-container);font-size:22px;font-weight:650}
+
+/* M3 OutlinedTextField */
+.otf{margin-top:20px}
+.otf .box{position:relative;height:56px;border-radius:4px;outline:1px solid var(--outline);outline-offset:-1px;display:flex;align-items:center;gap:8px;padding:0 16px}
+.otf .box.focus{outline:2px solid var(--primary);outline-offset:-2px}
+.otf .box.err{outline:2px solid var(--error);outline-offset:-2px}
+.otf .lbl{position:absolute;top:-9px;left:12px;padding:0 4px;background:var(--surface);color:var(--on-surface-var);font-size:12px;font-weight:500;line-height:18px}
+.otf .box.focus .lbl{color:var(--primary)}
+.otf .box.err .lbl{color:var(--error)}
+.otf .v{font-size:22px;font-weight:600;letter-spacing:-.01em}
+.otf .v.ph{color:var(--on-surface-var);font-weight:400;font-size:16px}
+.otf .caret{width:2px;height:24px;background:var(--primary);margin-left:-6px}
+.otf .sfx{margin-left:auto;color:var(--on-surface-var)}
+.otf .sup{color:var(--on-surface-var);margin:4px 16px 0;display:flex;align-items:center;gap:4px}
+.otf .sup.err{color:var(--error)}
+.bmi{margin-top:16px;padding:14px 16px;border-radius:16px;background:var(--surface-low)}
+.bmi .h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.bmi .h span{color:var(--on-surface-var)}
+.scale{position:relative;display:grid;grid-template-columns:3.5fr 4.5fr 2fr 5fr 5fr;gap:3px;margin-top:12px;height:8px}
+.scale i{background:var(--surface-highest)}
+.scale i.on{background:var(--primary)}
+.scale .mk{position:absolute;top:-5px;width:4px;height:18px;border-radius:2px;background:var(--on-surface);transform:translateX(-2px)}
+.ticks{position:relative;height:16px;margin-top:6px;color:var(--on-surface-var)}
+.ticks span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.ime{flex:none;background:var(--surface-cont);padding:6px 6px 22px}
+.ime .tag{color:var(--on-surface-var);text-align:center;padding:2px 0 6px}
+.ime .keys{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.ime .keys > span{height:44px;border-radius:10px;background:var(--surface);display:grid;place-items:center;font-size:20px;font-weight:500}
+.ime .keys > span.k2{background:var(--surface-highest)}
+
+.spd{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.spd .row{grid-template-columns:1fr auto;min-height:60px}
+.spd .row b{font-size:16px}
+.spd .row p{white-space:nowrap}
+.spd .row .tag{display:inline-block;margin-left:8px;font-size:11px;font-weight:600;padding:1px 6px;border-radius:6px;background:var(--primary-container);color:var(--on-primary-container);vertical-align:2px}
+.spd .row.on .tag{background:var(--primary);color:var(--on-primary)}
+.spd .row .end b{display:block;color:var(--on-surface);font-size:15px}
+.spd .row.on .end b{color:var(--on-secondary-container)}
+.spd .row .end .clamp{display:inline-flex;align-items:center;gap:3px;color:var(--warn)}
+.spd .row .end .clamp .ms{font-size:14px}
+.warnbox{display:flex;gap:10px;margin-top:12px;padding:12px 14px;border-radius:16px;background:var(--warn-container);color:var(--on-warn-container)}
+
+/* S02 */
+.res{flex:1;overflow-y:auto;scrollbar-width:none;padding:0 20px;display:flex;flex-direction:column}
+.res .q{text-align:center;margin-top:4px}
+.ringbox{position:relative;display:grid;place-items:center;margin-top:6px}
+.ringbox svg{width:220px;height:220px}
+.ringbox .c{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ringbox .c small{color:var(--on-surface-var)}
+.arrive{animation:arrive .6s cubic-bezier(.2,0,0,1) both .1s}
+@keyframes arrive{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){ .arrive{animation:none} }
+.eta{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;text-align:center}
+.eta .ms{color:var(--primary)}
+.mix{margin-top:16px}
+.mix .stack{display:flex;gap:3px;height:10px}
+.mix .stack i{background:var(--c)}
+.mix .legend{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.mix .legend div{display:flex;flex-direction:column}
+.mix .legend span{display:flex;align-items:center;gap:6px;color:var(--on-surface-var)}
+.mix .legend span i{width:8px;height:8px;border-radius:4px;background:var(--c)}
+.mix .legend b{font-size:16px;margin-top:1px}
+.mix .legend b small{font-size:12px;color:var(--on-surface-var);font-weight:500}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);margin-top:14px;border-radius:16px;background:var(--surface-low);padding:12px 4px}
+.grid div{text-align:center;padding:0 4px;border-left:1px solid color-mix(in srgb,var(--outline-var) 60%,transparent)}
+.grid div:first-child{border-left:0}
+.grid small{display:block;color:var(--on-surface-var)}
+.grid b{font-size:16px;font-weight:600}
+.grid em{display:block;font-style:normal;color:var(--on-surface-var)}
+.how{display:flex;align-items:center;justify-content:space-between;height:48px;margin-top:4px;color:var(--primary);width:100%}
+.howtext{color:var(--on-surface-var);display:flex;flex-direction:column;gap:6px}
+.howtext b{color:var(--on-surface);font-weight:600}
+.disc{color:var(--on-surface-var);text-align:center;margin-top:auto;padding-top:8px}
+
+/* S03 */
+.card{margin-top:16px;border-radius:16px;background:var(--surface-low);padding:16px}
+.card .h{display:flex;align-items:center;gap:10px}
+.card .h .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--primary-container);color:var(--on-primary-container)}
+.card p.d{color:var(--on-surface-var);margin-top:8px}
+.keyrow{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin-top:16px}
+.keyrow .otf{margin-top:0;width:100%}
+.keyrow .otf .box{padding:0 4px 0 14px}
+.keyrow .otf .lbl{background:var(--surface-low)}
+.keyrow .otf .v{font-size:15px;letter-spacing:.12em;font-weight:500;flex:1;overflow:hidden;white-space:nowrap}
+.keyrow .otf .v.ph{letter-spacing:0;font-size:14px}
+.keyrow .otf .icon-btn{width:40px;height:48px}
+.check{height:48px;padding:0 18px;border-radius:24px;background:var(--secondary-container);color:var(--on-secondary-container);font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:6px;flex:none}
+.check.off{background:color-mix(in srgb,var(--on-surface) 12%,transparent);color:color-mix(in srgb,var(--on-surface) 50%,transparent)}
+.res::-webkit-scrollbar{display:none}
+.okline{display:flex;align-items:center;gap:6px;margin:6px 4px 0;color:var(--primary)}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.switch{width:52px;height:32px;border-radius:16px;background:var(--primary);position:relative;flex:none}
+.switch::after{content:"";position:absolute;right:4px;top:4px;width:24px;height:24px;border-radius:12px;background:var(--on-primary)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc">
+    <h1>S01–S03 · Onboarding</h1>
+    <p>Năm bước, mỗi bước một câu hỏi, nút Tiếp 56dp ghim ở vùng ngón cái và chỉ bật khi dữ liệu hợp lệ. Chọn thẻ không tự sang bước: luôn bấm Tiếp, để một chạm nhầm còn sửa được. Chuyển bước dùng shared-axis X của M3 (tiến sang trái, lùi sang phải); Back hệ thống quay lại bước trước. “Giữ cân” bỏ qua bước 5. S02 đặt số kcal/ngày vào đúng vòng calo trống của S10 lúc đầu ngày. Thang BMI dùng ngưỡng châu Á, chỉ tô màu chính cho đoạn hiện tại, không tô đỏ hay vàng theo phân loại, để không phán xét. Số liệu theo ví dụ 02 §10.</p>
+  </header>
+  <div class="toolbar"><button id="tDark" aria-pressed="false">Xem tất cả ở giao diện tối</button></div>
+  <div class="frames" id="frames"></div>
+</div>
+<script>
+const fmt = n => n.toLocaleString('vi-VN');
+const status = `<div class="status"><span>9:41</span><span><span class="ms">signal_cellular_alt</span> <span class="ms">wifi</span> <span class="ms">battery_5_bar</span></span></div>`;
+const topBar = (step, total=5) => `<div class="top">${step>1?`<button class="icon-btn" aria-label="Quay lại"><span class="ms">arrow_back</span></button>`:'<span></span>'}<div class="prog"><div class="bar"><i style="width:${step/total*100}%"></i></div><span class="t-label-m">Bước ${step}/${total}</span></div><span></span></div>`;
+const back = `<div class="top"><button class="icon-btn" aria-label="Quay lại"><span class="ms">arrow_back</span></button><span></span><span></span></div>`;
+const cta = (label, off) => `<div class="foot"><button class="cta${off?' off':''}"${off?' aria-disabled="true"':''}>${label}</button></div>`;
+const otf = ({label, v='', sfx='', focus, err, sup, supErr, ph, tail=''}) => `<div class="otf"><div class="box${focus?' focus':''}${err?' err':''}"><span class="lbl">${label}</span>${ph?`<span class="v ph">${ph}</span>`:`<span class="v">${v}</span>`}${focus&&!ph?'<i class="caret"></i>':''}${sfx?`<span class="sfx t-body-m">${sfx}</span>`:''}${tail}</div>${sup?`<p class="sup t-body-s${supErr?' err':''}">${supErr?'<span class="ms s18">error</span>':''}${sup}</p>`:''}</div>`;
+const BMI_MIN=15, BMI_MAX=35, bpos = v => ((Math.max(BMI_MIN,Math.min(BMI_MAX,v))-BMI_MIN)/(BMI_MAX-BMI_MIN)*100).toFixed(1);
+const bmiCard = (v, label, seg) => `<div class="bmi"><div class="h"><b class="t-title-m">BMI ${String(v.toFixed(1)).replace('.',',')}</b><span class="t-label-m">${label} · ngưỡng châu Á</span></div>
+  <div class="scale">${[0,1,2,3,4].map(i=>`<i class="${i===seg?'on':''}"></i>`).join('')}<span class="mk" style="left:${bpos(v)}%"></span></div>
+  <div class="ticks t-label-m">${[18.5,23,25,30].map(t=>`<span style="left:${bpos(t)}%">${String(t).replace('.',',')}</span>`).join('')}</div></div>`;
+const ime = `<div class="ime" aria-hidden="true"><p class="tag t-label-m">Bàn phím số của hệ thống</p><div class="keys">${['1','2','3','4','5','6','7','8','9',',','0','<span class="ms">backspace</span>'].map((k,i)=>`<span class="${i===9||i===11?'k2':''}">${k}</span>`).join('')}</div></div>`;
+
+const F = {};
+F.s1 = () => `${status}${topBar(1)}
+  <div class="content"><h1 class="t-headline">Chào bạn! Bạn là</h1><p class="lead t-body-m">Dùng để tính năng lượng cơ thể cần mỗi ngày.</p>
+    <div class="pair" role="radiogroup" aria-label="Giới tính"><button class="opt on" role="radio" aria-checked="true"><span class="ic"><span class="ms">man</span></span><span class="t-title-m">Nam</span></button><button class="opt" role="radio" aria-checked="false"><span class="ic"><span class="ms">woman</span></span><span class="t-title-m">Nữ</span></button></div>
+    <p class="field-l t-label-l">Năm sinh</p>
+    <div class="wheel" role="listbox" aria-label="Năm sinh"><span class="sel"></span><div>1995</div><div class="c" role="option" aria-selected="true">1996 · 30 tuổi</div><div>1997</div></div>
+    <button class="link t-label-l" style="margin-top:auto;align-self:center"><span class="ms s20">settings_backup_restore</span>Khôi phục từ bản sao lưu</button>
+  </div>${cta('Tiếp')}`;
+
+F.s2 = () => `${status}${topBar(2)}
+  <div class="content"><h1 class="t-headline">Chiều cao & cân nặng</h1>
+    ${otf({label:'Chiều cao', v:'170', sfx:'cm'})}
+    ${otf({label:'Cân nặng hiện tại', v:'75', sfx:'kg', focus:true})}
+    ${bmiCard(26.0,'Béo phì độ I',3)}
+  </div>
+  <div class="foot" style="padding-bottom:10px"><button class="cta">Tiếp</button></div>${ime}`;
+
+F.s2off = () => `${status}${topBar(2)}
+  <div class="content"><h1 class="t-headline">Chiều cao & cân nặng</h1>
+    ${otf({label:'Chiều cao', v:'170', sfx:'cm'})}
+    ${otf({label:'Cân nặng hiện tại', v:'300', sfx:'kg', err:true, sup:'Nhập cân nặng từ 30 đến 250 kg', supErr:true})}
+    <p class="t-body-s" style="color:var(--on-surface-var);margin-top:16px">BMI sẽ hiện khi đủ chiều cao và cân nặng.</p>
+  </div>
+  <div class="foot"><button class="cta off" aria-disabled="true">Tiếp</button></div>`;
+
+const ACT = [
+  ['airline_seat_recline_normal','Ít vận động','Ngồi nhiều, gần như không tập','1,2'],
+  ['directions_walk','Vận động nhẹ','Đi lại nhiều hoặc tập 1–3 buổi/tuần','1,375'],
+  ['directions_run','Vận động vừa','Tập 3–5 buổi/tuần','1,55'],
+  ['fitness_center','Vận động nhiều','Tập 6–7 buổi/tuần','1,725'],
+  ['construction','Rất nhiều','Lao động nặng / tập 2 lần/ngày','1,9'],
+];
+F.s3 = () => `${status}${topBar(3)}
+  <div class="content"><h1 class="t-headline">Mức vận động</h1><p class="lead t-body-m">Tính cả đi lại và công việc, không chỉ giờ tập.</p>
+    <div class="list" role="radiogroup">${ACT.map((a,i)=>`<button class="row${i===1?' on':''}" role="radio" aria-checked="${i===1}"><span class="ic"><span class="ms">${a[0]}</span></span><p class="t-title-m">${a[1]}<small class="t-body-s">${a[2]}</small></p><span class="end t-label-m">×${a[3]}</span></button>`).join('')}</div>
+  </div>${cta('Tiếp')}`;
+
+F.s4 = () => `${status}${topBar(4)}
+  <div class="content"><h1 class="t-headline">Mục tiêu của bạn</h1>
+    <div class="list" role="radiogroup">${[['trending_down','Giảm cân','Ăn ít hơn mức cơ thể đốt'],['trending_flat','Giữ cân','Ăn đúng mức cơ thể đốt · bỏ qua bước 5'],['trending_up','Tăng cân','Ăn nhiều hơn mức cơ thể đốt']].map((a,i)=>`<button class="row${i===0?' on':''}" role="radio" aria-checked="${i===0}" style="min-height:76px;grid-template-columns:40px 1fr"><span class="ic"><span class="ms">${a[0]}</span></span><p class="t-title-m">${a[1]}<small class="t-body-s">${a[2]}</small></p></button>`).join('')}</div>
+  </div>${cta('Tiếp')}`;
+
+F.s5 = (target=68, lowBmi=false) => {
+  const weeks = r => `~${Math.round(Math.abs(75-target)/r)} tuần`;
+  const rows = [['0,25','Nhẹ nhàng',2020,weeks(0.25)],['0,5','Khuyên dùng',1740,weeks(0.5)],['0,75','Nhanh',1720,weeks(0.52),true],['1,0','Rất nhanh',1720,weeks(0.52),true]];
+  const b = target/2.89, bmi = b.toFixed(1).replace('.',',');
+  const cls = b < 18.5 ? 'Thiếu cân' : b < 23 ? 'Bình thường' : 'Thừa cân';
+  return `${status}${topBar(5)}
+  <div class="content"><h1 class="t-headline">Cân nặng mong muốn</h1>
+    ${otf({label:'Cân mục tiêu', v:String(target), sfx:'kg', sup:`BMI mục tiêu ${bmi} · ${cls}`})}
+    ${lowBmi?`<div class="warnbox t-body-s"><span class="ms s20">info</span><span>BMI mục tiêu dưới 18,5 là thiếu cân theo ngưỡng châu Á. Bạn vẫn có thể tiếp tục, nhưng nên chọn cân nặng cao hơn.</span></div>`:''}
+    <p class="field-l t-label-l" style="margin-top:${lowBmi?14:20}px">Tốc độ mỗi tuần</p>
+    <div class="spd" role="radiogroup">${rows.map((s,i)=>`<button class="row${i===1?' on':''}" role="radio" aria-checked="${i===1}"><p><b>${s[0]} kg</b>${i===1?`<span class="tag">${s[1]}</span>`:`<small class="t-body-s" style="display:inline;margin-left:8px">${s[1]}</small>`}</p><span class="end t-label-m"><b>${fmt(s[2])} kcal</b>${s[4]?`<span class="clamp"><span class="ms">info</span>Đã chỉnh · ~0,52 kg/tuần</span><span style="display:block">${s[3]}</span>`:s[3]}</span></button>`).join('')}</div>
+  </div>${cta('Xem kết quả')}`;
+};
+
+const ringSvg = () => `<svg viewBox="0 0 220 220" aria-hidden="true"><circle cx="110" cy="110" r="98" fill="none" stroke="var(--ring-track)" stroke-width="14"/></svg>`;
+F.r = (clamp, open) => {
+  const kcal = clamp ? 1720 : 1740, P = 122, Fg = 52, Cg = clamp ? 192 : 196;
+  const pk = P*4, fk = Math.round(kcal*.27), ck = kcal-pk-fk, pct = k => (k/kcal*100).toFixed(1);
+  return `${status}${back}
+  <div class="res">
+    <p class="q t-title-m">Mục tiêu mỗi ngày của bạn</p>
+    <div class="ringbox">${ringSvg()}<div class="c arrive"><span class="t-display-l">${fmt(kcal)}</span><small class="t-label-l">kcal mỗi ngày</small></div></div>
+    <p class="eta t-body-m"><span class="ms s20">flag</span>Đạt 68 kg khoảng ${clamp?'15/02/2027 · ~13 tuần':'19/02/2027 · ~14 tuần'}</p>
+    ${clamp?`<div class="warnbox t-body-s"><span class="ms s20">info</span><span>Tốc độ 1 kg/tuần cần ăn dưới mức an toàn. App đã điều chỉnh về ${fmt(kcal)} kcal/ngày (~0,52 kg/tuần).</span></div>`:''}
+    ${`<div class="mix"><div class="stack" aria-label="Tỉ lệ năng lượng"><i style="--c:var(--protein);width:${pct(pk)}%"></i><i style="--c:var(--carb);width:${pct(ck)}%"></i><i style="--c:var(--fat);width:${pct(fk)}%"></i></div>
+      <div class="legend"><div style="--c:var(--protein)"><span class="t-label-m"><i></i>Đạm</span><b>${P} <small>g · ${Math.round(pk/kcal*100)}%</small></b></div><div style="--c:var(--carb)"><span class="t-label-m"><i></i>Tinh bột</span><b>${Cg} <small>g · ${Math.round(ck/kcal*100)}%</small></b></div><div style="--c:var(--fat)"><span class="t-label-m"><i></i>Béo</span><b>${Fg} <small>g · 27%</small></b></div></div></div>`}
+    <div class="grid"><div><small class="t-label-m">BMI</small><b>26,0</b><em class="t-label-m">Béo phì độ I</em></div><div><small class="t-label-m">BMR</small><b>1.668</b><em class="t-label-m">kcal</em></div><div><small class="t-label-m">TDEE</small><b>2.293</b><em class="t-label-m">kcal</em></div><div><small class="t-label-m">Nước</small><b>2,6</b><em class="t-label-m">lít/ngày</em></div></div>
+    <button class="how t-label-l" aria-expanded="${!!open}">Cách tính<span class="ms">${open?'expand_less':'expand_more'}</span></button>
+    ${open?`<div class="howtext t-body-s"><p><b>BMR 1.668</b>: năng lượng cơ thể đốt khi nghỉ (Mifflin-St Jeor, theo giới tính, tuổi, chiều cao, cân nặng).</p><p><b>TDEE 2.293</b>: BMR × 1,375 cho mức vận động nhẹ.</p><p><b>Mục tiêu 1.740</b>: TDEE trừ 550 kcal/ngày để giảm ~0,5 kg/tuần (1 kg mỡ ≈ 7.700 kcal).</p></div>`:''}
+    <p class="disc t-body-s">Số liệu là ước lượng, không thay thế tư vấn y tế.</p>
+  </div>${cta('Bắt đầu')}`;
+};
+
+F.s03 = (state) => {
+  const tail = `<button class="icon-btn" aria-label="Hiện key"><span class="ms s20">visibility</span></button><button class="icon-btn" aria-label="Dán"><span class="ms s20">content_paste</span></button>`;
+  const box = state==='fail'
+    ? otf({label:'API key', v:'sk-ant-••••7Qx2', err:true, sup:'API key không hợp lệ. Kiểm tra lại key đã dán.', supErr:true, tail})
+    : state==='empty' ? otf({label:'API key', ph:'Dán key vào đây', tail})
+    : otf({label:'API key', v:'••••••••3f9A', tail});
+  return `${status}${back}
+  <div class="content"><h1 class="t-headline">Thiết lập nhanh</h1><p class="lead t-body-m">Có thể làm sau trong Cài đặt.</p>
+    <div class="card"><div class="h"><span class="ic"><span class="ms">auto_awesome</span></span><b class="t-title-m">AI ghi món</b></div>
+      <p class="d t-body-s">Dán API key để chụp ảnh và chat. Key được mã hoá trên máy, không nằm trong bản sao lưu.</p>
+      <div class="keyrow">${box}<button class="check${state==='empty'?' off':''}"${state==='empty'?' aria-disabled="true"':''}><span class="ms s20">${state==='ok'?'check':'network_check'}</span>Kiểm tra</button></div>
+      ${state==='ok'?`<p class="okline t-label-m"><span class="ms s18 fill">check_circle</span>Đã kết nối · claude-sonnet-5-5</p>`:''}</div>
+    <div class="card"><div class="sw"><div class="h"><span class="ic"><span class="ms">water_drop</span></span><div><b class="t-title-m">Nhắc uống nước</b><p class="t-body-s" style="color:var(--on-surface-var)">08:00–21:00 · mỗi 90 phút</p></div></div><span class="switch" role="switch" aria-checked="true" aria-label="Nhắc uống nước"></span></div>
+      <p class="d t-body-s">Android sẽ hỏi quyền gửi thông báo.</p></div>
+  </div><div class="foot"><button class="cta">Xong</button><button class="cta ghost t-label-l">Để sau</button></div>`;
+};
+
+const frames = [
+  [F.s1(), false, 'S01 · Bước 1','Hai thẻ chọn; năm sinh dạng bánh xe, hiện luôn tuổi. Lối khôi phục từ bản sao lưu.'],
+  [F.s2(), true, 'S01 · Bước 2','OutlinedTextField có hậu tố đơn vị; BMI tính ngay trên thang ngưỡng châu Á 15–35.'],
+  [F.s2off(), false, 'S01 · Bước 2 · chưa hợp lệ','Khi đang gõ chỉ khoá Tiếp; lỗi chỉ hiện sau khi rời ô hoặc bấm Xong trên bàn phím.'],
+  [F.s3(), false, 'S01 · Bước 3','Năm mức vận động, hệ số ở bên phải.'],
+  [F.s4(), false, 'S01 · Bước 4','Cùng ngữ pháp chọn với mọi bước; Giữ cân nói rõ sẽ bỏ qua bước 5.'],
+  [F.s5(68), false, 'S01 · Bước 5','Mỗi tốc độ hiện kcal/ngày và thời gian; tốc độ bị điều chỉnh về mức an toàn hiện hổ phách kèm tốc độ thực (~0,52 kg/tuần).'],
+  [F.s5(50, true), true, 'S01 · Bước 5 · BMI mục tiêu thấp','Cân mục tiêu 50 kg (BMI 17,3): cảnh báo hổ phách, vẫn cho tiếp tục (02 §7).'],
+  [F.r(false,false), false, 'S02 · Kết quả','Số kcal/ngày trong vòng calo trống 220dp của S10; số hiện lên một lần khi mở.'],
+  [F.r(false,true), true, 'S02 · Cách tính mở rộng','Giải thích ngắn BMR, TDEE và mức trừ.'],
+  [F.r(true,false), false, 'S02 · Điều chỉnh an toàn','Chọn 1 kg/tuần: hộp hổ phách nêu mức đã chỉnh và tốc độ thực.'],
+  [F.s03('empty'), false, 'S03 · Chưa có key','Ô trống: nút Dán sẵn sàng, Kiểm tra khoá tới khi có key.'],
+  [F.s03('fail'), true, 'S03 · Key sai','Lỗi ở dòng hỗ trợ của ô; vẫn có thể “Để sau”.'],
+  [F.s03('ok'), false, 'S03 · Đã kết nối','Kiểm tra thành công hiện model đang dùng.'],
+];
+document.getElementById('frames').innerHTML = frames.map(([h,d,b,c])=>`<figure><div class="phone${d?' dark':''}" data-dark="${d}">${h}</div><figcaption><b>${b} · ${d?'tối':'sáng'}</b>${c}</figcaption></figure>`).join('');
+const tg = document.getElementById('tDark');
+tg.addEventListener('click', () => {
+  const on = tg.getAttribute('aria-pressed') !== 'true';
+  tg.setAttribute('aria-pressed', String(on));
+  document.querySelectorAll('.phone').forEach(p => p.classList.toggle('dark', on || p.dataset.dark === 'true'));
+  tg.textContent = on ? 'Trở về như thiết kế' : 'Xem tất cả ở giao diện tối';
+});
+</script>
+</body>
+</html>

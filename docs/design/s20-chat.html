@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cali · S20 Chat AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&display=swap" rel="stylesheet">
+<style>
+:root{ --page:#F3F2F7; --page-ink:#1B1B21; --page-muted:#5E5E68; --page-line:#DCDBE3; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; } }
+:root[data-theme="dark"]{ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; }
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--page);color:var(--page-ink);font-family:'Roboto Flex',Roboto,system-ui,sans-serif;font-variation-settings:"opsz" 14;line-height:1.5}
+::selection{background:#DEE0FF;color:#00105C}
+.wrap{max-width:1640px;margin:0 auto;padding:40px 16px 64px}
+header.doc{max-width:760px;margin:0 auto 32px;padding:0 4px}
+header.doc h1{font-size:28px;font-weight:600;letter-spacing:-.01em;font-variation-settings:"opsz" 32}
+header.doc p{color:var(--page-muted);margin-top:8px;font-size:15px;max-width:70ch}
+.frames{display:flex;flex-wrap:wrap;gap:44px 32px;justify-content:center}
+figure{display:flex;flex-direction:column;align-items:center;gap:14px}
+figcaption{font-size:13px;color:var(--page-muted);text-align:center;max-width:300px}
+figcaption b{display:block;color:var(--page-ink);font-weight:600;font-size:14px}
+
+/* ===== App tokens (DESIGN.md) ===== */
+.phone{
+  --primary:#4355B9; --on-primary:#FFFFFF; --primary-container:#DEE0FF; --on-primary-container:#00105C;
+  --secondary-container:#E0E1F9; --on-secondary-container:#181A2C;
+  --surface:#FBF8FF; --surface-low:#F5F2FA; --surface-cont:#EFEDF4; --surface-highest:#E4E1E9;
+  --on-surface:#1B1B21; --on-surface-var:#46464F; --outline:#767680; --outline-var:#C6C5D0;
+  --error:#BA1A1A; --error-container:#FFDAD6; --on-error-container:#410002;
+  --warn:#8A5100; --warn-container:#FFDCBE; --on-warn-container:#2C1600;
+  --inverse-surface:#303036; --inverse-on-surface:#F2EFF7; --inverse-primary:#BAC3FF;
+  --protein:#006780; --carb:#4C6700; --fat:#8E4585;
+  --meal-sang:#4355B9; --meal-trua:#5868C9; --meal-toi:#1E2A78; --meal-phu:#6C79D6;
+  --ring-track:var(--surface-cont); --scrim:rgba(0,0,0,.32);
+  width:360px;height:780px;border-radius:36px;overflow:hidden;position:relative;
+  background:var(--surface);color:var(--on-surface);
+  outline:1px solid var(--page-line);
+  box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 32px -8px rgba(20,20,40,.18);
+  font-feature-settings:"tnum" 1;display:flex;flex-direction:column;
+}
+.phone.dark{
+  --primary:#BAC3FF; --on-primary:#08218A; --primary-container:#293CA0; --on-primary-container:#DEE0FF;
+  --secondary-container:#43465A; --on-secondary-container:#E0E1F9;
+  --surface:#121318; --surface-low:#1B1B21; --surface-cont:#1F1F25; --surface-highest:#35343A;
+  --on-surface:#E4E1E9; --on-surface-var:#C6C5D0; --outline:#90909A; --outline-var:#46464F;
+  --error:#FFB4AB; --error-container:#93000A; --on-error-container:#FFDAD6;
+  --warn:#FFB86E; --warn-container:#693C00; --on-warn-container:#FFDCBE;
+  --inverse-surface:#E4E1E9; --inverse-on-surface:#303036; --inverse-primary:#4355B9;
+  --protein:#5FD4F6; --carb:#B1D46A; --fat:#FFAEE9;
+  --meal-sang:#BAC3FF; --meal-trua:#8E9BF5; --meal-toi:#E4E6FF; --meal-phu:#6B78C9;
+  --ring-track:var(--surface-highest); --scrim:rgba(0,0,0,.5);
+}
+.t-title-l{font-size:22px;line-height:1.27;font-weight:600;font-variation-settings:"opsz" 22}
+.t-title-m{font-size:16px;line-height:1.5;font-weight:600}
+.t-body-l{font-size:16px;line-height:1.5;font-weight:400}
+.t-body-m{font-size:14px;line-height:1.43;font-weight:500}
+.t-body-s{font-size:12px;line-height:1.33;font-weight:400}
+.t-label-l{font-size:14px;line-height:1.43;font-weight:600}
+.t-label-m{font-size:12px;line-height:1.33;font-weight:500}
+.t-label-s{font-size:11px;line-height:1.45;font-weight:500}
+.ms{font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;font-size:24px;line-height:1;display:inline-block;font-variation-settings:"FILL" 0,"wght" 400,"opsz" 24;-webkit-font-smoothing:antialiased;user-select:none;flex:none}
+.ms.fill{font-variation-settings:"FILL" 1,"wght" 400,"opsz" 24}
+.ms.s16{font-size:16px}.ms.s18{font-size:18px}.ms.s20{font-size:20px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+
+.status{height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:500;background:var(--surface)}
+.status .ms{font-size:16px}
+.appbar{height:64px;flex:none;display:grid;grid-template-columns:48px 1fr 48px;align-items:center;padding:0 4px;background:var(--surface)}
+.icon-btn{width:48px;height:48px;border-radius:24px;display:grid;place-items:center;color:var(--on-surface-var);flex:none}
+.title{text-align:center;padding:2px 8px;border-radius:12px}
+.title b{display:block}
+.title span{color:var(--on-surface-var);display:inline-flex;align-items:center;gap:2px}
+.title span .ms{font-size:18px}
+.title .left{color:var(--primary);font-weight:600}
+
+.stream{flex:1;overflow-y:auto;scrollbar-width:none;padding:8px 12px 12px;display:flex;flex-direction:column;gap:12px}
+.stream::-webkit-scrollbar{display:none}
+.daymark{align-self:center;color:var(--on-surface-var);padding:2px 10px}
+
+.msg{display:flex;flex-direction:column;max-width:86%;gap:4px}
+.msg.me{align-self:flex-end;align-items:flex-end}
+.msg.ai{align-self:flex-start;align-items:flex-start;max-width:96%}
+.bub{padding:10px 14px;border-radius:20px;word-break:break-word}
+.me .bub{background:var(--secondary-container);color:var(--on-secondary-container);border-radius:20px 20px 6px 20px}
+.ai .bub{background:var(--surface-cont);border-radius:20px 20px 20px 6px}
+.ai .bub p+p{margin-top:8px}
+.ai .bub b{font-weight:650}
+.stamp{color:var(--on-surface-var);padding:0 6px;display:flex;align-items:center;gap:4px}
+.photo{width:200px;height:150px;border-radius:20px 20px 6px 20px;background:var(--primary-container);color:var(--on-primary-container);display:grid;place-items:center;position:relative}
+.photo .ms{font-size:44px}
+.photo+.bub{margin-top:2px}
+
+/* collapsed food card */
+.msg.card{width:304px;max-width:96%}
+.food{width:100%;border-radius:20px 20px 20px 6px;background:var(--surface-low);outline:1px solid var(--outline-var);outline-offset:-1px;padding:14px 14px 6px}
+.food.saved{outline-color:transparent}
+.food .head{display:flex;align-items:center;gap:8px}
+.food .chip{height:28px;border-radius:8px;display:inline-flex;align-items:center;gap:6px;padding:0 10px;background:var(--secondary-container);color:var(--on-secondary-container)}
+.food .chip .tone{width:10px;height:10px;border-radius:2px;background:var(--tone)}
+.food .chip .ms{font-size:16px}
+.food .kcal{margin-left:auto}
+.food .kcal small{color:var(--on-surface-var);font-weight:500}
+.food ul{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:4px}
+.food li{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.food li span:first-child small{color:var(--on-surface-var);margin-left:6px}
+.food li .k{font-weight:600}
+.food .macro{display:flex;gap:10px;margin-top:8px;color:var(--on-surface-var)}
+.food .macro span{display:inline-flex;align-items:center;gap:4px}
+.food .macro i{width:6px;height:6px;border-radius:3px;background:var(--c)}
+.food .flag{display:flex;gap:6px;align-items:flex-start;margin-top:8px;color:var(--on-warn-container);background:var(--warn-container);border-radius:12px;padding:8px 10px}
+.food .after{margin-top:10px;color:var(--on-surface-var)}
+.food .after .t{display:flex;justify-content:space-between;align-items:baseline}
+.food .after .t b{color:var(--on-surface);font-weight:600}
+.food .after .lane{position:relative;height:10px;background:var(--ring-track);display:flex;gap:3px;margin-top:6px}
+.food .after .lane i{display:block;height:100%;background:var(--tone)}
+.food .after .lane i.new{background:color-mix(in srgb,var(--tone) 40%,var(--ring-track));box-shadow:inset 0 0 0 1.5px var(--tone)}
+.food .after .lane .goal{position:absolute;top:-3px;bottom:-3px;right:-1px;width:2px;background:var(--on-surface)}
+.food .acts{display:flex;align-items:center;gap:4px;margin:6px -6px 0}
+.btn{height:48px;border-radius:24px;padding:0 18px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:600}
+.btn.tonal{background:var(--secondary-container);color:var(--on-secondary-container)}
+.btn.text{color:var(--primary)}
+.btn.text.mute{color:var(--on-surface-var)}
+.status-line{display:flex;align-items:center;gap:8px;margin:8px 0 10px;min-height:32px;color:var(--on-surface-var)}
+.status-line .ms{color:var(--primary)}
+.status-line b{color:var(--on-surface);font-weight:600}
+.status-line .sp{flex:1}
+.food.skipped .kcal b,.food.skipped li,.food.skipped li .k{color:var(--on-surface-var)}
+.food.skipped .status-line .ms{color:var(--outline)}
+
+.typing{display:inline-flex;align-items:center;gap:6px;padding:14px 16px;border-radius:20px 20px 20px 6px;background:var(--surface-cont)}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--on-surface-var);animation:dot 1.2s infinite ease-in-out both}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+@media (prefers-reduced-motion: reduce){ .typing i{animation:none;opacity:.6} }
+.errb{border-radius:20px 20px 20px 6px;background:var(--error-container);color:var(--on-error-container);padding:12px 14px}
+.errb .row{display:flex;gap:8px;align-items:flex-start}
+.errb .btn{margin:8px 0 -2px 0;color:var(--on-error-container);height:48px;outline:1px solid color-mix(in srgb,var(--on-error-container) 45%,transparent);outline-offset:-1px}
+
+/* empty */
+.empty{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;padding:0 4px 4px}
+.empty .hello{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+.empty .hello .badge{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:var(--primary-container);color:var(--on-primary-container)}
+.empty .hello p{color:var(--on-surface-var);margin-top:2px}
+.sugg{min-height:48px;border-radius:16px;background:var(--surface-low);outline:1px solid var(--outline-var);outline-offset:-1px;display:flex;align-items:center;gap:12px;padding:0 14px;text-align:left}
+.sugg .ms{color:var(--primary)}
+
+/* composer */
+.composer{flex:none;padding:8px 8px 8px 4px;display:flex;align-items:flex-end;gap:4px;background:var(--surface)}
+.field{flex:1;min-height:48px;border-radius:24px;background:var(--surface-cont);display:flex;align-items:center;padding:0 16px;color:var(--on-surface-var);min-width:0}
+.field.typed{color:var(--on-surface)}
+.field .caret{width:2px;height:20px;background:var(--primary);margin-left:2px}
+.send{width:48px;height:48px;border-radius:24px;display:grid;place-items:center;background:var(--primary);color:var(--on-primary);flex:none}
+.send.off{background:color-mix(in srgb,var(--on-surface) 12%,transparent);color:color-mix(in srgb,var(--on-surface) 50%,transparent)}
+.attached{margin:0 12px 4px;display:flex;align-items:center;gap:10px;padding:6px 6px 6px 6px;border-radius:16px;background:var(--surface-low)}
+.attached .th{width:44px;height:44px;border-radius:12px;background:var(--primary-container);color:var(--on-primary-container);display:grid;place-items:center}
+.attached p{flex:1;color:var(--on-surface-var)}
+.navbar{flex:none;height:104px;background:var(--surface-cont);display:grid;grid-template-columns:repeat(4,1fr);padding-top:12px;position:relative}
+.navbar::after{content:"";position:absolute;left:50%;bottom:8px;width:108px;height:4px;border-radius:2px;background:var(--on-surface);opacity:.4;transform:translateX(-50%)}
+.nav-i{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--on-surface-var)}
+.nav-i .pill{width:64px;height:32px;border-radius:16px;display:grid;place-items:center}
+.nav-i.on{color:var(--on-surface);font-weight:700}
+.nav-i.on .pill{background:var(--secondary-container);color:var(--on-secondary-container)}
+
+/* attach sheet */
+.scrim{position:absolute;inset:0;background:var(--scrim)}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surface-low);border-radius:28px 28px 0 0;padding:0 8px 28px}
+.sheet .handle{width:32px;height:4px;border-radius:2px;background:var(--outline-var);margin:12px auto 8px}
+.sheet .opt{display:flex;align-items:center;gap:16px;min-height:56px;padding:0 16px;width:100%;text-align:left;border-radius:16px}
+.sheet .opt .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--primary-container);color:var(--on-primary-container)}
+.sheet .opt p small{display:block;color:var(--on-surface-var);font-weight:400}
+.snack{position:absolute;left:12px;right:12px;bottom:196px;min-height:48px;border-radius:4px;background:var(--inverse-surface);color:var(--inverse-on-surface);display:flex;align-items:center;justify-content:space-between;padding:0 4px 0 16px;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.snack button{height:48px;padding:0 12px;color:var(--inverse-primary);font-weight:600;font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc">
+    <h1>S20 · Chat AI</h1>
+    <p>Một luồng chat theo ngày. Mọi thứ AI trả về là tin nhắn: tư vấn là chữ, ghi món là một thẻ thu gọn có đúng ba thông tin để quyết định (giờ · bữa, tổng kcal, tác động lên ngày), hai nút “Xem & lưu” (mở S12) và “Bỏ qua”. Thẻ không lưu gì cho tới khi qua S12. Thanh trên luôn cho thấy số còn lại để hỏi “tối nay ăn gì” có con số để bám. Giờ ăn lấy từ chính tin nhắn, AI đọc được “sáng nay 7h” hay “hôm qua” thì thẻ ghi đúng giờ, đúng ngày. Số liệu là dữ liệu mẫu.</p>
+  </header>
+  <div class="frames" id="frames"></div>
+</div>
+<script>
+const TARGET = 1740;
+const fmt = n => n.toLocaleString('vi-VN');
+const MEAL = {sang:'Sáng', trua:'Trưa', toi:'Tối', phu:'Phụ'};
+const status = `<div class="status"><span>12:36</span><span><span class="ms">signal_cellular_alt</span> <span class="ms">wifi</span> <span class="ms">battery_5_bar</span></span></div>`;
+const bar = (left, day='Thứ Năm, 13/11') => `<div class="appbar"><button class="icon-btn" aria-label="Ngày trước"><span class="ms">chevron_left</span></button><button class="title" aria-label="Chọn ngày"><b class="t-title-l">Chat AI</b><span class="t-label-m">${day}<span class="ms">arrow_drop_down</span> · <span class="left">còn ${fmt(left)} kcal</span></span></button><button class="icon-btn" aria-label="Ngày sau"><span class="ms">chevron_right</span></button></div>`;
+const nav = `<nav class="navbar"><div class="nav-i t-label-m"><span class="pill"><span class="ms">today</span></span>Hôm nay</div><div class="nav-i on t-label-m"><span class="pill"><span class="ms fill">forum</span></span>Chat AI</div><div class="nav-i t-label-m"><span class="pill"><span class="ms">calendar_month</span></span>Lịch sử</div><div class="nav-i t-label-m"><span class="pill"><span class="ms">settings</span></span>Cài đặt</div></nav>`;
+const composer = (text, attached) => `${attached?`<div class="attached"><span class="th"><span class="ms">image</span></span><p class="t-body-s">Ảnh bữa trưa · sẽ nén trước khi gửi</p><button class="icon-btn" aria-label="Bỏ ảnh"><span class="ms s20">close</span></button></div>`:''}<div class="composer"><button class="icon-btn" aria-label="Đính ảnh"><span class="ms">add_photo_alternate</span></button><div class="field t-body-l${text?' typed':''}">${text?`${text}<i class="caret"></i>`:'Nhắn món bạn ăn hoặc hỏi AI'}</div><button class="send${text||attached?'':' off'}" aria-label="Gửi"><span class="ms">send</span></button></div>`;
+
+const me = (t, time, extra='', failed=false) => `<div class="msg me">${extra}<div class="bub t-body-m">${t}</div><span class="stamp t-label-s">${failed?'<span class="ms s16" style="color:var(--error)">error</span><span style="color:var(--error)">Chưa gửi ·</span>':''}${time}</span></div>`;
+const ai = (html, time) => `<div class="msg ai"><div class="bub t-body-m">${html}</div><span class="stamp t-label-s"><span class="ms s16" style="color:var(--primary)">auto_awesome</span>${time}</span></div>`;
+const photo = `<div class="photo" role="img" aria-label="Ảnh bạn đã gửi (chỗ đặt thumbnail)"><span class="ms">image</span></div>`;
+
+function food(o){
+  const total = o.items.reduce((s,i)=>s+i.k,0), m=[0,1,2].map(j=>o.items.reduce((s,i)=>s+i.m[j],0));
+  const before = o.before, after = before+total, left = TARGET-after, w = k => `calc(${(k/TARGET*100).toFixed(1)}% - 2px)`;
+  const lane = `<div class="lane" style="--tone:var(--meal-${o.meal})"><i style="width:${w(before)}"></i><i class="new" style="width:${w(Math.min(total,Math.max(0,TARGET-before)))}"></i><span class="goal" aria-hidden="true"></span></div>`;
+  const when = o.day ? `${o.day} · ${o.time}` : o.time;
+  const head = `<div class="head"><span class="chip t-label-m"><span class="tone" style="--tone:var(--meal-${o.meal})"></span>${MEAL[o.meal]} · ${when}</span><span class="kcal"><b class="t-title-m">${fmt(total)}</b> <small class="t-label-m">kcal</small></span></div>`;
+  const list = `<ul>${o.items.map(i=>`<li class="t-body-m"><span>${i.n}<small class="t-body-s">${i.p}</small></span><span class="k">${fmt(i.k)}</span></li>`).join('')}</ul><div class="macro t-label-m"><span style="--c:var(--protein)"><i></i>${m[0]}</span><span style="--c:var(--carb)"><i></i>${m[1]}</span><span style="--c:var(--fat)"><i></i>${m[2]} g</span></div>`;
+  const flag = o.flag?`<div class="flag t-body-s"><span class="ms s16">help</span><span>${o.flag}</span></div>`:'';
+  if(o.state==='saved') return `<div class="msg ai card"><div class="food saved" style="background:var(--surface-low)">${head}${list}<div class="status-line t-body-m"><span class="ms s20 fill">check_circle</span><span><b>Đã lưu vào ${MEAL[o.meal]}</b></span><span class="sp"></span><button class="btn text" style="margin:-8px -10px -8px 0">Xem lại</button></div></div><span class="stamp t-label-s"><span class="ms s16" style="color:var(--primary)">auto_awesome</span>${o.stamp}</span></div>`;
+  if(o.state==='skipped') return `<div class="msg ai card"><div class="food skipped">${head}${list}<div class="status-line t-body-m"><span class="ms s20">do_not_disturb_on</span><span>Đã bỏ qua</span><span class="sp"></span><button class="btn text" style="margin:-8px -10px -8px 0">Hoàn tác</button></div></div></div>`;
+  return `<div class="msg ai card"><div class="food">${head}${list}${flag}<div class="after t-label-m"><div class="t"><span>${o.day?"Ngày này":"Hôm nay"} sau khi lưu</span><b>${left>=0?`còn ${fmt(left)}`:`vượt ${fmt(-left)}`}</b></div>${lane}</div><div class="acts"><button class="btn tonal">Xem & lưu</button><button class="btn text mute">Bỏ qua</button></div></div><span class="stamp t-label-s"><span class="ms s16" style="color:var(--primary)">auto_awesome</span>${o.stamp}</span></div>`;
+}
+const BUNBO = [{n:'Bún bò Huế', p:'1 tô vừa', k:490, m:[33,60,12]},{n:'Trà đá', p:'1 ly', k:0, m:[0,0,0]}];
+
+function phone({dark, left, body, comp, extra=''}){
+  return `<div class="phone${dark?' dark':''}">${status}${bar(left, body.day)}${body.html}${comp}${nav}${extra}</div>`;
+}
+
+const frames = [
+  {dark:false, left:1740, body:{html:`<div class="stream"><div class="empty"><div class="hello"><span class="badge"><span class="ms">auto_awesome</span></span><div><h2 class="t-title-m">Hôm nay bạn ăn gì?</h2><p class="t-body-s">Gõ món, gửi ảnh, hoặc hỏi nên ăn gì tiếp.</p></div></div>
+    <button class="sugg t-body-m"><span class="ms">restaurant</span>Trưa nay mình ăn…</button>
+    <button class="sugg t-body-m"><span class="ms">help</span>Tối nay còn bao nhiêu calo, nên ăn gì?</button>
+    <button class="sugg t-body-m"><span class="ms">fitness_center</span>Hôm nay đủ đạm chưa?</button></div></div>`}, comp:composer(''), cap:['Sáng · luồng trống','Ba gợi ý nhanh nằm ngay tầm ngón cái, chạm là điền vào ô nhập.']},
+  {dark:false, left:920, body:{html:`<div class="stream"><span class="daymark t-label-s">Hôm nay</span>
+    ${me('trưa ăn 1 tô bún bò với 1 ly trà đá','12:35')}
+    ${food({items:BUNBO, meal:'trua', time:'12:35', before:820, stamp:'12:35'})}
+    ${ai('Bữa này vừa phải. Bạn vẫn còn <b>430 kcal</b> cho cả buổi chiều và tối.','12:35')}</div>`}, comp:composer(''), cap:['Sáng · AI ghi món, chờ xác nhận','Thẻ chưa lưu nên thanh trên vẫn là 920; “sau khi lưu” trong thẻ là 430. “Xem & lưu” mở S12.']},
+  {dark:true, left:430, body:{html:`<div class="stream"><span class="daymark t-label-s">Hôm nay</span>
+    ${me('trưa ăn 1 tô bún bò với 1 ly trà đá','12:35')}
+    ${food({items:BUNBO, meal:'trua', time:'12:35', state:'saved', stamp:'12:35'})}
+    ${me('tối nay còn ăn gì được?','12:41')}
+    ${ai('Còn <b>430 kcal</b>, đạm mới được 95/122 g. Mình gợi ý:<br><b>• Cá hồi áp chảo + rau luộc</b> ~380 kcal, thêm ~30 g đạm.<br><b>• Salad gà + 1 chén cơm nhỏ</b> ~420 kcal.','12:41')}</div>`}, comp:composer(''), cap:['Tối · đã lưu + tư vấn','Thẻ đổi sang “Đã lưu vào Trưa”, thanh trên còn 430 và lời tư vấn dùng cùng con số.']},
+  {dark:false, left:430, body:{html:`<div class="stream"><span class="daymark t-label-s">Hôm nay</span>
+    ${me('ăn một nửa thôi','19:05',photo)}
+    ${food({items:[{n:'Cơm tấm sườn',p:'½ dĩa',k:330,m:[22,40,10]},{n:'Mỡ hành + nước mắm',p:'1 chén',k:60,m:[1,8,5]}], meal:'toi', time:'19:05', before:1310, stamp:'19:06', flag:'Mình không chắc phần nước mắm: bạn chan hết chén không?'})}
+    ${me('chan hết luôn','19:07')}
+    <div class="msg ai"><div class="typing" aria-label="AI đang soạn tin"><i></i><i></i><i></i></div></div></div>`}, comp:composer(''), cap:['Sáng · ảnh + câu hỏi làm rõ','Nhãn hổ phách ngay trên thẻ; bạn trả lời trong luồng, AI cập nhật thẻ (bong bóng “đang gõ”).']},
+  {dark:false, left:430, body:{html:`<div class="stream"><span class="daymark t-label-s">Hôm nay</span>
+    ${me('tối ăn lẩu thái 4 người','19:40','',true)}
+    <div class="msg ai"><div class="errb t-body-m"><div class="row"><span class="ms s20">cloud_off</span><span>Không có kết nối. Tin nhắn chưa được gửi.</span></div><button class="btn">Thử lại</button></div></div></div>`}, comp:composer(''), cap:['Sáng · lỗi mạng','Tin nhắn của bạn được đánh dấu “Chưa gửi”; bong bóng lỗi có nút Thử lại 48dp rõ là nút.']},
+  {dark:false, left:430, body:{html:`<div class="stream"><span class="daymark t-label-s">Hôm nay</span>
+    ${me('trưa ăn 1 tô bún bò với 1 ly trà đá','12:35')}
+    ${food({items:BUNBO, meal:'trua', time:'12:35', state:'saved', stamp:'12:35'})}</div>`}, comp:composer(''), extra:`<div class="scrim"></div><div class="sheet" role="dialog" aria-label="Đính ảnh"><div class="handle"></div><button class="opt t-title-m"><span class="ic"><span class="ms">photo_camera</span></span><p>Chụp ảnh<small class="t-body-s">Giờ ăn lấy lúc bạn bấm chụp</small></p></button><button class="opt t-title-m"><span class="ic"><span class="ms">photo_library</span></span><p>Chọn từ thư viện<small class="t-body-s">Giờ ăn lấy theo giờ chụp ảnh</small></p></button></div>`, cap:['Sáng · đính ảnh','Hai lối đính ảnh; dưới mỗi lối ghi rõ giờ ăn lấy từ đâu (05 §4.1).']},
+  {dark:true, left:790, body:{day:'Thứ Tư, 12/11', html:`<div class="stream"><span class="daymark t-label-s">12/11 · xếp theo ngày ăn</span>
+    ${me('sáng ăn bánh mì thịt','07:30')}
+    ${food({items:[{n:'Bánh mì thịt',p:'1 ổ',k:330,m:[16,38,12]}], meal:'sang', time:'07:30', state:'skipped'})}
+    ${me('hôm qua tối ăn phở bò','13/11 · 07:50')}
+    ${food({items:[{n:'Phở bò',p:'1 tô vừa',k:470,m:[28,55,12]}], meal:'toi', time:'19:00', day:'Hôm qua', before:950, stamp:'07:50'})}</div>`}, comp:composer(''), cap:['Tối · ghi cho hôm qua','Tin gửi sáng nay nhưng xếp vào luồng 12/11 theo ngày ăn; AI đọc “hôm qua” nên thẻ ghi “Tối · Hôm qua · 19:00”. Thẻ bỏ qua vẫn đọc rõ.']},
+];
+const only = new URLSearchParams(location.search).get('f');
+if(only!==null){ document.body.innerHTML = phone(frames[+only]); document.body.style.cssText='margin:0;background:transparent'; const ph=document.querySelector('.phone'); ph.style.cssText+=';box-shadow:none;outline:none;border-radius:0'; }
+else document.getElementById('frames').innerHTML = frames.map(f=>`<figure>${phone(f)}<figcaption><b>${f.cap[0]}</b>${f.cap[1]}</figcaption></figure>`).join('');
+document.querySelectorAll('.phone').forEach(p=>{ const s=p.querySelector('.stream'); if(s) s.scrollTop = s.scrollHeight; });
+</script>
+</body>
+</html>

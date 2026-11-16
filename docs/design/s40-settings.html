@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cali · S40 Cài đặt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&display=swap" rel="stylesheet">
+<style>
+:root{ --page:#F3F2F7; --page-ink:#1B1B21; --page-muted:#5E5E68; --page-line:#DCDBE3; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; } }
+:root[data-theme="dark"]{ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; }
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--page);color:var(--page-ink);font-family:'Roboto Flex',Roboto,system-ui,sans-serif;font-variation-settings:"opsz" 14;line-height:1.5}
+.wrap{max-width:1640px;margin:0 auto;padding:40px 16px 64px}
+header.doc{max-width:760px;margin:0 auto 32px;padding:0 4px}
+header.doc h1{font-size:28px;font-weight:600;letter-spacing:-.01em;font-variation-settings:"opsz" 32}
+header.doc p{color:var(--page-muted);margin-top:8px;font-size:15px;max-width:72ch}
+.frames{display:flex;flex-wrap:wrap;gap:44px 32px;justify-content:center;align-items:flex-start}
+figure{display:flex;flex-direction:column;align-items:center;gap:14px}
+figcaption{font-size:13px;color:var(--page-muted);text-align:center;max-width:320px}
+figcaption b{display:block;color:var(--page-ink);font-weight:600;font-size:14px}
+
+/* ===== App tokens (DESIGN.md) ===== */
+.phone{
+  --primary:#4355B9; --on-primary:#FFFFFF; --primary-container:#DEE0FF; --on-primary-container:#00105C;
+  --secondary-container:#E0E1F9; --on-secondary-container:#181A2C;
+  --surface:#FBF8FF; --surface-low:#F5F2FA; --surface-cont:#EFEDF4; --surface-highest:#E4E1E9;
+  --on-surface:#1B1B21; --on-surface-var:#46464F; --outline:#767680; --outline-var:#C6C5D0;
+  --error:#BA1A1A; --on-error:#FFFFFF; --error-container:#FFDAD6; --on-error-container:#410002;
+  --warn:#8A5100; --warn-container:#FFDCBE; --on-warn-container:#2C1600;
+  --inverse-surface:#303036; --inverse-on-surface:#F2EFF7; --inverse-primary:#BAC3FF;
+  --protein:#006780; --carb:#4C6700; --fat:#8E4585;
+  --meal-sang:#4355B9; --meal-trua:#5868C9; --meal-toi:#1E2A78; --meal-phu:#6C79D6;
+  --scrim:rgba(0,0,0,.32); --lane-track:var(--surface-cont);
+  width:360px;height:780px;border-radius:36px;overflow:hidden;position:relative;
+  background:var(--surface);color:var(--on-surface);
+  outline:1px solid var(--page-line);
+  box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 32px -8px rgba(20,20,40,.18);
+  font-feature-settings:"tnum" 1;display:flex;flex-direction:column;
+}
+.phone.dark{
+  --primary:#BAC3FF; --on-primary:#08218A; --primary-container:#293CA0; --on-primary-container:#DEE0FF;
+  --secondary-container:#43465A; --on-secondary-container:#E0E1F9;
+  --surface:#121318; --surface-low:#1B1B21; --surface-cont:#1F1F25; --surface-highest:#35343A;
+  --on-surface:#E4E1E9; --on-surface-var:#C6C5D0; --outline:#90909A; --outline-var:#46464F;
+  --error:#FFB4AB; --on-error:#690005; --error-container:#93000A; --on-error-container:#FFDAD6;
+  --warn:#FFB86E; --warn-container:#693C00; --on-warn-container:#FFDCBE;
+  --inverse-surface:#E4E1E9; --inverse-on-surface:#303036; --inverse-primary:#4355B9;
+  --protein:#5FD4F6; --carb:#B1D46A; --fat:#FFAEE9;
+  --meal-sang:#BAC3FF; --meal-trua:#8E9BF5; --meal-toi:#E4E6FF; --meal-phu:#6B78C9;
+  --scrim:rgba(0,0,0,.5); --lane-track:var(--surface-highest);
+}
+.t-display-s{font-size:36px;line-height:1.1;font-weight:650;letter-spacing:-.02em;font-variation-settings:"opsz" 48,"wdth" 92}
+.t-display-m{font-size:45px;line-height:1.15;font-weight:600;letter-spacing:-.01em;font-variation-settings:"opsz" 48}
+.t-title-l{font-size:22px;line-height:1.27;font-weight:600;font-variation-settings:"opsz" 22}
+.t-title-m{font-size:16px;line-height:1.5;font-weight:600}
+.t-body-l{font-size:16px;line-height:1.5;font-weight:400}
+.t-body-m{font-size:14px;line-height:1.43;font-weight:500}
+.t-body-s{font-size:12px;line-height:1.33;font-weight:400}
+.t-label-l{font-size:14px;line-height:1.43;font-weight:600}
+.t-label-m{font-size:12px;line-height:1.33;font-weight:500}
+.t-label-s{font-size:11px;line-height:1.45;font-weight:500}
+.ms{font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;font-size:24px;line-height:1;display:inline-block;font-variation-settings:"FILL" 0,"wght" 400,"opsz" 24;-webkit-font-smoothing:antialiased;user-select:none;flex:none}
+.ms.fill{font-variation-settings:"FILL" 1,"wght" 400,"opsz" 24}
+.ms.s14{font-size:14px}.ms.s16{font-size:16px}.ms.s18{font-size:18px}.ms.s20{font-size:20px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
+button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.muted{color:var(--on-surface-var)}
+b.n{font-weight:600;color:var(--on-surface)}
+
+.status{height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:500;background:var(--surface)}
+.status .ms{font-size:16px}
+.status,.appbar{transition:background-color .2s cubic-bezier(.2,0,0,1)}
+.phone.scrolled .status,.phone.scrolled .appbar{background:var(--surface-cont)}
+.appbar{height:64px;flex:none;display:grid;grid-template-columns:48px 1fr 48px;align-items:center;padding:0 4px;background:var(--surface)}
+.appbar h1{padding-left:4px}
+.appbar.center h1{text-align:center;padding:0}
+.icon-btn{width:48px;height:48px;border-radius:24px;display:grid;place-items:center;color:var(--on-surface-var);flex:none}
+.body{flex:1;overflow-y:auto;scrollbar-width:none;padding:0 12px 20px;display:flex;flex-direction:column;gap:8px}
+.body::-webkit-scrollbar{display:none}
+.body>*{flex:none}
+.gesture{flex:none;height:24px;position:relative;background:var(--surface)}
+.gesture::after{content:"";position:absolute;left:50%;bottom:8px;width:108px;height:4px;border-radius:2px;background:var(--on-surface);opacity:.4;transform:translateX(-50%)}
+h2.sec{margin:12px 8px 0}
+.lead{color:var(--on-surface-var);padding:0 8px}
+
+/* list rows: label ← tabular value */
+.grp{background:var(--surface-low);border-radius:16px;overflow:hidden}
+.li{width:100%;min-height:56px;display:grid;grid-template-columns:1fr auto 20px;align-items:center;gap:10px;padding:8px 12px 8px 16px;text-align:left}
+.li.nochev{grid-template-columns:1fr auto}
+.li+.li,.grp>.blk+.li,.grp>.li+.blk,.grp>.blk+.blk{border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent)}
+.li small{display:block;color:var(--on-surface-var)}
+.li .val{text-align:right;white-space:nowrap}
+.li .val b{font-size:16px;font-weight:600}
+.li .val u{text-decoration:none;font-size:12px;font-weight:500;color:var(--on-surface-var);margin-left:3px}
+.li .val em{font-style:normal;font-size:16px;font-weight:400}
+.li>.ms.go{color:var(--on-surface-var);font-size:20px}
+button.li:hover,button.nav:hover{background:color-mix(in srgb,var(--on-surface) 8%,transparent)}
+.li.sw{grid-template-columns:1fr 52px;min-height:64px;padding-right:16px}
+.blk{padding:12px 16px 14px}
+/* S40 nav rows (S30 "Xem thêm" grammar) */
+.nav{width:100%;min-height:64px;display:grid;grid-template-columns:40px 1fr 24px;gap:14px;align-items:center;padding:10px 14px;text-align:left}
+.nav+.nav{border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent)}
+.nav .ic{width:40px;height:40px;border-radius:12px;background:var(--primary-container);color:var(--on-primary-container);display:grid;place-items:center}
+.nav small{display:block;color:var(--on-surface-var);font-weight:400}
+.nav small .ms{vertical-align:-3px;margin-right:4px}
+.nav .ms.go{color:var(--on-surface-var)}
+.nav.plain{cursor:default}
+.nav.plain .ic{background:var(--surface-highest);color:var(--on-surface-var)}
+
+/* Switch M3 52×32 */
+.switch{width:52px;height:32px;border-radius:16px;position:relative;flex:none;background:var(--primary)}
+.switch::after{content:"";position:absolute;right:4px;top:4px;width:24px;height:24px;border-radius:12px;background:var(--on-primary)}
+.switch.off{background:var(--surface-highest);outline:2px solid var(--outline);outline-offset:-2px}
+.switch.off::after{left:8px;right:auto;top:8px;width:16px;height:16px;border-radius:8px;background:var(--outline)}
+
+/* cards */
+.card{background:var(--surface-low);border-radius:16px;padding:14px 16px 16px}
+.card .hd{display:flex;align-items:center;gap:12px}
+.card .hd .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--primary-container);color:var(--on-primary-container)}
+hr.div{border:0;border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent);margin:12px 0 10px}
+.line{display:flex;gap:8px;align-items:flex-start;color:var(--on-surface-var)}
+.line+.line{margin-top:8px}
+.line>.ms{color:var(--primary);margin-top:-1px}
+.line>.ms.neu{color:var(--on-surface-var)}
+.line b{color:var(--on-surface);font-weight:600}
+.chip{height:24px;border-radius:8px;padding:0 8px;display:inline-flex;align-items:center;gap:4px;background:var(--secondary-container);color:var(--on-secondary-container)}
+
+/* summary of the goal in use */
+.sum .meta{display:flex;align-items:center;justify-content:space-between;color:var(--on-surface-var);min-height:24px}
+.sum .big{display:flex;align-items:baseline;gap:6px;margin-top:2px}
+.mac{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;color:var(--on-surface-var)}
+.mac span{display:inline-flex;align-items:center;gap:5px}
+.mac i{width:8px;height:8px;border-radius:4px;background:var(--c)}
+.mac b{color:var(--on-surface);font-weight:600}
+
+/* M3 OutlinedTextField */
+.otf{margin-top:20px;--lbl:var(--surface-low)}
+.otf:first-child{margin-top:8px}
+.otf .box{position:relative;min-height:56px;border-radius:4px;outline:1px solid var(--outline);outline-offset:-1px;display:flex;align-items:center;gap:8px;padding:0 16px}
+.otf .box.focus{outline:2px solid var(--primary);outline-offset:-2px}
+.otf .box.err{outline:2px solid var(--error);outline-offset:-2px}
+.otf .lbl{position:absolute;top:-9px;left:12px;padding:0 4px;background:var(--lbl);color:var(--on-surface-var);font-size:12px;font-weight:500;line-height:18px;white-space:nowrap}
+.otf .box.focus .lbl{color:var(--primary)}
+.otf .box.err .lbl{color:var(--error)}
+.otf .v{font-size:22px;font-weight:600;letter-spacing:-.01em}
+.otf .v.txt{font-size:16px;font-weight:500;letter-spacing:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.otf .v.key{font-size:15px;letter-spacing:.12em;font-weight:500;flex:1;overflow:hidden;white-space:nowrap}
+.otf .caret{width:2px;height:24px;background:var(--primary);margin-left:-6px;flex:none}
+.otf .sfx{margin-left:auto;color:var(--on-surface-var);white-space:nowrap}
+.otf .tail{display:flex;margin-right:-12px}
+.otf .tail .icon-btn{width:48px}
+.otf .sup{color:var(--on-surface-var);margin:4px 16px 0;display:flex;align-items:flex-start;gap:4px}
+.otf .sup.err{color:var(--error)}
+.otf .sup .ms{margin-top:-1px}
+.otf .area{padding:14px 16px;align-items:flex-start;min-height:112px}
+.otf .area p{font-size:16px;font-weight:400;line-height:1.5}
+.otf .sup .cnt{margin-left:auto;padding-left:8px;white-space:nowrap}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pair .otf,.trio .otf{margin-top:8px}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.trio .otf .box{padding:0 12px}
+
+.btn{height:48px;border-radius:24px;padding:0 18px 0 14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:14px;flex:none}
+.btn.tonal{background:var(--secondary-container);color:var(--on-secondary-container)}
+.btn.out{outline:1px solid var(--outline-var);outline-offset:-1px;color:var(--primary)}
+.btn.text{color:var(--primary);padding:0 12px}
+.btn.fill{background:var(--primary);color:var(--on-primary);padding:0 20px}
+.btn.danger{background:var(--error);color:var(--on-error);padding:0 20px}
+.btn.off{background:color-mix(in srgb,var(--on-surface) 12%,transparent);color:color-mix(in srgb,var(--on-surface) 50%,transparent);outline:0;cursor:default}
+.okline{display:flex;align-items:flex-start;gap:6px;margin:10px 4px 0;color:var(--on-surface-var)}
+.okline .ms{color:var(--primary)}
+.okline b{color:var(--on-surface);font-weight:600}
+.btnrow{display:flex;gap:8px;margin-top:14px}
+.btnrow .btn{flex:1}
+
+/* amber adjust box */
+.warnbox{display:flex;gap:10px;margin-top:12px;padding:12px 14px;border-radius:16px;background:var(--warn-container);color:var(--on-warn-container)}
+.warnbox b{font-weight:600}
+/* attention strip (S35 ai-stale-strip grammar): neutral, never amber */
+.strip{display:grid;grid-template-columns:20px 1fr auto;gap:10px;align-items:center;padding:6px 6px 6px 12px;border-radius:12px;background:var(--secondary-container);color:var(--on-secondary-container)}
+.strip .btn{padding:0 12px;color:var(--on-secondary-container)}
+
+/* segmented */
+.segm{display:grid;height:48px;border-radius:24px;outline:1px solid var(--outline);outline-offset:-1px;overflow:hidden}
+.segm button{display:flex;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:600;border-left:1px solid var(--outline)}
+.segm button:first-child{border-left:0}
+.segm button.on{background:var(--secondary-container);color:var(--on-secondary-container)}
+.segm button small{font-weight:500;font-size:12px}
+.fl{color:var(--on-surface-var);margin:14px 0 8px}
+
+/* energy mix bar */
+.mix .stack{display:flex;gap:3px;height:10px;margin-top:14px}
+.mix .stack i{background:var(--c)}
+.mix .legend{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.mix .legend span{display:flex;align-items:center;gap:6px;color:var(--on-surface-var)}
+.mix .legend span i{width:8px;height:8px;border-radius:4px;background:var(--c)}
+.mix .legend b{font-size:16px;font-weight:600}
+.mix .legend b small{font-size:12px;color:var(--on-surface-var);font-weight:500}
+
+/* time chips */
+.tchip{position:relative;height:32px;border-radius:8px;padding:0 10px;display:inline-flex;align-items:center;gap:6px;background:var(--secondary-container);color:var(--on-secondary-container);font-size:14px;font-weight:600}
+.tchip::after{content:"";position:absolute;inset:-8px 0}
+.tchip.err{background:var(--error-container);color:var(--on-error-container)}
+.range{display:inline-flex;align-items:center;gap:6px;color:var(--on-surface-var)}
+
+/* meal rows + 24h lane */
+.meal{width:100%;min-height:56px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px;padding:8px 12px 8px 16px}
+.meal+.meal{border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent)}
+.meal .nm{display:flex;align-items:center;gap:10px}
+.tone{width:10px;height:10px;border-radius:2px;background:var(--tone);flex:none}
+.meal.auto{color:var(--on-surface-var)}
+.meal.auto .nm b{color:var(--on-surface)}
+.lane24{position:relative;margin-top:12px}
+.lane24 .bars{display:flex;gap:3px;height:10px}
+.lane24 .bars i{background:var(--tone);flex-basis:0}
+.lane24 .now{position:absolute;top:-4px;width:2px;height:18px;background:var(--on-surface);transform:translateX(-1px)}
+.ticks{position:relative;height:16px;margin-top:6px;color:var(--on-surface-var)}
+.ticks span{position:absolute;transform:translateX(-50%)}
+.ticks span:first-child{transform:none}
+.ticks span:last-child{transform:translateX(-100%)}
+.key24{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:10px;color:var(--on-surface-var)}
+.key24 span{display:inline-flex;align-items:center;gap:6px}
+
+/* stat grid (S02 / S30) */
+.stat{background:var(--surface-low);border-radius:16px;display:grid;grid-template-columns:repeat(3,1fr);padding:12px 4px}
+.stat div{padding:0 10px;display:flex;flex-direction:column;gap:2px}
+.stat div+div{border-left:1px solid color-mix(in srgb,var(--outline-var) 60%,transparent)}
+.stat small{color:var(--on-surface-var)}
+.stat b{font-weight:600}
+.stat b small{font-size:12px;font-weight:500;margin-left:3px}
+
+/* nav bar (S30) */
+.navbar{flex:none;height:104px;background:var(--surface-cont);display:grid;grid-template-columns:repeat(4,1fr);padding-top:12px;position:relative}
+.navbar::after{content:"";position:absolute;left:50%;bottom:8px;width:108px;height:4px;border-radius:2px;background:var(--on-surface);opacity:.4;transform:translateX(-50%)}
+.nav-i{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--on-surface-var)}
+.nav-i .pill{width:64px;height:32px;border-radius:16px;display:grid;place-items:center}
+.nav-i.on{color:var(--on-surface);font-weight:700}
+.nav-i.on .pill{background:var(--secondary-container);color:var(--on-secondary-container)}
+
+/* secondary sheets (S12 / S31) */
+.overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;z-index:5}
+.scrim{position:absolute;inset:0;background:var(--scrim)}
+.psheet{position:relative;background:var(--surface-low);border-radius:28px 28px 0 0;padding:0 20px 28px}
+.handle{width:32px;height:4px;border-radius:2px;background:var(--outline-var);margin:12px auto 0}
+.psheet h3{margin-top:16px}
+.psheet .lead{padding:0;margin-top:6px}
+.acts{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
+.acts .btn{padding:0 20px}
+.acts .btn.text{padding:0 16px}
+.spd{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.row{width:100%;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;min-height:60px;padding:10px 14px;border-radius:16px;background:var(--surface-low);outline:1px solid var(--outline-var);outline-offset:-1px;text-align:left}
+.row.on{background:var(--secondary-container);outline:2px solid var(--primary);outline-offset:-2px;color:var(--on-secondary-container)}
+.row p{white-space:nowrap}
+.row p b{font-size:16px;font-weight:600}
+.row p small{margin-left:8px;color:var(--on-surface-var)}
+.row.on p small{color:var(--on-secondary-container)}
+.row .tag{display:inline-block;margin-left:8px;font-size:11px;font-weight:600;padding:1px 6px;border-radius:6px;background:var(--primary-container);color:var(--on-primary-container);vertical-align:2px}
+.row.on .tag{background:var(--primary);color:var(--on-primary)}
+.row .end{text-align:right;color:var(--on-surface-var)}
+.row .end b{display:block;color:var(--on-surface);font-size:15px;font-weight:600}
+.row.on .end,.row.on .end b{color:var(--on-secondary-container)}
+.row .end .clamp{display:inline-flex;align-items:center;gap:3px;color:var(--warn)}
+.row .end .clamp .ms{font-size:14px}
+.row .wk{display:block;color:var(--on-surface-var)}
+.row.on .wk{color:var(--on-secondary-container)}
+.row .end .clamp{white-space:nowrap}
+.nw{white-space:nowrap}
+/* recalc (S31) */
+.rc-hero{display:grid;grid-template-columns:1fr 24px 1fr;align-items:end;gap:8px;margin-top:16px}
+.rc-hero .c{display:flex;flex-direction:column}
+.rc-hero .c .t-label-m{color:var(--on-surface-var)}
+.rc-hero .old b{color:var(--on-surface-var);font-weight:600}
+.rc-hero .arr{color:var(--on-surface-var);padding-bottom:8px}
+.rc-hero .new .d{color:var(--primary);font-weight:600}
+.rc-tab{margin-top:14px;display:grid;grid-template-columns:1fr 80px 88px;align-items:center;column-gap:8px}
+.rc-tab > *{padding:6px 0;border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent)}
+.rc-tab .h{border-top:0;padding-top:0;color:var(--on-surface-var)}
+.rc-tab .n{color:var(--on-surface-var)}
+.rc-tab .o,.rc-tab .w{text-align:right}
+.rc-tab .o{color:var(--on-surface-var)}
+.rc-tab .w{font-weight:650}
+.rc-tab .w.same{font-weight:500;color:var(--on-surface-var)}
+.rc-tab small{font-size:11px;font-weight:500;color:var(--on-surface-var)}
+/* TimeInput (S12) */
+.tin{display:flex;align-items:flex-start;gap:6px;margin-top:16px}
+.tin .f{display:flex;flex-direction:column;gap:6px;color:var(--on-surface-var)}
+.tin .box{width:96px;height:72px;border-radius:8px;display:grid;place-items:center;background:var(--surface-highest);color:var(--on-surface)}
+.tin .box.on{background:var(--primary-container);color:var(--on-primary-container);box-shadow:inset 0 0 0 2px var(--primary)}
+.tin .colon{height:72px;display:grid;place-items:center}
+.tin .src{margin:14px 0 0 6px;display:flex;flex-direction:column;gap:4px;color:var(--on-surface-var)}
+.errline{display:flex;gap:6px;align-items:flex-start;color:var(--error);margin-top:14px}
+.fixbtn{margin-top:10px}
+
+/* dialog (only for "Xoá toàn bộ dữ liệu", 05 §5) */
+.dlg-wrap{position:absolute;inset:0;display:grid;place-items:center;z-index:5}
+.dlg{position:relative;width:312px;background:var(--surface-low);border-radius:28px;padding:24px 24px 16px}
+.dlg .hico{display:block;width:24px;margin:0 auto;color:var(--on-surface-var)}
+.dlg h3{text-align:center;margin-top:14px}
+.dlg .bd{color:var(--on-surface-var);margin-top:14px}
+.dlg ul{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.dlg li{display:flex;gap:8px;align-items:flex-start;color:var(--on-surface)}
+.dlg li .ms{color:var(--on-surface-var)}
+.dlg .bk{margin-top:14px;padding-top:10px;border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent)}
+.dlg .acts{margin:18px -8px 0 0}
+.dlg .otf{--lbl:var(--surface-low);margin-top:20px}
+.dlg .otf .v.txt{flex:none}
+
+/* full-screen prompt editor */
+.edbar{height:64px;flex:none;display:grid;grid-template-columns:48px 1fr auto;align-items:center;padding:0 8px 0 4px;background:var(--surface)}
+.edstate{flex:none;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 8px 8px 16px;background:var(--surface)}
+.editor{flex:1;overflow:hidden;padding:12px 20px 0;border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent);font-size:14px;line-height:1.55;font-weight:400;white-space:pre-wrap;color:var(--on-surface)}
+.editor .h{font-weight:650}
+.editor .caret{display:inline-block;width:2px;height:18px;background:var(--primary);vertical-align:-4px;margin-left:1px}
+.edfoot{flex:none;padding:10px 16px 8px;background:var(--surface-cont);display:flex;flex-direction:column;gap:6px}
+.edfoot .line{color:var(--on-surface-var)}
+.ime{flex:none;background:var(--surface-cont);padding:6px 6px 22px}
+.ime .tag{color:var(--on-surface-var);text-align:center;padding:2px 0 6px}
+.ime .keys{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}
+.ime .keys > span{height:42px;border-radius:8px;background:var(--surface);display:grid;place-items:center;font-size:17px;font-weight:500}
+.foot-note{color:var(--on-surface-var);text-align:center;padding:8px 8px 0}
+body.still *{transition:none!important;animation:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc">
+    <h1>S40 · Cài đặt và S41–S45</h1>
+    <p>Tab Cài đặt (cấp cao, có navigation bar) và năm màn con. Mỗi hàng nói giá trị đang dùng bằng số tabular canh phải, nên Cài đặt đọc như bảng thông số của chính đồng hồ đo. Mọi thay đổi chạm tới mục tiêu calo (sửa hồ sơ, đổi tốc độ, ghi đè) đi qua sheet Đang dùng / Mới của S31 và áp dụng từ hôm nay (02 §11); tính lại theo lần cân mới nhất 74,1 kg (08/11), còn mục tiêu đang dùng 1.740 kcal tính theo 75,0 kg (21/10) như S31. Giới hạn an toàn của 02 §5 báo bằng hổ phách (Amber Adjust); đỏ chỉ cho ô nhập không hợp lệ, kiểm tra kết nối thất bại và nút xoá cuối cùng. Xoá toàn bộ dữ liệu là chỗ duy nhất của app dùng hộp thoại xác nhận, hai bước (05 §5). Lịch giả như các màn khác: 13/11/2026 là Thứ Năm. Số liệu là dữ liệu mẫu.</p>
+  </header>
+  <div class="frames" id="frames"></div>
+</div>
+<script>
+/* ---------- profile & calc (02) ---------- */
+const H_CM = 170, AGE = 30, ACT = 1.375, GOAL = 68, TODAY = '2026-11-13';
+const fmt = n => Math.round(n).toLocaleString('vi-VN');
+const dec = (n,d=1) => n.toLocaleString('vi-VN',{minimumFractionDigits:d,maximumFractionDigits:d});
+const sgn0 = n => (n<0?'−':'+') + fmt(Math.abs(n));
+const ic = (n, cls='') => `<span class="ms ${cls}">${n}</span>`;
+const r1 = x => Math.round(x*10+1e-9)/10;
+function plan(kg, rate=0.5){
+  const bmr = 10*kg + 6.25*H_CM - 5*AGE + 5, tdee = bmr*ACT, raw = tdee - rate*7700/7;
+  const maxDef = tdee*.25, floor = Math.max(1500, bmr);
+  let t = raw, clamp = null;
+  if(tdee - t > maxDef){ t = tdee - maxDef; clamp = 'deficit'; }
+  if(t < floor){ t = floor; clamp = 'floor'; }
+  t = Math.round(t/10)*10;
+  const bmi = r1(kg/((H_CM/100)**2)), p = Math.round(1.8*(bmi>=25?GOAL:kg)), fatK = t*.27;
+  const real = clamp ? Math.abs(tdee-t)*7/7700 : rate;
+  const weeks = Math.abs(kg-GOAL)/real, days = Math.ceil(+(weeks*7).toFixed(6));
+  return {bmr, tdee, t, clamp, real, weeks, days, p, f:Math.round(fatK/9), c:Math.round((t - p*4 - fatK)/4), water:Math.min(4000,Math.max(1500,Math.round(kg*35/100)*100))};
+}
+/* fictional calendar: 13/11/2026 is a Thursday → compute on 2025 */
+const addDays = (iso,n) => { const [y,m,d]=iso.split('-').map(Number); const t=new Date(Date.UTC(y-1,m-1,d+n)); return `${String(t.getUTCDate()).padStart(2,'0')}/${String(t.getUTCMonth()+1).padStart(2,'0')}/${t.getUTCFullYear()+1}`; };
+const USE = plan(75.0), NOW05 = plan(74.1, .5), NOW075 = plan(74.1, .75);
+
+/* ---------- pieces ---------- */
+const status = (t='20:15') => `<div class="status"><span>${t}</span><span>${ic('signal_cellular_alt')} ${ic('wifi')} ${ic('battery_5_bar')}</span></div>`;
+const bar = (title, back=true) => back
+  ? `<div class="appbar"><button class="icon-btn" aria-label="Quay lại">${ic('arrow_back')}</button><h1 class="t-title-l">${title}</h1></div>`
+  : `<div class="appbar center"><span></span><h1 class="t-title-l">${title}</h1><span></span></div>`;
+const nav = `<nav class="navbar"><div class="nav-i t-label-m"><span class="pill">${ic('today')}</span>Hôm nay</div><div class="nav-i t-label-m"><span class="pill">${ic('forum')}</span>Chat AI</div><div class="nav-i t-label-m"><span class="pill">${ic('calendar_month')}</span>Lịch sử</div><div class="nav-i on t-label-m"><span class="pill">${ic('settings','fill')}</span>Cài đặt</div></nav>`;
+const sw = on => `<span class="switch${on?'':' off'}" aria-hidden="true"></span>`;
+const li = (lab, val, o={}) => `<button class="li${o.nochev?' nochev':''}"${o.id?` id="${o.id}"`:''}><span class="t-body-l">${lab}${o.sub?`<small class="t-body-s">${o.sub}</small>`:''}</span><span class="val">${val}</span>${o.nochev?'':ic('chevron_right','go')}</button>`;
+const swRow = (lab, on, sub) => `<button class="li sw" role="switch" aria-checked="${on}"><span class="t-body-l">${lab}${sub?`<small class="t-body-s">${sub}</small>`:''}</span>${sw(on)}</button>`;
+const num = (n,u) => `<b>${n}</b>${u?`<u>${u}</u>`:''}`;
+const otf = o => `<div class="otf"${o.lbl?` style="--lbl:${o.lbl}"`:''}><div class="box${o.err?' err':o.focus?' focus':''}${o.area?' area':''}"><span class="lbl">${o.label}</span>${o.area?`<p>${o.v}${o.focus?'<i class="caret" style="display:inline-block;vertical-align:-5px;margin-left:2px"></i>':''}</p>`:`<span class="v${o.cls?' '+o.cls:''}">${o.v}</span>${o.focus?'<i class="caret"></i>':''}`}${o.sfx?`<span class="sfx t-body-m">${o.sfx}</span>`:''}${o.tail?`<span class="tail">${o.tail}</span>`:''}</div>${o.sup?`<p class="sup t-body-s${o.err?' err':''}">${o.err?ic('error','s18'):''}<span>${o.sup}</span>${o.cnt?`<span class="cnt">${o.cnt}</span>`:''}</p>`:''}</div>`;
+const sec = (t, id) => `<h2 class="sec t-title-m"${id?` id="${id}"`:''}>${t}</h2>`;
+
+/* ---------- S40 ---------- */
+function s40(f){
+  const later = f.later;
+  const N = (icon, t, sub, o={}) => `<button class="nav"><span class="ic">${ic(icon)}</span><span class="t-title-m">${t}<small class="t-body-s">${sub}</small></span>${ic('chevron_right','go')}</button>`;
+  const body = `
+    ${sec('Của bạn')}
+    <div class="grp">${N('person','Hồ sơ & mục tiêu',`<span class="nw">${fmt(USE.t)} kcal/ngày</span> · <span class="nw">giảm còn 68 kg</span>`)}</div>
+    ${sec('Ghi món & nhắc')}
+    <div class="grp">
+      ${N('auto_awesome','AI', later?`${ic('key_off','s16')}Chưa có API key · cần để chụp món và chat`:'Anthropic · key …3f9A · đã kết nối')}
+      ${N('water_drop','Nước & nhắc nhở', later?'2,6 L/ngày · nhắc đang tắt':'2,6 L/ngày · nhắc 90 phút, 07:00–22:00')}
+      ${N('restaurant','Bữa ăn',[['Sáng','05:00'],['Trưa','10:00'],['Phụ','14:00'],['Tối','17:30']].map(([m,t])=>`<span class="nw">${m} ${t}</span>`).join(' · '))}
+    </div>
+    ${sec('Dữ liệu')}
+    <div class="grp">${N('database','Dữ liệu', later?'Chưa sao lưu lần nào · 0 món đã lưu':'Sao lưu gần nhất 09/11 · 18 món đã lưu')}</div>
+    ${sec('Giới thiệu')}
+    <div class="grp"><div class="nav plain"><span class="ic">${ic('info')}</span><span class="t-title-m">Cali 1.0<small class="t-body-s">Số liệu là ước lượng, không thay thế tư vấn y tế.</small></span><span></span></div></div>`;
+  return `${status()}${bar('Cài đặt', false)}<div class="body">${body}</div>${nav}`;
+}
+
+/* ---------- S41 ---------- */
+function s41(f){
+  const ov = f.override;
+  const sum = `<section class="card sum" aria-label="Mục tiêu đang dùng">
+    <div class="meta t-label-m"><span>Mục tiêu đang dùng · từ 21/10</span></div>
+    <div class="big"><span class="t-display-s">${fmt(USE.t)}</span><span class="t-label-m muted">kcal/ngày</span></div>
+    <div class="mac t-label-m"><span style="--c:var(--protein)"><i></i>Đạm <b>${USE.p}</b> g</span><span style="--c:var(--carb)"><i></i>Tinh bột <b>${USE.c}</b> g</span><span style="--c:var(--fat)"><i></i>Béo <b>${USE.f}</b> g</span><span>${ic('water_drop','s14')}Nước <b>${dec(USE.water/1000)}</b> L</span></div>
+    <hr class="div">
+    <p class="line t-body-s">${ic('flag','s18')}<span>Đạt 68 kg khoảng <b>~${addDays(TODAY, NOW05.days)}</b> (theo lần cân 08/11, ~${Math.round(NOW05.weeks)} tuần)</span></p>
+    <p class="line t-body-s">${ic('info','s18 neu')}<span>Tính theo <b>75,0 kg</b> (lần cân 21/10). Sửa một mục bên dưới sẽ tính lại theo lần cân mới nhất <b>74,1 kg</b>.</span></p>
+  </section>`;
+  const profile = `${sec('Hồ sơ')}<div class="grp">
+    ${li('Giới tính', `<em>Nam</em>`)}
+    ${li('Năm sinh', `${num('1996')}<u>· 30 tuổi</u>`)}
+    ${li('Chiều cao', num('170','cm'))}
+    ${li('Cân nặng', num('74,1','kg'), {sub:'Lần cân 08/11 · ghi và sửa trong Cân nặng'})}
+    ${li('Mức vận động', num('×1,375'), {sub:'Vận động nhẹ · đi lại nhiều hoặc tập 1–3 buổi/tuần'})}
+  </div>`;
+  const goal = `${sec('Mục tiêu')}<div class="grp">
+    ${li('Mục tiêu', `<em>Giảm cân</em>`)}
+    ${li('Cân mong muốn', num('68','kg'), {sub:'BMI 23,5 · Thừa cân'})}
+    ${li('Tốc độ', num('0,5','kg/tuần'), {sub:'Khuyên dùng · bớt 550 kcal/ngày'})}
+    ${swRow('Tự tính lại khi ghi cân', false, 'Tắt: hỏi sau mỗi lần ghi cân (Cân nặng)')}
+  </div>`;
+  const O = OVR, kcalT = O.typed, floorT = O.t, g = O.g, P = O.P;
+  const over = `${sec('Ghi đè thủ công', 'ovr')}<div class="grp">
+    ${swRow('Tự đặt calo mục tiêu', !!ov, ov?'Ghi đè · các số khác vẫn tự tính':`Đang tự tính: ${fmt(USE.t)} kcal/ngày`)}
+    ${ov?`<div class="blk">${otf({label:'Calo mục tiêu', v:fmt(kcalT), sfx:'kcal/ngày', sup:'Từ 1.000 đến 5.000 kcal'})}
+      <div class="warnbox t-body-s">${ic('info','s20')}<span>${fmt(kcalT)} kcal là thâm hụt ${fmt(O.tdee-kcalT)} kcal/ngày, quá giới hạn 25% TDEE (${fmt(O.tdee*.25)} kcal). App đã điều chỉnh về <b>${fmt(floorT)} kcal/ngày</b> (~${dec(O.real,2)} kg/tuần).</span></div></div>`:''}
+    ${swRow('Tự đặt tỉ lệ macro', !!ov, ov?'Tổng ba phần phải đúng 100%':'Đang tự tính: đạm theo kg, béo 27%')}
+    ${ov?`<div class="blk"><div class="trio">${otf({label:'Đạm', v:P[0], sfx:'%'})}${otf({label:'Tinh bột', v:P[1], sfx:'%', focus:true})}${otf({label:'Béo', v:P[2], sfx:'%'})}</div>
+      <p class="okline t-body-s">${ic('check_circle','s18 fill')}<span>Tổng <b>100%</b> · theo ${fmt(floorT)} kcal/ngày</span></p>
+      <div class="mix"><div class="stack" aria-label="Tỉ lệ năng lượng"><i style="--c:var(--protein);flex:${P[0]}"></i><i style="--c:var(--carb);flex:${P[1]}"></i><i style="--c:var(--fat);flex:${P[2]}"></i></div>
+      <div class="legend"><div style="--c:var(--protein)"><span class="t-label-m"><i></i>Đạm</span><b>${g[0]} <small>g</small></b></div><div style="--c:var(--carb)"><span class="t-label-m"><i></i>Tinh bột</span><b>${g[1]} <small>g</small></b></div><div style="--c:var(--fat)"><span class="t-label-m"><i></i>Béo</span><b>${g[2]} <small>g</small></b></div></div></div></div>`:''}
+  </div>
+  <p class="foot-note t-body-s">Khi ghi đè, Hôm nay và Tổng kết tuần ghi nhãn “Tùy chỉnh”. Tính lại chỉ đổi các số không bị ghi đè.</p>`;
+  return `${status()}${bar('Hồ sơ & mục tiêu')}<div class="body">${sum}${profile}${goal}${over}</div><div class="gesture"></div>${f.sheet==='speed'?speedSheet():f.sheet==='recalc'?recalcSheet():f.sheet==='recalcOvr'?recalcSheet(true):''}`;
+}
+/* manual override, 02 §5 order: 25% deficit cap first, then floor max(1500, BMR), round to 10 */
+const OVR = (()=>{ const p = plan(74.1), typed = 1400; let t = typed;
+  if(p.tdee - t > p.tdee*.25) t = p.tdee*.75;
+  t = Math.max(t, 1500, p.bmr); t = Math.round(t/10)*10;
+  const P = [30,40,30];
+  return {typed, t, tdee:p.tdee, real:(p.tdee-t)*7/7700, P, g:[Math.round(t*P[0]/100/4), Math.round(t*P[1]/100/4), Math.round(t*P[2]/100/9)], water:p.water}; })();
+function speedSheet(){
+  const rows = [[0.25,'Nhẹ nhàng'],[0.5,'Khuyên dùng'],[0.75,'Nhanh'],[1.0,'Rất nhanh']].map(([r,l])=>({r,l,p:plan(74.1,r)}));
+  return `<div class="overlay"><div class="scrim"></div><div class="psheet" role="dialog" aria-label="Tốc độ mỗi tuần"><div class="handle"></div>
+    <h3 class="t-title-l">Tốc độ mỗi tuần</h3>
+    <p class="lead t-body-m">Kcal tính theo lần cân 08/11 (74,1 kg).</p>
+    <div class="spd" role="radiogroup">${rows.map(s=>{ const on = s.r===0.75;
+      return `<button class="row${on?' on':''}" role="radio" aria-checked="${on}"><p><b>${({0.25:'0,25',0.5:'0,5',0.75:'0,75',1:'1,0'})[s.r]} kg</b>${s.r===0.5?`<span class="tag">${s.l}</span>`:`<small class="t-body-s">${s.l}</small>`}<span class="wk t-label-m">~${Math.round(s.p.weeks)} tuần</span></p><span class="end t-label-m"><b>${fmt(s.p.t)} kcal</b>${s.p.clamp?`<span class="clamp">${ic('info')}Đã chỉnh · ~${dec(s.p.real,2)} kg/tuần</span>`:'<span class="clamp" style="visibility:hidden">–</span>'}</span></button>`; }).join('')}</div>
+    <div class="acts"><button class="btn text">Huỷ</button><button class="btn fill">Xong</button></div>
+  </div></div>`;
+}
+function recalcSheet(ovr){
+  const old = USE, nw = ovr ? {t:OVR.t, tdee:OVR.tdee, p:OVR.g[0], c:OVR.g[1], f:OVR.g[2], water:OVR.water, real:OVR.real, days:Math.ceil(+((74.1-GOAL)/OVR.real*7).toFixed(6)), weeks:(74.1-GOAL)/OVR.real} : NOW075;
+  const leadTxt = ovr ? 'Tự đặt 1.400 kcal và macro 30 / 40 / 30%, tính theo lần cân 08/11 (74,1 kg). Đang dùng tính theo 75,0 kg (21/10).' : 'Tốc độ 0,5 → 0,75 kg/tuần, tính theo lần cân 08/11 (74,1 kg). Đang dùng tính theo 75,0 kg (21/10).';
+  const warnTxt = ovr ? `1.400 kcal là thâm hụt ${fmt(OVR.tdee-1400)} kcal/ngày, quá giới hạn 25% TDEE. App đã điều chỉnh về <b>${fmt(nw.t)} kcal/ngày</b> (~${dec(nw.real,2)} kg/tuần).` : `Tốc độ 0,75 kg/tuần cần ăn dưới mức an toàn. App đã điều chỉnh về <b>${fmt(nw.t)} kcal/ngày</b> (~${dec(nw.real,2)} kg/tuần).`;
+  const row = (n, a, b, u) => `<span class="n t-body-m">${n}</span><span class="o t-body-m">${a}</span><span class="w t-body-m${a===b?' same':''}">${b}${u?` <small>${u}</small>`:''}</span>`;
+  const L = v => dec(v/1000);
+  return `<div class="overlay"><div class="scrim"></div><div class="psheet" role="dialog" aria-label="Áp dụng mục tiêu mới"><div class="handle"></div>
+    <h3 class="t-title-l">Áp dụng mục tiêu mới?</h3>
+    <p class="lead t-body-m">${leadTxt}</p>
+    <div class="rc-hero"><div class="c old"><span class="t-label-m">Đang dùng</span><b class="t-title-l">${fmt(old.t)}</b><span class="t-label-m">kcal/ngày</span></div>
+      <span class="arr">${ic('arrow_forward')}</span>
+      <div class="c new"><span class="t-label-m">Mới</span><b class="t-display-s">${fmt(nw.t)}</b><span class="t-label-m"><span class="d">${sgn0(nw.t-old.t)} kcal</span> · kcal/ngày</span></div></div>
+    <div class="rc-tab"><span class="h t-label-m"></span><span class="h o t-label-m">Đang dùng</span><span class="h w t-label-m" style="font-weight:500">Mới</span>
+      ${row('TDEE', fmt(old.tdee), fmt(nw.tdee), 'kcal')}${row('Đạm', old.p, nw.p, 'g')}${row('Tinh bột', old.c, nw.c, 'g')}${row('Béo', old.f, nw.f, 'g')}${row('Nước', L(old.water), L(nw.water), 'L')}</div>
+    <div class="warnbox t-body-s">${ic('info','s20')}<span>${warnTxt}</span></div>
+    <p class="line t-body-s" style="margin-top:12px">${ic('flag','s18')}<span>Đạt 68 kg khoảng <b>~${addDays(TODAY, nw.days)}</b> (~${Math.round(nw.weeks)} tuần). Áp dụng từ hôm nay 13/11; các ngày trước vẫn so với ${fmt(old.t)} kcal.</span></p>
+    <div class="acts" style="margin-top:14px"><button class="btn text">Huỷ</button><button class="btn fill">Áp dụng</button></div>
+  </div></div>`;
+}
+
+/* ---------- S42 ---------- */
+const NOTES = 'Mình ăn cơm nhà bát nhỏ ~150 g. Cà phê sữa đá luôn ít đường. Trưa hay ăn cơm văn phòng, ít rau.';
+function s42(f){
+  const tail = `<button class="icon-btn" aria-label="Hiện key">${ic('visibility','s20')}</button><button class="icon-btn" aria-label="Dán từ bộ nhớ tạm">${ic('content_paste','s20')}</button>`;
+  const key = f.fail
+    ? otf({label:'API key', v:'••••••••••••7Qx2', cls:'key', err:true, tail, sup:'API key không hợp lệ (401). Kiểm tra lại key đã dán trên trang quản lý của Anthropic.'})
+    : otf({label:'API key', v:'••••••••••••3f9A', cls:'key', tail, sup:'Chỉ hiện 4 ký tự cuối. Mã hoá trên máy, không vào bản sao lưu.'});
+  const conn = `<section class="card" aria-label="Kết nối">
+    ${otf({label:'Hãng AI', v:'Anthropic', cls:'txt', tail:`<span class="icon-btn" aria-hidden="true">${ic('arrow_drop_down')}</span>`})}
+    ${key}
+    <div class="btnrow" style="margin-top:12px"><button class="btn tonal" style="flex:none">${ic(f.fail?'network_check':'check','s20')}Kiểm tra kết nối</button></div>
+    ${f.fail?'':`<p class="okline t-body-s">${ic('check_circle','s18 fill')}<span>Đã kết nối lúc <b>20:14</b> · cả <b>model ảnh</b> và <b>model chat</b> đều trả lời</span></p>`}
+  </section>`;
+  const models = `${sec('Model')}<section class="card">
+    ${otf({label:'Model phân tích ảnh', v:'claude-sonnet-5-5', cls:'txt', sup:'Mặc định · dùng khi chụp món'})}
+    ${otf({label:'Model chat', v:'claude-haiku-5-5', cls:'txt', sup:'Mặc định · chat và nhận xét tuần'})}
+  </section>`;
+  const prompt = `${sec('Lời dặn cho AI')}<div class="grp">${li('System prompt', '', {sub:'Bản mặc định v1 · chưa sửa'})}</div>
+    <section class="card">${otf({label:'Ghi chú cá nhân', v:NOTES, area:true, sup:'AI đọc ghi chú này mỗi lần gọi', cnt:`${NOTES.length}/500`})}</section>`;
+  const auto = `<p class="line t-body-s" style="padding:8px 8px 0">${ic('insights','s18 neu')}<span>Nhận xét AI tuần tự tạo khi mở: bật/tắt ở Nước & nhắc nhở.</span></p>
+    <p class="line t-body-s" style="padding:0 8px">${ic('lock','s18 neu')}<span>Key chỉ được giải mã ngay trước khi gọi AI và không bao giờ ghi vào log. Ảnh chỉ gửi tới hãng đã chọn ở trên.</span></p>`;
+  return `${status()}${bar('AI')}<div class="body">${conn}${models}${prompt}${auto}</div><div class="gesture"></div>`;
+}
+const PROMPT = `Bạn là trợ lý dinh dưỡng trong app Cali, giúp một người Việt Nam theo dõi lượng calo nạp vào.
+Bạn có hai nhiệm vụ:
+1. GHI MÓN: khi người dùng mô tả hoặc chụp ảnh thứ họ đã/đang ăn uống, hãy gọi tool \`record_food_items\` với ước lượng dinh dưỡng cho từng món.
+2. TƯ VẤN: khi người dùng hỏi (nên ăn gì, đã đủ chất chưa…), trả lời ngắn gọn bằng tiếng Việt, dựa vào <user_context>. Không gọi tool trong trường hợp này.
+
+§§## Quy tắc ước lượng
+- Luôn tính dầu mỡ dùng khi chiên, xào, rán, và nước sốt, nước chấm, nước béo. Ghi giả định vào \`assumptions\`.
+
+§§## Phong cách trả lời tư vấn
+- Ngắn gọn (tối đa ~80 từ)¦, thân thiện, xưng "mình" – "bạn".
+- Dựa vào calo/macro còn lại để gợi ý cụ thể, có con số.`;
+function s42editor(){
+  const txt = PROMPT.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/§§(## [^\n]+)/g,'<span class="h">$1</span>').replace('¦','<i class="caret"></i>');
+  const keys = 'qwertyuiop'.split('').concat('asdfghjkl'.split(''));
+  return `${status()}<div class="edbar"><button class="icon-btn" aria-label="Đóng, bỏ thay đổi chưa lưu">${ic('close')}</button><h1 class="t-title-l" style="padding-left:4px">System prompt</h1><button class="btn text">Lưu</button></div>
+    <div class="edstate"><span class="chip t-label-m">${ic('edit','s16')}Đã sửa</span><button class="btn text" style="padding:0 8px">${ic('restart_alt','s18')}Khôi phục mặc định</button></div>
+    <div class="editor" role="textbox" aria-multiline="true" aria-label="System prompt">${txt}</div>
+    <div class="edfoot"><p class="line t-body-s">${ic('info','s18 neu')}<span>Hồ sơ, đã ăn hôm nay và ghi chú cá nhân (<b>&lt;user_context&gt;</b>) app tự nối vào cuối mỗi lần gọi, không cần viết ở đây.</span></p></div>
+    <div class="ime" aria-hidden="true"><p class="tag t-label-m">Bàn phím của hệ thống</p><div class="keys">${keys.map(k=>`<span>${k}</span>`).join('')}<span style="background:var(--surface-highest)">${ic('backspace','s20')}</span></div></div>`;
+}
+
+/* ---------- S43 ---------- */
+function s43(f){
+  const strip = f.noPerm ? `<div class="strip t-body-s">${ic('notifications_off','s20')}<span>Chưa có quyền thông báo, nên nhắc uống nước và tổng kết tuần chưa hiện được.</span><button class="btn t-label-l">Cho phép</button></div>` : '';
+  const water = `${sec('Mục tiêu nước')}<section class="card">
+    <div class="segm" role="radiogroup" style="grid-template-columns:1fr 1fr"><button class="on" role="radio" aria-checked="true">Tự động</button><button role="radio" aria-checked="false">Tùy chỉnh</button></div>
+    <div style="display:flex;align-items:baseline;gap:6px;margin-top:14px"><span class="t-title-l">${fmt(USE.water)}</span><span class="t-label-m muted">ml/ngày</span></div>
+    <p class="line t-body-s" style="margin-top:6px">${ic('calculate','s18 neu')}<span>75,0 kg × 35 ml = 2.625, làm tròn 100 ml. Cùng lần cân 21/10 với mục tiêu calo; tính lại cùng lúc.</span></p>
+  </section>
+  ${sec('Hai nút nhanh')}<section class="card" style="padding-top:12px"><div class="pair">${otf({label:'Nút nhỏ', v:'250', sfx:'ml'})}${otf({label:'Nút lớn', v:'500', sfx:'ml'})}</div>
+    <p class="line t-body-s" style="margin-top:10px">${ic('touch_app','s18 neu')}<span>Hai nút của ô Nước (Hôm nay). Nút nhỏ cũng là nút “+250 ml” trên thông báo nhắc.</span></p></section>`;
+  const remind = `${sec('Nhắc uống nước')}<div class="grp">
+    ${swRow('Nhắc uống nước', true, 'Kênh thông báo “Nhắc uống nước”')}
+    <button class="li nochev"><span class="t-body-l">Khung giờ</span><span class="range t-label-m"><span class="tchip">07:00</span>–<span class="tchip">22:00</span></span></button>
+    <div class="blk"><p class="t-body-l" style="margin-bottom:10px">Chu kỳ</p>
+      <div class="segm" role="radiogroup" style="grid-template-columns:repeat(4,1fr)">${[45,60,90,120].map(m=>`<button class="${m===90?'on':''}" role="radio" aria-checked="${m===90}">${m}<small>phút</small></button>`).join('')}</div>
+      <p class="line t-body-s" style="margin-top:10px">${ic('info','s18 neu')}<span>Nhắc 90 phút sau lần uống hoặc lần nhắc gần nhất; uống đủ ${fmt(USE.water)} ml thì nghỉ tới 07:00 mai.</span></p>
+      <p class="line t-body-s">${f.noPerm?`${ic('notifications_off','s18 neu')}<span><b>Chưa nhắc được</b> · thiếu quyền thông báo</span>`:`${ic('notifications','s18')}<span>Nhắc tiếp lúc <b>14:05</b></span>`}</p></div>
+  </div>`;
+  const weekly = `${sec('Tổng kết tuần')}<div class="grp">
+    ${swRow('Thông báo sáng Thứ Hai', true, 'Kênh “Tổng kết tuần” · điểm tính trên máy, không gọi AI')}
+    <button class="li nochev"><span class="t-body-l">Giờ gửi<small class="t-body-s">Lần tới: Thứ Hai 17/11 · tuần 10/11 – 16/11</small></span><span class="tchip">08:00</span></button>
+    ${swRow('Tự tạo nhận xét tuần khi mở', true, 'Khi mở tổng kết của tuần đã kết thúc · tốn 1 lượt model chat. Tắt thì bấm “Tạo nhận xét” khi cần.')}
+  </div>`;
+  return `${status()}${bar('Nước & nhắc nhở')}<div class="body">${strip}${water}${remind}${weekly}</div><div class="gesture"></div>`;
+}
+
+/* ---------- S44 ---------- */
+const MEALS = [['sang','Sáng','05:00','09:59'],['trua','Trưa','10:00','13:59'],['phu','Phụ','14:00','17:29'],['toi','Tối','17:30','21:59']];
+function s44(f){
+  const segs = [['phu',300],['sang',300],['trua',240],['phu',210],['toi',270],['phu',120]];
+  const nowMin = 20*60+15;
+  const lane = `<section class="card" aria-label="Một ngày 24 giờ">
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><b class="t-title-m">Một ngày 24 giờ</b><span class="t-label-m muted">bây giờ 20:15 → Tối</span></div>
+    <div class="lane24"><div class="bars">${segs.map(([k,m])=>`<i style="--tone:var(--meal-${k});flex-grow:${m}"></i>`).join('')}</div><span class="now" style="left:${(nowMin/1440*100).toFixed(2)}%"></span></div>
+    <div class="ticks t-label-s">${[0,6,12,18,24].map(h=>`<span style="left:${h/24*100}%">${String(h).padStart(2,'0')}:00</span>`).join('')}</div>
+    <div class="key24 t-label-m">${[['sang','Sáng'],['trua','Trưa'],['phu','Phụ'],['toi','Tối']].map(([k,n])=>`<span><i class="tone" style="--tone:var(--meal-${k})"></i>${n}</span>`).join('')}</div>
+  </section>`;
+  const rows = `<div class="grp">${MEALS.map(([k,n,a,b])=>`<div class="meal"><span class="nm"><i class="tone" style="--tone:var(--meal-${k})"></i><b class="t-title-m">${n}</b></span><span class="range t-label-m"><button class="tchip" aria-label="${n} bắt đầu ${a}">${a}</button>–<button class="tchip" aria-label="${n} kết thúc ${b}">${b}</button></span></div>`).join('')}
+    <div class="meal auto"><span class="nm"><i class="tone" style="--tone:var(--meal-phu)"></i><span><b class="t-title-m">Phụ</b><small class="t-body-s" style="display:block">Giờ không thuộc bữa nào</small></span></span><span class="t-label-l" style="padding-right:10px">22:00 – 04:59</span></div></div>`;
+  const body = `<p class="lead t-body-m" style="margin-top:4px">Giờ ăn của món quyết định bữa khi chưa chọn tay. Đổi giờ chỉ áp dụng cho món ghi từ giờ; món đã ghi giữ bữa của nó.</p>${lane}${rows}
+    <div><button class="btn text">${ic('restart_alt','s18')}Khôi phục giờ mặc định</button></div>`;
+  const sheet = f.sheet ? `<div class="overlay"><div class="scrim"></div><div class="psheet" role="dialog" aria-label="Giờ kết thúc bữa Trưa"><div class="handle"></div>
+    <h3 class="t-title-l">Trưa kết thúc lúc</h3>
+    <div class="tin"><label class="f t-label-m"><span class="box t-display-m">14</span>Giờ</label><span class="colon t-display-m">:</span><label class="f t-label-m"><span class="box on t-display-m">30</span>Phút</label>
+      <span class="src t-body-s">Đang là<b class="n t-label-l">13:59</b></span></div>
+    <p class="errline t-body-s">${ic('error','s18')}<span>Trùng với Phụ 14:00 – 17:29. Mỗi phút chỉ thuộc một bữa.</span></p>
+    <button class="btn tonal fixbtn">${ic('edit','s18')}Dời Phụ bắt đầu từ 14:31</button>
+    <div class="acts"><button class="btn text">Huỷ</button><button class="btn fill off" aria-disabled="true">Xong</button></div>
+  </div></div>` : '';
+  return `${status()}${bar('Bữa ăn')}<div class="body">${body}</div><div class="gesture"></div>${sheet}`;
+}
+
+/* ---------- S45 ---------- */
+function s45(f){
+  const body = `<section class="card">
+      <div class="hd"><span class="ic">${ic('backup')}</span><b class="t-title-m">Sao lưu ra file</b></div>
+      <p class="line t-body-s" style="margin-top:12px">${ic('history','s18')}<span>Lần xuất gần nhất <b>09/11/2026, 21:04</b> · 4 ngày trước<br>cali-2026-11-09.json</span></p>
+      <p class="line t-body-s">${ic('inventory_2','s18 neu')}<span>Một file JSON: hồ sơ, mục tiêu, nhật ký, cân, nước, chat, Món của tôi, cài đặt. Không gồm API key và ảnh thu nhỏ.</span></p>
+      <div class="btnrow"><button class="btn tonal">${ic('download','s20')}Xuất file</button><button class="btn out">${ic('file_open','s20')}Nhập từ file</button></div>
+      <p class="line t-body-s" style="margin-top:10px">${ic('info','s18 neu')}<span>Nhập sẽ thay toàn bộ dữ liệu hiện tại (app hỏi lại trước). File từ bản app mới hơn sẽ bị từ chối.</span></p>
+    </section>
+    ${sec('Trên máy')}
+    <div class="stat"><div><small class="t-label-m">Ngày đã ghi</small><b class="t-title-m">45</b></div><div><small class="t-label-m">Lần cân</small><b class="t-title-m">16</b></div><div><small class="t-label-m">Món đã lưu</small><b class="t-title-m">18</b></div></div>
+    <div class="grp">${swRow('Lưu ảnh thu nhỏ', true, 'Ảnh 256 px để hiện trong nhật ký · 6,4 MB')}</div>
+    <p class="line t-body-s" style="padding:2px 8px 0">${ic('cloud_done','s18 neu')}<span>Android cũng tự sao lưu dữ liệu app vào tài khoản Google của máy (Auto Backup), trừ API key.</span></p>
+    ${sec('Xoá')}
+    <div class="grp"><button class="nav"><span class="ic" style="background:var(--surface-highest);color:var(--on-surface-var)">${ic('delete_forever')}</span><span class="t-title-m">Xoá toàn bộ dữ liệu<small class="t-body-s">Về lại màn chào như lần đầu · hỏi 2 lần</small></span>${ic('chevron_right','go')}</button></div>`;
+  return `${status()}${bar('Dữ liệu')}<div class="body">${body}</div><div class="gesture"></div>${f.dlg===1?dlg1():f.dlg===2?dlg2():''}`;
+}
+function dlg1(){
+  return `<div class="dlg-wrap"><div class="scrim"></div><div class="dlg" role="alertdialog" aria-label="Xoá toàn bộ dữ liệu, bước 1 trên 2">
+    ${ic('delete_forever','hico')}
+    <h3 class="t-title-l">Xoá toàn bộ dữ liệu?</h3>
+    <p class="bd t-body-m">Mọi thứ trên máy sẽ mất, không hoàn tác được:</p>
+    <ul class="t-body-m"><li>${ic('event_note','s18')}Nhật ký 45 ngày · 271 món</li><li>${ic('monitor_weight','s18')}16 lần cân · nước · 96 tin nhắn chat</li><li>${ic('bookmarks','s18')}18 món đã lưu · hồ sơ, cài đặt, API key</li></ul>
+    <div class="bk"><p class="line t-body-s">${ic('history','s18')}<span>Bản sao lưu gần nhất <b>09/11</b> thiếu 4 ngày gần đây.</span></p>
+      <button class="btn text" style="margin:4px 0 0 18px;padding:0 8px">${ic('download','s18')}Xuất bản sao lưu trước</button></div>
+    <div class="acts"><button class="btn text">Huỷ</button><button class="btn text">Tiếp tục</button></div>
+  </div></div>`;
+}
+function dlg2(){
+  return `<div class="dlg-wrap"><div class="scrim"></div><div class="dlg" role="alertdialog" aria-label="Xoá toàn bộ dữ liệu, bước 2 trên 2">
+    ${ic('delete_forever','hico')}
+    <h3 class="t-title-l">Gõ XOÁ để xác nhận</h3>
+    <p class="bd t-body-m">45 ngày nhật ký, 16 lần cân và 18 món đã lưu sẽ bị xoá vĩnh viễn. App mở lại ở màn chào.</p>
+    ${otf({label:'Gõ XOÁ', v:'XOÁ', cls:'txt', focus:true, sup:'Gõ “XOA” không dấu cũng được'})}
+    <div class="acts"><button class="btn text">Huỷ</button><button class="btn danger">${ic('delete_forever','s20')}Xoá vĩnh viễn</button></div>
+  </div></div>`;
+}
+
+/* ---------- frames ---------- */
+const SCREENS = {s40, s41, s42, s42editor, s43, s44, s45};
+const frames = [
+  {s:'s40', cap:['S40 · Sáng','Tab cấp cao, Cài đặt được chọn. Năm hàng 64dp theo ngữ pháp “Xem thêm” của S30; dòng phụ là giá trị đang dùng, nên không cần mở mục nào để biết app đang chạy với số gì.']},
+  {s:'s40', dark:true, later:true, cap:['S40 · Tối · đã bấm “Để sau” ở S03','Chưa có API key (biểu tượng key_off + chữ, không đỏ: chưa phải lỗi), nhắc nước đang tắt, chưa sao lưu. Chạm AI mở thẳng S42, như 03 §8 khi chưa có key.']},
+  {s:'s41', cap:['S41 · Hồ sơ & mục tiêu','Thẻ đầu nói mục tiêu đang dùng (1.740 kcal, Display Small như sheet tính lại) và nó tính theo số nào. Mỗi hàng là nhãn ← giá trị tabular; cân nặng chỉ đọc, sửa trong Cân nặng (02 §1).']},
+  {s:'s41', sheet:'speed', cap:['S41 · chạm “Tốc độ”','Sheet phụ với hàng chọn của S01 bước 5, tính theo 74,1 kg. 0,75 và 1,0 bị kẹp về 1.710 kcal (~0,52 kg/tuần, hổ phách): nhanh hơn 0,5 chỉ sớm 3 ngày.']},
+  {s:'s41', sheet:'recalc', cap:['S41 · Xong → sheet Đang dùng / Mới','Cùng sheet tính lại của S31: 1.740 → 1.710 (−30). Bị kẹp thì dòng an toàn thành hộp hổ phách với câu của 02 §5. Huỷ là bỏ thay đổi; Áp dụng tạo mục tiêu mới từ 13/11.']},
+  {s:'s41', override:true, scroll:'ovr', cap:['S41 · Ghi đè quá giới hạn an toàn','1.400 kcal là thâm hụt 880 kcal/ngày, quá 25% TDEE (570): theo thứ tự 02 §5, app kẹp về 1.710 kcal/ngày (~0,52 kg/tuần), rồi mới xét sàn BMR 1.659 (đã đạt). Amber Adjust, không chặn. Tỉ lệ 30/40/30 → 128 / 171 / 57 g. Tổng ≠ 100% hay ngoài 1.000–5.000 kcal mới là lỗi đỏ, hiện khi rời ô.']},
+  {s:'s41', override:true, scroll:'ovr', sheet:'recalcOvr', cap:['S41 · Rời ô ghi đè → sheet Đang dùng / Mới','Ghi đè đi qua cùng sheet như sửa hồ sơ: 1.740 → 1.710 (−30), macro theo 30/40/30% (128 / 171 / 57 g), hộp hổ phách nói rõ giới hạn 25% TDEE. Áp dụng từ 13/11; Huỷ trả ô về giá trị cũ.']},
+  {s:'s42', h:1100, cap:['S42 · AI, toàn trang','Hãng, key che giữ 4 ký tự cuối (hiện / dán), “Kiểm tra kết nối” thành công. Model là chuỗi sửa được. System prompt mở trình soạn toàn màn hình; ghi chú cá nhân sửa ngay tại chỗ. Công tắc nhận xét AI tuần nằm ở S43 theo 05; ở đây chỉ một dòng chỉ đường.']},
+  {s:'s42', dark:true, fail:true, cap:['S42 · Tối · kiểm tra thất bại','Key mới dán bị 401: viền, nhãn và dòng hỗ trợ màu error với biểu tượng (lỗi của ô nhập). Mất mạng hay 429 không phải lỗi của key, nên báo bằng dòng dưới nút, không tô đỏ ô.']},
+  {s:'s42editor', cap:['S42 · System prompt','Trình soạn toàn màn hình. Chip “Đã sửa”; “Khôi phục mặc định” không hỏi lại mà hiện snackbar Hoàn tác (05 §5). Đóng khi chưa Lưu thì bỏ thay đổi. Phần &lt;user_context&gt; app tự nối, nói rõ ở chân.']},
+  {s:'s43', noPerm:true, h:1250, cap:['S43 · Nước & nhắc nhở · thiếu quyền','Dải trung tính (không hổ phách) “Cho phép” gọi hộp thoại hệ thống, hoặc “Mở Cài đặt” khi đã bị từ chối hẳn. Mục tiêu tự động 2.600 ml theo 02 §8; hai nút nhanh; khung giờ 07:00–22:00 và chu kỳ 90 phút như 04 §3. Nhóm Tổng kết tuần theo 05: thông báo Thứ Hai 08:00 và “Tự tạo nhận xét tuần khi mở” (nói rõ tốn 1 lượt model chat).']},
+  {s:'s44', cap:['S44 · Bữa ăn','Bốn khung giờ của 05 §4.2 vẽ thành một làn 24 giờ cùng ngữ pháp vòng calo: tông meal-*, đầu vuông, khe 3dp; Phụ xuất hiện ba đoạn vì giờ không thuộc bữa nào là Phụ. Vạch đứng là bây giờ 20:15 → Tối.']},
+  {s:'s44', sheet:true, cap:['S44 · TimeInput · khung trùng nhau','Chạm giờ kết thúc của Trưa mở TimeInput của S12. 14:30 đè lên Phụ: dòng lỗi đỏ, Xong tắt, kèm nút sửa một chạm “Dời Phụ bắt đầu từ 14:31” (như “Có phải 74,1 kg?” của S31).']},
+  {s:'s45', cap:['S45 · Dữ liệu','Sao lưu JSON qua Storage Access Framework, lần xuất gần nhất và cái gì không có trong file (API key, ảnh). Xoá toàn bộ là một hàng trung tính; màu error chỉ có ở nút xoá cuối cùng.']},
+  {s:'s45', dlg:1, cap:['S45 · Xoá · bước 1/2','Hộp thoại xác nhận duy nhất của app. Nói rõ mất gì (đếm thật) và đưa lối “Xuất bản sao lưu trước” vì bản 09/11 thiếu 4 ngày. “Tiếp tục” chưa xoá gì, chưa đỏ.']},
+  {s:'s45', dlg:2, dark:true, cap:['S45 · Tối · Xoá · bước 2/2','Không có dòng “Bước 2/2” (bước nằm trong aria-label). Gõ XOÁ (không dấu cũng được) mới bật nút filled error “Xoá vĩnh viễn”. Một chạm nhầm không bao giờ xoá được dữ liệu.']},
+];
+
+function phone(f){
+  const inner = SCREENS[f.s](f);
+  return `<div class="phone${f.dark?' dark':''}${f.scroll?' scrolled':''}" data-scroll="${f.scroll||''}" style="height:${f.h||780}px">${inner}</div>`;
+}
+const only = new URLSearchParams(location.search).get('f');
+if(only!==null){ document.body.innerHTML = phone(frames[+only]); document.body.style.cssText='margin:0;background:transparent'; document.body.classList.add('still'); const ph=document.querySelector('.phone'); ph.style.cssText+=';box-shadow:none;outline:none;border-radius:0'; }
+else document.getElementById('frames').innerHTML = frames.map(f=>`<figure>${phone(f)}<figcaption><b>${f.cap[0]}</b>${f.cap[1]}</figcaption></figure>`).join('');
+function settle(){
+  document.querySelectorAll('.phone').forEach(p=>{ const id=p.dataset.scroll; if(!id) return; const b=p.querySelector('.body'), a=p.querySelector('#'+id); if(a&&b) b.scrollTop = a.offsetTop - b.offsetTop - 120; });
+}
+settle(); document.fonts && document.fonts.ready.then(settle);
+</script>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cali · S11 Camera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&display=swap" rel="stylesheet">
+<style>
+:root{ --page:#F3F2F7; --page-ink:#1B1B21; --page-muted:#5E5E68; --page-line:#DCDBE3; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; } }
+:root[data-theme="dark"]{ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; }
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--page);color:var(--page-ink);font-family:'Roboto Flex',Roboto,system-ui,sans-serif;font-variation-settings:"opsz" 14;line-height:1.5}
+.wrap{max-width:1640px;margin:0 auto;padding:40px 16px 64px}
+header.doc{max-width:760px;margin:0 auto 32px;padding:0 4px}
+header.doc h1{font-size:28px;font-weight:600;letter-spacing:-.01em;font-variation-settings:"opsz" 32}
+header.doc p{color:var(--page-muted);margin-top:8px;font-size:15px;max-width:70ch}
+.frames{display:flex;flex-wrap:wrap;gap:44px 32px;justify-content:center;align-items:flex-start}
+figure{display:flex;flex-direction:column;align-items:center;gap:14px}
+figcaption{font-size:13px;color:var(--page-muted);text-align:center;max-width:320px}
+figcaption b{display:block;color:var(--page-ink);font-weight:600;font-size:14px}
+
+/* ===== App tokens: màn Camera luôn dùng scheme TỐI của DESIGN.md ===== */
+.phone{
+  --primary:#BAC3FF; --on-primary:#08218A; --primary-container:#293CA0; --on-primary-container:#DEE0FF;
+  --secondary-container:#43465A; --on-secondary-container:#E0E1F9;
+  --surface:#121318; --surface-low:#1B1B21; --surface-cont:#1F1F25; --surface-highest:#35343A;
+  --on-surface:#E4E1E9; --on-surface-var:#C6C5D0; --outline:#90909A; --outline-var:#46464F;
+  --error:#FFB4AB; --error-container:#93000A; --on-error-container:#FFDAD6;
+  --warn:#FFB86E; --warn-container:#693C00; --on-warn-container:#FFDCBE;
+  --meal-sang:#BAC3FF; --meal-trua:#8E9BF5; --meal-toi:#E4E6FF; --meal-phu:#6B78C9;
+  --veil:color-mix(in srgb,#000 62%,transparent);
+  width:360px;height:780px;border-radius:36px;overflow:hidden;position:relative;
+  background:#000;color:var(--on-surface);
+  outline:1px solid var(--page-line);
+  box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 32px -8px rgba(20,20,40,.18);
+  font-feature-settings:"tnum" 1;display:flex;flex-direction:column;
+}
+.phone ::selection{background:var(--primary-container);color:var(--on-primary-container)}
+.t-display-m{font-size:45px;line-height:1.15;font-weight:600;letter-spacing:-.01em;font-variation-settings:"opsz" 48}
+.t-title-l{font-size:22px;line-height:1.27;font-weight:600;font-variation-settings:"opsz" 22}
+.t-title-m{font-size:16px;line-height:1.5;font-weight:600}
+.t-body-l{font-size:16px;line-height:1.5;font-weight:400}
+.t-body-m{font-size:14px;line-height:1.43;font-weight:500}
+.t-body-s{font-size:12px;line-height:1.33;font-weight:400}
+.t-label-l{font-size:14px;line-height:1.43;font-weight:600}
+.t-label-m{font-size:12px;line-height:1.33;font-weight:500}
+.t-label-s{font-size:11px;line-height:1.45;font-weight:500}
+.ms{font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;font-size:24px;line-height:1;display:inline-block;font-variation-settings:"FILL" 0,"wght" 400,"opsz" 24;-webkit-font-smoothing:antialiased;user-select:none;flex:none;letter-spacing:normal;text-transform:none;white-space:nowrap}
+.ms.fill{font-variation-settings:"FILL" 1,"wght" 400,"opsz" 24}
+.ms.s16{font-size:16px}.ms.s18{font-size:18px}.ms.s20{font-size:20px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.muted{color:var(--on-surface-var)}
+
+.status{height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:500;position:relative;z-index:3}
+.status .ms{font-size:16px}
+.gesture{flex:none;height:24px;position:relative;z-index:3}
+.gesture::after{content:"";position:absolute;left:50%;bottom:8px;width:108px;height:4px;border-radius:2px;background:var(--on-surface);opacity:.4;transform:translateX(-50%)}
+.solid{background:var(--surface)}
+.appbar{height:64px;flex:none;display:flex;align-items:center;gap:4px;padding:0 4px;position:relative;z-index:3}
+.appbar h1{flex:1}
+.icon-btn{width:48px;height:48px;border-radius:24px;display:grid;place-items:center;color:var(--on-surface-var);flex:none}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.body>*{flex:none}
+
+/* ===== viewfinder ===== */
+.vf{position:absolute;inset:0;background:#000;display:grid;place-items:center}
+.guide{position:absolute;left:48px;top:212px;width:264px;height:264px;border-radius:50%;border:2px solid var(--on-surface);outline:1.5px solid rgba(0,0,0,.6);outline-offset:0;display:grid;place-items:center;align-content:center;gap:6px;color:var(--outline)}
+.guide .ms{font-size:56px}
+.topbar{position:absolute;left:0;right:0;top:32px;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;z-index:4}
+.vbtn{width:48px;height:48px;border-radius:24px;display:grid;place-items:center;background:var(--veil);color:var(--on-surface)}
+.topbar .grp{display:flex;gap:8px}
+.flash{height:48px;border-radius:24px;padding:0 16px 0 12px;display:inline-flex;align-items:center;gap:6px;background:var(--veil);color:var(--on-surface)}
+.flash.on{background:var(--secondary-container);color:var(--on-secondary-container)}
+.tip{position:absolute;left:0;right:0;top:100px;display:flex;justify-content:center;z-index:4;padding:0 12px}
+.tip>div{min-height:32px;border-radius:16px;padding:6px 14px;display:inline-flex;align-items:center;gap:6px;background:var(--veil);color:var(--on-surface)}
+.lowbar{position:absolute;left:12px;right:12px;bottom:178px;z-index:4;display:flex;align-items:center;gap:10px;min-height:56px;border-radius:28px;padding:4px 4px 4px 16px;background:var(--veil);color:var(--on-surface)}
+.lowbar span.txt{flex:1}
+.lowbar .act{height:48px;border-radius:24px;padding:0 16px 0 12px;display:inline-flex;align-items:center;gap:6px;background:var(--secondary-container);color:var(--on-secondary-container);font-weight:600;font-size:14px}
+.panel{position:absolute;left:0;right:0;bottom:0;background:#000;border-radius:28px 28px 0 0;padding:16px 16px 0;z-index:4;display:flex;flex-direction:column;align-items:stretch}
+.panel .tr{display:flex;justify-content:center;align-items:center}
+.chip{white-space:nowrap;height:32px;border-radius:8px;display:inline-flex;align-items:center;gap:6px;padding:0 6px 0 8px;background:var(--secondary-container);color:var(--on-secondary-container);position:relative}
+.chip.static{padding:0 10px 0 8px}
+button.chip::before{content:"";position:absolute;inset:-8px 0}
+.chip .tone{width:10px;height:10px;border-radius:2px;background:var(--tone)}
+.shut-row{display:grid;grid-template-columns:1fr 72px 1fr;align-items:center;margin-top:12px;height:72px}
+.gal.r{justify-self:end}
+.gal{justify-self:start;display:flex;flex-direction:column;align-items:center;gap:2px;width:56px;color:var(--on-surface-var)}
+.gal .t{width:48px;height:48px;border-radius:16px;background:var(--surface-highest);display:grid;place-items:center;color:var(--on-surface)}
+.shutter{width:72px;height:72px;border-radius:50%;border:4px solid var(--on-surface);display:grid;place-items:center}
+.shutter i{display:block;width:54px;height:54px;border-radius:50%;background:var(--on-surface)}
+
+/* ===== permission ===== */
+.perm{flex:1;display:flex;flex-direction:column;align-items:flex-start;padding:0 24px;gap:12px}
+.perm .tile{width:72px;height:72px;border-radius:28px;background:var(--surface-highest);color:var(--on-surface-var);display:grid;place-items:center;margin-top:48px}
+.perm .tile .ms{font-size:36px}
+.perm p{color:var(--on-surface-var)}
+
+/* ===== footer / buttons ===== */
+.foot{flex:none;background:var(--surface-cont);padding:12px 16px 4px;display:flex;flex-direction:column;gap:8px}
+.foot.plain{background:transparent}
+.btn{height:56px;border-radius:28px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 20px;font-weight:600;font-size:16px}
+.btn.fill{background:var(--primary);color:var(--on-primary)}
+.btn.tonal{background:var(--secondary-container);color:var(--on-secondary-container)}
+.btn.out{outline:1px solid var(--outline);outline-offset:-1px;color:var(--primary)}
+.btn.sm{height:48px;font-size:14px;border-radius:24px}
+.btn.grow{flex:1}
+.pair{display:flex;gap:8px}
+
+/* ===== review ===== */
+.photo{margin:0 12px;border-radius:16px;background:var(--surface-low);display:grid;place-items:center;color:var(--outline);position:relative;overflow:hidden}
+.photo .ms{font-size:64px}
+.photo .ph{display:flex;flex-direction:column;align-items:center;gap:6px}
+.photo.dim .ph{opacity:.55}
+.scan{position:absolute;left:0;right:0;top:var(--scan,38%);height:2px;background:var(--primary)}
+body:not(.still) .scan{animation:scan 2.8s cubic-bezier(.4,0,.2,1) infinite alternate}
+@keyframes scan{from{top:6%}to{top:94%}}
+@media (prefers-reduced-motion: reduce){ body:not(.still) .scan{animation:none} }
+.sec{padding:0 16px}
+.when{display:flex;align-items:center;gap:10px;margin-top:14px;padding:0 16px;color:var(--on-surface-var)}
+.field{margin:14px 16px 0}
+.field label{display:block;color:var(--on-surface-var);margin-bottom:6px}
+.field .in{min-height:48px;border-radius:24px;background:var(--surface-cont);padding:12px 16px;display:flex;align-items:center;gap:12px;color:var(--on-surface)}
+.field .in.empty{color:var(--on-surface-var)}
+.field .in .ms{color:var(--on-surface-var)}
+.caret{display:inline-block;width:2px;height:20px;background:var(--primary);vertical-align:-4px;margin-left:1px}
+.sugg{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.sugg button{height:32px;border-radius:8px;padding:0 12px;outline:1px solid var(--outline);outline-offset:-1px;color:var(--on-surface-var);position:relative;font-weight:600;font-size:12px}
+.sugg button::before{content:"";position:absolute;inset:-8px -2px}
+.line{display:flex;gap:8px;align-items:flex-start;color:var(--on-surface-var);padding:0 16px;margin-top:10px}
+.line .ms{color:var(--primary);margin-top:-1px}
+.line.first{margin-top:12px}
+
+/* ===== analysing ===== */
+.wait{padding:0 16px;margin-top:16px;display:flex;flex-direction:column;gap:2px}
+.steps{list-style:none;padding:0 16px;margin-top:6px}
+.steps li{display:flex;align-items:center;gap:12px;min-height:48px;color:var(--on-surface-var)}
+.badge{width:24px;height:24px;border-radius:12px;display:grid;place-items:center;background:var(--secondary-container);color:var(--on-secondary-container);font-size:12px;font-weight:600;flex:none}
+.steps .done .badge{background:var(--primary);color:var(--on-primary)}
+.steps .done .badge .ms{font-size:16px;font-variation-settings:"FILL" 0,"wght" 500,"opsz" 20}
+.steps .now{color:var(--on-surface)}
+.steps .now .badge{box-shadow:0 0 0 2px var(--primary)}
+.steps .todo .badge{background:transparent;outline:1px solid var(--outline-var);outline-offset:-1px;color:var(--on-surface-var)}
+.steps small{display:block;color:var(--on-surface-var);font-weight:400}
+
+/* ===== error ===== */
+.quote{margin:12px 16px 0;display:flex;align-items:center;gap:10px;color:var(--on-surface-var)}
+.quote q{quotes:"“" "”";color:var(--on-surface)}
+.errb{margin:14px 12px 0;border-radius:16px;background:var(--error-container);color:var(--on-error-container);padding:14px 16px;display:flex;gap:12px}
+.errb .ms{margin-top:1px}
+.errb b{display:block;font-weight:600;font-size:16px;line-height:1.5}
+.errb p{margin-top:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc">
+    <h1>S11 · Camera</h1>
+    <p>Chụp một ảnh bữa ăn: S10 📷 → S11 → S12. Camera là màn duy nhất bị ép tối: mọi khung dùng scheme tối của DESIGN.md, kể cả khi máy đang ở giao diện sáng. Viewfinder và panel dưới là #000 (gốc của scrim); nút và chữ đè lên ảnh trực tiếp nằm trên lớp che #000 62%, đủ ≥4.5:1 cho chữ kể cả khi ảnh trắng. Một lần chụp là một ảnh (03 §3.1), kèm ghi chú tùy chọn. Giờ ăn lấy lúc bấm chụp hoặc từ EXIF của ảnh thư viện (05 §4.1), bữa tự gán theo giờ (Sáng 05:00–09:59, Trưa 10:00–13:59, Phụ 14:00–17:29, Tối 17:30–21:59). Ngày giả định: Thứ Năm 13/11, bây giờ ≈ 12:35.</p>
+  </header>
+  <div class="frames" id="frames"></div>
+</div>
+<script>
+const MEAL = {sang:'Sáng', trua:'Trưa', toi:'Tối', phu:'Phụ'};
+const ic = (n, c='') => `<span class="ms ${c}" aria-hidden="true">${n}</span>`;
+const status = t => `<div class="status"><span>${t}</span><span>${ic('signal_cellular_alt')} ${ic('wifi')} ${ic('battery_5_bar')}</span></div>`;
+const gesture = '<div class="gesture"></div>';
+const timeChip = (txt, meal, opts={}) => {
+  const inner = `${ic('schedule','s18')}${txt} · <span class="tone" style="--tone:var(--meal-${meal})"></span>${MEAL[meal]}${opts.edit?ic('expand_more','s18'):''}`;
+  return opts.edit
+    ? `<button class="chip t-label-l" aria-label="Đổi giờ ăn và bữa">${inner}</button>`
+    : `<span class="chip static t-label-l" role="status" aria-label="Giờ ăn sẽ ghi ${txt}, bữa ${MEAL[meal]}">${inner}</span>`;
+};
+
+/* 0, 1: viewfinder */
+function viewfinder(f){
+  const flashIcon = {auto:'flash_auto', on:'flash_on', off:'flash_off'}[f.flash];
+  const flashTxt = {auto:'Tự động', on:'Bật', off:'Tắt'}[f.flash];
+  const tip = (f.low && f.flash==='on')
+    ? `<div class="t-label-m" role="status">${ic('brightness_low','s16')}Thiếu sáng · đèn đã bật, đưa món lại gần nguồn sáng</div>`
+    : `<div class="t-label-m">${ic('center_focus_weak','s16')}Chụp từ trên xuống, thấy cả đĩa</div>`;
+  const lowbar = (f.low && f.flash!=='on')
+    ? `<div class="lowbar" role="status">${ic('brightness_low','s20')}<span class="txt t-body-m">Thiếu sáng, ảnh có thể khó nhận món</span><button class="act">${ic('flash_on','s18')}Bật đèn</button></div>` : '';
+  return `<div class="phone dark">
+    <div class="vf" role="img" aria-label="Khung xem trước camera (chỗ đặt ảnh trực tiếp)"></div>
+    <div class="guide" aria-hidden="true">${ic('ramen_dining')}<span class="t-label-s">Xem trước camera</span></div>
+    ${status('12:35')}
+    <div class="topbar">
+      <button class="vbtn" aria-label="Đóng">${ic('close')}</button>
+      <div class="grp">
+        <button class="flash t-label-l${f.flash==='on'?' on':''}" aria-label="Đèn flash: ${flashTxt}">${ic(flashIcon, f.flash==='on'?'fill':'')}${flashTxt}</button>
+        <button class="vbtn" aria-label="Đổi camera trước / sau">${ic('cameraswitch')}</button>
+      </div>
+    </div>
+    <div class="tip">${tip}</div>
+    ${lowbar}
+    <div style="flex:1"></div>
+    <div class="panel">
+      <div class="tr">${timeChip('12:35','trua',{edit:true})}</div>
+      <div class="shut-row">
+        <button class="gal t-label-s" aria-label="Chọn từ thư viện"><span class="t">${ic('photo_library')}</span>Thư viện</button>
+        <button class="shutter" aria-label="Chụp"><i></i></button>
+        <button class="gal r t-label-s" aria-label="Thêm ghi chú cho AI"><span class="t">${ic('edit_note')}</span>Ghi chú</button>
+      </div>
+      <div style="height:12px"></div>
+      ${gesture}
+    </div>
+  </div>`;
+}
+
+/* 2: permission */
+function permission(f={}){
+  return `<div class="phone dark solid">
+    ${status('12:35')}
+    <div class="appbar"><button class="icon-btn" aria-label="Đóng">${ic('close')}</button></div>
+    <div class="body perm" style="margin-top:-40px">
+      <div class="tile">${ic('no_photography')}</div>
+      <h2 class="t-title-l" style="margin-top:12px">Cần quyền dùng camera</h2>
+      <p class="t-body-l">${f.settings
+        ? 'Quyền camera của Cali đang tắt. Mở Cài đặt, chọn Quyền → Camera → Chỉ cho phép khi dùng ứng dụng.'
+        : 'Cali chỉ mở camera khi bạn vào màn này, để chụp món bạn ăn. Ảnh được thu nhỏ còn 1024 px và xóa vị trí trước khi gửi cho AI.'}</p>
+      <p class="t-body-m" style="margin-top:8px">Không muốn cấp quyền? Chọn ảnh có sẵn trong thư viện, không cần quyền camera.</p>
+    </div>
+    <div class="foot plain" style="padding-bottom:4px">
+      ${f.settings ? `<button class="btn fill">${ic('settings','s20')}Mở Cài đặt</button>` : `<button class="btn fill">${ic('photo_camera','s20')}Cho phép</button>`}
+      <button class="btn out">${ic('photo_library','s20')}Chọn từ thư viện</button>
+    </div>
+    ${gesture}
+  </div>`;
+}
+
+/* 3, 6: review (camera / gallery) */
+function review(f){
+  const g = f.gallery;
+  const noteField = f.note
+    ? `<div class="in t-body-l">${ic('edit_note')}<span>${f.note}<span class="caret" aria-hidden="true"></span></span></div>`
+    : `<div class="in empty t-body-l">${ic('edit_note')}<span>Ví dụ: ăn một nửa, ít cơm</span></div>`;
+  const sugg = f.note ? '' : `<div class="sugg" role="group" aria-label="Gợi ý ghi chú"><button>ăn một nửa</button><button>ít cơm</button><button>không đường</button></div>`;
+  return `<div class="phone dark solid">
+    ${status('12:36')}
+    <div class="appbar"><button class="icon-btn" aria-label="Đóng">${ic('arrow_back')}</button><h1 class="t-title-l">${g?'Ảnh từ thư viện':'Xem lại ảnh'}</h1></div>
+    <div class="body">
+      <div class="photo" style="height:${g?250:272}px" role="img" aria-label="Ảnh món (chỗ đặt ảnh đã chụp)"><div class="ph">${ic('ramen_dining')}<span class="t-label-s">Ảnh đã chụp</span></div></div>
+      <div class="when">${timeChip(g?'Hôm qua 19:05':'12:35', g?'toi':'trua', {edit:true})}<span class="t-body-s" style="white-space:nowrap;display:inline-flex;align-items:center;gap:4px">${ic(g?'photo_library':'photo_camera','s16')}${g?'Giờ chụp ảnh':'Lúc bấm chụp'}</span></div>
+      ${g?`<div class="line t-body-s first">${ic('event','s18')}<span>Món sẽ ghi vào <b style="color:var(--on-surface);font-weight:600">Thứ Tư 12/11</b>, bữa Tối. Chạm chip để đổi giờ.</span></div>`:''}
+      <div class="field"><label class="t-label-m">Ghi chú cho AI (không bắt buộc)</label>${noteField}${sugg}</div>
+      <div class="line t-body-s">${ic('info','s18')}<span>${f.note?'AI dùng ghi chú để ước lượng khẩu phần. Nếu ăn lệch giờ, ghi luôn: “sáng nay 7h”.':'Nói rõ lượng đã ăn giúp AI ước lượng sát hơn.'}</span></div>
+      <div class="line t-body-s">${ic('lock','s18')}<span>Ảnh thu nhỏ còn 1024 px, xóa vị trí rồi mới gửi. Không lưu ảnh gốc.</span></div>
+    </div>
+    <div class="foot">
+      <div class="pair">
+        <button class="btn tonal">${ic(g?'photo_library':'photo_camera','s20')}${g?'Ảnh khác':'Chụp lại'}</button>
+        <button class="btn fill grow">${ic('auto_awesome','s20')}Phân tích</button>
+      </div>
+    </div>
+    <div class="foot" style="padding-top:0;padding-bottom:0">${gesture}</div>
+  </div>`;
+}
+
+/* 4: analysing */
+function analysing(){
+  return `<div class="phone dark solid">
+    ${status('12:36')}
+    <div class="appbar"><button class="icon-btn" aria-label="Hủy phân tích">${ic('close')}</button></div>
+    <div class="body">
+      <div class="photo dim" style="height:240px" role="img" aria-label="Ảnh món đang được phân tích"><div class="ph">${ic('ramen_dining')}<span class="t-label-s">Ảnh đã chụp</span></div><span class="scan"></span></div>
+      <div class="wait"><h1 class="t-title-l" role="status">Đang nhận diện món ăn…</h1><span class="t-body-m muted" style="white-space:nowrap" aria-label="Đã chờ 7 giây">Đã chờ 0:07</span></div>
+      <ol class="steps t-body-m">
+        <li class="done"><span class="badge">${ic('check')}</span><span>Thu nhỏ ảnh<small class="t-body-s">1024 px, đã xóa vị trí</small></span></li>
+        <li class="now"><span class="badge">2</span><span>AI đang nhận diện món, ước lượng kcal<small class="t-body-s">Đã gửi ảnh, đang chờ trả lời</small></span></li>
+      </ol>
+      <div class="line t-body-s first">${ic('schedule','s18')}<span>Thường mất vài giây, chờ tối đa 60 giây. Mạng chậm thì app tự thử lại, không cần bấm.</span></div>
+    </div>
+    <div class="foot plain">
+      <button class="btn out">Hủy</button>
+      <p class="t-body-s muted" style="text-align:center">Hủy thì không lưu gì cả.</p>
+    </div>
+    ${gesture}
+  </div>`;
+}
+
+/* 5: error offline */
+function failed(f={}){
+  const e = f.timeout
+    ? {i:'hourglass_disabled', t:'AI chưa trả lời sau 60 giây', p:'Ảnh và ghi chú vẫn được giữ. Thử lại sau ít phút, hoặc ghi món bằng tay.'}
+    : {i:'cloud_off', t:'Không có kết nối', p:'Ảnh và ghi chú vẫn được giữ. Thử lại khi có mạng, hoặc ghi món bằng tay.'};
+  return `<div class="phone dark solid">
+    ${status(f.timeout?'12:37':'12:36')}
+    <div class="appbar"><button class="icon-btn" aria-label="Đóng">${ic('close')}</button><h1 class="t-title-l">Chưa phân tích được</h1></div>
+    <div class="body">
+      <div class="photo" style="height:208px" role="img" aria-label="Ảnh món vẫn được giữ"><div class="ph">${ic('ramen_dining')}<span class="t-label-s">Ảnh đã chụp</span></div></div>
+      <div class="quote t-body-m">${ic('edit_note','s20')}<q>không đường, ăn một nửa</q></div>
+      <div class="errb t-body-m" role="alert">${ic(e.i,'s20')}<div><b>${e.t}</b><p>${e.p}</p></div></div>
+    </div>
+    <div class="foot plain">
+      <button class="btn fill">${ic('refresh','s20')}Thử lại</button>
+      <div class="pair"><button class="btn out sm grow">${ic('edit','s20')}Nhập tay</button><button class="btn out sm grow">${ic('menu_book','s20')}Món của tôi</button></div>
+    </div>
+    ${gesture}
+  </div>`;
+}
+
+const frames = [
+  {r:()=>viewfinder({flash:'auto'}), cap:['Sẵn sàng chụp','Vòng căn đĩa hai lớp (2dp on-surface + viền tương phản 1dp đen 40%) giữ ≥3:1 cả trên đĩa trắng. Chip giờ ăn · bữa ngay trên nút chụp, chạm để sửa (sheet giờ của S12). Thư viện và Ghi chú là hai ô 48dp đối xứng hai bên nút chụp 72dp. Flash ghi chữ trạng thái.']},
+  {r:()=>viewfinder({flash:'on', low:true}), cap:['Thiếu sáng · đèn đã bật','Đèn đã bật thì không còn việc gì để bấm: dòng gợi ý đổi thành viên thuốc trung tính “Thiếu sáng · đèn đã bật…”. Không dùng hổ phách (Amber Check là danh sách đóng).']},
+  {r:()=>viewfinder({flash:'off', low:true}), cap:['Thiếu sáng · đèn tắt','Thanh trung tính ngay trên panel, trong tầm ngón cái, có nút “Bật đèn” 48dp. Cũng hiện khi flash Tự động mà đèn chưa kích. Không chặn việc chụp.']},
+  {r:()=>permission(), cap:['Chưa có quyền camera','Nói rõ vì sao cần và ảnh được xử lý thế nào; hai lối ra: Cho phép (hộp thoại hệ thống) hoặc Chọn từ thư viện (không cần quyền camera).']},
+  {r:()=>permission({settings:true}), cap:['Đã chọn “Không hỏi lại”','Hệ thống không hiện hộp thoại nữa, nên nút gọi đúng việc nó làm: “Mở Cài đặt”, và chữ nói rõ bật ở đâu.']},
+  {r:()=>review({note:'không đường, ăn một nửa'}), cap:['Xem lại · ghi chú đang gõ','Ô ghi chú là chat-field của S20 (bo 24dp, tối thiểu 48dp), đang focus thì có con trỏ 2dp primary. Chip giờ ăn · bữa chạm để sửa. Chụp lại 56dp bên trái, Phân tích là nút chính.']},
+  {r:analysing, cap:['Đang phân tích','Một tiêu đề duy nhất. Không có phần trăm giả: hai bước quan sát được (thu nhỏ ảnh; AI nhận diện), đồng hồ “Đã chờ 0:07” và Hủy luôn có. Chuyển động duy nhất của màn: vạch quét trên ảnh, tắt khi giảm chuyển động.']},
+  {r:()=>failed(), cap:['Mất kết nối','Hộp lỗi của chat, ảnh (không làm mờ) và ghi chú được giữ. Thử lại là nút chính; Nhập tay và Món của tôi là lối đi không cần AI (03 §8).']},
+  {r:()=>failed({timeout:true}), cap:['AI không trả lời','Hết 60 giây đọc (03 §8), sau khi app đã tự thử lại với lỗi quá tải. Cùng bố cục và ba lối ra như mất kết nối.']},
+  {r:()=>review({gallery:true}), cap:['Ảnh từ thư viện','Giờ lấy từ EXIF (đọc trước khi xóa), có thể là ngày khác nên nói rõ “sẽ ghi vào Thứ Tư 12/11”. Chọn một ảnh mỗi lần; không có EXIF thì dùng lúc chọn ảnh và dòng nguồn đổi theo.']},
+];
+
+const only = new URLSearchParams(location.search).get('f');
+if(only!==null){
+  document.body.innerHTML = frames[+only].r();
+  document.body.style.cssText='margin:0;background:transparent';
+  document.body.classList.add('still');
+  const ph=document.querySelector('.phone'); ph.style.cssText+=';box-shadow:none;outline:none;border-radius:0';
+} else {
+  document.getElementById('frames').innerHTML = frames.map(f=>`<figure>${f.r()}<figcaption><b>${f.cap[0]}</b>${f.cap[1]}</figcaption></figure>`).join('');
+}
+</script>
+</body>
+</html>

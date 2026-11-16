@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cali · S30 Lịch sử</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&display=swap" rel="stylesheet">
+<style>
+:root{ --page:#F3F2F7; --page-ink:#1B1B21; --page-muted:#5E5E68; --page-line:#DCDBE3; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; } }
+:root[data-theme="dark"]{ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; }
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--page);color:var(--page-ink);font-family:'Roboto Flex',Roboto,system-ui,sans-serif;font-variation-settings:"opsz" 14;line-height:1.5}
+::selection{background:#DEE0FF;color:#00105C}
+.wrap{max-width:1640px;margin:0 auto;padding:40px 16px 64px}
+header.doc{max-width:760px;margin:0 auto 32px;padding:0 4px}
+header.doc h1{font-size:28px;font-weight:600;letter-spacing:-.01em;font-variation-settings:"opsz" 32}
+header.doc p{color:var(--page-muted);margin-top:8px;font-size:15px;max-width:70ch}
+.frames{display:flex;flex-wrap:wrap;gap:44px 32px;justify-content:center;align-items:flex-start}
+figure{display:flex;flex-direction:column;align-items:center;gap:14px}
+figcaption{font-size:13px;color:var(--page-muted);text-align:center;max-width:300px}
+figcaption b{display:block;color:var(--page-ink);font-weight:600;font-size:14px}
+
+/* ===== App tokens (DESIGN.md) ===== */
+.phone{
+  --primary:#4355B9; --on-primary:#FFFFFF; --primary-container:#DEE0FF; --on-primary-container:#00105C;
+  --secondary-container:#E0E1F9; --on-secondary-container:#181A2C;
+  --surface:#FBF8FF; --surface-low:#F5F2FA; --surface-cont:#EFEDF4; --surface-highest:#E4E1E9;
+  --on-surface:#1B1B21; --on-surface-var:#46464F; --outline:#767680; --outline-var:#C6C5D0;
+  --error:#BA1A1A; --error-container:#FFDAD6; --on-error-container:#410002;
+  --warn:#8A5100; --warn-container:#FFDCBE; --on-warn-container:#2C1600;
+  --ring-track:var(--surface-cont); --under:color-mix(in srgb,var(--primary) 70%,var(--surface-low));
+  width:360px;height:780px;border-radius:36px;overflow:hidden;position:relative;
+  background:var(--surface);color:var(--on-surface);
+  outline:1px solid var(--page-line);
+  box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 32px -8px rgba(20,20,40,.18);
+  font-feature-settings:"tnum" 1;display:flex;flex-direction:column;
+}
+.phone.dark{
+  --primary:#BAC3FF; --on-primary:#08218A; --primary-container:#293CA0; --on-primary-container:#DEE0FF;
+  --secondary-container:#43465A; --on-secondary-container:#E0E1F9;
+  --surface:#121318; --surface-low:#1B1B21; --surface-cont:#1F1F25; --surface-highest:#35343A;
+  --on-surface:#E4E1E9; --on-surface-var:#C6C5D0; --outline:#90909A; --outline-var:#46464F;
+  --error:#FFB4AB; --error-container:#93000A; --on-error-container:#FFDAD6;
+  --warn:#FFB86E; --warn-container:#693C00; --on-warn-container:#FFDCBE;
+  --ring-track:var(--surface-highest);
+}
+.phone ::selection{background:var(--primary-container);color:var(--on-primary-container)}
+.t-title-l{font-size:22px;line-height:1.27;font-weight:600;font-variation-settings:"opsz" 22}
+.t-title-m{font-size:16px;line-height:1.5;font-weight:600}
+.t-body-m{font-size:14px;line-height:1.43;font-weight:500}
+.t-body-s{font-size:12px;line-height:1.33;font-weight:400}
+.t-label-l{font-size:14px;line-height:1.43;font-weight:600}
+.t-label-m{font-size:12px;line-height:1.33;font-weight:500}
+.t-label-s{font-size:11px;line-height:1.45;font-weight:500}
+.ms{font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;font-size:24px;line-height:1;display:inline-block;font-variation-settings:"FILL" 0,"wght" 400,"opsz" 24;-webkit-font-smoothing:antialiased;user-select:none;flex:none}
+.ms.fill{font-variation-settings:"FILL" 1,"wght" 400,"opsz" 24}
+.ms.s16{font-size:16px}.ms.s18{font-size:18px}.ms.s20{font-size:20px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
+button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.muted{color:var(--on-surface-var)}
+
+.status{height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:500;background:var(--surface)}
+.status .ms{font-size:16px}
+.status,.appbar,.dow{transition:background-color .2s cubic-bezier(.2,0,0,1)}
+.phone.scrolled .status,.phone.scrolled .appbar,.phone.scrolled .dow{background:var(--surface-cont)}
+.appbar{height:64px;flex:none;display:grid;grid-template-columns:48px 1fr 48px;align-items:center;padding:0 4px;background:var(--surface)}
+.icon-btn{width:48px;height:48px;border-radius:24px;display:grid;place-items:center;color:var(--on-surface-var);flex:none}
+.icon-btn.off{color:color-mix(in srgb,var(--on-surface) 38%,transparent);cursor:default}
+.title{text-align:center;padding:2px 8px;border-radius:12px}
+.title b{display:block}
+.title span{color:var(--on-surface-var);display:inline-flex;align-items:center;gap:2px}
+.title span .ms{font-size:18px}
+.dow{flex:none;display:grid;grid-template-columns:repeat(7,48px);padding:0 12px 6px;background:var(--surface)}
+.dow span{text-align:center;color:var(--on-surface-var)}
+
+.body{flex:1;overflow-y:auto;scrollbar-width:none;padding:0 12px 16px;display:flex;flex-direction:column;gap:8px}
+.body::-webkit-scrollbar{display:none}
+.body>*{flex:none}
+
+/* week card = mini S35 chart */
+.wk{background:var(--surface-low);border-radius:16px;overflow:hidden}
+.wk.now{outline:1.5px solid var(--primary);outline-offset:-1.5px}
+.wk-h{width:100%;height:40px;display:flex;align-items:center;gap:8px;padding:0 4px 0 14px;color:var(--on-surface-var)}
+.wk-h .rg{flex:1}
+.wk-h .sc{display:inline-flex;align-items:baseline;gap:4px;color:var(--on-surface)}
+.wk-h .sc b{font-weight:650}
+.wk-h .sc small{color:var(--on-surface-var)}
+.wk-h .prov{height:24px;border-radius:8px;padding:0 8px;display:inline-flex;align-items:center;background:var(--secondary-container);color:var(--on-secondary-container)}
+.wk-h .ms{color:var(--on-surface-var);font-size:20px}
+.wk-h{height:48px}
+.wk-h.static{cursor:default}
+button.wk-h:hover,button.d:hover,button.link:hover{background:color-mix(in srgb,var(--on-surface) 8%,transparent)}
+button.wk-h:active,button.d:active,button.link:active{background:color-mix(in srgb,var(--on-surface) 12%,transparent)}
+.futrow{display:grid;grid-template-columns:repeat(7,48px)}
+.futrow .d{height:40px}
+.days{position:relative;display:grid;grid-template-columns:repeat(7,48px)}
+.days .gl{position:absolute;left:8px;right:8px;height:0;border-top:1px dashed color-mix(in srgb,var(--on-surface-var) 70%,transparent);bottom:calc(8px + var(--g))}
+.d{position:relative;height:72px;display:flex;flex-direction:column;align-items:center;padding-top:4px}
+.d .n{width:28px;height:28px;border-radius:14px;display:grid;place-items:center;font-size:14px;line-height:1.43;font-weight:600;position:relative}
+.d.out .n{color:var(--on-surface-var);font-weight:500}
+.d.future .n,.d.pre .n{color:color-mix(in srgb,var(--on-surface) 38%,transparent);font-weight:500}
+.d.today .n{outline:1.5px solid var(--primary);outline-offset:-1.5px;color:var(--primary);font-weight:700}
+.d .n .flag{position:absolute;top:-3px;right:-7px;font-size:14px;color:var(--warn);font-variation-settings:"FILL" 1,"wght" 500,"opsz" 20}
+.d .bar{position:absolute;left:50%;bottom:8px;width:14px;transform:translateX(-50%);display:flex;flex-direction:column-reverse;gap:3px}
+.d .bar i{display:block;width:100%;background:var(--primary)}
+.d .bar i.under{background:var(--under)}
+.d .bar i.over{background:var(--error)}
+.d .bar i.pend{background:transparent;box-shadow:inset 0 0 0 1.5px var(--primary)}
+.d .stub{position:absolute;left:50%;bottom:8px;width:14px;height:10px;transform:translateX(-50%);outline:1.5px dashed var(--outline);outline-offset:-1.5px}
+.d .dash{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);padding:0 4px;border-radius:4px;background:var(--surface-low);color:var(--on-surface-var)}
+.d .startf{position:absolute;top:-2px;left:-8px;font-size:16px;color:var(--primary);font-variation-settings:"FILL" 1,"wght" 500,"opsz" 20}
+
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:4px 6px 0;color:var(--on-surface-var)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;display:inline-block}
+.legend b{color:var(--on-surface);font-weight:600}
+.legend .ms{font-size:14px;color:var(--warn);font-variation-settings:"FILL" 1,"wght" 500,"opsz" 20}
+
+h2.sec{margin:12px 8px 0}
+.stat{background:var(--surface-low);border-radius:16px;display:grid;grid-template-columns:repeat(3,1fr);padding:12px 4px}
+.stat div{padding:0 10px;display:flex;flex-direction:column;gap:2px}
+.stat div+div{border-left:1px solid color-mix(in srgb,var(--outline-var) 60%,transparent)}
+.stat small{color:var(--on-surface-var)}
+.stat b{font-weight:600}
+.stat b small{font-size:12px;font-weight:500;margin-left:2px}
+.links{background:var(--surface-low);border-radius:16px;overflow:hidden}
+.link{width:100%;min-height:64px;display:grid;grid-template-columns:40px 1fr 24px;gap:14px;align-items:center;padding:10px 14px}
+.link+.link{border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent)}
+.link .ic{width:40px;height:40px;border-radius:12px;background:var(--primary-container);color:var(--on-primary-container);display:grid;place-items:center}
+.link small{display:block;color:var(--on-surface-var);font-weight:400}
+.link .ms.go{color:var(--on-surface-var)}
+.note{display:flex;gap:10px;align-items:flex-start;background:var(--surface-low);border-radius:16px;padding:12px 14px;color:var(--on-surface-var)}
+.note .ms{color:var(--primary)}
+
+.navbar{flex:none;height:104px;background:var(--surface-cont);display:grid;grid-template-columns:repeat(4,1fr);padding-top:12px;position:relative}
+.navbar::after{content:"";position:absolute;left:50%;bottom:8px;width:108px;height:4px;border-radius:2px;background:var(--on-surface);opacity:.4;transform:translateX(-50%)}
+.nav-i{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--on-surface-var)}
+.nav-i .pill{width:64px;height:32px;border-radius:16px;display:grid;place-items:center}
+.nav-i.on{color:var(--on-surface);font-weight:700}
+.nav-i.on .pill{background:var(--secondary-container);color:var(--on-secondary-container)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc">
+    <h1>S30 · Lịch sử</h1>
+    <p>Lịch tháng xếp theo tuần, vì tuần là đơn vị của tổng kết (S35). Mỗi tuần là một thẻ: đầu thẻ là nhãn tuần và điểm tuần (chạm mở S35), thân thẻ là bảy ô ngày 48dp. Mỗi ô là một cột calo mini đứng trên vạch mục tiêu chung của cả hàng, cùng ngữ pháp với biểu đồ 7 ngày của S35: đạt là chàm, thiếu là chàm nhạt, vượt tách ở vạch và phần vượt màu đỏ, chưa ghi là ô nét đứt có “—”, hôm nay chỉ có viền (đang ghi). Chạm ô mở chi tiết ngày (S33). Số liệu khớp với S10, S20, S35.</p>
+  </header>
+  <div class="frames" id="frames"></div>
+</div>
+<script>
+const TARGET = 1740, TOP = TARGET*1.55, H = 30;
+const fmt = n => Math.round(n).toLocaleString('vi-VN');
+const ic = (n, cls='') => `<span class="ms ${cls}">${n}</span>`;
+const y = v => v/TOP*H;
+const WD = ['Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy','Chủ Nhật'];
+
+/* kcal by date (yyyy-mm-dd); null = app in use but nothing logged */
+const K = {
+  '2026-09-29':1820,'2026-09-30':1650,
+  '2026-10-01':1700,'2026-10-02':2150,'2026-10-03':2400,'2026-10-04':1980,'2026-10-05':1500,
+  '2026-10-06':1760,'2026-10-07':1690,'2026-10-08':800,'2026-10-09':1810,'2026-10-10':1720,'2026-10-11':2240,'2026-10-12':1900,
+  '2026-10-13':1700,'2026-10-14':1640,'2026-10-15':1520,'2026-10-16':1580,'2026-10-17':1530,'2026-10-18':2310,'2026-10-19':1998,
+  '2026-10-20':1690,'2026-10-21':1780,'2026-10-22':null,'2026-10-23':1720,'2026-10-24':2100,'2026-10-25':1600,'2026-10-26':1950,
+  '2026-10-27':1690,'2026-10-28':1720,'2026-10-29':1500,'2026-10-30':1540,'2026-10-31':2210,
+  '2026-11-01':1430,'2026-11-02':1910,
+  '2026-11-03':1710,'2026-11-04':1760,'2026-11-05':690,'2026-11-06':1800,'2026-11-07':1650,'2026-11-08':2360,'2026-11-09':2630,
+  '2026-11-10':1710,'2026-11-11':1690,'2026-11-12':1420,'2026-11-13':1310
+};
+const SCORE = {'2026-09-29':55,'2026-10-06':58,'2026-10-13':61,'2026-10-20':69,'2026-10-27':64,'2026-11-03':71,'2026-11-10':66};
+const GRADE = s => s>=85?'Xuất sắc':s>=70?'Tốt':s>=50?'Cần cố gắng':'Chưa tốt';
+const TODAY = '2026-11-13';
+/* weekday layout follows the rest of the mockups (13/11 = Thứ Năm, 10/11 = Thứ Hai), so dates are laid out on the 2025 grid and labelled 2026 */
+const iso = d => d.toISOString().slice(0,10).replace(/^2025/,'2026').replace(/^2024/,'2025');
+const GY = y => y-1;
+const dm = d => `${String(d.getUTCDate()).padStart(2,'0')}/${String(d.getUTCMonth()+1).padStart(2,'0')}`;
+const cls = k => { const x=k-TARGET; return Math.abs(x)<=TARGET*.1?'hit':x>0?'over':'under'; };
+
+function cell(d, month, startISO){
+  const id = iso(d), n = d.getUTCDate(), out = d.getUTCMonth()!==month;
+  const label = `${WD[(d.getUTCDay()+6)%7]}, ${dm(d)}`;
+  if(id > TODAY) return `<div class="d future${out?' out':''}" aria-hidden="true"><span class="n">${n}</span></div>`;
+  if(startISO && id < startISO) return `<div class="d pre${out?' out':''}"><span class="n">${n}</span></div>`;
+  const k = K[id];
+  if(startISO===undefined && !(id in K)) return `<div class="d pre${out?' out':''}"><span class="n">${n}</span></div>`;
+  if(k==null) return `<button class="d${out?' out':''}" aria-label="${label}: chưa ghi. Mở chi tiết ngày"><span class="n">${n}</span><span class="dash t-label-s">—</span><span class="stub"></span></button>`;
+  const today = id===TODAY, c = cls(k), sus = !today && k < TARGET*.5, first = startISO && id===startISO;
+  let bar;
+  if(today) bar = `<i class="pend" style="height:${y(k)}px"></i>`;
+  else if(c==='over') bar = `<i style="height:${y(TARGET)}px"></i><i class="over" style="height:${Math.max(3,y(k-TARGET)-3)}px"></i>`;
+  else bar = `<i class="${c==='under'?'under':''}" style="height:${y(k)}px"></i>`;
+  const st = today?'hôm nay, đang ghi':c==='hit'?'đạt':c==='over'?`vượt ${fmt(k-TARGET)}`:`thiếu ${fmt(TARGET-k)}`;
+  return `<button class="d${out?' out':''}${today?' today':''}" aria-label="${label}: ${fmt(k)} kcal, ${st}${sus?', nghi ghi thiếu':''}${first?', ngày bắt đầu dùng app':''}. Mở chi tiết ngày"><span class="n">${n}${sus?`<span class="ms flag">warning</span>`:''}${first?`<span class="ms startf">flag</span>`:''}</span><span class="bar">${bar}</span></button>`;
+}
+
+function weekCard(mon, month, startISO){
+  const days = [...Array(7)].map((_,i)=>new Date(mon.getTime()+i*864e5));
+  const id = iso(mon), sun = days[6], now = id <= TODAY && iso(sun) >= TODAY, future = id > TODAY;
+  const range = `${dm(mon)} – ${dm(sun)}`;
+  const s = startISO ? null : SCORE[id];
+  let head;
+  if(future || (startISO && iso(sun) < startISO)) return `<div class="futrow" aria-label="Tuần ${range}, chưa tới">${days.map(d=>cell(d,month,startISO)).join('')}</div>`;
+  else if(startISO && iso(sun) < startISO) head = `<div class="wk-h static t-label-m"><span class="rg">${range}</span></div>`;
+  else if(now) head = `<button class="wk-h t-label-m" aria-label="Tổng kết tuần này ${range}, tạm tính${s!=null?` ${s} điểm`:''}"><span class="rg" style="color:var(--on-surface);font-weight:600">Tuần này · ${range}</span>${s!=null?`<span class="prov t-label-m">Tạm tính · ${s}</span>`:`<span class="prov t-label-m">Tạm tính</span>`}${ic('chevron_right')}</button>`;
+  else head = `<button class="wk-h t-label-m" aria-label="Tổng kết tuần ${range}, ${s} điểm, ${GRADE(s)}"><span class="rg">${range}</span><span class="sc"><b class="t-label-l">${s}</b><small class="t-label-m">· ${GRADE(s)}</small></span>${ic('chevron_right')}</button>`;
+  const anyBar = days.some(d=>iso(d)<=TODAY && (!startISO || iso(d)>=startISO));
+  return `<section class="wk${now?' now':''}">${head}<div class="days" style="--g:${y(TARGET)}px">${anyBar?'<span class="gl" aria-hidden="true"></span>':''}${days.map(d=>cell(d,month,startISO)).join('')}</div></section>`;
+}
+
+function monthCounts(month, year, start){
+  const c = {hit:0,over:0,under:0,miss:0,sus:0,sum:0,n:0};
+  Object.entries(K).forEach(([id,k])=>{ const d=new Date(id.replace(/^2026/,'2025')+'T00:00:00Z'); if(d.getUTCMonth()!==month||d.getUTCFullYear()!==year||id>TODAY||(start&&id<start)) return;
+    if(id===TODAY && k!=null) c.today = cls(k);
+    if(k==null){c.miss++;return;} c[cls(k)]++; c.sum+=k; c.n++; if(k<TARGET*.5)c.sus++; });
+  return c;
+}
+
+const status = `<div class="status"><span>20:15</span><span>${ic('signal_cellular_alt')} ${ic('wifi')} ${ic('battery_5_bar')}</span></div>`;
+const nav = `<nav class="navbar"><div class="nav-i t-label-m"><span class="pill">${ic('today')}</span>Hôm nay</div><div class="nav-i t-label-m"><span class="pill">${ic('forum')}</span>Chat AI</div><div class="nav-i on t-label-m"><span class="pill">${ic('calendar_month','fill')}</span>Lịch sử</div><div class="nav-i t-label-m"><span class="pill">${ic('settings')}</span>Cài đặt</div></nav>`;
+const MONTHS = ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
+
+function phone({year=2026, month=10, dark=false, start, scroll=0}){
+  const first = new Date(Date.UTC(GY(year),month,1)), last = new Date(Date.UTC(GY(year),month+1,0));
+  const mon0 = new Date(first.getTime() - ((first.getUTCDay()+6)%7)*864e5);
+  const weeks = []; for(let m=mon0; m<=last; m=new Date(m.getTime()+7*864e5)) weeks.push(m);
+  const isNow = year===2026 && month===10;
+  const c = monthCounts(month, GY(year), start);
+  const sw = t => t==='hit'?'background:var(--primary)':t==='over'?'background:var(--error)':t==='under'?'background:var(--under)':'outline:1.5px dashed var(--outline);outline-offset:-1.5px';
+  const legend = `<div class="legend t-label-m">${[['hit','Đạt',c.hit],['over','Vượt',c.over],['under','Thiếu',c.under],['miss','Chưa ghi',c.miss]].map(([t,n,v])=>`<span><i style="${sw(t)}"></i>${n} <b>${v}</b>${c.today===t?' (gồm hôm nay)':''}</span>`).join('')}${c.sus?`<span><span class="ms">warning</span>Nghi ghi thiếu <b>${c.sus}</b></span>`:''}<span><i style="height:0;border-top:1px dashed var(--on-surface-var)"></i>Mục tiêu ${fmt(TARGET)}</span></div>`;
+  const L = (icon,t,sub) => `<button class="link"><span class="ic">${ic(icon)}</span><span class="t-title-m">${t}<small class="t-body-s">${sub}</small></span>${ic('chevron_right','go')}</button>`;
+  const links = start
+    ? [L('insights','Tổng kết tuần','Tuần này tạm tính · bản chính thức sáng 17/11'),L('monitor_weight','Cân nặng','74,8 kg · ghi lúc bắt đầu'),L('bar_chart','Thống kê','Có số sau vài ngày ghi'),L('menu_book','Món của tôi','Chưa lưu món nào')]
+    : [L('insights','Tổng kết tuần','Tuần trước 71 điểm · Tốt'),L('monitor_weight','Cân nặng','74,1 kg · −0,5 kg so với tuần trước'),L('bar_chart','Thống kê','Calo, macro, nước theo tuần hoặc tháng'),L('menu_book','Món của tôi','18 món đã lưu')];
+  const more = `<h2 class="sec t-title-m">Xem thêm</h2><div class="links">${links.join('')}</div>`;
+  const below = (isNow ? (start ? `
+    <div class="note t-body-s">${ic('flag','s20')}<span>Bạn bắt đầu dùng Cali từ <b style="color:var(--on-surface)">12/11</b> (ô có cờ). Ngày trước đó để trống, không tính là chưa ghi. Tuần này vẫn xem tạm tính được; tổng kết chính thức đầu tiên có vào sáng Thứ Hai 17/11.</span></div>` : `
+    <h2 class="sec t-title-m">Tuần này · tạm tính</h2>
+    <div class="stat"><div><small class="t-label-m">TB mỗi ngày</small><b class="t-title-m">1.533<small class="muted">kcal</small></b></div><div><small class="t-label-m">Ngày đạt</small><b class="t-title-m">2<small class="muted">/ 4 ngày</small></b></div><div><small class="t-label-m">Nước TB</small><b class="t-title-m">2,2<small class="muted">L</small></b></div></div>`) : `
+    <h2 class="sec t-title-m">Tháng 10 · tóm tắt</h2>
+    <div class="stat"><div><small class="t-label-m">TB mỗi ngày</small><b class="t-title-m">${fmt(c.sum/c.n)}<small class="muted">kcal</small></b></div><div><small class="t-label-m">Ngày đạt</small><b class="t-title-m">${c.hit}<small class="muted">/ 31 ngày</small></b></div><div><small class="t-label-m">Cân TB</small><b class="t-title-m">75,3<small class="muted">kg</small></b></div></div>`) + more;
+  const body = `${weeks.map(m=>weekCard(m,month,start)).join('')}${legend}${below}`;
+  return `<div class="phone${dark?' dark':''}${scroll?' scrolled':''}" data-scroll="${scroll}">${status}
+    <div class="appbar"><button class="icon-btn" aria-label="Tháng trước">${ic('chevron_left')}</button><button class="title" aria-label="Chọn tháng"><b class="t-title-l">Lịch sử</b><span class="t-label-m">${MONTHS[month]}, ${year}${ic('arrow_drop_down')}</span></button><button class="icon-btn${isNow?' off':''}" aria-label="Tháng sau"${isNow?' aria-disabled="true"':''}>${ic('chevron_right')}</button></div>
+    <div class="dow t-label-m">${['T2','T3','T4','T5','T6','T7','CN'].map(d=>`<span>${d}</span>`).join('')}</div>
+    <div class="body">${body}</div>${nav}</div>`;
+}
+
+const frames = [
+  {cap:['Sáng · tháng này','Tuần này có viền chàm và nhãn “Tạm tính · 66”; hôm nay (13) viền tròn, cột chỉ có viền vì đang ghi; T4 05/11 có cờ nghi ghi thiếu. Tuần 03/11 là 71 · Tốt, đúng S35.']},
+  {dark:true, cap:['Tối · tháng này','Cùng dữ liệu; vạch mục tiêu đứt chạy suốt hàng nên mỗi tuần đọc như biểu đồ 7 cột.']},
+  {scroll:420, cap:['Sáng · đã cuộn','Tóm tắt tuần này (TB kcal, ngày đạt, nước) và bốn lối vào; thanh trên chuyển tonal khi cuộn.']},
+  {month:9, cap:['Sáng · tháng trước','Tháng đã qua: 22/10 chưa ghi là ô nét đứt; ngày đầu và cuối của tháng kề vẫn có cột để tuần đọc trọn.']},
+  {dark:true, start:'2026-11-12', cap:['Tối · người mới','Bắt đầu dùng từ 12/11 (ô có cờ chàm). Ngày trước đó chỉ có số mờ, không bị tính là “chưa ghi”.']},
+];
+
+const only = new URLSearchParams(location.search).get('f');
+if(only!==null){ document.body.innerHTML = phone(frames[+only]); document.body.style.cssText='margin:0;background:transparent'; const ph=document.querySelector('.phone'); ph.style.cssText+=';box-shadow:none;outline:none;border-radius:0'; }
+else document.getElementById('frames').innerHTML = frames.map(f=>`<figure>${phone(f)}<figcaption><b>${f.cap[0]}</b>${f.cap[1]}</figcaption></figure>`).join('');
+document.querySelectorAll('.phone').forEach(p=>{ const b=p.querySelector('.body'); b.scrollTop=+p.dataset.scroll||0; });
+</script>
+</body>
+</html>

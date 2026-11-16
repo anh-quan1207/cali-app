@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cali · S35 Tổng kết tuần</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&display=swap" rel="stylesheet">
+<style>
+:root{ --page:#F3F2F7; --page-ink:#1B1B21; --page-muted:#5E5E68; --page-line:#DCDBE3; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; } }
+:root[data-theme="dark"]{ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; }
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--page);color:var(--page-ink);font-family:'Roboto Flex',Roboto,system-ui,sans-serif;font-variation-settings:"opsz" 14;line-height:1.5}
+::selection{background:#DEE0FF;color:#00105C}
+.wrap{max-width:1640px;margin:0 auto;padding:40px 16px 64px}
+header.doc{max-width:760px;margin:0 auto 32px;padding:0 4px}
+header.doc h1{font-size:28px;font-weight:600;letter-spacing:-.01em;font-variation-settings:"opsz" 32}
+header.doc p{color:var(--page-muted);margin-top:8px;font-size:15px;max-width:70ch}
+header.doc .toggle{margin-top:14px;height:40px;padding:0 16px;border-radius:20px;border:1px solid var(--page-line);color:var(--page-ink);font-size:14px;font-weight:600}
+.frames{display:flex;flex-wrap:wrap;gap:44px 32px;justify-content:center;align-items:flex-start}
+figure{display:flex;flex-direction:column;align-items:center;gap:14px}
+figcaption{font-size:13px;color:var(--page-muted);text-align:center;max-width:300px}
+figcaption b{display:block;color:var(--page-ink);font-weight:600;font-size:14px}
+
+/* ===== App tokens (DESIGN.md) ===== */
+.phone{
+  --primary:#4355B9; --on-primary:#FFFFFF; --primary-container:#DEE0FF; --on-primary-container:#00105C;
+  --secondary-container:#E0E1F9; --on-secondary-container:#181A2C;
+  --surface:#FBF8FF; --surface-low:#F5F2FA; --surface-cont:#EFEDF4; --surface-highest:#E4E1E9;
+  --on-surface:#1B1B21; --on-surface-var:#46464F; --outline:#767680; --outline-var:#C6C5D0;
+  --error:#BA1A1A; --error-container:#FFDAD6; --on-error-container:#410002;
+  --warn:#8A5100; --warn-container:#FFDCBE; --on-warn-container:#2C1600;
+  --protein:#006780; --carb:#4C6700; --fat:#8E4585;
+  --ring-track:var(--surface-cont); --under:color-mix(in srgb,var(--primary) 70%,var(--surface-low));
+  width:360px;height:780px;border-radius:36px;overflow:hidden;position:relative;
+  background:var(--surface);color:var(--on-surface);
+  outline:1px solid var(--page-line);
+  box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 32px -8px rgba(20,20,40,.18);
+  font-feature-settings:"tnum" 1;display:flex;flex-direction:column;
+}
+.phone.tall{height:auto}
+.phone.dark{
+  --primary:#BAC3FF; --on-primary:#08218A; --primary-container:#293CA0; --on-primary-container:#DEE0FF;
+  --secondary-container:#43465A; --on-secondary-container:#E0E1F9;
+  --surface:#121318; --surface-low:#1B1B21; --surface-cont:#1F1F25; --surface-highest:#35343A;
+  --on-surface:#E4E1E9; --on-surface-var:#C6C5D0; --outline:#90909A; --outline-var:#46464F;
+  --error:#FFB4AB; --error-container:#93000A; --on-error-container:#FFDAD6;
+  --warn:#FFB86E; --warn-container:#693C00; --on-warn-container:#FFDCBE;
+  --protein:#5FD4F6; --carb:#B1D46A; --fat:#FFAEE9;
+  --ring-track:var(--surface-highest);
+}
+.phone ::selection{background:var(--primary-container);color:var(--on-primary-container)}
+.t-display-l{font-size:57px;line-height:1.05;font-weight:650;letter-spacing:-.03em;font-variation-settings:"opsz" 72,"wdth" 92}
+.t-title-l{font-size:22px;line-height:1.27;font-weight:600;font-variation-settings:"opsz" 22}
+.t-title-m{font-size:16px;line-height:1.5;font-weight:600}
+.t-body-l{font-size:16px;line-height:1.5;font-weight:400}
+.t-body-m{font-size:14px;line-height:1.43;font-weight:500}
+.t-body-s{font-size:12px;line-height:1.33;font-weight:400}
+.t-label-l{font-size:14px;line-height:1.43;font-weight:600}
+.t-label-m{font-size:12px;line-height:1.33;font-weight:500}
+.t-label-s{font-size:11px;line-height:1.45;font-weight:500}
+.ms{font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;font-size:24px;line-height:1;display:inline-block;font-variation-settings:"FILL" 0,"wght" 400,"opsz" 24;-webkit-font-smoothing:antialiased;user-select:none;flex:none}
+.ms.fill{font-variation-settings:"FILL" 1,"wght" 400,"opsz" 24}
+.ms.s16{font-size:16px}.ms.s18{font-size:18px}.ms.s20{font-size:20px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.muted{color:var(--on-surface-var)}
+.unit{color:var(--on-surface-var);font-weight:500}
+
+.status,.appbar,.week{transition:background-color .2s cubic-bezier(.2,0,0,1)}
+.phone.scrolled .status,.phone.scrolled .appbar,.phone.scrolled .week{background:var(--surface-cont)}
+.status{height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:500;background:var(--surface)}
+.status .ms{font-size:16px}
+.appbar{height:64px;flex:none;display:flex;align-items:center;gap:4px;padding:0 4px;background:var(--surface)}
+.appbar h1{flex:1}
+.icon-btn{width:48px;height:48px;border-radius:24px;display:grid;place-items:center;color:var(--on-surface-var);flex:none}
+.icon-btn.off{color:color-mix(in srgb,var(--on-surface) 38%,transparent);cursor:default}
+
+/* week switcher */
+.week{flex:none;display:grid;grid-template-columns:48px 1fr 48px;align-items:center;padding:0 4px 8px;background:var(--surface)}
+.week .mid{text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
+.week .mid .t-label-m{color:var(--on-surface-var);display:inline-flex;align-items:center;gap:4px}
+.week .prov{height:24px;border-radius:8px;padding:0 8px;display:inline-flex;align-items:center;gap:4px;background:var(--secondary-container);color:var(--on-secondary-container)}
+
+.body{flex:1;overflow-y:auto;scrollbar-width:none;padding:0 12px 16px;display:flex;flex-direction:column;gap:8px}
+.body::-webkit-scrollbar{display:none}
+.phone.tall .body{overflow:visible}
+.gesture{flex:none;height:24px;position:relative;background:var(--surface)}
+.gesture::after{content:"";position:absolute;left:50%;bottom:8px;width:108px;height:4px;border-radius:2px;background:var(--on-surface);opacity:.4;transform:translateX(-50%)}
+
+.card{background:var(--surface-low);border-radius:16px;padding:14px 16px 16px}
+.card .hd{display:flex;align-items:center;gap:8px;min-height:24px}
+.card .hd h2{flex:1}
+.cmp{display:inline-flex;align-items:center;gap:2px;color:var(--on-surface-var)}
+.cmp .ms{font-size:16px}
+.line{display:flex;gap:8px;align-items:flex-start;color:var(--on-surface-var)}
+.line .ms{color:var(--primary);margin-top:-1px}
+.line b{color:var(--on-surface);font-weight:600}
+
+/* score */
+.score{background:var(--primary-container);color:var(--on-primary-container);border-radius:16px;padding:14px 16px 16px}
+.score .top{display:flex;align-items:flex-end;gap:6px}
+.score .num{line-height:.9}
+.score .of{padding-bottom:6px;color:color-mix(in srgb,var(--on-primary-container) 72%,transparent)}
+.score .grade{margin-left:auto;text-align:right;padding-bottom:4px}
+.score .grade .cmp{color:color-mix(in srgb,var(--on-primary-container) 80%,transparent);justify-content:flex-end}
+.slane{display:flex;gap:3px;margin-top:16px}
+.slane .seg{min-width:0}
+.slane .bar{height:10px;background:color-mix(in srgb,var(--primary) 16%,var(--primary-container))}
+.slane .bar i{display:block;height:100%;background:var(--primary);transform-origin:left;animation:grow .7s cubic-bezier(.2,0,0,1) both;animation-delay:calc(.12s + var(--k) * .14s)}
+@keyframes grow{from{transform:scaleX(0)}}
+@media (prefers-reduced-motion: reduce){ .slane .bar i{animation:none} }
+body.still .slane .bar i{animation:none}
+.slane .lab{margin-top:8px;display:flex;flex-direction:column}
+.slane .lab span{color:color-mix(in srgb,var(--on-primary-container) 76%,transparent)}
+
+/* calorie headline */
+.big{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-top:10px}
+.big b{font-weight:650}
+.chip{height:32px;border-radius:8px;padding:0 12px 0 8px;display:inline-flex;align-items:center;gap:6px}
+.chip .ms{font-size:18px}
+.chip.warn{background:var(--warn-container);color:var(--on-warn-container)}
+.chip.err{background:var(--error-container);color:var(--on-error-container)}
+.sub{color:var(--on-surface-var);margin-top:4px}
+
+/* column chart: card-wide, 7 × 48dp columns */
+.chart{position:relative;margin:14px -16px 0}
+.plot{position:relative;height:var(--h);margin-top:22px}
+.band{position:absolute;left:0;right:0;background:color-mix(in srgb,var(--on-surface) 6%,transparent)}
+.goal{position:absolute;left:0;right:0;height:0;border-top:1px dashed var(--on-surface-var)}
+.goal-l{position:absolute;right:8px;transform:translateY(-100%);padding-bottom:2px;color:var(--on-surface-var)}
+.cols{position:absolute;inset:0;display:grid;grid-template-columns:repeat(7,1fr)}
+.col{position:relative;height:100%;border-radius:0}
+.col .stack{position:absolute;left:50%;bottom:0;width:20px;transform:translateX(-50%);display:flex;flex-direction:column-reverse;gap:3px}
+.col .stack i{display:block;width:100%;background:var(--primary)}
+.col .stack i.light{background:var(--under)}
+.col .stack i.over{background:var(--error)}
+.col .stack i.pend{background:color-mix(in srgb,var(--primary) 40%,var(--ring-track));box-shadow:inset 0 0 0 1.5px var(--primary)}
+.col .stub{position:absolute;left:50%;bottom:0;width:20px;height:8px;transform:translateX(-50%);outline:1.5px dashed var(--outline);outline-offset:-1.5px}
+.col .v{position:absolute;left:0;right:0;text-align:center;transform:translateY(-100%);padding-bottom:3px;color:var(--on-surface-var);display:flex;flex-direction:column;align-items:center;line-height:1.2}
+.col .v.err{color:var(--error);font-weight:650}
+.col .v.warn{color:var(--warn);font-weight:600}
+.col .v .ms{font-size:16px;color:var(--warn)}
+.col .v em{font-style:normal;background:var(--surface-low);padding:0 3px;border-radius:4px}
+.days{display:grid;grid-template-columns:repeat(7,1fr);border-top:1px solid var(--outline-var)}
+.days span{text-align:center;padding-top:6px;color:var(--on-surface-var);position:relative;height:26px}
+.days span.today{color:var(--on-surface);font-weight:700}
+.days span.today::after{content:"";position:absolute;left:50%;bottom:-2px;width:4px;height:4px;border-radius:2px;background:var(--primary);transform:translateX(-50%)}
+.days span.future{color:color-mix(in srgb,var(--on-surface) 38%,transparent)}
+
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;color:var(--on-surface-var)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;display:inline-block}
+.legend b{color:var(--on-surface);font-weight:600}
+.note-warn{display:flex;gap:6px;align-items:flex-start;color:var(--on-surface-var);margin-top:8px}
+.note-warn .ms{color:var(--warn)}
+.rows{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+hr.div{border:0;border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent);margin:12px 0 0}
+
+/* macro */
+.mac{margin-top:12px;display:flex;flex-direction:column;gap:12px}
+.mac .r .t{display:flex;align-items:baseline;gap:6px}
+.mac .r .t .nm{display:inline-flex;align-items:center;gap:6px;flex:1}
+.mac .r .t .nm i{width:8px;height:8px;border-radius:4px;background:var(--c)}
+.mac .r .track{position:relative;height:6px;background:var(--surface-highest);margin-top:6px;display:flex;gap:3px}
+.mac .r .track i{display:block;height:100%;background:var(--c)}
+.mac .r .track i.ov{background:var(--error)}
+.mac .r .track .gl{position:absolute;left:80%;top:-3px;bottom:-3px;width:2px;margin-left:-1px;background:var(--on-surface)}
+.mac .r.over .t .val,.mac .r.over .foot{color:var(--error)}
+.mac .r .foot{margin-top:4px;display:flex;align-items:center;gap:4px;color:var(--on-surface-var)}
+.mix{margin-top:14px;display:grid;grid-template-columns:64px 1fr 92px;align-items:center;gap:8px 10px}
+.mix .bar{display:flex;gap:3px;height:10px}
+.mix .bar i{display:block;height:100%}
+.mix .pc{text-align:right;color:var(--on-surface-var)}
+.mix .lb{color:var(--on-surface-var)}
+
+/* weight */
+.wt{display:grid;grid-template-columns:1fr 132px;gap:12px;margin-top:10px;align-items:end}
+.wt .v{display:flex;align-items:baseline;gap:4px}
+.wt svg{display:block;overflow:visible}
+.wl{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;color:var(--on-surface-var);margin-top:4px}
+.wl .cur{color:var(--on-surface);font-weight:700}
+.empty-wt{display:flex;gap:12px;align-items:center;margin-top:10px}
+.empty-wt .ic{width:40px;height:40px;border-radius:12px;background:var(--surface-highest);color:var(--on-surface-var);display:grid;place-items:center;flex:none}
+.empty-wt p{flex:1;color:var(--on-surface-var)}
+.btn{height:48px;border-radius:24px;padding:0 18px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:600;flex:none}
+.btn.tonal{background:var(--secondary-container);color:var(--on-secondary-container)}
+.btn.outline{color:var(--primary);outline:1px solid var(--outline-var);outline-offset:-1px}
+.btn.text{color:var(--primary);padding:0 12px}
+.btn .ms{font-size:20px}
+
+/* top foods */
+.foods{list-style:none;margin-top:10px;display:flex;flex-direction:column}
+.foods li{display:grid;grid-template-columns:18px 1fr auto;gap:2px 10px;align-items:baseline;padding:8px 0}
+.foods li+li{border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent)}
+.foods .rk{color:var(--on-surface-var)}
+.foods .n small{color:var(--on-surface-var);margin-left:6px}
+.foods .k{font-weight:600}
+.foods .k small{color:var(--on-surface-var);font-weight:500}
+.foods .sh{grid-column:2 / 4;height:4px;background:var(--surface-highest);margin-top:4px}
+.foods .sh i{display:block;height:100%;background:var(--primary)}
+
+/* AI review */
+.ai .hd .ms{color:var(--primary)}
+.ai .head{margin-top:10px}
+.ai .sec{margin-top:14px}
+.ai .sec h3{display:flex;align-items:center;gap:8px}
+.ai .sec h3 .ms{font-size:20px;color:var(--primary)}
+.ai .sec ul{list-style:none;margin:6px 0 0 28px;display:flex;flex-direction:column;gap:6px}
+.ai .sec ul li{position:relative}
+.ai .sec ul li::before{content:"";position:absolute;left:-14px;top:8px;width:4px;height:4px;border-radius:2px;background:var(--on-surface-var)}
+.ai ol{list-style:none;margin-top:8px;display:flex;flex-direction:column;gap:8px;counter-reset:s}
+.ai ol{gap:0 !important}
+.ai ol li{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:start;counter-increment:s;padding:10px 0}
+.ai ol li+li{border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent)}
+.ai ol li::before{content:counter(s);width:24px;height:24px;border-radius:12px;background:var(--secondary-container);color:var(--on-secondary-container);display:grid;place-items:center;font-size:12px;font-weight:700}
+.ai .disc{margin-top:12px;color:var(--on-surface-var)}
+.ai .fresh{display:flex;gap:10px;align-items:center;margin-top:12px;border-radius:12px;background:var(--secondary-container);color:var(--on-secondary-container);padding:6px 6px 6px 12px}
+.ai .fresh p{flex:1}
+.ai .fresh .btn{background:var(--surface);color:var(--primary);height:40px;padding:0 14px}
+.ai .fresh .btn::after{content:"";position:absolute;inset:-4px 0}
+.ai .stale .head,.ai .stale .sec li,.ai .stale ol li{color:var(--on-surface-var)}
+.ai .pending{display:flex;gap:12px;align-items:center;margin-top:12px;color:var(--on-surface-var)}
+.typing{display:inline-flex;align-items:center;gap:6px;padding:12px 14px;border-radius:20px 20px 20px 6px;background:var(--surface-cont)}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--on-surface-var);animation:dot 1.2s infinite ease-in-out both}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+@media (prefers-reduced-motion: reduce){ .typing i{animation:none;opacity:.6} }
+.errb{margin-top:12px;border-radius:16px;background:var(--error-container);color:var(--on-error-container);padding:12px 14px}
+.errb .row{display:flex;gap:8px;align-items:flex-start}
+.errb .btn{margin-top:8px;color:var(--on-error-container);outline:1px solid color-mix(in srgb,var(--on-error-container) 45%,transparent);outline-offset:-1px}
+.start{margin-top:10px}
+.start p{color:var(--on-surface-var)}
+.start .btn{margin-top:10px}
+.foot-note{color:var(--on-surface-var);text-align:center;padding:8px 8px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc">
+    <h1>S35 · Tổng kết tuần</h1>
+    <p>Báo cáo một tuần (Thứ Hai → Chủ Nhật), đọc từ trên xuống: điểm, rồi calo, nước, macro, cân, món, cuối cùng là nhận xét của AI. Mọi biểu đồ dùng lại ngữ pháp của vòng calo: đầu vuông, khe 3dp, phần vượt tách khỏi phần trong mục tiêu. Điểm tính trên máy theo 08 §4; AI chỉ viết lời. Tuần 03/11 – 09/11 dùng đúng bộ số mẫu của 08 §5.4; tuần này (10/11 – 16/11) khớp với sổ của S10 và S20. Số liệu là dữ liệu mẫu.</p>
+    <button class="toggle" id="toggle">Xem toàn bộ ở giao diện tối</button>
+  </header>
+  <div class="frames" id="frames"></div>
+</div>
+<script>
+const TARGET = 1740, TDEE = 2293, WATER = 2600, MAC_T = [122,196,52];
+const fmt = n => Math.round(n).toLocaleString('vi-VN');
+const dec = (n,d=1) => n.toLocaleString('vi-VN',{minimumFractionDigits:d,maximumFractionDigits:d});
+const sgn = n => (n<0?'−':'+') + dec(Math.abs(n),2).replace(/0$/,'');
+const ic = (n, cls='') => `<span class="ms ${cls}">${n}</span>`;
+const cmp = (dir, txt) => `<span class="cmp t-label-m">${ic(dir>0?'arrow_upward':'arrow_downward')}${txt}</span>`;
+
+/* ---------- data ---------- */
+const DONE = {
+  range:'03/11 – 09/11', state:'done', prevScore:64,
+  days:[1710,1760,690,1800,1650,2360,2630].map((k,i)=>({d:['T2','T3','T4','T5','T6','T7','CN'][i],k})),
+  water:[2600,2700,2600,2800,2600,1100,800],
+  mac:[104,231,55], protDays:3, cmpKcal:[+1,'TB +5%'], cmpWater:[-1,'TB −200 ml'], cmpProt:[+1,'+6 g'], prevHit:3,
+  weight:{avg:74.1, prev:74.6, n:3, hist:[['13/10',75.4],['20/10',75.0],['27/10',74.6],['03/11',74.1]], goal:68, eta:'02/02/2027'},
+  foods:[['Cơm tấm sườn',2,1300],['Trà sữa trân châu',3,1200],['Phở bò',2,940],['Bánh mì thịt',2,660],['Bún bò Huế',1,490]],
+  topMeal:['Tối',760], ai:'done'
+};
+const MISS = {
+  range:'20/10 – 26/10', state:'done', prevScore:61,
+  days:[1690,1780,null,1720,2100,1600,1950].map((k,i)=>({d:['T2','T3','T4','T5','T6','T7','CN'][i],k})),
+  water:[2600,2700,null,2600,2000,2600,1500],
+  mac:[110,205,54], protDays:4, cmpKcal:[+1,'TB +3%'], cmpWater:[+1,'TB +100 ml'], cmpProt:[+1,'+4 g'], prevHit:3,
+  weight:{avg:75.0, prev:75.4, n:2, hist:[['29/09',76.0],['06/10',75.7],['13/10',75.4],['20/10',75.0]], goal:68, eta:'09/02/2027'},
+  foods:[['Cơm gà xối mỡ',2,1400],['Bún chả',2,1100],['Phở bò',1,470],['Trà sữa trân châu',1,400],['Bánh xèo',1,380]],
+  topMeal:['Tối',720], ai:'hidden'
+};
+const NOW = {
+  range:'10/11 – 16/11', state:'live', left:3, prevScore:71,
+  days:[{d:'T2',k:1710},{d:'T3',k:1690},{d:'T4',k:1420},{d:'T5',k:1310,today:true},{d:'T6',future:true},{d:'T7',future:true},{d:'CN',future:true}],
+  water:[2600,2400,2700,1250,null,null,null],
+  mac:[98,186,49], protDays:1, cmpKcal:[+1,'TB +3%'], cmpWater:[-1,'TB −440 ml'], cmpProt:[-1,'−2 g'], prevHit:3,
+  weight:null,
+  foods:[['Bún bò Huế',2,980],['Xôi gà',2,760],['Cơm tấm sườn',1,650],['Phở bò',1,470],['Trà sữa trân châu',1,400]],
+  topMeal:['Trưa',610], ai:'none'
+};
+
+/* ---------- rules (08 §2, §4) ---------- */
+function stats(w){
+  const logged = w.days.filter(d=>d.k!=null);
+  const cls = d => { const x=d.k-TARGET; return Math.abs(x)<=TARGET*.1?'hit':x>0?'over':'under'; };
+  logged.forEach(d=>{ d.c=cls(d); d.sus = d.k < TARGET*.5; });
+  const n = logged.length, D = w.days.filter(d=>!d.future).length;
+  const sum = logged.reduce((s,d)=>s+d.k,0), tgt = n*TARGET;
+  const cnt = {hit:0,over:0,under:0}; logged.forEach(d=>cnt[d.c]++);
+  const missed = w.days.filter(d=>d.k==null && !d.future).length;
+  const wl = w.water.filter(v=>v!=null), wHit = wl.filter(v=>v>=WATER).length;
+  const parts = [40*cnt.hit/D, 20*Math.min(1,w.mac[0]/MAC_T[0]), 20*wHit/D, 20*logged.filter(d=>!d.sus).length/D];
+  const total = Math.round(parts.reduce((a,b)=>a+b,0));
+  return {logged,n,sum,tgt,delta:sum-tgt,cnt,missed,avg:sum/n,tdee:sum-n*TDEE,wSum:wl.reduce((a,b)=>a+b,0),wHit,wN:D,D,parts:parts.map(Math.round),total};
+}
+const grade = s => s>=85?'Xuất sắc':s>=70?'Tốt':s>=50?'Cần cố gắng':'Chưa tốt';
+
+/* ---------- pieces ---------- */
+const status = `<div class="status"><span>13:02</span><span>${ic('signal_cellular_alt')} ${ic('wifi')} ${ic('battery_5_bar')}</span></div>`;
+const appbar = `<div class="appbar"><button class="icon-btn" aria-label="Quay lại">${ic('arrow_back')}</button><h1 class="t-title-l">Tổng kết tuần</h1></div>`;
+function weekbar(w, s){
+  const sub = w.state==='done'
+    ? `<span class="t-label-m">${ic('event_available','s16')}Đã kết thúc · ghi ${s.n}/${s.D} ngày</span>`
+    : `<span class="prov t-label-m">${ic('hourglass_top','s16')}Tạm tính · còn ${w.left} ngày</span>`;
+  const next = w.state==='done' ? `<button class="icon-btn" aria-label="Tuần sau">${ic('chevron_right')}</button>` : `<button class="icon-btn off" aria-label="Tuần sau" aria-disabled="true">${ic('chevron_right')}</button>`;
+  return `<div class="week"><button class="icon-btn" aria-label="Tuần trước">${ic('chevron_left')}</button><div class="mid"><b class="t-title-m">${w.state==='done'?'Tuần':'Tuần này ·'} ${w.range}</b>${sub}</div>${next}</div>`;
+}
+
+function scoreCard(w, s){
+  const names = ['Calo','Đạm','Nước','Ghi chép'], max=[40,20,20,20];
+  const d = s.total - w.prevScore;
+  return `<section class="score" aria-label="Điểm tuần ${s.total} trên 100, ${grade(s.total)}">
+    <div class="top"><span class="num t-display-l">${s.total}</span><span class="of t-title-m">/100 điểm</span>
+      <div class="grade"><div class="t-title-l">${grade(s.total)}</div>${cmp(d,`${Math.abs(d)} so với tuần trước`)}</div></div>
+    <div class="slane">${names.map((n,i)=>`<div class="seg" style="flex:${max[i]}"><div class="bar"><i style="--k:${i};width:${s.parts[i]/max[i]*100}%"></i></div><div class="lab"><span class="t-label-m">${n}</span><b class="t-label-l">${s.parts[i]}/${max[i]}</b></div></div>`).join('')}</div>
+  </section>`;
+}
+
+function colChart({days, vals, goal, top, h=120, value, cls, label}){
+  const y = v => v/top*h;
+  const cols = days.map((d,i)=>{
+    const v = vals[i];
+    if(d.future) return `<div class="col" aria-hidden="true"></div>`;
+    if(v==null) return `<button class="col" aria-label="${d.d}: chưa ghi"><span class="stub"></span><span class="v t-label-s" style="top:${h-8}px">—</span></button>`;
+    const c = cls(d,v), parts = [];
+    if(c==='over'){ parts.push(`<i style="height:${y(goal)}px"></i>`, `<i class="over" style="height:${Math.max(4,y(v-goal)-3)}px"></i>`); }
+    else parts.push(`<i class="${c==='pend'?'pend':c==='light'?'light':''}" style="height:${y(v)}px"></i>`);
+    const vc = c==='over'?'err':(d.sus?'warn':'');
+    return `<button class="col" aria-label="${label(d,v)}"><span class="stack">${parts.join('')}</span><span class="v t-label-s ${vc}" style="top:${h-y(v)}px">${d.sus?ic('warning'):''}<em>${value(v)}</em></span></button>`;
+  }).join('');
+  const band = goal && cls.band ? `<div class="band" style="bottom:${y(goal*.9)}px;height:${y(goal*.2)}px"></div>` : '';
+  return `<div class="chart"><div class="plot" style="--h:${h}px">${band}<div class="goal" style="bottom:${y(goal)}px"></div><div class="cols">${cols}</div></div>
+    <div class="days t-label-m">${days.map(d=>`<span class="${d.today?'today':d.future?'future':''}">${d.d}</span>`).join('')}</div></div>`;
+}
+
+function kcalCard(w, s){
+  const pct = Math.round(Math.abs(s.delta)/s.tgt*100);
+  let head, chip='';
+  if(s.delta>0){
+    head = `Vượt <b>${fmt(s.delta)} kcal</b> so với mục tiêu`;
+    chip = pct<=10 ? `<span class="chip warn t-label-l">${ic('info')}Vượt nhẹ ${pct}%</span>` : `<span class="chip err t-label-l">${ic('warning')}Vượt ${pct}%</span>`;
+  } else head = `Thiếu <b>${fmt(-s.delta)} kcal</b> so với mục tiêu`;
+  const cls = (d,v) => d.today ? 'pend' : d.c==='over' ? 'over' : d.c==='under' ? 'light' : 'hit';
+  cls.band = true; cls.goalLabel = `Mục tiêu ${fmt(TARGET)}`;
+  const top = Math.max(TARGET*1.25, ...s.logged.map(d=>d.k))*1.06;
+  const chart = colChart({days:w.days, vals:w.days.map(d=>d.k), goal:TARGET, top, value:v=>fmt(v), cls,
+    label:(d,v)=>`${d.d}: ${fmt(v)} kcal, ${d.today?'hôm nay, đang ghi':d.c==='hit'?'đạt':d.c==='over'?`vượt ${fmt(v-TARGET)}`:`thiếu ${fmt(TARGET-v)}`}${d.sus?', nghi ghi thiếu':''}. Mở chi tiết ngày`});
+  const hi = s.logged.reduce((a,b)=>b.k>a.k?b:a), lo = s.logged.reduce((a,b)=>b.k<a.k?b:a);
+  const sus = s.logged.filter(d=>d.sus);
+  const td = s.logged.find(d=>d.today), todayC = td ? td.c : null;
+  const kg = s.tdee/7700;
+  const sw = c => c==='hit'?'background:var(--primary)':c==='over'?'background:var(--error)':c==='under'?'background:var(--under)':'outline:1.5px dashed var(--outline);outline-offset:-1.5px';
+  return `<section class="card">
+    <div class="hd"><h2 class="t-title-m">Calo</h2>${cmp(w.cmpKcal[0], w.cmpKcal[1])}</div>
+    <div class="big"><span class="t-title-l" style="font-weight:500">${head}</span>${chip}</div>
+    <p class="sub t-body-s">Đã ăn ${fmt(s.sum)} / ${fmt(s.tgt)} kcal · TB ${fmt(s.avg)} kcal/ngày${w.state==='live'?' · hôm nay chưa xong':''}</p>
+    ${chart}
+    <div class="legend t-label-m">${[['hit','Đạt',s.cnt.hit],['over','Vượt',s.cnt.over],['under','Thiếu',s.cnt.under],['miss','Chưa ghi',s.missed]].map(([c,n,v])=>`<span><i style="${sw(c)}"></i>${n} <b>${v}</b>${c===todayC?' (gồm hôm nay)':''}</span>`).join('')}<span><i style="height:0;border-top:1px dashed var(--on-surface-var)"></i>Mục tiêu ${fmt(TARGET)} ± 10%</span></div><p class="t-label-m muted" style="margin-top:4px">${w.state==='live'?'Cùng kỳ tuần trước':'Tuần trước'} đạt ${w.prevHit} ngày</p>
+    ${s.missed?`<p class="note-warn t-body-s"><span class="ms s16" style="color:var(--on-surface-var)">info</span><span>${s.missed} ngày chưa ghi: không tính vào tổng calo, và kéo điểm Calo, Nước, Ghi chép xuống.</span></p>`:''}
+    ${sus.map(d=>`<p class="note-warn t-body-s">${ic('warning','s16')}<span>${d.d} chỉ ghi ${fmt(d.k)} kcal, dưới một nửa mục tiêu: có thể còn sót món.</span></p>`).join('')}
+    <hr class="div">
+    <div class="rows t-body-s">
+      <p class="line">${ic('swap_vert','s18')}<span>Nhiều nhất <b>${hi.d} ${fmt(hi.k)}</b> · ít nhất <b>${lo.d} ${fmt(lo.k)}</b> kcal</span></p>
+      <p class="line">${ic('trending_down','s18')}<span>So với TDEE ${fmt(TDEE)}/ngày: thâm hụt ≈ <b>${fmt(Math.round(-s.tdee/10)*10)} kcal</b> → dự kiến <b>${sgn(kg)} kg</b></span></p>
+    </div>
+  </section>`;
+}
+
+function waterCard(w, s){
+  const days = w.days.map((d,i)=>({...d, sus:false}));
+  const cls = (d,v) => d.today ? 'pend' : v>=WATER ? 'hit' : 'light';
+  cls.band=false; cls.goalLabel=`Mục tiêu ${dec(WATER/1000)} L`;
+  const chart = colChart({days, vals:w.water, goal:WATER, top:3200, h:96, value:v=>dec(v/1000), cls,
+    label:(d,v)=>`${d.d}: ${dec(v/1000)} lít${v>=WATER?', đạt':''}. Mở chi tiết ngày`});
+  const tgt = s.wN*WATER;
+  return `<section class="card">
+    <div class="hd"><h2 class="t-title-m">Nước</h2>${cmp(w.cmpWater[0], w.cmpWater[1])}</div>
+    <div class="big"><span class="t-title-l" style="font-weight:500"><b>${dec(s.wSum/1000)}</b> / ${dec(tgt/1000)} L</span></div>
+    <p class="sub t-body-s">Mục tiêu ${dec(WATER/1000)} L/ngày (vạch đứt) · đạt ${s.wHit}/${s.wN} ngày · thiếu ${dec((tgt-s.wSum)/1000)} L · TB ${dec(s.wSum/s.wN/1000,2)} L/ngày</p>
+    ${chart}
+  </section>`;
+}
+
+function macroCard(w,s){
+  const N = ['Đạm','Tinh bột','Béo'], C=['protein','carb','fat'];
+  const rows = w.mac.map((v,i)=>{ const t=MAC_T[i], r=v/t, over=r>1;
+    return `<div class="r${over?' over':''}" style="--c:var(--${C[i]})"><div class="t"><span class="nm t-label-m"><i></i>${N[i]}</span><span class="val t-title-m">${v}</span><span class="unit t-label-m">/ ${t} g · ${Math.round(r*100)}%</span></div><div class="track">${over?`<i style="width:calc(80% - 1.5px)"></i><i class="ov" style="width:calc(${Math.min(r-1,.25)/1.25*100}% - 1.5px)"></i>`:`<i style="width:${r/1.25*100}%"></i>`}<span class="gl" aria-hidden="true"></span></div>${over?`<div class="foot t-label-s">${ic('warning','s16')}vượt ${v-t} g mỗi ngày</div>`:i===0?`<div class="foot t-label-s">Đạt đạm ${w.protDays}/${s.D} ngày</div>`:''}</div>`; }).join('');
+  const kc = [w.mac[0]*4,w.mac[1]*4,w.mac[2]*9], tot=kc.reduce((a,b)=>a+b,0), act=kc.map(k=>Math.round(k/tot*100));
+  const tk = [MAC_T[0]*4,MAC_T[1]*4,MAC_T[2]*9], tt=tk.reduce((a,b)=>a+b,0), tg=tk.map(k=>Math.round(k/tt*100));
+  const bar = p => `<div class="bar">${p.map((x,i)=>`<i style="flex:${x};background:var(--${C[i]})"></i>`).join('')}</div>`;
+  return `<section class="card">
+    <div class="hd"><h2 class="t-title-m">Macro · TB mỗi ngày</h2>${cmp(w.cmpProt[0], 'Đạm '+w.cmpProt[1])}</div>
+    <div class="mac">${rows}</div>
+    <div class="mix t-label-m"><span class="lb">Thực tế</span>${bar(act)}<span class="pc">${act.join(' · ')} %</span><span class="lb">Mục tiêu</span>${bar(tg)}<span class="pc">${tg.join(' · ')} %</span></div>
+  </section>`;
+}
+
+function weightCard(w,s){
+  if(!w.weight) return `<section class="card"><div class="hd"><h2 class="t-title-m">Cân nặng</h2></div>
+    <div class="empty-wt"><span class="ic">${ic('monitor_weight')}</span><p class="t-body-s">Tuần này chưa có lần cân nào. Cân ít nhất 2 lần/tuần để so dự kiến với thực tế.</p></div>
+    <button class="btn outline" style="margin-top:12px;width:100%">${ic('add')}Ghi cân nặng</button></section>`;
+  const x=w.weight, ch=x.avg-x.prev, H=56, W=132, lo=Math.min(...x.hist.map(h=>h[1]))-.3, hi=Math.max(...x.hist.map(h=>h[1]))+.3;
+  const pts = x.hist.map((h,i)=>[W/8+i*W/4, 4+(hi-h[1])/(hi-lo)*(H-8)]);
+  const svg = `<div><svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Cân trung bình 4 tuần: ${x.hist.map(h=>dec(h[1])).join(', ')} kg">
+    <polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="var(--primary)" stroke-width="2"/>
+    ${pts.map((p,i)=>`<rect x="${p[0]-3.5}" y="${p[1]-3.5}" width="7" height="7" fill="${i===3?'var(--primary)':'var(--surface-low)'}" stroke="var(--primary)" stroke-width="1.5"/>`).join('')}
+    </svg><div class="wl t-label-s">${x.hist.map((h,i)=>`<span${i===3?' class="cur"':''}>${h[0]}</span>`).join('')}</div></div>`;
+  const left = x.avg - x.goal;
+  return `<section class="card"><div class="hd"><h2 class="t-title-m">Cân nặng</h2><span class="cmp t-label-m">${x.n} lần cân</span></div>
+    <div class="wt"><div><div class="v"><b class="t-title-l">${dec(x.avg)}</b><span class="unit t-label-m">kg TB tuần</span></div>
+      <p class="t-body-m" style="margin-top:2px">${sgn(ch).replace(/,?0+$/,'')} kg so với tuần trước</p>
+      <p class="t-body-s muted" style="margin-top:6px">Dự kiến theo lượng ăn ${sgn(s.tdee/7700)} kg · thực tế ${sgn(ch).replace(/,?0+$/,'')} kg</p></div>${svg}</div>
+    <hr class="div"><div class="rows t-body-s"><p class="line">${ic('flag','s18')}<span>Còn <b>${dec(left)} kg</b> tới ${x.goal} kg · dự kiến ~${x.eta}</span></p></div></section>`;
+}
+
+function foodsCard(w){
+  const max = w.foods[0][2];
+  return `<section class="card"><div class="hd"><h2 class="t-title-m">Món nhiều calo nhất</h2></div>
+    <ol class="foods">${w.foods.map((f,i)=>`<li><span class="rk t-label-m">${i+1}</span><span class="n t-body-m">${f[0]}<small class="t-label-m">×${f[1]}</small></span><span class="k t-body-m">${fmt(f[2])} <small class="t-label-m">kcal</small></span><span class="sh"><i style="width:${f[2]/max*100}%"></i></span></li>`).join('')}</ol>
+    <hr class="div"><div class="rows t-body-s"><p class="line">${ic('dinner_dining','s18')}<span>Bữa nặng nhất: <b>${w.topMeal[0]}</b>, TB <b>${fmt(w.topMeal[1])} kcal</b>/ngày</span></p></div></section>`;
+}
+
+const REVIEW = {
+  head:'Ngày thường đều tay, cuối tuần kéo tổng calo vượt 420 kcal.',
+  good:['4/7 ngày trong mục tiêu, nhiều hơn tuần trước 1 ngày.','Cân TB giảm 0,5 kg, khớp với dự kiến −0,45 kg.'],
+  issues:['T7 và CN vượt tổng 1.510 kcal, xoá phần thâm hụt 1.090 kcal của 5 ngày đầu.','Đạm TB 104 g, mới 85% mục tiêu; chỉ 3/7 ngày đạt.','T4 chỉ ghi 690 kcal, có thể còn sót món.'],
+  patterns:['Cuối tuần vừa ăn vượt vừa uống ít nước (T7 1,1 L, CN 0,8 L).','3 ly trà sữa trân châu = 1.200 kcal, gần 10% calo cả tuần.'],
+  next:['Trà sữa gọi 50% đường, bỏ trân châu: bớt khoảng 150 kcal mỗi ly.','Thêm 2 quả trứng vào bữa sáng: khoảng +12 g đạm mỗi ngày.','T7–CN chọn trước bữa tối quanh 600 kcal và bật nhắc uống nước mỗi 2 giờ.']
+};
+function aiCard(state){
+  const hd = (meta) => `<div class="hd">${ic('auto_awesome','s20')}<h2 class="t-title-m">Nhận xét của AI</h2>${meta?`<span class="t-label-s muted">${meta}</span>`:''}</div>`;
+  const sec = (icon, t, arr) => `<div class="sec"><h3 class="t-label-l">${ic(icon)}${t}</h3><ul class="t-body-m">${arr.map(x=>`<li>${x}</li>`).join('')}</ul></div>`;
+  const body = `<p class="head t-title-m">${REVIEW.head}</p>${sec('check_circle','Làm tốt',REVIEW.good)}${sec('flag','Cần cải thiện',REVIEW.issues)}${sec('insights','Quy luật',REVIEW.patterns)}
+    <div class="sec"><h3 class="t-label-l">${ic('lightbulb')}3 việc cho tuần sau</h3><ol class="t-body-m">${REVIEW.next.map(x=>`<li><span>${x}</span></li>`).join('')}</ol></div>
+    <p class="disc t-body-s">AI viết từ số liệu tuần, có thể sai. Không phải lời khuyên y khoa.</p>`;
+  if(state==='done') return `<section class="card ai" id="ai">${hd('Tạo 10/11 · 08:02')}${body}</section>`;
+  if(state==='stale') return `<section class="card ai" id="ai">${hd('Tạo 10/11 · 08:02')}<div class="fresh">${ic('sync','s20')}<p class="t-body-s">Bạn đã sửa món của tuần này sau khi nhận xét được tạo.</p><button class="btn" style="position:relative">Tạo lại</button></div><div class="stale">${body}</div></section>`;
+  if(state==='loading') return `<section class="card ai" id="ai">${hd()}<div class="pending"><div class="typing" aria-label="AI đang viết nhận xét"><i></i><i></i><i></i></div><p class="t-body-s">Đang viết nhận xét từ số liệu tuần. Các phần trên đã đầy đủ.</p></div></section>`;
+  if(state==='error') return `<section class="card ai" id="ai">${hd()}<div class="errb t-body-m"><div class="row">${ic('cloud_off','s20')}<span>Không tạo được nhận xét vì mất kết nối. Số liệu tuần ở trên vẫn đầy đủ.</span></div><button class="btn">Thử lại</button></div></section>`;
+  return `<section class="card ai" id="ai">${hd()}<div class="start"><p class="t-body-s">Tuần chưa kết thúc. Nhận xét tạm tính sẽ dựa trên 4 ngày đã qua (gồm hôm nay); tuần kết thúc thì AI tự viết bản chính thức.</p><button class="btn tonal">${ic('auto_awesome')}Tạo nhận xét tạm tính</button></div></section>`;
+}
+
+function phone({w, dark, tall, ai, scroll}){
+  const s = stats(w);
+  const body = [scoreCard(w,s), kcalCard(w,s), waterCard(w,s), macroCard(w,s), weightCard(w,s), foodsCard(w), ai==='hidden'?'':aiCard(ai||w.ai), `<p class="foot-note t-body-s">Ngày chưa ghi không tính vào tổng và trung bình.</p>`].join('');
+  return `<div class="phone${dark?' dark':''}${tall?' tall':''}${scroll?' scrolled':''}">${status}${appbar}${weekbar(w,s)}<div class="body">${body}</div><div class="gesture"></div></div>`;
+}
+
+const frames = [
+  {w:DONE, tall:true, cap:['Sáng · tuần đã kết thúc, toàn trang','Bộ số của 08 §5.4: 71 điểm “Tốt”, vượt 420 kcal (vượt nhẹ 3%), T7 và CN tách phần vượt lên trên vạch mục tiêu, T4 có cờ nghi ghi thiếu.']},
+  {w:DONE, dark:true, cap:['Tối · màn đầu khi mở từ thông báo','Điểm và bốn phần của điểm, câu chính về calo và biểu đồ 7 ngày nằm trong một màn.']},
+  {w:NOW, tall:true, cap:['Sáng · tuần đang diễn ra, toàn trang','“Tạm tính · còn 3 ngày”; cột hôm nay chưa xong vẽ kiểu đoạn chờ, ba ngày tới để trống. Chưa có lần cân, AI chờ bạn bấm.']},
+  {w:MISS, cap:['Sáng · tuần có 1 ngày chưa ghi','T4 không có cột (ô nét đứt, “—”). Điểm chia cho 7 ngày theo 08 §4, nên ngày chưa ghi kéo Calo, Nước, Ghi chép xuống: 69 “Cần cố gắng”.']},
+  {w:DONE, ai:'loading', scroll:true, cap:['Sáng · AI đang viết','Bong bóng đang gõ của chat; các thẻ số liệu không chờ AI.']},
+  {w:DONE, ai:'error', dark:true, scroll:true, cap:['Tối · AI lỗi','Bong bóng lỗi như S20, nói rõ số liệu vẫn đủ; Thử lại 48dp.']},
+  {w:DONE, ai:'stale', scroll:true, cap:['Sáng · dữ liệu đã đổi','Bạn sửa món cũ: nhận xét cũ vẫn đọc được (chữ phụ) và có nút “Tạo lại”. Không có API key thì thẻ AI ẩn hẳn.']},
+];
+
+const only = new URLSearchParams(location.search).get('f');
+if(only!==null){ document.body.innerHTML = phone(frames[+only]); document.body.style.cssText='margin:0;background:transparent'; document.body.classList.add('still'); const ph=document.querySelector('.phone'); ph.style.cssText+=';box-shadow:none;outline:none;border-radius:0'; }
+else document.getElementById('frames').innerHTML = frames.map(f=>`<figure>${phone(f)}<figcaption><b>${f.cap[0]}</b>${f.cap[1]}</figcaption></figure>`).join('');
+function settle(){
+  const list = only!==null ? [frames[+only]] : frames;
+  document.querySelectorAll('.phone').forEach((p,i)=>{ if(list[i]&&list[i].scroll){ const b=p.querySelector('.body'), a=p.querySelector('#ai'); b.scrollTop = a.offsetTop - b.offsetTop - 140; } });
+}
+settle(); document.fonts && document.fonts.ready.then(settle);
+const tg = document.getElementById('toggle');
+if(tg){ let all=false; const orig=[...document.querySelectorAll('.phone')].map(p=>p.classList.contains('dark'));
+  tg.onclick=()=>{ all=!all; document.querySelectorAll('.phone').forEach((p,i)=>p.classList.toggle('dark', all||orig[i])); tg.textContent = all?'Về giao diện gốc của từng khung':'Xem toàn bộ ở giao diện tối'; }; }
+</script>
+</body>
+</html>

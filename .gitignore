@@ -1,0 +1,42 @@
+# Bí mật & cấu hình máy
+local.properties
+*.jks
+*.keystore
+secrets.properties
+
+# Build
+/build
+/app/build
+build/
+.gradle/
+.kotlin/
+captures/
+*.apk
+*.aab
+*.hprof
+
+# Android Studio / IntelliJ — phần cá nhân
+.idea/workspace.xml
+.idea/caches/
+.idea/shelf/
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/dictionaries/
+.idea/libraries/
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+.idea/deploymentTargetSelector.xml
+.idea/deploymentTargetDropDown.xml
+.idea/androidTestResultsUserPreferences.xml
+.idea/appInsightsSettings.xml
+.idea/studiobot.xml
+.idea/gradle.xml
+.idea/other.xml
+*.iml
+
+# Hệ điều hành
+.DS_Store
+Thumbs.db
+
+# Ảnh chụp tạm khi so mockup
+/screen*.png

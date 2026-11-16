@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cali · S15 Nước trong ngày</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..500,0..1,0&display=swap" rel="stylesheet">
+<style>
+:root{ --page:#F3F2F7; --page-ink:#1B1B21; --page-muted:#5E5E68; --page-line:#DCDBE3; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; } }
+:root[data-theme="dark"]{ --page:#0E0E12; --page-ink:#E4E1E9; --page-muted:#A3A2AD; --page-line:#2C2C33; }
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--page);color:var(--page-ink);font-family:'Roboto Flex',Roboto,system-ui,sans-serif;font-variation-settings:"opsz" 14;line-height:1.5}
+::selection{background:#DEE0FF;color:#00105C}
+.wrap{max-width:1640px;margin:0 auto;padding:40px 16px 64px}
+header.doc{max-width:760px;margin:0 auto 32px;padding:0 4px}
+header.doc h1{font-size:28px;font-weight:600;letter-spacing:-.01em;font-variation-settings:"opsz" 32}
+header.doc p{color:var(--page-muted);margin-top:8px;font-size:15px;max-width:70ch}
+header.doc .toggle{margin-top:14px;height:40px;padding:0 16px;border-radius:20px;border:1px solid var(--page-line);color:var(--page-ink);font-size:14px;font-weight:600}
+.frames{display:flex;flex-wrap:wrap;gap:44px 32px;justify-content:center;align-items:flex-start}
+figure{display:flex;flex-direction:column;align-items:center;gap:14px}
+figcaption{font-size:13px;color:var(--page-muted);text-align:center;max-width:300px}
+figcaption b{display:block;color:var(--page-ink);font-weight:600;font-size:14px}
+
+/* ===== App tokens (DESIGN.md) ===== */
+.phone{
+  --primary:#4355B9; --on-primary:#FFFFFF; --primary-container:#DEE0FF; --on-primary-container:#00105C;
+  --secondary-container:#E0E1F9; --on-secondary-container:#181A2C;
+  --surface:#FBF8FF; --surface-low:#F5F2FA; --surface-cont:#EFEDF4; --surface-highest:#E4E1E9;
+  --on-surface:#1B1B21; --on-surface-var:#46464F; --outline:#767680; --outline-var:#C6C5D0;
+  --error:#BA1A1A; --error-container:#FFDAD6; --on-error-container:#410002;
+  --warn:#8A5100; --warn-container:#FFDCBE; --on-warn-container:#2C1600;
+  --inverse-surface:#303036; --inverse-on-surface:#F2EFF7; --inverse-primary:#BAC3FF;
+  --scrim:rgba(0,0,0,.32);
+  --ring-track:var(--surface-cont); --under:color-mix(in srgb,var(--primary) 70%,var(--surface-low));
+  width:360px;height:780px;border-radius:36px;overflow:hidden;position:relative;
+  background:var(--surface);color:var(--on-surface);
+  outline:1px solid var(--page-line);
+  box-shadow:0 1px 2px rgba(0,0,0,.06),0 12px 32px -8px rgba(20,20,40,.18);
+  font-feature-settings:"tnum" 1;display:flex;flex-direction:column;
+}
+.phone.tall{height:auto}
+.phone.dark{
+  --primary:#BAC3FF; --on-primary:#08218A; --primary-container:#293CA0; --on-primary-container:#DEE0FF;
+  --secondary-container:#43465A; --on-secondary-container:#E0E1F9;
+  --surface:#121318; --surface-low:#1B1B21; --surface-cont:#1F1F25; --surface-highest:#35343A;
+  --on-surface:#E4E1E9; --on-surface-var:#C6C5D0; --outline:#90909A; --outline-var:#46464F;
+  --error:#FFB4AB; --error-container:#93000A; --on-error-container:#FFDAD6;
+  --warn:#FFB86E; --warn-container:#693C00; --on-warn-container:#FFDCBE;
+  --inverse-surface:#E4E1E9; --inverse-on-surface:#303036; --inverse-primary:#4355B9;
+  --scrim:rgba(0,0,0,.5);
+  --ring-track:var(--surface-highest); --under:color-mix(in srgb,#BAC3FF 70%,#1B1B21);
+}
+.phone ::selection{background:var(--primary-container);color:var(--on-primary-container)}
+.t-display-l{font-size:57px;line-height:1.05;font-weight:650;letter-spacing:-.03em;font-variation-settings:"opsz" 72,"wdth" 92}
+.t-title-l{font-size:22px;line-height:1.27;font-weight:600;font-variation-settings:"opsz" 22}
+.t-title-m{font-size:16px;line-height:1.5;font-weight:600}
+.t-body-l{font-size:16px;line-height:1.5;font-weight:400}
+.t-body-m{font-size:14px;line-height:1.43;font-weight:500}
+.t-body-s{font-size:12px;line-height:1.33;font-weight:400}
+.t-label-l{font-size:14px;line-height:1.43;font-weight:600}
+.t-label-m{font-size:12px;line-height:1.33;font-weight:500}
+.t-label-s{font-size:11px;line-height:1.45;font-weight:500}
+.ms{font-family:'Material Symbols Rounded';font-weight:400;font-style:normal;font-size:24px;line-height:1;display:inline-block;font-variation-settings:"FILL" 0,"wght" 400,"opsz" 24;-webkit-font-smoothing:antialiased;user-select:none;flex:none}
+.ms.fill{font-variation-settings:"FILL" 1,"wght" 400,"opsz" 24}
+.ms.s14{font-size:14px}.ms.s16{font-size:16px}.ms.s18{font-size:18px}.ms.s20{font-size:20px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.muted{color:var(--on-surface-var)}
+
+/* bars: S33 child-screen app bar (back / date title / ‹ / ›) */
+.status,.appbar{transition:background-color .2s cubic-bezier(.2,0,0,1)}
+.phone.scrolled .status,.phone.scrolled .appbar{background:var(--surface-cont)}
+.status{height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:500;background:var(--surface)}
+.status .ms{font-size:16px}
+.appbar{height:64px;flex:none;display:grid;grid-template-columns:48px 1fr 48px 48px;align-items:center;padding:0 4px;background:var(--surface)}
+.icon-btn{width:48px;height:48px;border-radius:24px;display:grid;place-items:center;color:var(--on-surface-var);flex:none}
+.icon-btn:hover{background:color-mix(in srgb,var(--on-surface) 8%,transparent)}
+.icon-btn.off{color:color-mix(in srgb,var(--on-surface) 38%,transparent);cursor:default}
+.title{text-align:left;border-radius:12px;padding:2px 8px;min-height:48px;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.title b{display:block;white-space:nowrap}
+.title span{color:var(--on-surface-var);display:inline-flex;align-items:center}
+.title span .ms{font-size:18px}
+
+.body{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;padding:0 12px 16px;display:flex;flex-direction:column;gap:8px}
+.body::-webkit-scrollbar{display:none}
+.body>*{flex:none}
+.phone.tall .body{overflow:visible}
+
+.card{background:var(--surface-low);border-radius:16px;padding:14px 16px 16px}
+.card .hd{display:flex;align-items:center;gap:8px;min-height:24px}
+.card .hd h2{flex:1}
+.cmp{display:inline-flex;align-items:center;gap:4px;color:var(--on-surface-var)}
+.line{display:flex;gap:8px;align-items:flex-start;color:var(--on-surface-var)}
+.line .ms{color:var(--primary);margin-top:-1px}
+.line .ms.n{color:var(--on-surface-var)}
+.line b{color:var(--on-surface);font-weight:600}
+.rows{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+hr.div{border:0;border-top:1px solid color-mix(in srgb,var(--outline-var) 55%,transparent);margin:12px 0 0}
+
+/* hero: the day's total */
+.hero .meta{display:flex;align-items:center;gap:6px;color:var(--on-surface-var);min-height:24px}
+.hero .meta .ms{color:var(--primary)}
+.hero .meta.done{color:var(--on-surface);font-weight:600}
+.hero .top{display:flex;align-items:flex-end;gap:6px;margin-top:8px}
+.hero .num{line-height:.9}
+.hero .u{padding-bottom:4px;color:var(--on-surface-var)}
+.hero .chg{margin-left:auto;text-align:right}
+/* water lane: S12 lane grammar, one segment per drink, lane length = goal */
+.wlane{position:relative;margin-top:18px;height:10px;background:var(--surface-highest)}
+.wlane i{position:absolute;top:0;bottom:0;background:var(--primary);transform-origin:left center;animation:grow .7s cubic-bezier(.2,0,0,1) both;animation-delay:calc(120ms + var(--k) * 90ms)}
+.wlane .gm{position:absolute;right:-1px;top:-4px;bottom:-4px;width:2px;background:var(--on-surface)}
+.olane{position:relative;margin-top:4px;height:6px;border-radius:3px;background:color-mix(in srgb,var(--primary) 18%,transparent)}
+.olane i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--primary);transform-origin:left center;animation:grow .7s cubic-bezier(.2,0,0,1) both;animation-delay:calc(120ms + var(--k) * 90ms)}
+.olane .gm{position:absolute;right:-1px;top:-4px;bottom:0;width:2px;background:var(--on-surface)}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media (prefers-reduced-motion: reduce){ .wlane i,.olane i{animation:none} }
+body.still .wlane i,body.still .olane i{animation:none}
+.gl-lab{display:flex;justify-content:space-between;gap:8px;margin-top:8px;color:var(--on-surface-var)}
+.gl-lab b{color:var(--on-surface);font-weight:600}
+/* reminder row: a divided row of the hero, not a nested box (S33 stale row grammar) */
+.remind{display:grid;grid-template-columns:20px 1fr 20px;gap:12px;align-items:center;width:calc(100% + 16px);min-height:48px;margin:4px -8px -10px;padding:0 8px;border-radius:12px;text-align:left;color:var(--on-surface-var)}
+.remind .ms:first-child{color:var(--primary)}
+.remind b{color:var(--on-surface);font-weight:600}
+.remind:hover,.hero .chg:hover{background:color-mix(in srgb,var(--on-surface) 8%,transparent)}
+.hero .chg{min-height:48px;display:flex;flex-direction:column;align-items:flex-end;justify-content:flex-end;padding:0 4px 2px;margin-right:-4px;border-radius:12px}
+.hero .chg span{display:inline-flex;align-items:center;gap:3px;color:var(--on-surface-var)}
+
+/* drinks list: S31 record rows */
+.recs{margin-top:6px}
+.rec-wrap{position:relative;margin:0 -16px;overflow:hidden}
+.rec-bg{position:absolute;inset:0;background:var(--error-container);color:var(--on-error-container);display:flex;align-items:center;justify-content:flex-end;gap:6px;padding-right:20px}
+.rec{position:relative;width:100%;min-height:48px;display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:8px;padding:4px 16px;text-align:left;background:var(--surface-low)}
+.rec-wrap+.rec-wrap .rec{box-shadow:inset 0 1px 0 color-mix(in srgb,var(--outline-var) 55%,transparent)}
+.rec-wrap.swiped .rec{transform:translateX(-112px)}
+.rec .tm{font-weight:600;font-variation-settings:"wdth" 90}
+.rec .src{display:flex;flex-direction:column;color:var(--on-surface-var);min-width:0}
+.rec .src span{display:flex;align-items:center;gap:4px}
+.rec .src small{display:flex;align-items:center;gap:4px;color:var(--primary);font-weight:600}
+.rec .v{font-size:16px;font-weight:400;color:var(--on-surface-var)}
+.rec .v small{color:var(--on-surface-var);font-size:12px;font-weight:500;margin-left:3px}
+.rec:hover{background:color-mix(in srgb,var(--on-surface) 8%,var(--surface-low))}
+.empty-rec{display:flex;gap:10px;align-items:center;color:var(--on-surface-var);min-height:48px}
+.empty-rec i{width:14px;height:10px;outline:1.5px dashed var(--outline);outline-offset:-1.5px;flex:none}
+
+/* 7-day column chart: S35 water chart, 7 × 48dp */
+.chart{position:relative;margin:10px -16px 0}
+.plot{position:relative;height:var(--h);margin-top:22px}
+.goal{position:absolute;left:0;right:0;height:0;border-top:1px dashed var(--on-surface-var)}
+.cols{position:absolute;inset:0;display:grid;grid-template-columns:repeat(7,1fr)}
+.col{position:relative;height:100%}
+.col .stack{position:absolute;left:50%;bottom:0;width:20px;transform:translateX(-50%);display:flex;flex-direction:column-reverse;gap:3px}
+.col .stack i{display:block;width:100%;background:var(--primary)}
+.col .stack i.light{background:var(--under)}
+.col .stack i.pend{background:color-mix(in srgb,var(--primary) 40%,var(--ring-track));box-shadow:inset 0 0 0 1.5px var(--primary)}
+.col .v{position:absolute;left:0;right:0;text-align:center;transform:translateY(-100%);padding-bottom:3px;color:var(--on-surface-var);line-height:1.2}
+.col .v em{font-style:normal;background:var(--surface-low);padding:0 3px;border-radius:4px}
+.days{display:grid;grid-template-columns:repeat(7,1fr);border-top:1px solid var(--outline-var)}
+.days span{text-align:center;padding-top:6px;color:var(--on-surface-var);position:relative;height:26px}
+.days span.cur{color:var(--on-surface);font-weight:700}
+.days span.cur::after{content:"";position:absolute;left:50%;bottom:-2px;width:4px;height:4px;border-radius:2px;background:var(--primary);transform:translateX(-50%)}
+.days span.future{color:color-mix(in srgb,var(--on-surface) 38%,transparent)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;color:var(--on-surface-var)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;display:inline-block}
+.legend b{color:var(--on-surface);font-weight:600}
+.foot-note{color:var(--on-surface-var);text-align:center;padding:8px 8px 0}
+
+/* pinned quick-add dock (thumb zone) */
+.dock{flex:none;position:relative;background:var(--surface-cont);padding:12px 16px 32px}
+.dock::after{content:"";position:absolute;left:50%;bottom:8px;width:108px;height:4px;border-radius:2px;background:var(--on-surface);opacity:.4;transform:translateX(-50%)}
+.dock .note{display:flex;align-items:center;gap:6px;color:var(--on-surface-var);margin:-2px 4px 8px}
+.dock .btns{display:grid;grid-template-columns:1.25fr 1fr 48px;gap:8px}
+.btn{height:48px;border-radius:24px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:14px;padding:0 16px}
+.btn.fill{background:var(--primary);color:var(--on-primary)}
+.btn.tonal{background:var(--secondary-container);color:var(--on-secondary-container)}
+.btn.out{width:48px;padding:0;color:var(--primary);outline:1px solid var(--outline-var);outline-offset:-1px}
+
+.snack{position:absolute;left:12px;right:12px;bottom:100px;min-height:48px;border-radius:4px;background:var(--inverse-surface);color:var(--inverse-on-surface);display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 4px 0 16px;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.snack span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.snack button{height:48px;padding:0 12px;color:var(--inverse-primary);font-weight:600;font-size:14px;flex:none}
+
+/* sheets (S31 secondary sheet + OutlinedTextField) */
+.overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end}
+.scrim{position:absolute;inset:0;background:var(--scrim)}
+.psheet{position:relative;background:var(--surface-low);border-radius:28px 28px 0 0;padding:0 20px 28px}
+.overlay.kb .psheet{padding-bottom:12px}
+.handle{width:32px;height:4px;border-radius:2px;background:var(--outline-var);margin:12px auto 0}
+.psheet h3{margin-top:16px}
+.chips{display:flex;align-items:center;gap:8px;margin-top:16px;flex-wrap:wrap}
+.dchip{position:relative;height:32px;border-radius:8px;padding:0 4px 0 8px;display:inline-flex;align-items:center;gap:6px;background:var(--secondary-container);color:var(--on-secondary-container)}
+.dchip::after{content:"";position:absolute;inset:-8px 0}
+.chips .src{color:var(--on-surface-var);display:inline-flex;align-items:center;gap:4px}
+.otf{margin-top:20px}
+.otf .box{position:relative;height:56px;border-radius:4px;outline:1px solid var(--outline);outline-offset:-1px;display:flex;align-items:center;gap:8px;padding:0 16px}
+.otf .box.focus{outline:2px solid var(--primary);outline-offset:-2px}
+.otf .lbl{position:absolute;top:-9px;left:12px;padding:0 4px;background:var(--surface-low);color:var(--on-surface-var);font-size:12px;font-weight:500;line-height:18px}
+.otf .box.focus .lbl{color:var(--primary)}
+.otf .v{font-size:22px;font-weight:600;letter-spacing:-.01em}
+.otf .caret{width:2px;height:24px;background:var(--primary);margin-left:-6px}
+.otf .sfx{margin-left:auto;color:var(--on-surface-var)}
+.otf .sup{color:var(--on-surface-var);margin:4px 16px 0}
+.otf .sup b{color:var(--on-surface);font-weight:600}
+.otf .box.err{outline:2px solid var(--error);outline-offset:-2px}
+.otf .box.err .lbl{color:var(--error)}
+.otf .sup.err{color:var(--error);display:flex;align-items:flex-start;gap:4px}
+.otf .sup.err .ms{margin-top:-1px}
+.acts button.fill.off{background:color-mix(in srgb,var(--on-surface) 12%,transparent);color:color-mix(in srgb,var(--on-surface) 50%,transparent);cursor:default}
+.gs-num{margin-top:12px;display:flex;align-items:baseline;gap:6px}
+.acts{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
+.acts button{height:48px;padding:0 20px;border-radius:24px;font-weight:600;font-size:14px;color:var(--primary);display:inline-flex;align-items:center;gap:8px}
+.acts button.fill{background:var(--primary);color:var(--on-primary)}
+.acts .del{margin-right:auto;padding:0 16px 0 12px}
+.ime{flex:none;position:relative;background:var(--surface-cont);padding:6px 6px 22px}
+.ime .tag{color:var(--on-surface-var);text-align:center;padding:2px 0 6px}
+.ime .keys{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.ime .keys > span{height:44px;border-radius:10px;background:var(--surface);display:grid;place-items:center;font-size:20px;font-weight:500}
+.ime .keys > span.k2{background:var(--surface-highest)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc">
+    <h1>S15 · Nước trong ngày</h1>
+    <p>Màn con mở từ ô Nước của S10 (hoặc nút “Sửa” trên ô Nước của S33). Một ngày nước là thanh làn của S12 duỗi theo mục tiêu: mỗi lần uống là một đoạn primary đầu vuông, khe 3dp, toàn chiều dài làn là mục tiêu 2.600 ml (02 §8, §10: 75 kg × 35 = 2.625 → 2.600). Uống quá mục tiêu không phải trạng thái xấu: phần trên mục tiêu tách sang làn riêng 6dp nhưng vẫn primary, chữ trung tính “Đạt mục tiêu · +N ml”, không hổ phách, không đỏ. Từng lần uống đọc nhỏ và nhạt như từng lần cân của S31; số lớn là tổng ngày. Nhắc tiếp theo 06 §4: max(lần uống gần nhất, lần nhắc trước) + 90 phút, kẹp trong khung 07:00–22:00; ngoài khung hoặc đã đủ thì 07:00 hôm sau. Mục tiêu chỉ nói một lần (vạch cuối làn + “của 2.600 ml”); cách tính nằm sau một chạm. Nút +250 / +500 ghim ở chân, trong vùng ngón cái. Lịch giả như các màn khác: 13/11/2026 là Thứ Năm, bây giờ 12:40. Số liệu là dữ liệu mẫu, khớp S10 (1.250 / 2.600 ml) và S33 (12/11: 2.700 ml).</p>
+    <button class="toggle" id="toggle">Xem toàn bộ ở giao diện tối</button>
+  </header>
+  <div class="frames" id="frames"></div>
+</div>
+<script>
+const GOAL = 2600, LANE_W = 304;
+const fmt = n => Math.round(n).toLocaleString('vi-VN');
+const L = v => (v/1000).toLocaleString('vi-VN',{minimumFractionDigits:1,maximumFractionDigits:2});
+const ic = (n, cls='') => `<span class="ms ${cls}">${n}</span>`;
+const hm = m => String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+const mins = t => { const [h,m] = t.split(':').map(Number); return h*60+m; };
+const SRC = {app:['Trong app','water_drop'], noti:['Từ thông báo','notifications'], widget:['Từ widget','widgets']};
+
+/* ---------- data (04 water_entry: time, amount_ml, source) ---------- */
+const TODAY_1240 = [['07:05',250,'app'],['08:40',500,'app'],['10:20',250,'noti'],['12:35',250,'app']];          // 1.250 (S10)
+const TODAY_2130 = [...TODAY_1240,['14:05',250,'noti'],['15:50',250,'app'],['17:30',500,'app'],['19:40',250,'noti'],['21:10',350,'app']]; // 2.850
+const DAY_1211  = [['06:50',250,'app'],['08:15',500,'app'],['10:00',250,'noti'],['11:40',250,'app'],['13:30',500,'app'],['15:10',250,'noti'],['17:00',250,'app'],['19:20',450,'app']]; // 2.700 (S33, S35 T4)
+/* week 10/11 – 16/11 (S35 in-progress week; today = live figure) */
+const WEEK = (today) => [{d:'T2',v:2600},{d:'T3',v:2400},{d:'T4',v:2700},{d:'T5',v:today,today:true},{d:'T6',future:true},{d:'T7',future:true},{d:'CN',future:true}];
+
+const sum = rs => rs.reduce((s,r)=>s+r[1],0);
+function crossing(rs){ let c=0; for(const r of rs){ if(c<GOAL && c+r[1]>=GOAL) return r[0]; c+=r[1]; } return null; }
+/* 06 §4: next = max(last drink, last reminder) + interval, clamped to the window; outside the window or goal met → window start tomorrow */
+const WIN = ['07:00','22:00'], INTERVAL = 90;
+function nextReminder(rs, lastRemind){
+  if(sum(rs)>=GOAL) return {t:WIN[0], tomorrow:true};
+  const n = Math.max(mins(rs[rs.length-1][0]), lastRemind?mins(lastRemind):0) + INTERVAL;
+  if(n>mins(WIN[1])) return {t:WIN[0], tomorrow:true};
+  return {t:hm(Math.max(n, mins(WIN[0]))), tomorrow:false};
+}
+
+/* ---------- pieces ---------- */
+const status = t => `<div class="status"><span>${t}</span><span>${ic('signal_cellular_alt')} ${ic('wifi')} ${ic('battery_5_bar')}</span></div>`;
+function appbar(f){
+  const past = !!f.past;
+  const b = past ? `Nước · ${f.past.date}` : 'Nước · Hôm nay';
+  const s = past ? `${f.past.dow} · ${f.past.rel}` : 'Thứ Năm, 13/11';
+  const next = past ? `<button class="icon-btn" aria-label="Ngày sau: hôm nay">${ic('chevron_right')}</button>` : `<button class="icon-btn off" aria-disabled="true" aria-label="Ngày sau (đang ở hôm nay)">${ic('chevron_right')}</button>`;
+  return `<div class="appbar"><button class="icon-btn" aria-label="Quay lại">${ic('arrow_back')}</button><button class="title" aria-label="${b}, ${s}. Chọn ngày khác"><b class="t-title-l">${b}</b><span class="t-label-m">${s}${ic('arrow_drop_down')}</span></button><button class="icon-btn" aria-label="Ngày trước">${ic('chevron_left')}</button>${next}</div>`;
+}
+
+function lane(rs){
+  const px = ml => ml/GOAL*LANE_W;
+  let c = 0, segs = '', over = 0;
+  rs.forEach((r,k)=>{
+    const a = Math.min(c, GOAL), b = Math.min(c+r[1], GOAL);
+    if(b>a){ const x = px(a), w = Math.max(4, px(b-a) - (b<GOAL?3:0)); segs += `<i style="--k:${k};left:${x}px;width:${w}px"></i>`; }
+    over += Math.max(0, c+r[1]-GOAL) - Math.max(0, c-GOAL);
+    c += r[1];
+  });
+  const total = sum(rs);
+  const aria = `${rs.length} lần uống, tổng ${fmt(total)} trên ${fmt(GOAL)} ml${over?`, trên mục tiêu ${fmt(over)} ml`:''}`;
+  return `<div role="img" aria-label="${aria}"><div class="wlane">${segs}<span class="gm" aria-hidden="true"></span></div>${over?`<div class="olane"><i style="--k:${rs.length};width:${Math.max(6,px(over))}px"></i><span class="gm" aria-hidden="true"></span></div>`:''}</div>`;
+}
+
+function hero(f){
+  const rs = f.live, total = sum(rs), left = GOAL-total, pct = Math.round(total/GOAL*100), done = total>=GOAL, at = crossing(rs);
+  const meta = done
+    ? `<div class="meta done t-label-l">${ic('check_circle','s18 fill')}Đạt mục tiêu · +${fmt(total-GOAL)} ml</div>`
+    : `<div class="meta t-label-m">${ic('water_drop','s16 fill')}Đã uống ${f.past?'ngày này':'hôm nay'} · ${rs.length} lần</div>`;
+  const labs = done
+    ? `<span>Đạt lúc <b>${at}</b></span>`
+    : `<span>Còn <b>${fmt(left)}</b> ml · ~${Math.ceil(left/250)} cốc 250 ml</span>`;
+  /* one tappable 48dp row → S43 Nước & nhắc nhở; no row for a past day */
+  let remind = '';
+  if(!f.past){
+    const nr = nextReminder(rs, f.lastRemind);
+    const [icn, txt] = f.noPerm ? ['notifications_off', `Không nhắc được · <b>chưa có quyền</b>`]
+      : done ? ['notifications_paused', `Đủ mục tiêu · nhắc lại <b>${nr.t}</b> mai`]
+      : ['notifications', `Nhắc tiếp lúc <b>${nr.t}</b>${nr.tomorrow?' mai':''}`];
+    remind = `<hr class="div"><button class="remind" aria-label="${txt.replace(/<[^>]+>/g,'')}. Mở Nước và nhắc nhở">${ic(icn,'s20')}<span class="t-body-m">${txt}</span>${ic('chevron_right','s20')}</button>`;
+  }
+  return `<section class="card hero${f.past?' nofoot':''}" aria-label="Đã uống ${fmt(total)} trên ${fmt(GOAL)} ml">
+    ${meta}
+    <div class="top"><span class="num t-display-l">${fmt(total)}</span><span class="u t-title-m">ml</span><button class="chg" aria-label="${pct}% của mục tiêu ${fmt(GOAL)} ml. Xem cách tính mục tiêu"><b class="t-title-m">${pct}%</b><span class="t-label-m">của ${fmt(GOAL)} ml${ic('info','s14')}</span></button></div>
+    ${lane(rs)}
+    <div class="gl-lab t-label-m">${labs}</div>
+    ${remind}
+  </section>`;
+}
+
+function list(f){
+  const rs = f.recs, at = crossing(f.live);
+  let c = 0;
+  const rows = rs.map(([t,v,s])=>{
+    c += v;
+    const sw = f.swiped===t;
+    const tag = t===at ? `<small class="t-label-s">${ic('check_circle','s14 fill')}Đạt mục tiêu · ${fmt(c)} ml</small>` : '';
+    return `<div class="rec-wrap${sw?' swiped':''}">${sw?`<div class="rec-bg t-label-l">${ic('delete','s20')}Xoá</div>`:''}<button class="rec" aria-label="${t}: ${fmt(v)} ml, ${SRC[s][0].toLowerCase()}. Sửa lần uống"><span class="tm t-body-m">${t}</span><span class="src"><span class="t-body-s">${ic(SRC[s][1],'s16')}${SRC[s][0]}</span>${tag}</span><span class="v">${fmt(v)}<small>ml</small></span></button></div>`;
+  }).join('');
+  return `<section class="card" id="list"><div class="hd"><h2 class="t-title-m">Các lần uống</h2></div><div class="recs">${rows}</div></section>`;
+}
+
+function week(f){
+  const days = WEEK(f.todayTotal), cur = f.past ? 'T4' : 'T5';
+  const h = 96, top = 3200, y = v => v/top*h;
+  const cols = days.map(d=>{
+    if(d.future) return `<div class="col" aria-hidden="true"></div>`;
+    const c = d.today ? 'pend' : d.v>=GOAL ? '' : 'light';
+    const st = d.today ? 'hôm nay, đang uống' : d.v>=GOAL ? 'đạt' : 'chưa đạt';
+    return `<button class="col" aria-label="${d.d}: ${L(d.v)} lít, ${st}. Mở nước ngày này"><span class="stack"><i class="${c}" style="height:${y(d.v)}px"></i></span><span class="v t-label-s" style="top:${h-y(d.v)}px"><em>${L(d.v)}</em></span></button>`;
+  }).join('');
+  const past = days.filter(d=>!d.future && !d.today), hit = past.filter(d=>d.v>=GOAL).length;
+  return `<section class="card"><div class="hd"><h2 class="t-title-m">Tuần này · 10/11 – 16/11</h2><span class="cmp t-label-m">đạt ${hit}/${past.length} ngày</span></div>
+    <div class="chart"><div class="plot" style="--h:${h}px"><div class="goal" style="bottom:${y(GOAL)}px"></div><div class="cols">${cols}</div></div>
+    <div class="days t-label-m">${days.map(d=>`<span class="${d.d===cur?'cur':d.future?'future':''}">${d.d}</span>`).join('')}</div></div>
+    <div class="legend t-label-m"><span><i style="background:var(--primary)"></i>Đạt <b>${hit}</b></span><span><i style="background:var(--under)"></i>Chưa đạt <b>${past.length-hit}</b></span><span><i style="background:color-mix(in srgb,var(--primary) 40%,var(--ring-track));box-shadow:inset 0 0 0 1.5px var(--primary)"></i>Hôm nay</span><span><i style="height:0;border-top:1px dashed var(--on-surface-var)"></i>Mục tiêu ${L(GOAL)} L</span></div>
+  </section>`;
+}
+
+function dock(f){
+  const note = f.past ? `<p class="note t-body-s">${ic('history','s16')}Ghi cho ${f.past.date} lúc 14:30 · chạm lần uống để đổi giờ</p>` : '';
+  const day = f.past ? ` cho ngày ${f.past.date}` : '';
+  return `<div class="dock">${note}<div class="btns"><button class="btn fill" aria-label="Thêm 250 ml${day}">${ic('water_drop','s20 fill')}+250 ml</button><button class="btn tonal" aria-label="Thêm 500 ml${day}">+500 ml</button><button class="btn out" aria-label="Thêm lượng khác${day}">${ic('add','s20')}</button></div></div>`;
+}
+
+const ime = `<div class="ime" aria-hidden="true"><p class="tag t-label-m">Bàn phím số của hệ thống</p><div class="keys">${['1','2','3','4','5','6','7','8','9','','0',ic('backspace')].map((k,i)=>`<span class="${i===9||i===11?'k2':''}">${k}</span>`).join('')}</div></div>`;
+
+const MIN_ML = 10, MAX_ML = 3000;
+function sheet(o, rs, date){
+  const total = sum(rs), after = o.edit ? total - o.edit[1] + o.v : total + o.v;
+  const err = o.v<MIN_ML || o.v>MAX_ML;
+  const sup = err
+    ? `<p class="sup err t-body-s">${ic('error','s18')}Nhập từ ${fmt(MIN_ML)} đến ${fmt(MAX_ML)} ml</p>`
+    : `<p class="sup t-body-s">${fmt(MIN_ML)}–${fmt(MAX_ML)} ml · sau khi lưu <b>${fmt(after)} / ${fmt(GOAL)} ml</b>${o.edit?` (${o.v<o.edit[1]?'−':'+'}${fmt(Math.abs(o.v-o.edit[1]))})`:''}</p>`;
+  const chip = o.edit
+    ? `<button class="dchip t-label-l" aria-label="Đổi giờ uống, đang là ${o.edit[0]}">${ic('schedule','s18')}${o.edit[0]}${ic('arrow_drop_down')}</button><span class="src t-body-s">${ic(SRC[o.edit[2]][1],'s16')}${SRC[o.edit[2]][0]} · ${date}</span>`
+    : `<button class="dchip t-label-l" aria-label="Đổi giờ uống, đang là bây giờ 12:40">${ic('schedule','s18')}Bây giờ · 12:40${ic('arrow_drop_down')}</button>`;
+  const kb = !err;   // error shows on blur: keyboard closed, no caret
+  return `<div class="overlay${kb?' kb':''}"><div class="scrim"></div><div class="psheet" role="dialog" aria-label="${o.edit?'Sửa lần uống':'Thêm nước'}"><div class="handle"></div>
+    <h3 class="t-title-l">${o.edit?'Sửa lần uống':'Thêm lượng khác'}</h3>
+    <div class="chips">${chip}</div>
+    <div class="otf"><div class="box ${err?'err':'focus'}"><span class="lbl">Lượng nước</span><span class="v">${fmt(o.v)}</span>${err?'':'<i class="caret"></i>'}<span class="sfx t-body-m">ml</span></div>${sup}</div>
+    <div class="acts">${o.edit?`<button class="del" aria-label="Xoá lần uống ${o.edit[0]}">${ic('delete','s20')}Xoá</button>`:''}<button>Huỷ</button><button class="fill${err?' off':''}"${err?' aria-disabled="true"':''}>${o.edit?'Lưu':err?'Thêm':`Thêm ${fmt(o.v)} ml`}</button></div>
+  </div>${kb?ime:''}</div>`;
+}
+
+function goalSheet(){
+  return `<div class="overlay"><div class="scrim"></div><div class="psheet" role="dialog" aria-label="Mục tiêu nước"><div class="handle"></div>
+    <h3 class="t-title-l">Mục tiêu nước</h3>
+    <p class="gs-num"><b class="t-title-l">${fmt(GOAL)}</b> <span class="t-label-m muted">ml mỗi ngày · tự tính</span></p>
+    <div class="rows t-body-s">
+      <p class="line">${ic('calculate','s18')}<span>75,0 kg × 35 ml = <b>2.625 ml</b>, làm tròn 100 ml → <b>${fmt(GOAL)} ml</b>. Vận động vừa nên không cộng thêm.</span></p>
+      <p class="line">${ic('monitor_weight','s18')}<span>Theo lần cân 21/10 (75,0 kg), cùng số với mục tiêu calo đang dùng.</span></p>
+      <p class="line">${ic('event_available','s18')}<span>Uống từ mục tiêu trở lên là <b>ngày đạt nước</b> trong tổng kết tuần.</span></p>
+    </div>
+    <div class="acts"><button>Đóng</button><button class="fill">Đổi mục tiêu</button></div>
+  </div></div>`;
+}
+
+function phone(f){
+  f = {lastRemind:'10:10', ...f, live: f.recs};
+  const body = [hero(f), list(f), week(f), `<p class="foot-note t-body-s">Chạm một lần uống để sửa giờ hoặc lượng; vuốt trái để xoá.</p>`].join('');
+  const snack = f.snack ? `<div class="snack t-body-m" role="status"><span>${f.snack}</span><button>Hoàn tác</button></div>` : '';
+  const sh = f.sheet==='goal' ? goalSheet() : f.sheet ? sheet(f.sheet, f.live, f.past ? f.past.date : '13/11') : '';
+  return `<div class="phone${f.dark?' dark':''}${f.tall?' tall':''}${f.scroll?' scrolled':''}">${status(f.time||'12:40')}${appbar(f)}<div class="body">${body}</div>${dock(f)}${snack}${sh}</div>`;
+}
+
+const DELETED = TODAY_1240.filter(r=>r[0]!=='10:20');
+const frames = [
+  {recs:TODAY_1240, todayTotal:1250, tall:true, cap:['Sáng · hôm nay 12:40, toàn trang','1.250 / 2.600 ml như ô Nước của S10: 48%, còn 1.350 ml (~6 cốc 250 ml). Bốn lần uống là bốn đoạn của làn, khe 3dp; làn dài đúng bằng mục tiêu, nên mục tiêu chỉ nói một lần (vạch + “của 2.600 ml”, chạm để xem cách tính). Nhắc tiếp 14:05 = max(uống 12:35, nhắc 10:10) + 90 phút (06 §4); cả hàng 48dp mở S43.']},
+  {recs:TODAY_1240, todayTotal:1250, dark:true, cap:['Tối · màn đầu','Tổng ngày là số Display Large duy nhất; từng lần uống là Body Large on-surface-var như từng lần cân của S31. Nguồn ghi bằng chữ (Trong app / Từ thông báo, theo water_entry.source). +250 / +500 / + lượng khác ghim ở chân, trong vùng ngón cái; bút chì chỉ dành cho “Sửa”.']},
+  {recs:TODAY_2130, todayTotal:2850, time:'21:30', tall:true, cap:['Sáng · 21:30, đạt và trên mục tiêu, toàn trang','Uống quá mục tiêu không phải trạng thái xấu: làn chính đầy tới vạch, phần +250 ml chạy làn riêng 6dp bên dưới nhưng vẫn primary; chữ trung tính “Đạt mục tiêu · +250 ml”, không hổ phách, không đỏ. Hàng 21:10 ghi “Đạt mục tiêu · 2.850 ml”. Đủ mục tiêu nên nhắc lại 07:00 mai.']},
+  {recs:TODAY_1240, todayTotal:1250, sheet:{v:330}, cap:['Sáng · thêm lượng khác','Nút outlined + ở chân mở sheet phụ: chip giờ (mặc định bây giờ, chạm mở TimeInput của S12) và ô ml với bàn phím số. Dòng hỗ trợ nêu khoảng 10–3.000 ml và hệ quả trước khi lưu: 1.580 / 2.600 ml.']},
+  {recs:TODAY_1240, todayTotal:1250, sheet:{v:5000}, cap:['Sáng · lỗi khoảng khi rời ô','5.000 ml ngoài khoảng: lỗi chỉ hiện khi rời ô (bàn phím đã đóng), viền 2dp error, nhãn error, dòng hỗ trợ có biểu tượng error “Nhập từ 10 đến 3.000 ml”; nút Thêm tắt. Trong lúc gõ chỉ tắt nút, không báo lỗi.']},
+  {recs:TODAY_1240, todayTotal:1250, dark:true, sheet:{v:400, edit:['08:40',500,'app']}, cap:['Tối · sửa lần uống','Chạm hàng 08:40 mở cùng sheet ở chế độ sửa: chip giờ 08:40, nguồn và ngày lấy từ bản ghi, 500 → 400 ml cho thấy −100. “Xoá” là nút chữ primary bên trái (đỏ không phải màu xoá); xoá xong có snackbar Hoàn tác.']},
+  {recs:TODAY_1240, todayTotal:1250, swiped:'10:20', cap:['Sáng · đang vuốt xoá','Vuốt trái hàng 10:20: nền error-container 112dp với “Xoá”. Chưa thả nên chưa xoá: tổng vẫn 1.250 ml, 48%, không snackbar.']},
+  {recs:DELETED, todayTotal:1000, time:'12:41', snack:'Đã xoá 250 ml · 10:20', cap:['Sáng · vừa xoá','Thả quá ngưỡng là xoá, không hộp thoại: còn 3 hàng; tổng, phần trăm, đoạn làn và cột hôm nay tính lại ngay (1.000 ml, 38%, còn 1.600). Snackbar + Hoàn tác nổi trên chân ghim. Nhắc tiếp vẫn 14:05 (lần uống gần nhất vẫn 12:35).']},
+  {recs:DAY_1211, todayTotal:1250, past:{date:'12/11', dow:'Thứ Tư', rel:'Hôm qua'}, time:'12:41', cap:['Sáng · ngày đã qua 12/11 (‹)','2.700 ml như S33 và cột T4 của S35: đạt lúc 19:20, +100 ml trên làn riêng. Ngày đã qua không có hàng nhắc. Thêm cho ngày đã qua ghi lúc 14:30 (giữa khung 07:00–22:00), sửa được. › về hôm nay; cột T4 mang dấu ngày đang xem.']},
+  {recs:TODAY_1240, todayTotal:1250, noPerm:true, cap:['Sáng · nhắc không chạy được','Bật nhắc nhưng chưa có quyền thông báo (Android 13+): cùng hàng 48dp của thẻ, đổi biểu tượng chuông gạch và chữ “Không nhắc được · chưa có quyền”; chạm mở S43, nơi kiểm tra và xin quyền. Không lồng hộp, không hổ phách.']},
+  {recs:TODAY_1240, todayTotal:1250, sheet:'goal', cap:['Sáng · chạm “của 2.600 ml”','Cách tính mục tiêu nằm sau một chạm, không phải chữ thường trực: 75,0 kg × 35 = 2.625 → 2.600 ml (02 §8), theo lần cân 21/10 như mục tiêu calo. “Đổi mục tiêu” mở S43.']},
+];
+
+
+const only = new URLSearchParams(location.search).get('f');
+if(only!==null){ document.body.innerHTML = phone(frames[+only-1]); document.body.style.cssText='margin:0;background:transparent'; document.body.classList.add('still'); const ph=document.querySelector('.phone'); ph.style.cssText+=';box-shadow:none;outline:none;border-radius:0'; }
+else document.getElementById('frames').innerHTML = frames.map(f=>`<figure>${phone(f)}<figcaption><b>${f.cap[0]}</b>${f.cap[1]}</figcaption></figure>`).join('');
+const tg = document.getElementById('toggle');
+if(tg){ let all=false; const orig=[...document.querySelectorAll('.phone')].map(p=>p.classList.contains('dark'));
+  tg.onclick=()=>{ all=!all; document.querySelectorAll('.phone').forEach((p,i)=>p.classList.toggle('dark', all||orig[i])); tg.textContent = all?'Về giao diện gốc của từng khung':'Xem toàn bộ ở giao diện tối'; }; }
+</script>
+</body>
+</html>
