@@ -3,6 +3,8 @@
 
     <!-- Nhắc uống nước (Android 13+), hỏi ở S03 / S43. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- GĐ5: đặt lại lịch nhắc nước sau khi khởi động lại máy (06 §4). -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
@@ -34,5 +36,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- GĐ5: nhắc uống nước (06 §4). -->
+        <receiver android:name=".core.notify.WaterAlarmReceiver" android:exported="false" />
+        <receiver android:name=".core.notify.WaterActionReceiver" android:exported="false" />
+        <receiver android:name=".core.notify.BootReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

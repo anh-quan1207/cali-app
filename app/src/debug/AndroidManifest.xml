@@ -13,5 +13,7 @@
         </activity>
         <!-- Chỉ bản debug: nạp bộ số mockup để chụp so ảnh (GĐ3). -->
         <activity android:name=".feature.debug.SeedActivity" android:exported="true" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- Chỉ bản debug: rút ngắn chu kỳ nhắc nước để thử (GĐ5, 09 §6 mục 10). -->
+        <receiver android:name=".feature.debug.DebugWaterReceiver" android:exported="true" />
     </application>
 </manifest>

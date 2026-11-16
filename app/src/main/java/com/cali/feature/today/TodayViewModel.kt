@@ -10,6 +10,8 @@ import com.cali.core.data.prefs.SettingsRepository
 import com.cali.core.data.repo.DayData
 import com.cali.core.data.repo.DiaryRepository
 import com.cali.core.data.repo.WeightRepository
+import com.cali.core.data.db.entity.WaterSource
+import com.cali.core.data.repo.WaterRepository
 import com.cali.core.ui.UiMessage
 import com.cali.core.ui.UndoCenter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,10 +29,14 @@ import javax.inject.Inject
 
 data class WeightTile(val latest: WeightEntryEntity, val previous: WeightEntryEntity?)
 
+/** Ô Nước (S10 mục 6, GĐ5): tổng ngày đang xem / mục tiêu, hai nút nhanh. */
+data class WaterTile(val totalMl: Int, val goalMl: Int, val cupSmall: Int, val cupLarge: Int)
+
 data class TodayUiState(
     val today: LocalDate,
     val day: DayData,
     val weight: WeightTile?,
+    val water: WaterTile,
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -39,6 +45,7 @@ class TodayViewModel @Inject constructor(
     private val diary: DiaryRepository,
     weights: WeightRepository,
     settings: SettingsRepository,
+    private val water: WaterRepository,
     private val undo: UndoCenter,
 ) : ViewModel() {
 
@@ -48,10 +55,14 @@ class TodayViewModel @Inject constructor(
         selected.flatMapLatest { diary.observeDay(it) },
         weights.observeAll().map { all -> all.firstOrNull()?.let { WeightTile(it, all.getOrNull(1)) } },
         settings.settings,
-    ) { day, w, s ->
+        selected.flatMapLatest { water.observeDay(it) },
+    ) { day, w, s, wd ->
         diary.resolver = com.cali.core.calc.MealTypeResolver(s.mealTimes)
-        TodayUiState(diary.today(), day, w)
+        TodayUiState(diary.today(), day, w, WaterTile(wd.totalMl, wd.goalMl, s.waterCupSmallMl, s.waterCupLargeMl))
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+
+    /** +nhỏ / +lớn trên ô Nước: ghi cho ngày đang xem (hôm nay = bây giờ, ngày cũ = 14:30). */
+    fun addWater(ml: Int) = viewModelScope.launch { water.add(selected.value, ml, null, WaterSource.APP) }
 
     fun goTo(date: LocalDate) {
         if (!date.isAfter(diary.today())) selected.value = date

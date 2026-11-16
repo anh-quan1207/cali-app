@@ -55,6 +55,8 @@ import com.cali.feature.food.LogFoodRoute
 import com.cali.feature.food.MyFoodEditRoute
 import com.cali.feature.food.MyFoodsRoute
 import com.cali.feature.settings.DataRoute
+import com.cali.feature.settings.WaterSettingsRoute
+import com.cali.feature.water.WaterRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -73,6 +75,9 @@ import javax.inject.Inject
 @Serializable object MyFoodsDest
 @Serializable data class MyFoodEditDest(val id: Long = -1)
 @Serializable object DataDest
+// GĐ5
+@Serializable data class WaterDest(val date: String)
+@Serializable object WaterSettingsDest
 @Serializable object AiSettingsDest
 @Serializable object SystemPromptDest
 
@@ -115,12 +120,16 @@ fun AppNavHost(vm: AppViewModel = hiltViewModel()) {
                 onOpenMyFoods = { nav.navigate(MyFoodsDest) },
                 onQuickAdd = { d, m -> nav.navigate(LogFoodDest(d.toString(), m?.name.orEmpty())) },
                 onEditFood = { nav.navigate(EditFoodDest(it)) },
+                onOpenWater = { nav.navigate(WaterDest(it.toString())) },
+                onOpenWaterSettings = { nav.navigate(WaterSettingsDest) },
                 onOpenAi = { nav.navigate(AiSettingsDest) },
                 onCapture = { nav.navigate(CaptureDest) },
                 onOpenChatCard = { nav.navigate(LogFoodDest(java.time.LocalDate.now().toString(), chatId = it)) },
                 prefill = vm.chatPrefill,
             )
         }
+        composable<WaterDest> { WaterRoute(onBack = { nav.popBackStack() }, onOpenSettings = { nav.navigate(WaterSettingsDest) }) }
+        composable<WaterSettingsDest> { WaterSettingsRoute(onBack = { nav.popBackStack() }) }
         composable<ProfileDest> { ProfileRoute(onBack = { nav.popBackStack() }) }
         composable<LogFoodDest> {
             LogFoodRoute(
@@ -174,6 +183,8 @@ private fun MainShell(
     onOpenMyFoods: () -> Unit,
     onQuickAdd: (java.time.LocalDate, com.cali.core.calc.model.MealType?) -> Unit,
     onEditFood: (Long) -> Unit,
+    onOpenWater: (java.time.LocalDate) -> Unit,
+    onOpenWaterSettings: () -> Unit,
     onOpenAi: () -> Unit,
     onCapture: () -> Unit,
     onOpenChatCard: (Long) -> Unit,
@@ -203,10 +214,10 @@ private fun MainShell(
     ) { pad ->
         Box(Modifier.padding(pad).fillMaxSize()) {
             when (Tab.entries[tab]) {
-                Tab.TODAY -> TodayRoute(onQuickAdd = onQuickAdd, onEditFood = onEditFood, onCapture = onCapture, onOpenChat = { tab = Tab.CHAT.ordinal })
+                Tab.TODAY -> TodayRoute(onQuickAdd = onQuickAdd, onEditFood = onEditFood, onOpenWater = onOpenWater, onCapture = onCapture, onOpenChat = { tab = Tab.CHAT.ordinal })
                 Tab.CHAT -> com.cali.feature.chat.ChatRoute(onOpenCard = onOpenChatCard, onOpenAiSettings = onOpenAi, onOpenToday = { tab = Tab.TODAY.ordinal })
                 Tab.HISTORY -> Placeholder(stringResource(R.string.placeholder_history))
-                Tab.SETTINGS -> SettingsRoute(onOpenProfile = onOpenProfile, onOpenData = onOpenData, onOpenMyFoods = onOpenMyFoods, onOpenAi = onOpenAi)
+                Tab.SETTINGS -> SettingsRoute(onOpenProfile = onOpenProfile, onOpenData = onOpenData, onOpenMyFoods = onOpenMyFoods, onOpenWater = onOpenWaterSettings, onOpenAi = onOpenAi)
             }
         }
     }

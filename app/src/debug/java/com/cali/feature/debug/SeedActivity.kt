@@ -18,7 +18,10 @@ import com.cali.core.data.repo.MyFoodRepository
 import com.cali.core.data.repo.NewFood
 import com.cali.core.data.repo.ProfileInput
 import com.cali.core.data.repo.ProfileRepository
+import com.cali.core.data.db.entity.WaterSource
+import com.cali.core.data.repo.WaterRepository
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -37,6 +40,7 @@ class SeedActivity : ComponentActivity() {
     @Inject lateinit var diary: DiaryRepository
     @Inject lateinit var myFoods: MyFoodRepository
     @Inject lateinit var settings: SettingsRepository
+    @Inject lateinit var water: WaterRepository
 
     private data class F(val t: String, val meal: MealType, val n: String, val p: String, val k: Double, val m: List<Double>, val src: FoodSource)
 
@@ -60,6 +64,7 @@ class SeedActivity : ComponentActivity() {
         }
         val day = intent.getStringExtra("day") ?: "ok"
         val withMyFoods = intent.getBooleanExtra("myfoods", false)
+        val waterMode = intent.getStringExtra("water")
         lifecycleScope.launch {
             val today = LocalDate.now()
             if (!settings.current().onboardingDone) {
@@ -95,8 +100,34 @@ class SeedActivity : ComponentActivity() {
                     repeat(20 - i) { db.myFoodDao().markUsed(id, System.currentTimeMillis() - i * 3_600_000L) }
                 }
             }
+            if (waterMode != null) seedWater(today, waterMode)
             Toast.makeText(this@SeedActivity, "Đã nạp dữ liệu mẫu: $day", Toast.LENGTH_SHORT).show()
             finish()
+        }
+    }
+
+    /**
+     * GĐ5 — nước theo mockup s15: `--es water today` (1.250 ml), `evening` (2.850 ml), `none`.
+     * Luôn nạp kèm 3 ngày trước: hôm qua 2.700 ml (s15 f9), rồi 2.400 và 2.600.
+     */
+    private suspend fun seedWater(today: LocalDate, mode: String) {
+        val dao = db.waterEntryDao()
+        val days = (0L..3L).map { today.minusDays(it) }
+        days.forEach { d -> dao.observeByDate(d).first().forEach { dao.delete(it) } }
+        val todayFirst = listOf("07:05" to 250 to WaterSource.APP, "08:40" to 500 to WaterSource.APP, "10:20" to 250 to WaterSource.NOTIFICATION, "12:35" to 250 to WaterSource.APP)
+        val evening = todayFirst + listOf("14:05" to 250 to WaterSource.NOTIFICATION, "15:50" to 250 to WaterSource.APP, "17:30" to 500 to WaterSource.APP, "19:40" to 250 to WaterSource.NOTIFICATION, "21:10" to 350 to WaterSource.APP)
+        val yesterday = listOf("06:50" to 250, "08:15" to 500, "10:00" to 250, "11:40" to 250, "13:30" to 500, "15:10" to 250, "17:00" to 250, "19:20" to 450)
+            .mapIndexed { i, p -> p to if (i == 2 || i == 5) WaterSource.NOTIFICATION else WaterSource.APP }
+        val sets = mapOf(
+            today to when (mode) { "evening" -> evening; "none" -> emptyList(); else -> todayFirst },
+            today.minusDays(1) to yesterday,
+            today.minusDays(2) to listOf("09:00" to 1200 to WaterSource.APP, "15:00" to 1200 to WaterSource.APP),
+            today.minusDays(3) to listOf("09:00" to 1300 to WaterSource.APP, "15:00" to 1300 to WaterSource.APP),
+        )
+        sets.forEach { (d, list) ->
+            list.forEach { (tm, src) ->
+                water.add(d, tm.second, LocalTime.parse(tm.first), src).getOrThrow()
+            }
         }
     }
 }

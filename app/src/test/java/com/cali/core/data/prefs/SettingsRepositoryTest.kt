@@ -81,6 +81,16 @@ class SettingsRepositoryTest {
         assertTrue(r.isFailure)
     }
 
+    @Test fun `muc tieu nuoc tuy chinh - null la tu dong (GD5, 09 §8 G5-1)`() = runTestWithScope {
+        val repo = repo(tmp.newFile("w.preferences_pb").also { it.delete() })
+        assertNull(repo.current().waterGoalOverrideMl)
+        repo.update { it.copy(waterGoalOverrideMl = 3000) }
+        assertEquals(3000, repo.current().waterGoalOverrideMl)
+        assertTrue(repo.exportRaw().containsKey("water_goal_override_ml"))
+        repo.update { it.copy(waterGoalOverrideMl = null) }
+        assertNull(repo.current().waterGoalOverrideMl)
+    }
+
     @Test fun `ban cai cu da luu model Claude thi doc ra model Neuralwatt`() = runTestWithScope {
         val file = tmp.newFile("d.preferences_pb").also { it.delete() }
         val store = PreferenceDataStoreFactory.create(scope = scope) { file }

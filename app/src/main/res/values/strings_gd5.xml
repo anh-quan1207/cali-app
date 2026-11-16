@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chuỗi của GĐ5 (Nước và nhắc nhở). Tách file riêng để gộp nhánh dễ. -->
+<resources>
+    <!-- Thông báo nhắc (05 §3) -->
+    <string name="water_channel_name">Nhắc uống nước</string>
+    <string name="water_channel_desc">Nhắc uống nước trong khung giờ đã chọn</string>
+    <string name="water_notif_title">Uống nước thôi 💧</string>
+    <string name="water_notif_text">Bạn đã uống %1$s/%2$s ml hôm nay.</string>
+    <string name="water_notif_add">+%1$s ml</string>
+    <string name="water_notif_snooze">Để sau</string>
+    <string name="water_notif_logged">Đã ghi %1$s ml · %2$s/%3$s ml</string>
+
+    <!-- S10 ô Nước -->
+    <string name="s10_water">Nước</string>
+    <string name="s10_water_of">/ %1$s ml</string>
+    <string name="s10_water_add">+%1$s</string>
+    <string name="s10_water_add_cd">Thêm %1$s ml nước</string>
+    <string name="s10_water_open_cd">Nước: %1$s trên %2$s ml. Mở Nước trong ngày</string>
+
+    <!-- S15 Nước trong ngày -->
+    <string name="s15_title_today">Nước · Hôm nay</string>
+    <string name="s15_title_day">Nước · %1$s</string>
+    <string name="s15_sub_past">%1$s · %2$s</string>
+    <string name="s15_days_ago">%1$d ngày trước</string>
+    <string name="s15_pick_day_cd">%1$s, %2$s. Chọn ngày khác</string>
+    <string name="s15_prev_day">Ngày trước</string>
+    <string name="s15_next_day">Ngày sau</string>
+    <string name="s15_meta_today">Đã uống hôm nay · %1$d lần</string>
+    <string name="s15_meta_past">Đã uống ngày này · %1$d lần</string>
+    <string name="s15_meta_done">Đạt mục tiêu · +%1$s ml</string>
+    <string name="s15_unit_ml">ml</string>
+    <string name="s15_pct">%1$d%%</string>
+    <string name="s15_of_goal">của %1$s ml</string>
+    <string name="s15_of_goal_cd">%1$d%% của mục tiêu %2$s ml. Xem cách tính mục tiêu</string>
+    <string name="s15_left">Còn %1$s ml · ~%2$s cốc %3$s ml</string>
+    <string name="s15_reached_at">Đạt lúc %1$s</string>
+    <string name="s15_lane_cd">%1$d lần uống, tổng %2$s trên %3$s ml</string>
+    <string name="s15_lane_over_cd">, trên mục tiêu %1$s ml</string>
+    <string name="s15_remind_next">Nhắc tiếp lúc %1$s</string>
+    <string name="s15_remind_next_tomorrow">Nhắc tiếp lúc %1$s mai</string>
+    <string name="s15_remind_done">Đủ mục tiêu · nhắc lại %1$s mai</string>
+    <string name="s15_remind_no_perm">Không nhắc được · %1$s</string>
+    <string name="s15_remind_no_perm_b">chưa có quyền</string>
+    <string name="s15_remind_off">Nhắc uống nước đang tắt</string>
+    <string name="s15_remind_cd">%1$s. Mở Nước và nhắc nhở</string>
+    <string name="s15_list">Các lần uống</string>
+    <string name="s15_list_empty">Chưa ghi lần uống nào</string>
+    <string name="s15_src_app">Trong app</string>
+    <string name="s15_src_notification">Từ thông báo</string>
+    <string name="s15_src_widget">Từ widget</string>
+    <string name="s15_reached_tag">Đạt mục tiêu · %1$s ml</string>
+    <string name="s15_row_cd">%1$s: %2$s ml, %3$s. Sửa lần uống</string>
+    <string name="s15_week_this">Tuần này · %1$s – %2$s</string>
+    <string name="s15_week">Tuần %1$s – %2$s</string>
+    <string name="s15_week_hit">đạt %1$d/%2$d ngày</string>
+    <string name="s15_legend_hit">Đạt</string>
+    <string name="s15_legend_miss">Chưa đạt</string>
+    <string name="s15_legend_today">Hôm nay</string>
+    <string name="s15_legend_goal">Mục tiêu %1$s L</string>
+    <string name="s15_col_cd">%1$s: %2$s lít, %3$s. Mở nước ngày này</string>
+    <string name="s15_col_today">hôm nay, đang uống</string>
+    <string name="s15_col_hit">đạt</string>
+    <string name="s15_col_miss">chưa đạt</string>
+    <string-array name="weekday_short">
+        <item>T2</item>
+        <item>T3</item>
+        <item>T4</item>
+        <item>T5</item>
+        <item>T6</item>
+        <item>T7</item>
+        <item>CN</item>
+    </string-array>
+    <string name="s15_foot">Chạm một lần uống để sửa giờ hoặc lượng; vuốt trái để xoá.</string>
+    <string name="s15_add">+%1$s ml</string>
+    <string name="s15_add_cd">Thêm %1$s ml</string>
+    <string name="s15_add_cd_day">Thêm %1$s ml cho ngày %2$s</string>
+    <string name="s15_add_other_cd">Thêm lượng khác</string>
+    <string name="s15_past_note">Ghi cho %1$s lúc %2$s · chạm lần uống để đổi giờ</string>
+    <string name="s15_deleted">Đã xoá %1$s ml · %2$s</string>
+    <string name="s15_saved">Đã lưu lần uống %1$s</string>
+    <!-- Sheet thêm / sửa -->
+    <string name="s15_sheet_add">Thêm lượng khác</string>
+    <string name="s15_sheet_edit">Sửa lần uống</string>
+    <string name="s15_chip_now">Bây giờ · %1$s</string>
+    <string name="s15_chip_cd">Đổi giờ uống, đang là %1$s</string>
+    <string name="s15_amount">Lượng nước</string>
+    <string name="s15_support">%1$s–%2$s ml · sau khi lưu %3$s / %4$s ml</string>
+    <string name="s15_support_delta">%1$s–%2$s ml · sau khi lưu %3$s / %4$s ml (%5$s)</string>
+    <string name="s15_range_error">Nhập từ %1$s đến %2$s ml</string>
+    <string name="s15_add_n">Thêm %1$s ml</string>
+    <string name="s15_add_plain">Thêm</string>
+    <string name="s15_delete_cd">Xoá lần uống %1$s</string>
+    <string name="s15_time_title">Giờ uống</string>
+    <!-- Sheet mục tiêu -->
+    <string name="s15_goal_title">Mục tiêu nước</string>
+    <string name="s15_goal_auto">ml mỗi ngày · tự tính</string>
+    <string name="s15_goal_custom">ml mỗi ngày · tùy chỉnh</string>
+    <string name="s15_goal_calc">%1$s kg × 35 ml = %2$s ml, làm tròn 100 ml → %3$s ml. %4$s</string>
+    <string name="s15_goal_no_bonus">%1$s nên không cộng thêm.</string>
+    <string name="s15_goal_bonus">%1$s nên cộng thêm %2$s ml.</string>
+    <string name="s15_goal_clamped">Kẹp trong 1.500–4.000 ml.</string>
+    <string name="s15_goal_weight">Theo lần cân %1$s (%2$s kg), cùng số với mục tiêu calo đang dùng.</string>
+    <string name="s15_goal_custom_line">Bạn đã đặt %1$s ml; tự tính sẽ là %2$s ml.</string>
+    <string name="s15_goal_week">Uống từ mục tiêu trở lên là %1$s trong tổng kết tuần.</string>
+    <string name="s15_goal_week_b">ngày đạt nước</string>
+    <string name="s15_goal_change">Đổi mục tiêu</string>
+
+    <!-- S43 Nước & nhắc nhở -->
+    <string name="s43_title">Nước &amp; nhắc nhở</string>
+    <string name="s43_perm_strip">Chưa có quyền thông báo, nên nhắc uống nước và tổng kết tuần chưa hiện được.</string>
+    <string name="s43_perm_allow">Cho phép</string>
+    <string name="s43_perm_settings">Mở Cài đặt</string>
+    <string name="s43_goal_group">Mục tiêu nước</string>
+    <string name="s43_goal_auto">Tự động</string>
+    <string name="s43_goal_custom">Tùy chỉnh</string>
+    <string name="s43_per_day">ml/ngày</string>
+    <string name="s43_goal_auto_line">%1$s kg × 35 ml = %2$s, làm tròn 100 ml. Cùng lần cân %3$s với mục tiêu calo; tính lại cùng lúc.</string>
+    <string name="s43_goal_custom_label">Mục tiêu</string>
+    <string name="s43_goal_custom_line">Tự tính theo cân nặng sẽ là %1$s ml. Đổi về Tự động để theo cân nặng.</string>
+    <string name="s43_goal_error">Nhập từ %1$s đến %2$s ml</string>
+    <string name="s43_cups_group">Hai nút nhanh</string>
+    <string name="s43_cup_small">Nút nhỏ</string>
+    <string name="s43_cup_large">Nút lớn</string>
+    <string name="s43_cups_line">Hai nút của ô Nước (Hôm nay). Nút nhỏ cũng là nút “+%1$s ml” trên thông báo nhắc.</string>
+    <string name="s43_remind_group">Nhắc uống nước</string>
+    <string name="s43_remind_switch">Nhắc uống nước</string>
+    <string name="s43_remind_switch_sub">Kênh thông báo “Nhắc uống nước”</string>
+    <string name="s43_window">Khung giờ</string>
+    <string name="s43_window_start_cd">Bắt đầu nhắc %1$s</string>
+    <string name="s43_window_end_cd">Kết thúc nhắc %1$s</string>
+    <string name="s43_window_start_title">Bắt đầu nhắc lúc</string>
+    <string name="s43_window_end_title">Kết thúc nhắc lúc</string>
+    <string name="s43_window_same">Giờ bắt đầu và kết thúc phải khác nhau.</string>
+    <string name="s43_interval">Chu kỳ</string>
+    <string name="s43_minutes">phút</string>
+    <string name="s43_interval_line">Nhắc %1$d phút sau lần uống hoặc lần nhắc gần nhất; uống đủ %2$s ml thì nghỉ tới %3$s mai.</string>
+    <string name="s43_next">Nhắc tiếp lúc %1$s</string>
+    <string name="s43_next_tomorrow">Nhắc tiếp lúc %1$s mai</string>
+    <string name="s43_no_perm">%1$s · thiếu quyền thông báo</string>
+    <string name="s43_no_perm_b">Chưa nhắc được</string>
+    <string name="s43_off">Nhắc đang tắt</string>
+    <string name="s43_weekly_group">Tổng kết tuần</string>
+    <string name="s43_weekly_switch">Thông báo sáng Thứ Hai</string>
+    <string name="s43_weekly_switch_sub">Kênh “Tổng kết tuần” · điểm tính trên máy, không gọi AI</string>
+    <string name="s43_weekly_time">Giờ gửi</string>
+    <string name="s43_weekly_next">Lần tới: Thứ Hai %1$s · tuần %2$s – %3$s</string>
+    <string name="s43_weekly_time_title">Giờ gửi tổng kết</string>
+    <string name="s43_weekly_ai">Tự tạo nhận xét tuần khi mở</string>
+    <string name="s43_weekly_ai_sub">Khi mở tổng kết của tuần đã kết thúc · tốn 1 lượt model chat. Tắt thì bấm “Tạo nhận xét” khi cần.</string>
+</resources>
