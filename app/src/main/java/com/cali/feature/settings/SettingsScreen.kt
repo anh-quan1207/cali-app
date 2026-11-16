@@ -18,6 +18,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.Storage
 import androidx.compose.material.icons.outlined.WaterDrop
 import androidx.compose.material.icons.rounded.AutoAwesome
@@ -76,7 +77,7 @@ class SettingsViewModel @Inject constructor(
 
 /** S40 — vỏ danh sách mục. GĐ2 chỉ mở được S41; các mục khác ở giai đoạn sau. */
 @Composable
-fun SettingsRoute(onOpenProfile: () -> Unit, vm: SettingsViewModel = hiltViewModel()) {
+fun SettingsRoute(onOpenProfile: () -> Unit, onOpenData: () -> Unit, onOpenMyFoods: () -> Unit, vm: SettingsViewModel = hiltViewModel()) {
     val ui by vm.ui.collectAsStateWithLifecycle()
     val cs = MaterialTheme.colorScheme
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = Spacing.lg)) {
@@ -117,7 +118,11 @@ fun SettingsRoute(onOpenProfile: () -> Unit, vm: SettingsViewModel = hiltViewMod
         Spacer(Modifier.height(Spacing.xl))
 
         GroupTitle(stringResource(R.string.s40_group_data))
-        GroupBlock { NavRow(Icons.Outlined.Storage, stringResource(R.string.s40_data), stringResource(R.string.s40_data_sub), null) }
+        GroupBlock {
+            NavRow(Icons.Outlined.BookmarkBorder, stringResource(R.string.s34_title), stringResource(R.string.s40_my_foods_sub), onOpenMyFoods)
+            RowDivider()
+            NavRow(Icons.Outlined.Storage, stringResource(R.string.s40_data), stringResource(R.string.s40_data_sub), onOpenData)
+        }
         Spacer(Modifier.height(Spacing.xl))
 
         GroupTitle(stringResource(R.string.s40_group_about))

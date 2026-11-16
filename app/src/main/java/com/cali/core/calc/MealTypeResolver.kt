@@ -11,6 +11,9 @@ class MealTypeResolver(boundaries: List<MealBoundary> = DEFAULT) {
 
     private val sorted = boundaries.sortedBy { it.start }
 
+    /** Các mốc đã sắp theo giờ. */
+    val boundaries: List<MealBoundary> get() = sorted
+
     init {
         require(sorted.isNotEmpty())
     }

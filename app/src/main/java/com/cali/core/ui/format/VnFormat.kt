@@ -33,4 +33,28 @@ object VnFormat {
 
     fun date(d: LocalDate): String = d.format(date)
     fun dayMonth(d: LocalDate): String = d.format(dayMonth)
+
+    private val weekdays = listOf("Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy", "Chủ Nhật")
+
+    /** "Thứ Năm". */
+    fun weekday(d: LocalDate): String = weekdays[d.dayOfWeek.value - 1]
+
+    /** "Thứ Năm, 13/11". */
+    fun weekdayDayMonth(d: LocalDate): String = weekday(d) + ", " + dayMonth(d)
+
+    /** Số có dấu, trung tính: "−0,5" / "+0,3" / "0". Dùng dấu trừ thật (U+2212). */
+    fun signedKg(value: Double): String {
+        val r = Math.round(value * 10) / 10.0
+        return when {
+            r > 0 -> "+" + kg(r)
+            r < 0 -> "−" + kg(-r)
+            else -> "0"
+        }
+    }
+
+    fun signedInt(value: Int): String = when {
+        value > 0 -> "+" + int(value)
+        value < 0 -> "−" + int(-value)
+        else -> "0"
+    }
 }
