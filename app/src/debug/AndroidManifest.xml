@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <!-- Chỉ bản debug: màn xem thử theme để so với DESIGN.md / mockup (09 §4 GĐ1 việc 8). -->
+        <activity
+            android:name=".feature.debug.ThemePreviewActivity"
+            android:exported="true"
+            android:label="@string/preview_app_label">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

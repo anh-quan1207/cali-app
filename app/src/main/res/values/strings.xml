@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cali</string>
+    <string name="placeholder_gd1">Cali đang được dựng. Giai đoạn 1: khung project và logic tính toán.</string>
+</resources>

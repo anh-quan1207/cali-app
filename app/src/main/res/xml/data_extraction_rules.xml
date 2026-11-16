@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 06 §5: khóa Keystore không đi theo bản sao lưu, nên loại secure_prefs. -->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="file" path="datastore/secure_prefs.preferences_pb" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="file" path="datastore/secure_prefs.preferences_pb" />
+    </device-transfer>
+</data-extraction-rules>

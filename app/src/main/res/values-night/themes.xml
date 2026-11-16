@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Cửa sổ tối trước khi Compose vẽ, tránh chớp nền sáng ở chế độ tối. -->
+    <style name="Theme.Cali" parent="android:Theme.Material.NoActionBar" />
+</resources>

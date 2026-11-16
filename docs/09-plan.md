@@ -172,14 +172,33 @@ Tính theo buổi làm việc tập trung (~3–4 giờ), có dùng Claude Code.
 - Đồng bộ nhiều máy / iOS (xem D1).
 - Review lần hai cho mockup sau các lần sửa (hiện mới xem bằng mắt).
 
-Mâu thuẫn đặc tả / mockup phát hiện khi code: *(ghi ở đây)*
+Mâu thuẫn đặc tả / mockup phát hiện khi code:
+
+GĐ1 (16/11/2026):
+1. 09 §4 ghi Display Large 56sp; DESIGN.md + mockup là 57sp → dùng **57sp**.
+2. 09 §4 ghi shape 16/12/8/tròn; DESIGN.md có thêm 28dp (sheet) và 4dp (ô nhập, snackbar) → theo DESIGN.md (4/8/12/16/28/full).
+3. 06 §1 ghi biểu đồ Vico; D4 đã chốt Canvas → Canvas.
+4. 06 §1 ghi Retrofit hoặc Ktor; CLAUDE.md chỉ nêu OkHttp → để GĐ4 quyết.
+5. 02 không nói kcal ghi đè có bị kẹp không; bộ số mẫu (ghi đè 1.400 → 1.710) ngầm có → **ghi đè cũng qua kẹp**. Trần thâm hụt 25% áp cho mọi giá trị dưới TDEE (02 §5 chỉ nói "khi giảm cân").
+6. 03 §5 không nói mẫu số của "lệch > 20%" → chọn `|kcal − (4P+4C+9F)| / kcal của AI`; lệch đúng 20% chưa gắn cờ.
+7. 06 §8 cho phép JUnit5 → chọn JUnit4 vì Robolectric (test Room in-memory) chỉ chạy JUnit4.
+8. 02 §10 tính tinh bột từ đạm **đã làm tròn** (122 g × 4 = 488) nhưng béo **chưa làm tròn** (469,8) → code làm đúng như vậy để ra 196 g.
+9. 08 §4: điểm tổng = làm tròn tổng chưa làm tròn của 4 phần; có thể lệch 1 so với cộng 4 phần đã làm tròn (ví dụ 5.4 thì trùng: 71).
+10. 08 §3.5 "bữa có calo trung bình cao nhất": chọn TB tổng kcal của bữa trên các ngày có bữa đó.
+11. 05 §4.1 "giờ giữa khung": bữa Phụ có hai khung → lấy khung đầu tính từ mốc Sáng (14:00–17:30 → 15:45).
+12. 04 §2 `ai_call_log.mode` chỉ có PHOTO_LOG / CHAT; 03 §3.3 có WEEKLY_REVIEW → enum có cả ba.
+13. 08 §5.4 ghi tuần "10/11 – 16/11" theo lịch giả định của mockup; lịch thật Thứ Hai là 09/11 và 16/11/2026. Test dùng lịch thật, giữ nguyên số.
+14. DESIGN.md không có token cho secondary/tertiary, surfaceContainerLowest/High, surfaceDim/Bright → gán theo token gần nhất (primary, surface-cont…) để không lọt màu tím mặc định của M3.
+15. DESIGN.md chỉ định nghĩa 12 kiểu chữ; headlineLarge/headlineSmall/titleSmall của M3 giữ cỡ mặc định nhưng dùng Roboto Flex.
+
+Môi trường (máy dev, không phải mâu thuẫn đặc tả): JDK không tạo được Unix socket trong `C:\Users\…\Temp` → Gradle không nói chuyện được với daemon/worker ("Unable to establish loopback connection"). Cách chạy: `JAVA_TOOL_OPTIONS=-Djdk.net.unixdomain.tmpdir=E:\Cali\.gradle\uds` (thư mục đã gitignore). Robolectric 4.18 chưa hỗ trợ SDK 36 → `robolectric.properties` ghim sdk=35.
 
 ## 9. Tiến độ
 
 | GĐ | Trạng thái | Bắt đầu | Xong | Ghi chú |
 |---|---|---|---|---|
 | D1–D2 chốt | ☑ | 16/11/2026 | 16/11/2026 | D1: không iOS, Android thuần. D2: sao lưu JSON ở GĐ3 |
-| 1 | ☐ | | | |
+| 1 | ☑ | 16/11/2026 | 16/11/2026 | Nhánh `gd1`. AGP 9.5.1 / Gradle 9.9.1 / Kotlin 2.4.21 / Compose BOM 2026.09.00, compileSdk 37 (Platform 37 cài 16/11), targetSdk 36. 62 unit test xanh (core.calc 48, Room 6, prefs 6, định dạng số 1, bỏ dấu 1) + 1 test thiết bị (Keystore thật, AVD Android 16). Lint 0 lỗi. Theme preview chụp sáng/tối ở `.impeccable/review/gd1-theme-preview/`, màu khớp s10 f0/f3. Còn: người dùng cài lên điện thoại thật; Material Symbols để GĐ3 |
 | 2 | ☐ | | | |
 | 3 | ☐ | | | |
 | 4 | ☐ | | | |

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preview_app_label">Cali · Theme</string>
+    <string name="preview_title">Xem thử theme</string>
+    <string name="preview_remaining">Còn lại</string>
+    <string name="unit_kcal">kcal</string>
+    <string name="preview_eaten">Đã ăn</string>
+    <string name="preview_target">Mục tiêu</string>
+    <string name="macro_protein">Đạm</string>
+    <string name="macro_carb">Tinh bột</string>
+    <string name="macro_fat">Béo</string>
+    <string name="macro_left">còn %1$s g</string>
+    <string name="macro_over">vượt %1$s g</string>
+    <string name="preview_section_colors">Bảng màu</string>
+    <string name="preview_section_type">Kiểu chữ</string>
+    <string name="preview_type_sample">Hôm nay 1.740 kcal · 74,1 kg</string>
+</resources>

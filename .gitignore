@@ -40,3 +40,4 @@ Thumbs.db
 
 # Ảnh chụp tạm khi so mockup
 /screen*.png
+.idea/modules.xml
