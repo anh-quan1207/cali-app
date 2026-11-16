@@ -156,6 +156,9 @@ class DiaryRepository @Inject constructor(
 
     suspend fun byId(id: Long): FoodEntryEntity? = foodDao.byId(id)
 
+    /** Ghi lại nguyên bản ghi (Hoàn tác chuyển bữa / sửa). */
+    suspend fun put(entry: FoodEntryEntity): Result<Unit> = runCatching { foodDao.update(entry) }
+
     /** Xoá; trả lại bản ghi để Hoàn tác. */
     suspend fun delete(id: Long): Result<FoodEntryEntity> = runCatching {
         val e = requireNotNull(foodDao.byId(id)) { "Không có món $id" }

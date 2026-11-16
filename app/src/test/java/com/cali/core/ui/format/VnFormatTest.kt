@@ -23,4 +23,16 @@ class VnFormatTest {
         assertEquals("19/02/2027", VnFormat.date(LocalDate.of(2027, 2, 19)))
         assertEquals("09/11", VnFormat.dayMonth(LocalDate.of(2026, 11, 9)))
     }
+
+    @Test fun `so co dau dung dau tru that va thu trong tuan`() {
+        assertEquals("−0,5", VnFormat.signedKg(74.1 - 74.6))
+        assertEquals("+0,3", VnFormat.signedKg(0.3))
+        assertEquals("0", VnFormat.signedKg(0.04))
+        assertEquals("+245", VnFormat.signedInt(245))
+        assertEquals("−245", VnFormat.signedInt(-245))
+        assertEquals("1.235", VnFormat.signedInt(1235).removePrefix("+"))
+        // Lịch thật: 12/11/2026 là Thứ Năm (mockup giả định 13/11 = Thứ Năm, 09 §8 mục 13)
+        assertEquals("Thứ Năm, 12/11", VnFormat.weekdayDayMonth(LocalDate.of(2026, 11, 12)))
+        assertEquals("Thứ Hai", VnFormat.weekday(LocalDate.of(2026, 11, 16)))
+    }
 }

@@ -49,6 +49,12 @@ import com.cali.feature.onboarding.OnboardingRoute
 import com.cali.feature.onboarding.QuickSetupRoute
 import com.cali.feature.settings.ProfileRoute
 import com.cali.feature.settings.SettingsRoute
+import com.cali.feature.today.TodayRoute
+import com.cali.feature.food.EditFoodRoute
+import com.cali.feature.food.LogFoodRoute
+import com.cali.feature.food.MyFoodEditRoute
+import com.cali.feature.food.MyFoodsRoute
+import com.cali.feature.settings.DataRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -60,6 +66,11 @@ import javax.inject.Inject
 @Serializable object QuickSetupDest
 @Serializable object MainDest
 @Serializable object ProfileDest
+@Serializable data class LogFoodDest(val date: String, val meal: String = "")
+@Serializable data class EditFoodDest(val id: Long)
+@Serializable object MyFoodsDest
+@Serializable data class MyFoodEditDest(val id: Long = -1)
+@Serializable object DataDest
 
 @HiltViewModel
 class AppViewModel @Inject constructor(settings: SettingsRepository) : ViewModel() {
@@ -85,13 +96,35 @@ fun AppNavHost(vm: AppViewModel = hiltViewModel()) {
     val nav = rememberNavController()
     NavHost(nav, startDestination = startDest) {
         composable<OnboardingDest> {
-            OnboardingRoute(onFinished = { nav.navigate(QuickSetupDest) { popUpTo(OnboardingDest) { inclusive = true } } })
+            OnboardingRoute(
+                onFinished = { nav.navigate(QuickSetupDest) { popUpTo(OnboardingDest) { inclusive = true } } },
+                onRestored = { nav.toMain() },
+            )
         }
         composable<QuickSetupDest> {
             QuickSetupRoute(onFinished = { nav.toMain() }, onBack = { nav.toMain() })
         }
-        composable<MainDest> { MainShell(onOpenProfile = { nav.navigate(ProfileDest) }) }
+        composable<MainDest> {
+            MainShell(
+                onOpenProfile = { nav.navigate(ProfileDest) },
+                onOpenData = { nav.navigate(DataDest) },
+                onOpenMyFoods = { nav.navigate(MyFoodsDest) },
+                onQuickAdd = { d, m -> nav.navigate(LogFoodDest(d.toString(), m?.name.orEmpty())) },
+                onEditFood = { nav.navigate(EditFoodDest(it)) },
+            )
+        }
         composable<ProfileDest> { ProfileRoute(onBack = { nav.popBackStack() }) }
+        composable<LogFoodDest> { LogFoodRoute(onClose = { nav.popBackStack() }) }
+        composable<EditFoodDest> { EditFoodRoute(onClose = { nav.popBackStack() }) }
+        composable<MyFoodsDest> { MyFoodsRoute(onBack = { nav.popBackStack() }, onOpen = { nav.navigate(MyFoodEditDest(it ?: -1)) }) }
+        composable<MyFoodEditDest> { MyFoodEditRoute(onClose = { nav.popBackStack() }) }
+        composable<DataDest> {
+            DataRoute(
+                onBack = { nav.popBackStack() },
+                onRestored = { nav.toMain() },
+                onWiped = { nav.navigate(OnboardingDest) { popUpTo(0) { inclusive = true } } },
+            )
+        }
     }
 }
 
@@ -106,7 +139,13 @@ private enum class Tab(val label: Int, val icon: ImageVector, val selectedIcon: 
 
 /** Vỏ 4 tab (05 §1). GĐ2: Hôm nay / Chat / Lịch sử là chỗ giữ chỗ. */
 @Composable
-private fun MainShell(onOpenProfile: () -> Unit) {
+private fun MainShell(
+    onOpenProfile: () -> Unit,
+    onOpenData: () -> Unit,
+    onOpenMyFoods: () -> Unit,
+    onQuickAdd: (java.time.LocalDate, com.cali.core.calc.model.MealType?) -> Unit,
+    onEditFood: (Long) -> Unit,
+) {
     var tab by rememberSaveable { mutableIntStateOf(Tab.TODAY.ordinal) }
     val cs = MaterialTheme.colorScheme
     Scaffold(
@@ -128,24 +167,13 @@ private fun MainShell(onOpenProfile: () -> Unit) {
     ) { pad ->
         Box(Modifier.padding(pad).fillMaxSize()) {
             when (Tab.entries[tab]) {
-                Tab.TODAY -> TodayPlaceholder()
+                Tab.TODAY -> TodayRoute(onQuickAdd = onQuickAdd, onEditFood = onEditFood)
                 Tab.CHAT -> Placeholder(stringResource(R.string.placeholder_chat))
                 Tab.HISTORY -> Placeholder(stringResource(R.string.placeholder_history))
-                Tab.SETTINGS -> SettingsRoute(onOpenProfile = onOpenProfile)
+                Tab.SETTINGS -> SettingsRoute(onOpenProfile = onOpenProfile, onOpenData = onOpenData, onOpenMyFoods = onOpenMyFoods)
             }
         }
     }
-}
-
-@HiltViewModel
-class TodayPlaceholderViewModel @Inject constructor(repo: ProfileRepository) : ViewModel() {
-    val target = repo.observeGoal().map { it?.targetKcal }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
-}
-
-@Composable
-private fun TodayPlaceholder(vm: TodayPlaceholderViewModel = hiltViewModel()) {
-    val t by vm.target.collectAsStateWithLifecycle()
-    Placeholder(stringResource(R.string.placeholder_today, t?.let(VnFormat::int) ?: "—"))
 }
 
 @Composable
