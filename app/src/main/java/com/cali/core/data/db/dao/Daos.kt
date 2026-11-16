@@ -56,6 +56,19 @@ interface WeightEntryDao {
     @Query("SELECT * FROM weight_entry WHERE date BETWEEN :from AND :to ORDER BY date")
     suspend fun between(from: LocalDate, to: LocalDate): List<WeightEntryEntity>
 
+    @Query("SELECT * FROM weight_entry ORDER BY date DESC")
+    fun observeAll(): Flow<List<WeightEntryEntity>>
+
+    @Query("SELECT * FROM weight_entry WHERE date = :date")
+    suspend fun byDate(date: LocalDate): WeightEntryEntity?
+
+    /** Lần cân gần nhất trước ngày [date] (không gồm ngày đó). */
+    @Query("SELECT * FROM weight_entry WHERE date < :date ORDER BY date DESC LIMIT 1")
+    suspend fun latestBefore(date: LocalDate): WeightEntryEntity?
+
+    @Insert
+    suspend fun insert(entry: WeightEntryEntity): Long
+
     @Delete
     suspend fun delete(entry: WeightEntryEntity)
 }
@@ -83,6 +96,19 @@ interface FoodEntryDao {
 
     @Query("SELECT * FROM food_entry WHERE date BETWEEN :from AND :to ORDER BY eaten_at, sort_order, id")
     suspend fun between(from: LocalDate, to: LocalDate): List<FoodEntryEntity>
+
+    /** Món ghi gần đây cho tab Gần đây (S13). */
+    @Query("SELECT * FROM food_entry ORDER BY eaten_at DESC, id DESC LIMIT :limit")
+    suspend fun recent(limit: Int): List<FoodEntryEntity>
+
+    @Query("SELECT COUNT(*) FROM food_entry WHERE my_food_id = :myFoodId")
+    suspend fun countForMyFood(myFoodId: Long): Int
+
+    @Query("SELECT id FROM food_entry WHERE my_food_id = :myFoodId")
+    suspend fun idsForMyFood(myFoodId: Long): List<Long>
+
+    @Query("UPDATE food_entry SET my_food_id = :myFoodId WHERE id IN (:ids)")
+    suspend fun relinkMyFood(myFoodId: Long, ids: List<Long>)
 }
 
 @Dao
@@ -105,6 +131,16 @@ interface MyFoodDao {
 
     @Query("SELECT * FROM my_food ORDER BY use_count DESC, last_used_at DESC LIMIT :limit")
     suspend fun top(limit: Int): List<MyFoodEntity>
+
+    @Query("SELECT * FROM my_food WHERE id = :id")
+    suspend fun byId(id: Long): MyFoodEntity?
+
+    /** S34: yêu thích ghim đầu, rồi Hay dùng. */
+    @Query("SELECT * FROM my_food ORDER BY is_favorite DESC, use_count DESC, last_used_at DESC, name")
+    fun observeAll(): Flow<List<MyFoodEntity>>
+
+    @Query("SELECT * FROM my_food WHERE is_favorite = 1 ORDER BY use_count DESC, name")
+    fun observeFavorites(): Flow<List<MyFoodEntity>>
 
     @Query("UPDATE my_food SET use_count = use_count + 1, last_used_at = :at, updated_at = :at WHERE id = :id")
     suspend fun markUsed(id: Long, at: Long)

@@ -1,5 +1,6 @@
 package com.cali.feature.onboarding
 
+import androidx.compose.material.icons.rounded.Restore
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -52,21 +53,34 @@ import com.cali.core.calc.InputLimits
 
 /** S01 (5 bước) + S02 (kết quả). */
 @Composable
-fun OnboardingRoute(onFinished: () -> Unit, vm: OnboardingViewModel = hiltViewModel()) {
+fun OnboardingRoute(
+    onFinished: () -> Unit,
+    onRestored: () -> Unit,
+    vm: OnboardingViewModel = hiltViewModel(),
+    data: com.cali.feature.settings.DataViewModel = hiltViewModel(),
+) {
     val s by vm.state.collectAsStateWithLifecycle()
+    val snack = androidx.compose.runtime.remember { androidx.compose.material3.SnackbarHostState() }
+    com.cali.core.ui.component.CollectMessages(data.messages, snack)
+    val restore = androidx.activity.compose.rememberLauncherForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocument()) { uri ->
+        uri?.let { data.import(it, onRestored) }
+    }
     LaunchedEffect(Unit) { vm.done.collect { onFinished() } }
     BackHandler(enabled = s.step > 1) { vm.back() }
     Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface) {
         if (s.step == 6) {
             ResultScreen(s, vm.preview(s), onBack = { vm.back() }, onToggleHow = vm::toggleHow, onStart = vm::start)
         } else {
-            OnboardingSteps(s, vm)
+            OnboardingSteps(s, vm, onRestore = { restore.launch(arrayOf("application/json", "text/plain", "application/octet-stream")) })
+        }
+        androidx.compose.foundation.layout.Box(Modifier.fillMaxSize().safeDrawingPadding(), contentAlignment = androidx.compose.ui.Alignment.BottomCenter) {
+            androidx.compose.material3.SnackbarHost(snack)
         }
     }
 }
 
 @Composable
-private fun OnboardingSteps(s: OnboardingUiState, vm: OnboardingViewModel) {
+private fun OnboardingSteps(s: OnboardingUiState, vm: OnboardingViewModel, onRestore: () -> Unit) {
     Column(Modifier.fillMaxSize().safeDrawingPadding().imePadding()) {
         StepHeader(step = s.step, total = s.totalSteps, onBack = if (s.step > 1) ({ vm.back() }) else null)
         Column(
@@ -74,7 +88,7 @@ private fun OnboardingSteps(s: OnboardingUiState, vm: OnboardingViewModel) {
         ) {
             Spacer(Modifier.height(Spacing.lg))
             when (s.step) {
-                1 -> Step1(s, vm)
+                1 -> Step1(s, vm, onRestore)
                 2 -> Step2(s, vm)
                 3 -> Step3(s, vm)
                 4 -> Step4(s, vm)
@@ -102,7 +116,7 @@ private fun StepTitle(title: String, lead: String? = null) {
 }
 
 @Composable
-private fun Step1(s: OnboardingUiState, vm: OnboardingViewModel) {
+private fun Step1(s: OnboardingUiState, vm: OnboardingViewModel, onRestore: () -> Unit) {
     StepTitle(stringResource(R.string.s01_step1_title), stringResource(R.string.s01_step1_lead))
     Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
         Sex.entries.forEach { sex ->
@@ -125,6 +139,11 @@ private fun Step1(s: OnboardingUiState, vm: OnboardingViewModel) {
         onSelected = vm::setBirthYear,
         label = { y -> ctx.getString(R.string.s01_year_age, y, s.currentYear - y) },
     )
+    Spacer(Modifier.height(Spacing.lg))
+    androidx.compose.material3.TextButton(onClick = onRestore, modifier = Modifier.height(48.dp)) {
+        androidx.compose.material3.Icon(androidx.compose.material.icons.Icons.Rounded.Restore, null, Modifier.padding(end = Spacing.sm))
+        Text(stringResource(R.string.s01_restore), style = MaterialTheme.typography.labelLarge)
+    }
 }
 
 @Composable

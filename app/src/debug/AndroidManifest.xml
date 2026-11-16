@@ -11,5 +11,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Chỉ bản debug: nạp bộ số mockup để chụp so ảnh (GĐ3). -->
+        <activity android:name=".feature.debug.SeedActivity" android:exported="true" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 </manifest>
