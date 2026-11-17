@@ -81,14 +81,17 @@ class SettingsRepositoryTest {
         assertTrue(r.isFailure)
     }
 
-    @Test fun `muc tieu nuoc tuy chinh - null la tu dong (GD5, 09 §8 G5-1)`() = runTestWithScope {
-        val repo = repo(tmp.newFile("w.preferences_pb").also { it.delete() })
-        assertNull(repo.current().waterGoalOverrideMl)
+    @Test fun `muc tieu nuoc mac dinh 1500, null la tu dong va giu sau khi mo lai (09 §8 G5-8)`() = runTestWithScope {
+        val file = tmp.newFile("w.preferences_pb").also { it.delete() }
+        val repo = repo(file)
+        assertEquals(1500, repo.current().waterGoalOverrideMl)
         repo.update { it.copy(waterGoalOverrideMl = 3000) }
         assertEquals(3000, repo.current().waterGoalOverrideMl)
         assertTrue(repo.exportRaw().containsKey("water_goal_override_ml"))
         repo.update { it.copy(waterGoalOverrideMl = null) }
         assertNull(repo.current().waterGoalOverrideMl)
+        // Đã chọn "tự động" thì đọc lại vẫn là tự động, không quay về 1.500
+        assertTrue(repo.exportRaw().containsKey("water_goal_override_ml"))
     }
 
     @Test fun `ban cai cu da luu model Claude thi doc ra model Neuralwatt`() = runTestWithScope {

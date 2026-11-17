@@ -72,6 +72,7 @@ class DiaryRepositoryTest : DbTestBase() {
     @Test fun `ngay truoc snapshot dau tien dung muc tieu cua snapshot som nhat (G6)`() = runTestWithScope {
         val settings = newSettings(tmp, "g6")
         ProfileRepository(db, settings, TEST_CLOCK).completeOnboarding(TEST_PROFILE, 75.0).getOrThrow()
+        settings.update { it.copy(waterGoalOverrideMl = null) }.getOrThrow() // mục tiêu nước tự động theo snapshot (G5-8)
         val repo = DiaryRepository(db, TEST_CLOCK)
         val old = TEST_TODAY.minusDays(5)
         repo.add(listOf(food("Phở bò", 690.0)), at(old, 8, 0), MealType.BREAKFAST, false).getOrThrow()

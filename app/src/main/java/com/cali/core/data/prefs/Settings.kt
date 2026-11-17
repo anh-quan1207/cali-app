@@ -24,8 +24,8 @@ data class Settings(
     val waterIntervalMin: Int = 90,
     val waterCupSmallMl: Int = 250,
     val waterCupLargeMl: Int = 500,
-    /** Mục tiêu nước tùy chỉnh (S43); null = tự động theo goal_snapshot. Khóa thêm ở GĐ5, 09 §8 G5-1. */
-    val waterGoalOverrideMl: Int? = null,
+    /** Mục tiêu nước tùy chỉnh (S43); null = tự động theo goal_snapshot. Khóa thêm ở GĐ5 (G5-1); mặc định 1.500 ml theo yêu cầu người dùng (G5-8). */
+    val waterGoalOverrideMl: Int? = 1500,
     val mealTimes: List<MealBoundary> = MealTypeResolver.DEFAULT,
     val saveThumbnails: Boolean = true,
     val weeklyNotifyEnabled: Boolean = true,

@@ -28,6 +28,7 @@ class WaterRepositoryTest : DbTestBase() {
     @Test fun `bon lan uong mockup tong 1250 tren muc tieu 2600 cua ngay`() = runTestWithScope {
         val settings = newSettings(tmp, "a")
         ProfileRepository(db, settings, TEST_CLOCK).completeOnboarding(TEST_PROFILE, 75.0).getOrThrow()
+        settings.update { it.copy(waterGoalOverrideMl = null) } // chế độ tự động theo hồ sơ
         val r = CountingRescheduler()
         val repo = WaterRepository(db, settings, TEST_CLOCK, r)
 
@@ -113,6 +114,41 @@ class WaterRepositoryTest : DbTestBase() {
         assertEquals(TEST_TODAY, week.first().date)
         assertEquals(1250, week.first().totalMl)
         assertEquals(0, week[1].totalMl)
-        assertEquals(2600, week.first().goalMl)
+        assertEquals(1500, week.first().goalMl) // mặc định 1.500 (G5-8)
+        settings.update { it.copy(waterGoalOverrideMl = null) }.getOrThrow()
+        assertEquals(2600, repo.observeWeek(TEST_TODAY).first().first().goalMl) // tự động theo snapshot
+    }
+
+    @Test fun `mac dinh muc tieu 1500 ml, khong tinh theo ho so (09 §8 G5-8)`() = runTestWithScope {
+        val settings = newSettings(tmp, "g1500")
+        ProfileRepository(db, settings, TEST_CLOCK).completeOnboarding(TEST_PROFILE, 75.0).getOrThrow()
+        val day = WaterRepository(db, settings, TEST_CLOCK, CountingRescheduler()).observeDay(TEST_TODAY).first()
+        assertEquals(1500, day.goalMl)
+        assertEquals(2600, day.autoGoalMl)
+        assertFalse(day.goalAuto)
+    }
+
+    @Test fun `xoa lan vua them cua ngay, tra ban ghi de Hoan tac`() = runTestWithScope {
+        val r = CountingRescheduler()
+        val repo = WaterRepository(db, newSettings(tmp, "dl"), TEST_CLOCK, r)
+        val y = TEST_TODAY.minusDays(1)
+        repo.add(TEST_TODAY, 250, t(9, 0), WaterSource.APP).getOrThrow()
+        repo.add(TEST_TODAY, 500, t(11, 0), WaterSource.APP).getOrThrow()
+        repo.add(TEST_TODAY, 300, t(10, 0), WaterSource.APP).getOrThrow() // thêm sau cùng, giờ sớm hơn
+        repo.add(y, 400, t(20, 0), WaterSource.APP).getOrThrow() // ngày khác
+
+        val removed = repo.deleteLatest(TEST_TODAY).getOrThrow()
+        assertEquals(300, removed.amountMl) // lần bấm gần nhất, không phải giờ muộn nhất
+        assertEquals(750, repo.observeDay(TEST_TODAY).first().totalMl)
+        assertEquals(400, repo.observeDay(y).first().totalMl)
+
+        repo.restore(removed).getOrThrow()
+        assertEquals(1050, repo.observeDay(TEST_TODAY).first().totalMl)
+        assertEquals(6, r.calls)
+    }
+
+    @Test fun `xoa lan vua them khi ngay chua uong thi tra loi, khong nem`() = runTestWithScope {
+        val repo = WaterRepository(db, newSettings(tmp, "de"), TEST_CLOCK, CountingRescheduler())
+        assertTrue(repo.deleteLatest(TEST_TODAY).isFailure)
     }
 }

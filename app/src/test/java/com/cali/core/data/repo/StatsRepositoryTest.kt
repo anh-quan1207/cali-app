@@ -49,6 +49,7 @@ class StatsRepositoryTest : DbTestBase() {
     @Test fun `muc tieu tung ngay theo snapshot, so mon, nuoc, ngay bat dau dung app`() = runTestWithScope {
         val settings = newSettings(tmp, "a")
         ProfileRepository(db, settings, TEST_CLOCK).completeOnboarding(TEST_PROFILE, 75.0).getOrThrow() // snapshot 16/11: 1740 / 2600
+        settings.update { it.copy(waterGoalOverrideMl = null) }.getOrThrow() // mục tiêu nước tự động theo snapshot (G5-8)
         db.goalSnapshotDao().put(snapshot(LocalDate.of(2026, 11, 2), 1800, 2500, tdee = 2350.0))
         val diary = DiaryRepository(db, TEST_CLOCK)
         val water = WaterRepository(db, settings, TEST_CLOCK) {}

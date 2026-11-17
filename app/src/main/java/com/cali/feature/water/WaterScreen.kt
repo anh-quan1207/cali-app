@@ -33,6 +33,7 @@ import androidx.compose.material.icons.outlined.NotificationsOff
 import androidx.compose.material.icons.outlined.NotificationsPaused
 import androidx.compose.material.icons.outlined.WaterDrop
 import androidx.compose.material.icons.outlined.Widgets
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material.icons.rounded.CheckCircle
@@ -160,7 +161,7 @@ private fun WaterScreen(
             }
             SnackbarHost(snack, Modifier.align(Alignment.BottomCenter))
         }
-        Dock(s, onAdd = vm::quickAdd, onOther = { sheet = WaterSheet.Add })
+        Dock(s, onAdd = vm::quickAdd, onDeleteLast = vm::deleteLast, onOther = { sheet = WaterSheet.Add })
     }
 
     when (val sh = sheet) {
@@ -573,10 +574,10 @@ private fun LegendItem(fill: Color, stroke: Color?, label: String, count: String
     }
 }
 
-// ---------- chân ghim: +nhỏ / +lớn / + ----------
+// ---------- chân ghim: +250 / Xoá lần vừa thêm / + (G5-8) ----------
 
 @Composable
-private fun Dock(s: WaterUiState, onAdd: (Int) -> Unit, onOther: () -> Unit) {
+private fun Dock(s: WaterUiState, onAdd: (Int) -> Unit, onDeleteLast: () -> Unit, onOther: () -> Unit) {
     val cs = MaterialTheme.colorScheme
     val day = VnFormat.dayMonth(s.day.date)
     Column(Modifier.fillMaxWidth().background(cs.surfaceContainer).navigationBarsPadding().padding(start = Spacing.lg, end = Spacing.lg, top = Spacing.md, bottom = Spacing.md)) {
@@ -588,7 +589,8 @@ private fun Dock(s: WaterUiState, onAdd: (Int) -> Unit, onOther: () -> Unit) {
             }
         }
         val cdSmall = if (s.isToday) stringResource(R.string.s15_add_cd, VnFormat.int(s.cupSmall)) else stringResource(R.string.s15_add_cd_day, VnFormat.int(s.cupSmall), day)
-        val cdLarge = if (s.isToday) stringResource(R.string.s15_add_cd, VnFormat.int(s.cupLarge)) else stringResource(R.string.s15_add_cd_day, VnFormat.int(s.cupLarge), day)
+        val canDelete = s.day.entries.isNotEmpty()
+        val deleteCd = stringResource(R.string.water_delete_last_cd)
         Row(horizontalArrangement = Arrangement.spacedBy(Spacing.sm), verticalAlignment = Alignment.CenterVertically) {
             Button(
                 onClick = { onAdd(s.cupSmall) }, shape = CircleShape,
@@ -599,9 +601,13 @@ private fun Dock(s: WaterUiState, onAdd: (Int) -> Unit, onOther: () -> Unit) {
                 Text(stringResource(R.string.s15_add, VnFormat.int(s.cupSmall)), style = MaterialTheme.typography.labelLarge)
             }
             FilledTonalButton(
-                onClick = { onAdd(s.cupLarge) }, shape = CircleShape,
-                modifier = Modifier.weight(1f).height(48.dp).semantics { contentDescription = cdLarge },
-            ) { Text(stringResource(R.string.s15_add, VnFormat.int(s.cupLarge)), style = MaterialTheme.typography.labelLarge) }
+                onClick = onDeleteLast, enabled = canDelete, shape = CircleShape,
+                modifier = Modifier.weight(1f).height(48.dp).semantics { contentDescription = deleteCd },
+            ) {
+                Icon(Icons.Outlined.Delete, null, modifier = Modifier.size(20.dp))
+                Spacer(Modifier.width(Spacing.xs))
+                Text(stringResource(R.string.water_delete_last), style = MaterialTheme.typography.labelLarge)
+            }
             OutlinedIconButton(
                 onClick = onOther, modifier = Modifier.size(48.dp),
                 border = ButtonDefaults.outlinedButtonBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(cs.outlineVariant)),

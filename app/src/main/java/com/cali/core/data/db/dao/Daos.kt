@@ -200,6 +200,10 @@ interface WaterEntryDao {
     @Query("SELECT COALESCE(SUM(amount_ml), 0) FROM water_entry WHERE date = :date")
     suspend fun total(date: LocalDate): Int
 
+    /** Lần vừa thêm của một ngày (id lớn nhất) — nút xoá khi bấm nhầm (09 §8 G5-8). */
+    @Query("SELECT * FROM water_entry WHERE date = :date ORDER BY id DESC LIMIT 1")
+    suspend fun lastAdded(date: LocalDate): WaterEntryEntity?
+
     @Query("SELECT date, SUM(amount_ml) AS total FROM water_entry WHERE date BETWEEN :from AND :to GROUP BY date")
     fun observeTotalsBetween(from: LocalDate, to: LocalDate): Flow<List<WaterDayTotal>>
 

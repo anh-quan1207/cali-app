@@ -126,7 +126,8 @@ class WaterReminderSchedulerTest : DbTestBase() {
     }
 
     @Test fun `bam +250 tren thong bao ghi nguon NOTIFICATION va doi lich`() = runTestWithScope {
-        val e = env("f", at(14, 5), newSettings(tmp, "f"))
+        val s = newSettings(tmp, "f").also { it.update { x -> x.copy(waterGoalOverrideMl = null) }.getOrThrow() } // mục tiêu tự động 2.600 như mockup
+        val e = env("f", at(14, 5), s)
         e.water.add(TEST_TODAY, 1250, LocalTime.of(12, 35), WaterSource.APP).getOrThrow()
         e.actions.onAlarm()
         e.clock.now = at(14, 6)

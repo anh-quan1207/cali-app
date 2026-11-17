@@ -114,6 +114,14 @@ class WaterRepository @Inject constructor(
         e
     }
 
+    /** Xoá lần vừa thêm (id lớn nhất) của [date] — cho nút xoá khi bấm nhầm (G5-8). */
+    suspend fun deleteLatest(date: LocalDate): Result<WaterEntryEntity> = runCatching {
+        val e = requireNotNull(dao.lastAdded(date)) { "Chưa có lần uống ngày $date" }
+        dao.delete(e)
+        rescheduler.reschedule()
+        e
+    }
+
     suspend fun restore(entry: WaterEntryEntity): Result<Unit> = runCatching {
         dao.insert(entry)
         rescheduler.reschedule()

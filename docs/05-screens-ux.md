@@ -93,7 +93,7 @@ Trạng thái trống: "Chưa ghi món nào hôm nay. Chụp bữa ăn đầu ti
 Giống một dòng của S12 nhưng cho món đã lưu: sửa tên, khẩu phần, kcal, macro, bữa; Xóa.
 
 ### S15 — Nước trong ngày
-Danh sách các lần uống (giờ, ml), xóa / sửa, thêm với dung tích tùy ý.
+Danh sách các lần uống (giờ, ml), xóa / sửa, thêm với dung tích tùy ý. Chân màn: một nút +250 ml, nút Xoá lần vừa thêm (có Hoàn tác), nút + lượng khác (09 §8 G5-8).
 
 ### S20 — Chat AI
 - Luồng chat theo ngày (đổi ngày ở thanh trên cùng).
