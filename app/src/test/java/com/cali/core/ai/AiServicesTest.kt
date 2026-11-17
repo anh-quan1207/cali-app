@@ -122,6 +122,35 @@ class AiServicesTest : DbTestBase() {
         assertEquals("Bạn chan hết không?", req.history[1].text)
     }
 
+    @Test fun `nho AI sua bang loi - luot CHAT kem mon cu co khau phan va kcal, khong gui lai anh`() = runTestWithScope {
+        val (builder, _) = seed("e2")
+        val fake = FakeAiProvider(TEST_CLOCK)
+        val at = LocalDateTime.of(TEST_TODAY, LocalTime.of(7, 30))
+        val prev = (service(builder, fake).analyzePhoto(byteArrayOf(1), null, at) as AiOutcome.FoodLog).log
+        val r = service(builder, fake).correct(prev, "đây là bún riêu, tô nhỏ", hadImage = true, defaultAt = at)
+        assertTrue(r is AiOutcome.FoodLog)
+        val req = fake.requests.last()
+        assertEquals(AiMode.CHAT, req.mode)
+        assertNull(req.imageJpeg)
+        assertTrue(req.userText!!, req.userText.contains("đây là bún riêu, tô nhỏ"))
+        assertTrue(req.userText.contains("record_food_items"))
+        assertEquals(2, req.history.size)
+        assertTrue(req.history[0].hadImage)
+        assertEquals(prev.items.map { it.name }, req.history[1].loggedItemNames)
+        // AI cần biết lần trước đã ước bao nhiêu để sửa calo.
+        val said = req.history[1].text!!
+        prev.items.forEach { assertTrue(said, said.contains(it.name) && said.contains("${Math.round(it.kcal)} kcal")) }
+    }
+
+    @Test fun `nho AI sua - loi cua provider thanh Failed`() = runTestWithScope {
+        val (builder, _) = seed("e3")
+        val fake = FakeAiProvider(TEST_CLOCK)
+        val at = LocalDateTime.of(TEST_TODAY, LocalTime.of(7, 30))
+        val prev = (service(builder, fake).analyzePhoto(byteArrayOf(1), null, at) as AiOutcome.FoodLog).log
+        fake.nextError = AiErrorType.NO_NETWORK
+        assertEquals(AiErrorType.NO_NETWORK, (service(builder, fake).correct(prev, "ít cơm thôi", false, at) as AiOutcome.Failed).type)
+    }
+
     // --- ChatRepository ---
 
     private suspend fun com.cali.core.data.prefs.TestScopeHolder.chat(name: String, fake: FakeAiProvider = FakeAiProvider(TEST_CLOCK)): Pair<ChatRepository, FakeAiProvider> {

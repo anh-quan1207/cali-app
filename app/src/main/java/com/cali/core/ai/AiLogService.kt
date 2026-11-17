@@ -44,6 +44,23 @@ class AiLogService @Inject constructor(
         return call(AiMode.CHAT, defaultAt, answer, null, history)
     }
 
+    /** Nhờ AI sửa kết quả bằng lời khi AI không hỏi (09 §8 G6-18). Không gửi lại ảnh. */
+    suspend fun correct(previous: ValidatedFoodLog, correction: String, hadImage: Boolean, defaultAt: LocalDateTime): AiOutcome {
+        val names = previous.items.map { it.name }
+        // Lượt AI trước ghi rõ khẩu phần và kcal để AI biết sửa từ đâu (lịch sử thường chỉ có tên món).
+        val said = previous.items.joinToString("\n") { i ->
+            listOfNotNull(i.name, i.portionDesc.takeIf { it.isNotBlank() }, i.grams.takeIf { it > 0 }?.let { "~${Math.round(it)} g" }, "${Math.round(i.kcal)} kcal")
+                .joinToString(" · ")
+        }
+        val history = listOf(
+            ChatTurn(ChatRole.USER, text = null, hadImage = hadImage, loggedItemNames = names),
+            ChatTurn(ChatRole.ASSISTANT, text = said, loggedItemNames = names),
+        )
+        val text = "Kết quả trên chưa đúng: ${correction.trim()}\n" +
+            "Hãy sửa lại và gọi record_food_items với toàn bộ danh sách món sau khi sửa (thay cho danh sách cũ)."
+        return call(AiMode.CHAT, defaultAt, text, null, history)
+    }
+
     /** CHAT với lịch sử trong ngày (PromptBuilder tự cắt 10 tin cuối). */
     suspend fun chat(text: String?, jpeg: ByteArray?, history: List<ChatTurn>, sentAt: LocalDateTime): AiOutcome =
         call(AiMode.CHAT, sentAt, text, jpeg, history)
