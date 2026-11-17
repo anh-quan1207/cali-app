@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application>
-        <!-- Chỉ bản debug: màn xem thử theme để so với DESIGN.md / mockup (09 §4 GĐ1 việc 8). -->
+        <!-- Chỉ bản debug: màn xem thử theme (09 §4 GĐ1 việc 8). Không hiện icon; mở bằng adb shell am start -n com.cali/.feature.debug.ThemePreviewActivity -->
         <activity
             android:name=".feature.debug.ThemePreviewActivity"
             android:exported="true"
-            android:label="@string/preview_app_label">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:label="@string/preview_app_label" />
         <!-- Chỉ bản debug: nạp bộ số mockup để chụp so ảnh (GĐ3). -->
         <activity android:name=".feature.debug.SeedActivity" android:exported="true" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- Chỉ bản debug: rút ngắn chu kỳ nhắc nước để thử (GĐ5, 09 §6 mục 10). -->
