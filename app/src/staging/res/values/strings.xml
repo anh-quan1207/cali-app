@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bản staging (R8, ký debug) hiện tên khác để không lẫn với bản debug trên cùng máy. -->
+<resources>
+    <string name="app_name" translatable="false">Cali R8</string>
+</resources>
