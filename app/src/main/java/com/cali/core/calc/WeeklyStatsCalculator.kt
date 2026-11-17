@@ -203,7 +203,8 @@ object WeeklyStatsCalculator {
         val byDate = days.associateBy { it.date }
         val inputs = window.map { byDate[it] }
 
-        val results = window.mapIndexed { i, date -> dayResult(date, inputs[i]) }
+        // Hôm nay còn đang ghi: chưa gắn cờ nghi ghi thiếu (S30 f0).
+        val results = window.mapIndexed { i, date -> dayResult(date, inputs[i], inProgress = date == today) }
         val logged = inputs.filterNotNull().filter { it.entryCount > 0 }
         val loggedResults = results.filter { it.status != DayStatus.NOT_LOGGED }
 
@@ -328,7 +329,7 @@ object WeeklyStatsCalculator {
         score = trend(current.score.total.toDouble(), prev.score.total.toDouble()),
     )
 
-    private fun dayResult(date: LocalDate, d: DayInput?): DayResult {
+    private fun dayResult(date: LocalDate, d: DayInput?, inProgress: Boolean = false): DayResult {
         if (d == null) return DayResult(date, DayStatus.NOT_LOGGED, null, false, false, false)
         val status = dayStatus(d.entryCount, d.kcal, d.targetKcal)
         val logged = status != DayStatus.NOT_LOGGED
@@ -336,7 +337,7 @@ object WeeklyStatsCalculator {
             date = date,
             status = status,
             delta = if (logged) d.kcal - d.targetKcal else null,
-            suspectedUnderLog = logged && d.kcal < UNDER_LOG_RATIO * d.targetKcal,
+            suspectedUnderLog = logged && !inProgress && d.kcal < UNDER_LOG_RATIO * d.targetKcal,
             waterMet = d.targetWaterMl > 0 && d.waterMl >= d.targetWaterMl,
             proteinMet = logged && d.proteinG >= PROTEIN_MET_RATIO * d.targetProteinG,
         )

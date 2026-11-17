@@ -41,6 +41,16 @@ class PeriodStatsTest {
         assertTrue(s.isPartial)
     }
 
+    @Test fun `hom nay dang ghi duoi nua muc tieu chua bi coi la nghi ghi thieu`() {
+        // S30 f0: hôm nay (đang ghi) không gắn cờ ⚠; ngày đã qua thì có.
+        val days = thisWeek.take(3) + day(thursday, 600.0)
+        val s = calc.compute(weekStart = monday, today = thursday, days = days)
+        assertFalse(s.days[3].suspectedUnderLog)
+        assertEquals(0, s.suspectedUnderLogDays)
+        val done = calc.compute(weekStart = monday, today = thursday.plusDays(1), days = days)
+        assertTrue(done.days[3].suspectedUnderLog)
+    }
+
     @Test fun `ngay sau hom nay la FUTURE, khong phai chua ghi`() {
         val s = calc.compute(weekStart = monday, today = thursday, days = thisWeek)
         assertEquals(DayStatus.FUTURE, s.days[4].status)

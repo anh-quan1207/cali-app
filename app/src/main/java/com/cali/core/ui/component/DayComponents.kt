@@ -149,17 +149,18 @@ data class MacroValue(val grams: Double, val target: Int)
  * Vượt: phần trong mục tiêu giữ màu, phần dư tách bằng khe 3dp màu error, chữ đỏ.
  */
 @Composable
-fun MacroBars(protein: MacroValue, carb: MacroValue, fat: MacroValue, modifier: Modifier = Modifier) {
+fun MacroBars(protein: MacroValue, carb: MacroValue, fat: MacroValue, modifier: Modifier = Modifier, past: Boolean = false) {
     val cc = CaliTheme.colors
     Row(modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
-        MacroBar(stringResource(R.string.macro_protein), cc.protein, protein, Modifier.weight(1f))
-        MacroBar(stringResource(R.string.macro_carb), cc.carb, carb, Modifier.weight(1f))
-        MacroBar(stringResource(R.string.macro_fat), cc.fat, fat, Modifier.weight(1f))
+        MacroBar(stringResource(R.string.macro_protein), cc.protein, protein, Modifier.weight(1f), past)
+        MacroBar(stringResource(R.string.macro_carb), cc.carb, carb, Modifier.weight(1f), past)
+        MacroBar(stringResource(R.string.macro_fat), cc.fat, fat, Modifier.weight(1f), past)
     }
 }
 
+/** [past] = ngày đã qua (S33): không nói "còn" mà nói thiếu / đạt / vượt. */
 @Composable
-private fun MacroBar(name: String, color: Color, v: MacroValue, modifier: Modifier) {
+private fun MacroBar(name: String, color: Color, v: MacroValue, modifier: Modifier, past: Boolean) {
     val cs = MaterialTheme.colorScheme
     val g = v.grams.roundToInt()
     val over = v.target in 1 until g
@@ -197,7 +198,12 @@ private fun MacroBar(name: String, color: Color, v: MacroValue, modifier: Modifi
         }
         Spacer(Modifier.height(3.dp))
         Text(
-            if (over) stringResource(R.string.s10_macro_over, g - v.target) else stringResource(R.string.s10_macro_left, (v.target - g).coerceAtLeast(0)),
+            when {
+                over -> stringResource(R.string.s10_macro_over, g - v.target)
+                past && g >= v.target -> stringResource(R.string.s33_macro_met)
+                past -> stringResource(R.string.s33_macro_short, v.target - g)
+                else -> stringResource(R.string.s10_macro_left, (v.target - g).coerceAtLeast(0))
+            },
             style = MaterialTheme.typography.labelSmall,
             color = if (over) cs.error else cs.onSurfaceVariant,
         )

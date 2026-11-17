@@ -40,6 +40,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.cali.R
 import com.cali.core.data.prefs.SettingsRepository
 import com.cali.core.data.repo.ProfileRepository
@@ -80,9 +81,18 @@ import javax.inject.Inject
 @Serializable object WaterSettingsDest
 @Serializable object AiSettingsDest
 @Serializable object SystemPromptDest
+@Serializable data class WeeklyDest(val week: String = "")
+@Serializable data class DayDest(val date: String)
+@Serializable data class StatsDest(val month: Boolean = false)
+@Serializable object WeightDest
+@Serializable object MealTimesDest
 
 @HiltViewModel
-class AppViewModel @Inject constructor(settings: SettingsRepository, val chatPrefill: com.cali.feature.chat.ChatPrefill) : ViewModel() {
+class AppViewModel @Inject constructor(
+    settings: SettingsRepository,
+    val chatPrefill: com.cali.feature.chat.ChatPrefill,
+    val deepLinks: DeepLinks,
+) : ViewModel() {
     /** null = đang đọc DataStore. */
     val onboardingDone = settings.settings.map { it.onboardingDone }
         .stateIn(viewModelScope, SharingStarted.Eagerly, null)
@@ -103,6 +113,13 @@ fun AppNavHost(vm: AppViewModel = hiltViewModel()) {
     }
     val startDest = start ?: return
     val nav = rememberNavController()
+    // Thông báo tổng kết tuần → S35 (chỉ khi đã qua onboarding).
+    val weeklyLink by vm.deepLinks.weekly.collectAsStateWithLifecycle()
+    androidx.compose.runtime.LaunchedEffect(weeklyLink) {
+        val w = weeklyLink ?: return@LaunchedEffect
+        if (done == true) nav.navigate(WeeklyDest(w))
+        vm.deepLinks.weekly.value = null
+    }
     NavHost(nav, startDestination = startDest) {
         composable<OnboardingDest> {
             OnboardingRoute(
@@ -126,6 +143,11 @@ fun AppNavHost(vm: AppViewModel = hiltViewModel()) {
                 onCapture = { nav.navigate(CaptureDest) },
                 onOpenChatCard = { nav.navigate(LogFoodDest(java.time.LocalDate.now().toString(), chatId = it)) },
                 prefill = vm.chatPrefill,
+                onOpenDay = { nav.navigate(DayDest(it.toString())) },
+                onOpenWeekly = { nav.navigate(WeeklyDest(it?.toString().orEmpty())) },
+                onOpenWeight = { nav.navigate(WeightDest) },
+                onOpenStats = { nav.navigate(StatsDest()) },
+                onOpenMeals = { nav.navigate(MealTimesDest) },
             )
         }
         composable<WaterDest> { WaterRoute(onBack = { nav.popBackStack() }, onOpenSettings = { nav.navigate(WaterSettingsDest) }) }
@@ -155,6 +177,36 @@ fun AppNavHost(vm: AppViewModel = hiltViewModel()) {
         composable<MyFoodsDest> { MyFoodsRoute(onBack = { nav.popBackStack() }, onOpen = { nav.navigate(MyFoodEditDest(it ?: -1)) }) }
         composable<MyFoodEditDest> { MyFoodEditRoute(onClose = { nav.popBackStack() }) }
         composable<AiSettingsDest> { com.cali.feature.settings.AiSettingsRoute(onBack = { nav.popBackStack() }, onOpenPrompt = { nav.navigate(SystemPromptDest) }) }
+        composable<WeeklyDest> {
+            com.cali.feature.stats.WeeklyRoute(
+                onBack = { nav.popBackStack() },
+                onOpenDay = { nav.navigate(DayDest(it.toString())) },
+                onOpenAiSettings = { nav.navigate(AiSettingsDest) },
+            )
+        }
+        composable<DayDest> { entry ->
+            val date = java.time.LocalDate.parse(entry.toRoute<DayDest>().date)
+            TodayRoute(
+                onQuickAdd = { d, m -> nav.navigate(LogFoodDest(d.toString(), m?.name.orEmpty())) },
+                onEditFood = { nav.navigate(EditFoodDest(it)) },
+                onOpenWater = { nav.navigate(WaterDest(it.toString())) },
+                onCapture = { nav.navigate(CaptureDest) },
+                onOpenChat = { nav.popBackStack(MainDest, inclusive = false) },
+                onOpenWeekly = { nav.navigate(WeeklyDest(it.toString())) },
+                fixedDate = date,
+                onBack = { nav.popBackStack() },
+            )
+        }
+        composable<StatsDest> {
+            com.cali.feature.stats.StatsRoute(
+                onBack = { nav.popBackStack() },
+                onOpenDay = { nav.navigate(DayDest(it.toString())) },
+                onOpenWeekly = { nav.navigate(WeeklyDest(it.toString())) },
+                onOpenWeight = { nav.navigate(WeightDest) },
+            )
+        }
+        composable<WeightDest> { com.cali.feature.weight.WeightRoute(onBack = { nav.popBackStack() }) }
+        composable<MealTimesDest> { com.cali.feature.settings.MealTimesRoute(onBack = { nav.popBackStack() }) }
         composable<SystemPromptDest> { com.cali.feature.settings.SystemPromptRoute(onClose = { nav.popBackStack() }) }
         composable<DataDest> {
             DataRoute(
@@ -189,6 +241,11 @@ private fun MainShell(
     onCapture: () -> Unit,
     onOpenChatCard: (Long) -> Unit,
     prefill: com.cali.feature.chat.ChatPrefill,
+    onOpenDay: (java.time.LocalDate) -> Unit,
+    onOpenWeekly: (java.time.LocalDate?) -> Unit,
+    onOpenWeight: () -> Unit,
+    onOpenStats: () -> Unit,
+    onOpenMeals: () -> Unit,
 ) {
     var tab by rememberSaveable { mutableIntStateOf(Tab.TODAY.ordinal) }
     // "Hỏi AI" từ S13 → sang tab Chat với chữ điền sẵn.
@@ -214,18 +271,14 @@ private fun MainShell(
     ) { pad ->
         Box(Modifier.padding(pad).fillMaxSize()) {
             when (Tab.entries[tab]) {
-                Tab.TODAY -> TodayRoute(onQuickAdd = onQuickAdd, onEditFood = onEditFood, onOpenWater = onOpenWater, onCapture = onCapture, onOpenChat = { tab = Tab.CHAT.ordinal })
+                Tab.TODAY -> TodayRoute(onQuickAdd = onQuickAdd, onEditFood = onEditFood, onOpenWater = onOpenWater, onCapture = onCapture, onOpenChat = { tab = Tab.CHAT.ordinal }, onOpenWeekly = onOpenWeekly)
                 Tab.CHAT -> com.cali.feature.chat.ChatRoute(onOpenCard = onOpenChatCard, onOpenAiSettings = onOpenAi, onOpenToday = { tab = Tab.TODAY.ordinal })
-                Tab.HISTORY -> Placeholder(stringResource(R.string.placeholder_history))
-                Tab.SETTINGS -> SettingsRoute(onOpenProfile = onOpenProfile, onOpenData = onOpenData, onOpenMyFoods = onOpenMyFoods, onOpenWater = onOpenWaterSettings, onOpenAi = onOpenAi)
+                Tab.HISTORY -> com.cali.feature.history.HistoryRoute(
+                    onOpenDay = onOpenDay, onOpenWeekly = onOpenWeekly, onOpenWeight = onOpenWeight,
+                    onOpenStats = onOpenStats, onOpenMyFoods = onOpenMyFoods,
+                )
+                Tab.SETTINGS -> SettingsRoute(onOpenProfile = onOpenProfile, onOpenData = onOpenData, onOpenMyFoods = onOpenMyFoods, onOpenWater = onOpenWaterSettings, onOpenAi = onOpenAi, onOpenMeals = onOpenMeals)
             }
         }
-    }
-}
-
-@Composable
-private fun Placeholder(text: String) {
-    Column(Modifier.fillMaxSize().padding(Spacing.xl), verticalArrangement = androidx.compose.foundation.layout.Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
     }
 }

@@ -40,6 +40,7 @@
         <!-- GĐ5: nhắc uống nước (06 §4). -->
         <receiver android:name=".core.notify.WaterAlarmReceiver" android:exported="false" />
         <receiver android:name=".core.notify.WaterActionReceiver" android:exported="false" />
+        <receiver android:name=".core.notify.WeeklyAlarmReceiver" android:exported="false" />
         <receiver android:name=".core.notify.BootReceiver" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

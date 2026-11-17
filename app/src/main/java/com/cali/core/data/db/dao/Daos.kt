@@ -43,6 +43,16 @@ interface GoalSnapshotDao {
     @Query("SELECT * FROM goal_snapshot WHERE effective_from <= :date ORDER BY effective_from DESC LIMIT 1")
     fun observeForDate(date: LocalDate): Flow<GoalSnapshotEntity?>
 
+    /**
+     * GĐ6 (09 §8 G6): mục tiêu dùng cho ngày D = snapshot hiệu lực (lớn nhất ≤ D);
+     * ngày trước mọi snapshot (món nhập từ sao lưu, ghi lùi ngày) lấy snapshot sớm nhất.
+     */
+    @Query(
+        "SELECT * FROM goal_snapshot ORDER BY (effective_from <= :date) DESC, " +
+            "CASE WHEN effective_from <= :date THEN effective_from END DESC, effective_from ASC LIMIT 1",
+    )
+    fun observeEffective(date: LocalDate): Flow<GoalSnapshotEntity?>
+
     // GĐ6: mục tiêu từng ngày của một khoảng (S30–S35).
     @Query("SELECT * FROM goal_snapshot ORDER BY effective_from")
     suspend fun all(): List<GoalSnapshotEntity>

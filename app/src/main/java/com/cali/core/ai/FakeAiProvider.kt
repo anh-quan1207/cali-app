@@ -23,6 +23,23 @@ class FakeAiProvider(
         if (latencyMs > 0) delay(latencyMs)
         nextError?.let { nextError = null; return AiResult.Error(it, "Lỗi giả lập: $it") }
 
+        if (request.mode == AiMode.WEEKLY_REVIEW) {
+            return AiResult.Review(
+                WeeklyReview(
+                    headline = "Ngày thường đều tay, cuối tuần kéo tổng calo vượt mục tiêu.",
+                    highlights = listOf("4/7 ngày trong mục tiêu.", "Cân TB giảm, khớp với dự kiến theo lượng ăn."),
+                    issues = listOf("T7 và CN vượt nhiều, xoá phần thâm hụt của 5 ngày đầu.", "T4 chỉ ghi 690 kcal, có thể còn sót món."),
+                    patterns = listOf("Cuối tuần vừa ăn vượt vừa uống ít nước."),
+                    suggestions = listOf(
+                        "Trà sữa gọi 50% đường, bỏ trân châu: bớt khoảng 150 kcal mỗi ly.",
+                        "Thêm 2 quả trứng vào bữa sáng: khoảng +12 g đạm mỗi ngày.",
+                        "T7–CN chọn trước bữa tối quanh 600 kcal và bật nhắc nước mỗi 2 giờ.",
+                    ),
+                    tone = ReviewTone.ENCOURAGE,
+                ),
+                USAGE,
+            )
+        }
         val wantsAdvice = request.mode == AiMode.CHAT && request.imageJpeg == null &&
             request.userText?.trimEnd()?.endsWith("?") == true
         if (wantsAdvice) {

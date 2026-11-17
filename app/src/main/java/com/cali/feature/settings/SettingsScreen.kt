@@ -77,7 +77,7 @@ class SettingsViewModel @Inject constructor(
 
 /** S40 — vỏ danh sách mục. GĐ2 chỉ mở được S41; các mục khác ở giai đoạn sau. */
 @Composable
-fun SettingsRoute(onOpenProfile: () -> Unit, onOpenData: () -> Unit, onOpenMyFoods: () -> Unit, onOpenWater: () -> Unit, onOpenAi: () -> Unit, vm: SettingsViewModel = hiltViewModel()) {
+fun SettingsRoute(onOpenProfile: () -> Unit, onOpenData: () -> Unit, onOpenMyFoods: () -> Unit, onOpenWater: () -> Unit, onOpenAi: () -> Unit, onOpenMeals: () -> Unit = {}, vm: SettingsViewModel = hiltViewModel()) {
     val ui by vm.ui.collectAsStateWithLifecycle()
     val cs = MaterialTheme.colorScheme
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = Spacing.lg)) {
@@ -114,7 +114,7 @@ fun SettingsRoute(onOpenProfile: () -> Unit, onOpenData: () -> Unit, onOpenMyFoo
                 onOpenWater,
             )
             RowDivider()
-            NavRow(Icons.Rounded.Restaurant, stringResource(R.string.s40_meals), mealSummary(s), null)
+            NavRow(Icons.Rounded.Restaurant, stringResource(R.string.s40_meals), mealSummary(s), onOpenMeals)
         }
         Spacer(Modifier.height(Spacing.xl))
 

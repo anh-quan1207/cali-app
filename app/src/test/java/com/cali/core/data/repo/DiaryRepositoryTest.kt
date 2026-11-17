@@ -69,6 +69,19 @@ class DiaryRepositoryTest : DbTestBase() {
         assertEquals(listOf(0, 1), breakfast.map { it.sortOrder })
     }
 
+    @Test fun `ngay truoc snapshot dau tien dung muc tieu cua snapshot som nhat (G6)`() = runTestWithScope {
+        val settings = newSettings(tmp, "g6")
+        ProfileRepository(db, settings, TEST_CLOCK).completeOnboarding(TEST_PROFILE, 75.0).getOrThrow()
+        val repo = DiaryRepository(db, TEST_CLOCK)
+        val old = TEST_TODAY.minusDays(5)
+        repo.add(listOf(food("Phở bò", 690.0)), at(old, 8, 0), MealType.BREAKFAST, false).getOrThrow()
+        val day = repo.observeDay(old).first()
+        assertEquals(1740, day.goal?.targetKcal)
+        assertEquals(1050, day.summary.remainingKcal)
+        // Nước cũng lấy mục tiêu đó (S15 / S35 ngày cũ).
+        assertEquals(2600, WaterRepository(db, settings, TEST_CLOCK) {}.observeDay(old).first().goalMl)
+    }
+
     @Test fun `mon 23-30 thuoc ngay do, bua Phu`() = runTestWithScope {
         val repo = DiaryRepository(db, TEST_CLOCK)
         val late = at(TEST_TODAY, 23, 30)
