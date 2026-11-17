@@ -28,6 +28,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.ArrowRight
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowDropDown
@@ -40,6 +41,7 @@ import androidx.compose.material.icons.rounded.WaterDrop
 import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
@@ -69,6 +71,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
@@ -112,14 +115,19 @@ fun TodayRoute(
     onOpenWater: (date: LocalDate) -> Unit,
     onCapture: () -> Unit = {},
     onOpenChat: () -> Unit = {},
+    onOpenWeekly: (LocalDate) -> Unit = {},
+    /** S33: mở cho một ngày cụ thể, có nút quay lại. */
+    fixedDate: LocalDate? = null,
+    onBack: (() -> Unit)? = null,
     vm: TodayViewModel = hiltViewModel(),
 ) {
     val s by vm.state.collectAsStateWithLifecycle()
     val snack = remember { SnackbarHostState() }
     CollectMessages(vm.messages, snack)
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { vm.refreshToday() }
+    LaunchedEffect(fixedDate) { fixedDate?.let(vm::goTo) }
     val st = s ?: return
-    TodayScreen(st, vm, snack, onQuickAdd, onEditFood, onOpenWater, onCapture, onOpenChat)
+    TodayScreen(st, vm, snack, onQuickAdd, onEditFood, onOpenWater, onCapture, onOpenChat, onOpenWeekly, onBack)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -133,6 +141,8 @@ private fun TodayScreen(
     onOpenWater: (LocalDate) -> Unit,
     onCapture: () -> Unit,
     onOpenChat: () -> Unit,
+    onOpenWeekly: (LocalDate) -> Unit,
+    onBack: (() -> Unit)?,
 ) {
     val cs = MaterialTheme.colorScheme
     val list = rememberLazyListState()
@@ -149,8 +159,9 @@ private fun TodayScreen(
 
     Box(Modifier.fillMaxSize().background(cs.surface)) {
         Column(Modifier.fillMaxSize()) {
-            // Thanh ngày (05 §2 S10 mục 1)
-            Row(
+            // Thanh ngày (05 §2 S10 mục 1); S33 có nút quay lại, tiêu đề trái.
+            if (onBack != null) DayBackBar(s, barColor, onBack, onPick = { pickDate = true }, onPrev = { vm.shift(-1) }, onNext = { vm.shift(1) })
+            else Row(
                 Modifier.fillMaxWidth().background(barColor).height(64.dp).padding(horizontal = Spacing.xs),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -180,7 +191,7 @@ private fun TodayScreen(
             }
 
             LazyColumn(state = list, contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
-                item(key = "ring") { RingBlock(s) }
+                item(key = "ring") { if (date.isBefore(s.today)) PastRingBlock(s) else RingBlock(s) }
                 item(key = "macros") {
                     val g = day.goal
                     MacroBars(
@@ -188,6 +199,7 @@ private fun TodayScreen(
                         MacroValue(sum.carbG, g?.carbG ?: 0),
                         MacroValue(sum.fatG, g?.fatG ?: 0),
                         Modifier.padding(start = Spacing.gutter, end = Spacing.gutter, top = Spacing.lg),
+                        past = date.isBefore(s.today),
                     )
                 }
                 item(key = "actions") {
@@ -216,6 +228,9 @@ private fun TodayScreen(
                             border = ButtonDefaults.outlinedButtonBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(cs.outlineVariant)),
                         ) { Icon(Icons.Rounded.Add, stringResource(R.string.s10_quick_add), tint = cs.primary) }
                     }
+                }
+                s.week?.let { wk ->
+                    item(key = "week") { WeekTileView(wk, s.today, onOpen = { onOpenWeekly(wk.weekStart) }) }
                 }
                 item(key = "section") {
                     Row(Modifier.fillMaxWidth().padding(start = Spacing.gutter, end = Spacing.gutter, top = Spacing.gutter, bottom = Spacing.sm), verticalAlignment = Alignment.Bottom) {
@@ -487,5 +502,187 @@ private fun WeightTileView(w: WeightTile?, onLog: () -> Unit, modifier: Modifier
             modifier = Modifier.padding(top = 10.dp).fillMaxWidth().heightIn(min = 48.dp),
             border = ButtonDefaults.outlinedButtonBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(cs.outlineVariant)),
         ) { Text(stringResource(R.string.s10_log_weight), style = MaterialTheme.typography.labelLarge, color = cs.primary) }
+    }
+}
+
+// ---------- GĐ6: S33 Chi tiết ngày ----------
+
+/** S33: ← tiêu đề "Thứ Tư, 12/11" + phụ "Hôm qua ▾", ‹ › chuyển ngày. */
+@Composable
+private fun DayBackBar(s: TodayUiState, bg: androidx.compose.ui.graphics.Color, onBack: () -> Unit, onPick: () -> Unit, onPrev: () -> Unit, onNext: () -> Unit) {
+    val cs = MaterialTheme.colorScheme
+    val date = s.day.date
+    val isToday = date == s.today
+    Row(Modifier.fillMaxWidth().background(bg).statusBarsPadding().height(64.dp).padding(horizontal = Spacing.xs), verticalAlignment = Alignment.CenterVertically) {
+        IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.back), tint = cs.onSurface) }
+        Column(Modifier.weight(1f).clip(MaterialTheme.shapes.medium).clickable(onClick = onPick).padding(vertical = 2.dp)) {
+            Text(VnFormat.weekdayDayMonth(date), style = MaterialTheme.typography.titleLarge, color = cs.onSurface, modifier = Modifier.semantics { heading() })
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    when (date) {
+                        s.today -> stringResource(R.string.today)
+                        s.today.minusDays(1) -> stringResource(R.string.yesterday)
+                        else -> VnFormat.date(date)
+                    },
+                    style = MaterialTheme.typography.labelMedium, color = cs.onSurfaceVariant,
+                )
+                Icon(Icons.Rounded.ArrowDropDown, stringResource(R.string.s10_pick_day), tint = cs.onSurfaceVariant, modifier = Modifier.size(18.dp))
+            }
+        }
+        IconButton(onClick = onPrev) { Icon(Icons.Rounded.ChevronLeft, stringResource(R.string.s10_prev_day), tint = cs.onSurfaceVariant) }
+        IconButton(onClick = onNext, enabled = !isToday) {
+            Icon(Icons.Rounded.ChevronRight, stringResource(R.string.s10_next_day), tint = if (isToday) cs.onSurface.copy(alpha = 0.38f) else cs.onSurfaceVariant)
+        }
+    }
+}
+
+/** Vòng ngày đã qua (00-direction S33): giữa vòng là chênh lệch có dấu + loại ngày theo 08 §2; chưa ghi thì hiện mục tiêu. */
+@Composable
+private fun PastRingBlock(s: TodayUiState) {
+    val cs = MaterialTheme.colorScheme
+    val cc = CaliTheme.colors
+    val sum = s.day.summary
+    val target = sum.targetKcal ?: 0
+    val count = s.day.entries.size
+    val status = if (target > 0) com.cali.core.calc.WeeklyStatsCalculator.dayStatus(count, sum.totalKcal, target) else com.cali.core.calc.DayStatus.NOT_LOGGED
+    val delta = (sum.totalKcal - target).roundToInt()
+    val ringState = sum.status
+    val overColor = when (ringState) {
+        RingStatus.OVER_LIGHT -> cc.warn
+        RingStatus.OVER_MUCH -> cs.error
+        else -> cs.onSurface
+    }
+    val suspect = count > 0 && target > 0 && sum.totalKcal < target * 0.5
+    Column(Modifier.fillMaxWidth().padding(top = Spacing.xs), horizontalAlignment = Alignment.CenterHorizontally) {
+        val ringCd = stringResource(R.string.s10_ring_cd, VnFormat.int(sum.totalKcal.roundToInt()), VnFormat.int(target))
+        CalorieRing(
+            segments = ringParts(sum.segments),
+            targetKcal = target.toDouble(),
+            overColor = overColor,
+            modifier = Modifier.semantics(mergeDescendants = true) { contentDescription = ringCd },
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                val label = when (status) {
+                    com.cali.core.calc.DayStatus.UNDER -> stringResource(R.string.s33_under)
+                    com.cali.core.calc.DayStatus.OVER -> stringResource(R.string.s33_over)
+                    com.cali.core.calc.DayStatus.ON_TARGET -> stringResource(R.string.s33_on)
+                    else -> stringResource(R.string.s33_none)
+                }
+                val logged = status == com.cali.core.calc.DayStatus.UNDER || status == com.cali.core.calc.DayStatus.OVER || status == com.cali.core.calc.DayStatus.ON_TARGET
+                val value = if (logged) VnFormat.signedInt(delta) else if (target > 0) VnFormat.int(target) else "—"
+                val isOver = status == com.cali.core.calc.DayStatus.OVER
+                Text(label, style = MaterialTheme.typography.labelLarge, color = if (isOver) overColor else cs.onSurfaceVariant)
+                Text(value, style = MaterialTheme.typography.displayLarge, color = if (isOver) overColor else cs.onSurface, maxLines = 1)
+                Text(stringResource(R.string.unit_kcal), style = MaterialTheme.typography.labelMedium, color = cs.onSurfaceVariant)
+            }
+        }
+        Row(Modifier.padding(top = Spacing.xs), horizontalArrangement = Arrangement.spacedBy(40.dp)) {
+            Stat(stringResource(R.string.s10_eaten), VnFormat.int(sum.totalKcal.roundToInt()))
+            Stat(stringResource(R.string.s10_target), if (target > 0) VnFormat.int(target) else "—")
+        }
+        if (count > 0 && target > 0) {
+            val pct = kotlin.math.abs(delta * 100.0 / target).roundToInt()
+            val underColor = lerp(cs.surfaceContainerLow, cs.primary, 0.55f)
+            val isOver = status == com.cali.core.calc.DayStatus.OVER
+            val swatch = when (status) {
+                com.cali.core.calc.DayStatus.UNDER -> underColor
+                com.cali.core.calc.DayStatus.OVER -> cs.error
+                else -> cs.primary
+            }
+            val name = when (status) {
+                com.cali.core.calc.DayStatus.UNDER -> stringResource(R.string.gd6_legend_under)
+                com.cali.core.calc.DayStatus.OVER -> stringResource(R.string.gd6_legend_over)
+                else -> stringResource(R.string.gd6_legend_on)
+            }
+            val detail = when (status) {
+                com.cali.core.calc.DayStatus.UNDER -> stringResource(R.string.s33_chip_under, pct)
+                com.cali.core.calc.DayStatus.OVER -> stringResource(R.string.s33_chip_over, pct)
+                else -> stringResource(R.string.s33_chip_on, pct)
+            }
+            val container = when {
+                isOver && ringState == RingStatus.OVER_LIGHT -> cc.warnContainer
+                isOver -> cs.errorContainer
+                else -> cs.surfaceContainerHigh
+            }
+            val onContainer = when {
+                isOver && ringState == RingStatus.OVER_LIGHT -> cc.onWarnContainer
+                isOver -> cs.onErrorContainer
+                else -> cs.onSurface
+            }
+            Row(
+                Modifier.padding(top = 10.dp).clip(MaterialTheme.shapes.small).background(container).heightIn(min = 32.dp).padding(horizontal = Spacing.md, vertical = Spacing.xs),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Box(Modifier.size(12.dp).background(swatch))
+                Spacer(Modifier.width(Spacing.sm))
+                Text(name, style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold), color = onContainer)
+                Spacer(Modifier.width(6.dp))
+                Text(detail, style = MaterialTheme.typography.labelLarge, color = onContainer)
+            }
+            if (suspect) {
+                Row(
+                    Modifier.padding(top = 6.dp).clip(MaterialTheme.shapes.small).background(cc.warnContainer).heightIn(min = 32.dp).padding(horizontal = Spacing.md, vertical = Spacing.xs),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(Icons.Rounded.Warning, null, tint = cc.onWarnContainer, modifier = Modifier.size(16.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text(stringResource(R.string.s33_chip_suspect), style = MaterialTheme.typography.labelLarge, color = cc.onWarnContainer)
+                }
+            }
+        }
+    }
+}
+
+/** Thẻ tuần (S33, S10 Thứ Hai–Ba): ô điểm + tên tuần + Tạm tính / xếp loại; hàng "Tạo lại" khi nhận xét AI đã cũ. */
+@Composable
+private fun WeekTileView(w: WeekTile, today: LocalDate, onOpen: () -> Unit) {
+    val cs = MaterialTheme.colorScheme
+    val end = w.weekStart.plusDays(6)
+    Column(
+        Modifier.padding(start = Spacing.md, end = Spacing.md, top = Spacing.lg).fillMaxWidth()
+            .clip(MaterialTheme.shapes.large).background(cs.surfaceContainerLow).clickable(onClick = onOpen),
+    ) {
+        Row(Modifier.padding(Spacing.md), verticalAlignment = Alignment.CenterVertically) {
+            Box(Modifier.size(48.dp).clip(MaterialTheme.shapes.medium).background(cs.primaryContainer), contentAlignment = Alignment.Center) {
+                Text(w.score.toString(), style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold), color = cs.onPrimaryContainer)
+            }
+            Spacer(Modifier.width(Spacing.md))
+            Column(Modifier.weight(1f)) {
+                val inWeek = !today.isBefore(w.weekStart) && !today.isAfter(end)
+                Text(
+                    when {
+                        w.lastWeek -> stringResource(R.string.s10_last_week, VnFormat.dayMonth(w.weekStart), VnFormat.dayMonth(end))
+                        inWeek -> stringResource(R.string.gd6_this_week_range, VnFormat.dayMonth(w.weekStart), VnFormat.dayMonth(end))
+                        else -> stringResource(R.string.gd6_week_range, VnFormat.dayMonth(w.weekStart), VnFormat.dayMonth(end))
+                    },
+                    style = MaterialTheme.typography.titleMedium, color = cs.onSurface,
+                )
+                if (w.partial) {
+                    Text(
+                        stringResource(R.string.gd6_partial_left, w.remainingDays), style = MaterialTheme.typography.labelMedium, color = cs.onSecondaryContainer,
+                        modifier = Modifier.padding(top = 4.dp).clip(MaterialTheme.shapes.small).background(cs.secondaryContainer).padding(horizontal = 8.dp, vertical = 2.dp),
+                    )
+                } else {
+                    Text(
+                        stringResource(
+                            R.string.s10_last_week_sub, com.cali.feature.stats.gradeText(w.grade),
+                            if (w.deltaKcal >= 0) stringResource(R.string.s10_delta_over, VnFormat.int(w.deltaKcal)) else stringResource(R.string.s10_delta_under, VnFormat.int(-w.deltaKcal)),
+                            w.onTargetDays, w.countedDays,
+                        ),
+                        style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant,
+                    )
+                }
+            }
+            Icon(Icons.Rounded.ChevronRight, null, tint = cs.onSurfaceVariant)
+        }
+        if (w.reviewStale) {
+            HorizontalDivider(color = cs.outlineVariant)
+            Row(Modifier.fillMaxWidth().padding(start = Spacing.md, end = Spacing.xs), verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Rounded.AutoAwesome, null, tint = cs.primary, modifier = Modifier.size(16.dp))
+                Spacer(Modifier.width(Spacing.sm))
+                Text(stringResource(R.string.s33_regen), style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant, modifier = Modifier.weight(1f))
+                TextButton(onClick = onOpen, modifier = Modifier.heightIn(min = 48.dp)) { Text(stringResource(R.string.s33_regen_action)) }
+            }
+        }
     }
 }

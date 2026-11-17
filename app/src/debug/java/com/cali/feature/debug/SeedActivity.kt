@@ -32,6 +32,7 @@ import javax.inject.Inject
  * Chỉ bản debug: nạp bộ số mockup S10 cho hôm nay để chụp so ảnh (09 §1 mục 5).
  * `adb shell am start -n com.cali/.feature.debug.SeedActivity --es day ok|light|over|empty [--ez myfoods true]`
  * Hồ sơ: Nam, 1996, 170 cm, 75 kg, vận động nhẹ, giảm 0,5 kg/tuần → 1.740 kcal.
+ * GĐ6: `--ez history true` nạp 4 tuần trước tuần này (tuần trước = ví dụ 08 §5.4, điểm 71) + 16 lần cân (mockup s31).
  */
 @AndroidEntryPoint
 class SeedActivity : ComponentActivity() {
@@ -101,6 +102,7 @@ class SeedActivity : ComponentActivity() {
                 }
             }
             if (waterMode != null) seedWater(today, waterMode)
+            if (intent.getBooleanExtra("history", false)) seedHistory(today)
             Toast.makeText(this@SeedActivity, "Đã nạp dữ liệu mẫu: $day", Toast.LENGTH_SHORT).show()
             finish()
         }
@@ -129,6 +131,70 @@ class SeedActivity : ComponentActivity() {
                 water.add(d, tm.second, LocalTime.parse(tm.first), src).getOrThrow()
             }
         }
+    }
+
+    /** Một ngày: món có tên (kcal) + phần còn lại "Cơm nhà" mang toàn bộ macro của ngày. */
+    private data class Day(val kcal: Double, val p: Double, val c: Double, val f: Double, val water: Int, val named: List<Pair<String, Double>>)
+
+    private suspend fun seedHistory(today: LocalDate) {
+        val monday = today.minusDays((today.dayOfWeek.value - 1).toLong())
+        val from = monday.minusWeeks(4)
+        db.foodEntryDao().between(from, today.minusDays(1)).forEach { db.foodEntryDao().delete(it) }
+        val wdao = db.waterEntryDao()
+        (0 until java.time.temporal.ChronoUnit.DAYS.between(from, today).toInt()).forEach { i ->
+            wdao.observeByDate(from.plusDays(i.toLong())).first().forEach { wdao.delete(it) }
+        }
+        val ts = "Trà sữa trân châu" to 400.0
+        val ct = "Cơm tấm sườn" to 650.0
+        val pho = "Phở bò" to 470.0
+        val bm = "Bánh mì thịt" to 330.0
+        val bb = "Bún bò Huế" to 490.0
+        // Tuần trước = 08 §5.4: 1.710 · 1.760 · 690 · 1.800 · 1.650 · 2.360 · 2.630; nước đạt 5/7 → điểm 71.
+        val last = listOf(
+            Day(1710.0, 110.0, 220.0, 50.0, 2600, listOf(ts)),
+            Day(1760.0, 105.0, 230.0, 55.0, 2600, listOf(ct)),
+            Day(690.0, 40.0, 90.0, 25.0, 1100, listOf(pho)),
+            Day(1800.0, 115.0, 240.0, 60.0, 2600, listOf(bm)),
+            Day(1650.0, 118.0, 210.0, 55.0, 2600, listOf(bb)),
+            Day(2360.0, 120.0, 300.0, 65.0, 1100, listOf(ts, bm, pho)),
+            Day(2630.0, 120.0, 327.0, 75.0, 2600, listOf(ts, ct)),
+        )
+        val before = listOf(1700.0, 1900.0, 1650.0, 2000.0, 1720.0, 1800.0, 1600.0)
+        val weeks = mapOf(
+            monday.minusWeeks(4) to listOf(1750.0, 1690.0, 1820.0, 1600.0, 1980.0, 2100.0, 1700.0),
+            monday.minusWeeks(3) to listOf(1690.0, 1780.0, 0.0, 1720.0, 2100.0, 1600.0, 1950.0),
+            monday.minusWeeks(2) to before,
+        )
+        weeks.forEach { (start, list) ->
+            list.forEachIndexed { i, k ->
+                if (k > 0) addDay(start.plusDays(i.toLong()), Day(k, 100.0, k * 0.13, k * 0.03, 2400, emptyList()))
+            }
+        }
+        last.forEachIndexed { i, d -> addDay(monday.minusWeeks(1).plusDays(i.toLong()), d) }
+        if (today != monday) addDay(monday, Day(1710.0, 112.0, 215.0, 52.0, 2600, listOf(ct)))
+        // 16 lần cân (mockup s31, lịch thật lùi 1 ngày), tuần trước TB 74,1; tuần này chưa cân.
+        val wd = db.weightEntryDao()
+        wd.observeAll().first().forEach { wd.delete(it) }
+        val lastMonday = monday.minusWeeks(1)
+        listOf(
+            -35 to 76.0, -33 to 75.9, -31 to 75.8, -28 to 75.9, -25 to 75.5,
+            -21 to 75.6, -19 to 75.3, -16 to 75.3, -13 to 75.0, -9 to 75.0,
+            -7 to 74.8, -4 to 74.5, -2 to 74.5, 1 to 74.3, 3 to 73.9, 5 to 74.1,
+        ).forEachIndexed { i, (off, kg) ->
+            wd.put(WeightEntryEntity(date = lastMonday.plusDays(off.toLong()), weightKg = kg, createdAt = i.toLong()))
+        }
+    }
+
+    private suspend fun addDay(date: LocalDate, d: Day) {
+        val namedKcal = d.named.sumOf { it.second }
+        d.named.forEachIndexed { i, (n, k) ->
+            diary.add(listOf(NewFood(n, null, null, FoodValues(k, 0.0, 0.0, 0.0), FoodSource.MANUAL)), LocalDateTime.of(date, LocalTime.of(8 + i * 4, 0)), if (i == 0) MealType.BREAKFAST else MealType.SNACK, false).getOrThrow()
+        }
+        diary.add(
+            listOf(NewFood("Cơm nhà", null, null, FoodValues(d.kcal - namedKcal, d.p, d.c, d.f), FoodSource.MANUAL)),
+            LocalDateTime.of(date, LocalTime.of(19, 0)), MealType.DINNER, false,
+        ).getOrThrow()
+        water.add(date, d.water, LocalTime.of(12, 0), WaterSource.APP).getOrThrow()
     }
 }
 

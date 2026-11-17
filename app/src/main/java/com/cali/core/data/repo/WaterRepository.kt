@@ -51,7 +51,7 @@ class WaterRepository @Inject constructor(
         LocalDateTime.ofInstant(Instant.ofEpochMilli(e.createdAt), clock.zone).toLocalTime().withSecond(0).withNano(0)
 
     fun observeDay(date: LocalDate): Flow<WaterDay> =
-        combine(dao.observeByDate(date), goalDao.observeForDate(date), settings.settings) { list, goal, s ->
+        combine(dao.observeByDate(date), goalDao.observeEffective(date), settings.settings) { list, goal, s ->
             val auto = goal?.waterMl ?: 0
             WaterDay(
                 date = date,
@@ -66,7 +66,7 @@ class WaterRepository @Inject constructor(
     /** 7 ngày từ [weekStart] (Thứ Hai). Mục tiêu từng ngày theo snapshot của ngày đó. */
     fun observeWeek(weekStart: LocalDate): Flow<List<WaterWeekDay>> {
         val days = (0L..6L).map { weekStart.plusDays(it) }
-        val goals = days.map { goalDao.observeForDate(it) }
+        val goals = days.map { goalDao.observeEffective(it) }
         return combine(
             dao.observeTotalsBetween(days.first(), days.last()),
             settings.settings,

@@ -70,7 +70,7 @@ class DiaryRepository @Inject constructor(
     fun toLocal(millis: Long): LocalDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(millis), clock.zone)
 
     fun observeDay(date: LocalDate): Flow<DayData> =
-        combine(foodDao.observeByDate(date), goalDao.observeForDate(date)) { entries, goal ->
+        combine(foodDao.observeByDate(date), goalDao.observeEffective(date)) { entries, goal ->
             DayData(date, entries, goal, DaySummaryCalculator.summarize(entries.map(::toDayFood), goal?.targetKcal))
         }
 

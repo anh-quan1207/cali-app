@@ -27,6 +27,7 @@ class DebugWaterReceiver : BroadcastReceiver() {
     @Inject lateinit var scheduler: WaterReminderScheduler
     @Inject lateinit var actions: WaterReminderActions
     @Inject lateinit var state: ReminderStateStore
+    @Inject lateinit var weekly: com.cali.core.notify.WeeklyNotifier
 
     override fun onReceive(context: Context, intent: Intent) {
         val pending = goAsync()
@@ -40,6 +41,8 @@ class DebugWaterReceiver : BroadcastReceiver() {
                         scheduler.reschedule()
                     }
                     "com.cali.debug.WATER_FIRE" -> actions.onAlarm()
+                    // GĐ6: hiện ngay thông báo tổng kết tuần (09 §6, không chờ sáng Thứ Hai).
+                    "com.cali.debug.WEEKLY_FIRE" -> weekly.show()
                 }
                 Log.i(TAG, "interval=${settings.current().waterIntervalMin} scheduledAt=${state.scheduledAt} lastReminder=${state.lastReminderAt} snooze=${state.snoozeUntil}")
             } finally {

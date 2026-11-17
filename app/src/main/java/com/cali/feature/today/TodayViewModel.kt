@@ -32,11 +32,26 @@ data class WeightTile(val latest: WeightEntryEntity, val previous: WeightEntryEn
 /** Ô Nước (S10 mục 6, GĐ5): tổng ngày đang xem / mục tiêu, hai nút nhanh. */
 data class WaterTile(val totalMl: Int, val goalMl: Int, val cupSmall: Int, val cupLarge: Int)
 
+/** Thẻ tuần: S33 (tuần của ngày đang xem) và S10 Thứ Hai–Thứ Ba (tuần trước, 08 §1). */
+data class WeekTile(
+    val weekStart: LocalDate,
+    val score: Int,
+    val grade: com.cali.core.calc.WeekGrade,
+    val partial: Boolean,
+    val remainingDays: Int,
+    val reviewStale: Boolean,
+    val lastWeek: Boolean,
+    val deltaKcal: Int = 0,
+    val onTargetDays: Int = 0,
+    val countedDays: Int = 0,
+)
+
 data class TodayUiState(
     val today: LocalDate,
     val day: DayData,
     val weight: WeightTile?,
     val water: WaterTile,
+    val week: WeekTile? = null,
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -47,6 +62,8 @@ class TodayViewModel @Inject constructor(
     settings: SettingsRepository,
     private val water: WaterRepository,
     private val undo: UndoCenter,
+    private val stats: com.cali.core.data.repo.StatsRepository,
+    private val reviews: com.cali.core.ai.WeeklyReviewService,
 ) : ViewModel() {
 
     private val selected = MutableStateFlow(diary.today())
@@ -56,10 +73,36 @@ class TodayViewModel @Inject constructor(
         weights.observeAll().map { all -> all.firstOrNull()?.let { WeightTile(it, all.getOrNull(1)) } },
         settings.settings,
         selected.flatMapLatest { water.observeDay(it) },
-    ) { day, w, s, wd ->
+        selected.flatMapLatest { weekTile(it) },
+    ) { day, w, s, wd, wk ->
         diary.resolver = com.cali.core.calc.MealTypeResolver(s.mealTimes)
-        TodayUiState(diary.today(), day, w, WaterTile(wd.totalMl, wd.goalMl, s.waterCupSmallMl, s.waterCupLargeMl))
+        TodayUiState(diary.today(), day, w, WaterTile(wd.totalMl, wd.goalMl, s.waterCupSmallMl, s.waterCupLargeMl), wk)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+
+    private fun weekTile(date: LocalDate): kotlinx.coroutines.flow.Flow<WeekTile?> {
+        val today = diary.today()
+        val planner = com.cali.core.calc.WeeklySummaryPlanner
+        val (week, last) = when {
+            date.isBefore(today) -> planner.weekStart(date) to false
+            planner.showLastWeekCard(today) -> planner.weekStart(today).minusWeeks(1) to true
+            else -> return kotlinx.coroutines.flow.flowOf(null)
+        }
+        return combine(stats.observe(week, week.plusDays(6)), reviews.state(week)) { data, review ->
+            val s = com.cali.core.calc.WeeklyStatsCalculator.compute(week, data.today, data.daysIn(week, week.plusDays(6)), firstUseDate = data.firstUseDate)
+            if (s.elapsedDays == 0 || (last && s.loggedDays == 0)) {
+                null
+            } else {
+                WeekTile(
+                    week, s.score.total, s.grade, s.isPartial, s.remainingDays,
+                    reviewStale = review is com.cali.core.ai.WeeklyReviewState.Ready && review.stale,
+                    lastWeek = last,
+                    deltaKcal = Math.round(s.sumDeltaKcal).toInt(),
+                    onTargetDays = s.onTargetDays,
+                    countedDays = s.elapsedDays,
+                )
+            }
+        }
+    }
 
     /** +nhỏ / +lớn trên ô Nước: ghi cho ngày đang xem (hôm nay = bây giờ, ngày cũ = 14:30). */
     fun addWater(ml: Int) = viewModelScope.launch { water.add(selected.value, ml, null, WaterSource.APP) }

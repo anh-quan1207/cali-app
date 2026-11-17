@@ -105,9 +105,15 @@ class WaterActionReceiver : BroadcastReceiver() {
 @AndroidEntryPoint
 class BootReceiver : BroadcastReceiver() {
     @Inject lateinit var actions: WaterReminderActions
+    @Inject lateinit var weekly: WeeklySummaryScheduler
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action in ACTIONS) runAsync { actions.onSystemChange() }
+        if (intent.action in ACTIONS) {
+            runAsync {
+                actions.onSystemChange()
+                runCatching { weekly.reschedule() }
+            }
+        }
     }
 
     companion object {

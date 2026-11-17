@@ -477,4 +477,45 @@ class NeuralwattProviderTest {
         val e = provider().testConnection().exceptionOrNull() as AiException
         assertEquals(AiErrorType.RATE_LIMITED, e.type)
     }
+
+    // ---------- GĐ6: WEEKLY_REVIEW (08 §5) ----------
+
+    private val weekly = AiRequest(AiMode.WEEKLY_REVIEW, "PROMPT", ctx, userText = "<weekly_stats>\nTuần: 09/11/2026\n</weekly_stats>")
+
+    private val reviewInput = """{"headline":"Ngày thường đều tay","highlights":["4/7 ngày đạt"],"issues":["T7 vượt 620"],
+        "patterns":[],"suggestions":["a","b","c"],"tone":"ENCOURAGE"}"""
+
+    private fun reviewResponse(input: String = reviewInput) = ok(
+        """{"id":"chatcmpl-3","object":"chat.completion","model":"deepseek-v4.1-flash",
+        "choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","content":null,
+          "tool_calls":[{"id":"call_9","type":"function","function":{"name":"submit_weekly_review",
+            "arguments":${JsonPrimitive(input.replace("\n", ""))}}}]}}],
+        "usage":{"prompt_tokens":2000,"completion_tokens":250,"total_tokens":2250}}""",
+    )
+
+    @Test fun `WEEKLY_REVIEW dung model chat, ep goi submit_weekly_review, chi gui tool do`() = runBlocking {
+        server.enqueue(reviewResponse())
+        val r = provider().send(weekly)
+        val b = server.takeRequest().json()
+        assertEquals("deepseek-v4.1-flash", b["model"]!!.jsonPrimitive.content)
+        assertEquals("submit_weekly_review", b["tool_choice"]!!.jsonObject["function"]!!.jsonObject["name"]!!.jsonPrimitive.content)
+        val tools = b["tools"]!!.jsonArray
+        assertEquals(1, tools.size)
+        assertEquals("submit_weekly_review", tools[0].jsonObject["function"]!!.jsonObject["name"]!!.jsonPrimitive.content)
+        val system = b["messages"]!!.jsonArray[0].jsonObject["content"]!!.jsonPrimitive.content
+        assertTrue(system.contains("Đánh giá tuần"))
+        val user = b["messages"]!!.jsonArray.last().toString()
+        assertTrue(user.contains("weekly_stats"))
+        r as AiResult.Review
+        assertEquals("Ngày thường đều tay", r.review.headline)
+        assertEquals(1L, r.callId)
+        assertEquals(AiMode.WEEKLY_REVIEW, logs.single().mode)
+    }
+
+    @Test fun `WEEKLY_REVIEW khong goi tool hoac sai dinh dang thi INVALID_RESPONSE`() = runBlocking {
+        server.enqueue(textResponse("Tuần này tốt"))
+        server.enqueue(reviewResponse("""{"headline":"","highlights":[],"issues":[],"suggestions":[],"tone":"WARN"}"""))
+        val r = provider().send(weekly)
+        assertEquals(AiErrorType.INVALID_RESPONSE, (r as AiResult.Error).type)
+    }
 }
