@@ -159,4 +159,14 @@
 
     <!-- Làn "sau khi lưu" khi ngày chưa có mục tiêu -->
     <string name="proj_total_no_goal">Tổng %1$s kcal · chưa có mục tiêu ngày này</string>
+    <!-- 09 §8 G6-18: nhờ AI sửa bằng lời trên thẻ xác nhận -->
+    <string name="s12ai_fix_open">Kết quả chưa đúng? Nhờ AI sửa</string>
+    <string name="s12ai_fix_again">Vẫn chưa đúng? Nhờ AI sửa tiếp</string>
+    <string name="s12ai_fix_title">Nhờ AI sửa</string>
+    <string name="s12ai_fix_note">Nói AI sai chỗ nào, AI sẽ ước lại. Không gửi lại ảnh; món bạn tự thêm giữ nguyên.</string>
+    <string name="s12ai_fix_hint">Vd: đây là bún riêu, tô nhỏ</string>
+    <string name="s12ai_fix_send">Gửi cho AI sửa</string>
+    <string name="s12ai_fix_working">AI đang sửa…</string>
+    <string name="s12ai_fix_error">Chưa sửa được: %1$s Kết quả cũ vẫn giữ.</string>
+    <string name="s12ai_fix_cancel">Thôi, giữ kết quả này</string>
 </resources>

@@ -95,6 +95,10 @@ data class AiPanel(
     val answering: Boolean = false,
     val answerError: AiErrorType? = null,
     val answerNote: String? = null,
+    /** "Nhờ AI sửa" (09 §8 G6-18): đang gửi / lỗi / số lần đã sửa. */
+    val correcting: Boolean = false,
+    val correctError: AiErrorType? = null,
+    val corrections: Int = 0,
 )
 
 /**
@@ -244,6 +248,29 @@ class LogFoodViewModel @Inject constructor(
     }
 
     fun skipQuestion() = aiPanel.update { it?.copy(question = null, answerError = null) }
+
+    /**
+     * Nhờ AI sửa bằng lời khi kết quả sai mà AI không hỏi (09 §8 G6-18): một lượt CHAT kèm món cũ (khẩu phần, kcal),
+     * không gửi lại ảnh. Món AI cũ được thay, món người dùng tự thêm giữ nguyên; lỗi thì giữ kết quả cũ.
+     */
+    fun correct(text: String) = viewModelScope.launch {
+        val d = aiDraft ?: return@launch
+        val panel = aiPanel.value ?: return@launch
+        if (text.isBlank() || panel.correcting) return@launch
+        aiPanel.value = panel.copy(correcting = true, correctError = null)
+        when (val r = aiService.correct(aiLog ?: d.log, text.trim(), d.hadImage, d.defaultAt)) {
+            is AiOutcome.FoodLog -> {
+                aiLog = r.log
+                items.update { old -> old.filter { it.confidence == null } + AiReview.reviewOrder(r.log.items).map { it.toDraft(d.source, r.callId) } }
+                aiPanel.value = panel.copy(
+                    comment = r.log.comment ?: panel.comment, question = r.log.clarifyingQuestion, answerNote = null,
+                    noFood = items.value.isEmpty(), correcting = false, corrections = panel.corrections + 1,
+                )
+            }
+            is AiOutcome.Text -> aiPanel.value = panel.copy(answerNote = r.text, correcting = false)
+            is AiOutcome.Failed -> aiPanel.value = panel.copy(correcting = false, correctError = r.type)
+        }
+    }
 
     private val pickState = combine(stage, tab, query, search, recent) { st, tb, q, sr, rc -> PickPart(st, tb, q, sr, rc) }
 

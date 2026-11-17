@@ -35,6 +35,7 @@ import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.EditNote
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Restaurant
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Button
@@ -375,6 +376,7 @@ private fun ConfirmScreen(s: LogUi, vm: LogFoodViewModel, snack: SnackbarHostSta
                 if (ai.question != null) item(key = "q") { QuestionCard(ai, onSend = vm::answer, onSkip = vm::skipQuestion) }
                 val note = ai.answerNote ?: ai.comment
                 if (note != null) item(key = "comment") { AiComment(note) }
+                if (ai.question == null) item(key = "fix") { CorrectCard(ai, onSend = vm::correct) }
             }
             s.projection?.let { p ->
                 item(key = "proj") {
@@ -495,6 +497,72 @@ private fun QuestionCard(ai: AiPanel, onSend: (String) -> Unit, onSkip: () -> Un
             stringResource(R.string.s12ai_skip),
             style = MaterialTheme.typography.bodySmall, color = cc.onWarnContainer,
             modifier = Modifier.clickable(onClick = onSkip).padding(vertical = Spacing.xs),
+        )
+    }
+}
+
+/** "Kết quả chưa đúng? Nhờ AI sửa" (09 §8 G6-18): thu gọn thành một dòng, mở ra ô nhập + gửi. */
+@Composable
+private fun CorrectCard(ai: AiPanel, onSend: (String) -> Unit) {
+    val cs = MaterialTheme.colorScheme
+    var open by remember { mutableStateOf(false) }
+    var text by remember { mutableStateOf("") }
+    // Sửa xong thì thu gọn và xoá chữ đã gõ.
+    androidx.compose.runtime.LaunchedEffect(ai.corrections) { if (ai.corrections > 0) { open = false; text = "" } }
+    if (!open) {
+        Row(
+            Modifier.fillMaxWidth().clip(MaterialTheme.shapes.large).clickable { open = true }.heightIn(min = 48.dp).padding(horizontal = Spacing.md),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(Icons.Rounded.Edit, null, tint = cs.primary, modifier = Modifier.size(18.dp))
+            Spacer(Modifier.width(Spacing.sm))
+            Text(
+                stringResource(if (ai.corrections > 0) R.string.s12ai_fix_again else R.string.s12ai_fix_open),
+                style = MaterialTheme.typography.labelLarge, color = cs.primary,
+            )
+        }
+        return
+    }
+    Column(Modifier.fillMaxWidth().clip(MaterialTheme.shapes.large).background(cs.surfaceContainerLow).padding(Spacing.lg)) {
+        Text(stringResource(R.string.s12ai_fix_title), style = MaterialTheme.typography.titleSmall, color = cs.onSurface)
+        Text(stringResource(R.string.s12ai_fix_note), style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant, modifier = Modifier.padding(top = 2.dp))
+        Spacer(Modifier.height(Spacing.md))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            androidx.compose.material3.OutlinedTextField(
+                value = text,
+                onValueChange = { text = it.take(200) },
+                placeholder = { Text(stringResource(R.string.s12ai_fix_hint)) },
+                enabled = !ai.correcting,
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
+                keyboardActions = KeyboardActions(onSend = { onSend(text) }),
+                textStyle = MaterialTheme.typography.bodyLarge,
+                colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(focusedContainerColor = cs.surface, unfocusedContainerColor = cs.surface),
+                modifier = Modifier.weight(1f),
+            )
+            Spacer(Modifier.width(Spacing.sm))
+            if (ai.correcting) {
+                Box(Modifier.size(48.dp), contentAlignment = Alignment.Center) { androidx.compose.material3.CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp) }
+            } else {
+                androidx.compose.material3.FilledTonalIconButton(onClick = { onSend(text) }, enabled = text.isNotBlank(), modifier = Modifier.size(48.dp)) {
+                    Icon(Icons.AutoMirrored.Rounded.Send, stringResource(R.string.s12ai_fix_send))
+                }
+            }
+        }
+        if (ai.correcting) {
+            Text(stringResource(R.string.s12ai_fix_working), style = MaterialTheme.typography.bodySmall, color = cs.onSurfaceVariant, modifier = Modifier.padding(top = Spacing.sm))
+        }
+        if (ai.correctError != null) {
+            Text(
+                stringResource(R.string.s12ai_fix_error, stringResource(aiErrorText(ai.correctError))),
+                style = MaterialTheme.typography.bodySmall, color = cs.error, modifier = Modifier.padding(top = Spacing.sm),
+            )
+        }
+        Text(
+            stringResource(R.string.s12ai_fix_cancel),
+            style = MaterialTheme.typography.labelLarge, color = cs.primary,
+            modifier = Modifier.padding(top = Spacing.sm).clip(MaterialTheme.shapes.small).clickable(enabled = !ai.correcting) { open = false }
+                .heightIn(min = 48.dp).padding(vertical = Spacing.md, horizontal = Spacing.xs),
         )
     }
 }

@@ -65,6 +65,8 @@ Gửi số liệu tuần đã tổng hợp → bắt buộc gọi tool `submit_w
 ### 3.4 Câu hỏi làm rõ
 Nếu payload có `clarifying_question` (khi độ tin cậy thấp), Thẻ xác nhận hiện câu hỏi kèm ô trả lời. Gửi câu trả lời = một lượt chat mới có kèm kết quả trước đó → AI trả về payload cập nhật. Người dùng vẫn có thể bỏ qua câu hỏi và lưu luôn.
 
+**Nhờ AI sửa bằng lời** (thêm 17/11/2026, 09 §8 G6-18): khi AI không hỏi, Thẻ xác nhận vẫn có dòng "Kết quả chưa đúng? Nhờ AI sửa". Gửi lời sửa = một lượt CHAT (model chat) kèm các món AI vừa trả, có khẩu phần và kcal, **không gửi lại ảnh**; AI trả payload mới thay các món AI cũ, món người dùng tự thêm giữ nguyên. Lỗi thì giữ kết quả cũ.
+
 ## 4. Ngữ cảnh gửi kèm mỗi lần gọi
 
 Được chèn vào **cuối** system prompt (phần động, sau phần tĩnh để tận dụng prompt caching):
