@@ -167,12 +167,11 @@ fun WaterSettingsRoute(onBack: () -> Unit, vm: WaterSettingsViewModel = hiltView
                 }
             }
 
-            // ---- Hai nút nhanh ----
+            // ---- Nút nhanh (một nút, G5-8) ----
             SectionTitle(stringResource(R.string.s43_cups_group))
             Card(top = Spacing.md) {
                 Row(horizontalArrangement = Arrangement.spacedBy(Spacing.md)) {
                     MlField(stringResource(R.string.s43_cup_small), s.waterCupSmallMl, WaterSettingsViewModel.CUP_MIN, WaterSettingsViewModel.CUP_MAX, vm::setCupSmall, Modifier.weight(1f))
-                    MlField(stringResource(R.string.s43_cup_large), s.waterCupLargeMl, WaterSettingsViewModel.CUP_MIN, WaterSettingsViewModel.CUP_MAX, vm::setCupLarge, Modifier.weight(1f))
                 }
                 Line(Icons.Rounded.TouchApp, AnnotatedString(stringResource(R.string.s43_cups_line, VnFormat.int(s.waterCupSmallMl))), neutral = true, top = 10.dp)
             }

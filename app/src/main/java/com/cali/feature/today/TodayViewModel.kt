@@ -13,6 +13,7 @@ import com.cali.core.data.repo.WeightRepository
 import com.cali.core.data.db.entity.WaterSource
 import com.cali.core.data.repo.WaterRepository
 import com.cali.core.ui.UiMessage
+import com.cali.core.ui.component.hm
 import com.cali.core.ui.UndoCenter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -61,8 +62,15 @@ class TodayViewModel @Inject constructor(
         TodayUiState(diary.today(), day, w, WaterTile(wd.totalMl, wd.goalMl, s.waterCupSmallMl, s.waterCupLargeMl))
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
-    /** +nhỏ / +lớn trên ô Nước: ghi cho ngày đang xem (hôm nay = bây giờ, ngày cũ = 14:30). */
+    /** Nút +250 trên ô Nước: ghi cho ngày đang xem (hôm nay = bây giờ, ngày cũ = 14:30). */
     fun addWater(ml: Int) = viewModelScope.launch { water.add(selected.value, ml, null, WaterSource.APP) }
+
+    /** Nút xoá trên ô Nước: bỏ lần vừa thêm của ngày đang xem, có Hoàn tác (G5-8). */
+    fun deleteLastWater() = viewModelScope.launch {
+        water.deleteLatest(selected.value).onSuccess { removed ->
+            undo.post(UiMessage(R.string.s15_deleted, listOf(com.cali.core.ui.format.VnFormat.int(removed.amountMl), water.timeOf(removed).hm())) { water.restore(removed) })
+        }
+    }
 
     fun goTo(date: LocalDate) {
         if (!date.isAfter(diary.today())) selected.value = date

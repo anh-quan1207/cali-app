@@ -136,6 +136,13 @@ class WaterViewModel @Inject constructor(
     /** Nút +nhỏ / +lớn ở chân: hôm nay = bây giờ, ngày cũ = 14:30. */
     fun quickAdd(ml: Int) = viewModelScope.launch { water.add(selected.value, ml, null, WaterSource.APP) }
 
+    /** Nút xoá ở chân: bỏ lần vừa thêm của ngày đang xem, có Hoàn tác (G5-8). */
+    fun deleteLast() = viewModelScope.launch {
+        water.deleteLatest(selected.value).onSuccess { removed ->
+            undo.post(UiMessage(R.string.s15_deleted, listOf(com.cali.core.ui.format.VnFormat.int(removed.amountMl), water.timeOf(removed).hm())) { water.restore(removed) })
+        }
+    }
+
     fun add(ml: Int, time: LocalTime?) = viewModelScope.launch { water.add(selected.value, ml, time, WaterSource.APP) }
 
     fun update(id: Long, ml: Int, time: LocalTime) = viewModelScope.launch {

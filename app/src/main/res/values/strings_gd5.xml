@@ -75,6 +75,8 @@
     <string name="s15_add_cd">Thêm %1$s ml</string>
     <string name="s15_add_cd_day">Thêm %1$s ml cho ngày %2$s</string>
     <string name="s15_add_other_cd">Thêm lượng khác</string>
+    <string name="water_delete_last">Xoá</string>
+    <string name="water_delete_last_cd">Xoá lần vừa thêm</string>
     <string name="s15_past_note">Ghi cho %1$s lúc %2$s · chạm lần uống để đổi giờ</string>
     <string name="s15_deleted">Đã xoá %1$s ml · %2$s</string>
     <string name="s15_saved">Đã lưu lần uống %1$s</string>
@@ -118,10 +120,9 @@
     <string name="s43_goal_custom_label">Mục tiêu</string>
     <string name="s43_goal_custom_line">Tự tính theo cân nặng sẽ là %1$s ml. Đổi về Tự động để theo cân nặng.</string>
     <string name="s43_goal_error">Nhập từ %1$s đến %2$s ml</string>
-    <string name="s43_cups_group">Hai nút nhanh</string>
-    <string name="s43_cup_small">Nút nhỏ</string>
-    <string name="s43_cup_large">Nút lớn</string>
-    <string name="s43_cups_line">Hai nút của ô Nước (Hôm nay). Nút nhỏ cũng là nút “+%1$s ml” trên thông báo nhắc.</string>
+    <string name="s43_cups_group">Nút nhanh</string>
+    <string name="s43_cup_small">Mỗi lần bấm</string>
+    <string name="s43_cups_line">Nút “+%1$s ml” ở ô Nước (Hôm nay), màn Nước và trên thông báo nhắc.</string>
     <string name="s43_remind_group">Nhắc uống nước</string>
     <string name="s43_remind_switch">Nhắc uống nước</string>
     <string name="s43_remind_switch_sub">Kênh thông báo “Nhắc uống nước”</string>

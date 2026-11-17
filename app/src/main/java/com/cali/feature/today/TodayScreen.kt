@@ -29,6 +29,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowRight
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material.icons.rounded.AutoAwesome
@@ -240,7 +241,7 @@ private fun TodayScreen(
                         Modifier.padding(start = Spacing.md, end = Spacing.md, top = Spacing.sm).height(IntrinsicSize.Max),
                         horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                     ) {
-                        WaterTileView(s.water, onOpen = { onOpenWater(date) }, onAdd = vm::addWater, modifier = Modifier.weight(1f).fillMaxHeight())
+                        WaterTileView(s.water, onOpen = { onOpenWater(date) }, onAdd = vm::addWater, onDeleteLast = vm::deleteLastWater, modifier = Modifier.weight(1f).fillMaxHeight())
                         WeightTileView(s.weight, onLog = { weigh = true }, modifier = Modifier.weight(1f).fillMaxHeight())
                     }
                 }
@@ -415,9 +416,9 @@ private fun EmptyHero(isToday: Boolean) {
     }
 }
 
-/** Ô Nước (S10 mục 6, bật ở GĐ5): đã uống / mục tiêu, thanh, +nhỏ / +lớn. Chạm ô mở S15. Vượt mục tiêu vẫn primary. */
+/** Ô Nước (S10 mục 6): đã uống / mục tiêu, thanh, một nút +250 và nút xoá lần vừa thêm (G5-8). Chạm ô mở S15. Vượt mục tiêu vẫn primary. */
 @Composable
-private fun WaterTileView(w: WaterTile, onOpen: () -> Unit, onAdd: (Int) -> Unit, modifier: Modifier = Modifier) {
+private fun WaterTileView(w: WaterTile, onOpen: () -> Unit, onAdd: (Int) -> Unit, onDeleteLast: () -> Unit, modifier: Modifier = Modifier) {
     val cs = MaterialTheme.colorScheme
     val openCd = stringResource(R.string.s10_water_open_cd, VnFormat.int(w.totalMl), VnFormat.int(w.goalMl))
     Column(
@@ -440,16 +441,22 @@ private fun WaterTileView(w: WaterTile, onOpen: () -> Unit, onAdd: (Int) -> Unit
             }
         }
         Spacer(Modifier.weight(1f))
-        Row(Modifier.padding(top = 10.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            listOf(w.cupSmall, w.cupLarge).forEach { ml ->
-                val cd = stringResource(R.string.s10_water_add_cd, VnFormat.int(ml))
-                FilledTonalButton(
-                    onClick = { onAdd(ml) },
-                    shape = MaterialTheme.shapes.medium,
-                    contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
-                    modifier = Modifier.weight(1f).heightIn(min = 48.dp).semantics { contentDescription = cd },
-                ) { Text(stringResource(R.string.s10_water_add, VnFormat.int(ml)), style = MaterialTheme.typography.labelLarge) }
-            }
+        Row(Modifier.padding(top = 10.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
+            val ml = w.cupSmall
+            val cd = stringResource(R.string.s10_water_add_cd, VnFormat.int(ml))
+            FilledTonalButton(
+                onClick = { onAdd(ml) },
+                shape = MaterialTheme.shapes.medium,
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
+                modifier = Modifier.weight(1f).heightIn(min = 48.dp).semantics { contentDescription = cd },
+            ) { Text(stringResource(R.string.s15_add, VnFormat.int(ml)), style = MaterialTheme.typography.labelLarge) }
+            OutlinedIconButton(
+                onClick = onDeleteLast,
+                enabled = w.totalMl > 0,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.size(48.dp),
+                border = ButtonDefaults.outlinedButtonBorder(enabled = w.totalMl > 0).copy(brush = androidx.compose.ui.graphics.SolidColor(cs.outlineVariant)),
+            ) { Icon(Icons.Outlined.Delete, stringResource(R.string.water_delete_last_cd), tint = if (w.totalMl > 0) cs.onSurfaceVariant else cs.onSurface.copy(alpha = 0.38f)) }
         }
     }
 }

@@ -105,7 +105,7 @@ class SettingsRepository @Inject constructor(
             waterIntervalMin = p[K.waterIntervalMin] ?: d.waterIntervalMin,
             waterCupSmallMl = p[K.waterCupSmallMl] ?: d.waterCupSmallMl,
             waterCupLargeMl = p[K.waterCupLargeMl] ?: d.waterCupLargeMl,
-            waterGoalOverrideMl = p[K.waterGoalOverrideMl],
+            waterGoalOverrideMl = p[K.waterGoalOverrideMl].let { if (it == null) d.waterGoalOverrideMl else it.takeUnless { v -> v == WATER_GOAL_AUTO } },
             mealTimes = p[K.mealTimes]?.let(::decodeMeals) ?: d.mealTimes,
             saveThumbnails = p[K.saveThumbnails] ?: d.saveThumbnails,
             weeklyNotifyEnabled = p[K.weeklyNotifyEnabled] ?: d.weeklyNotifyEnabled,
@@ -132,7 +132,7 @@ class SettingsRepository @Inject constructor(
         p[K.waterIntervalMin] = s.waterIntervalMin
         p[K.waterCupSmallMl] = s.waterCupSmallMl
         p[K.waterCupLargeMl] = s.waterCupLargeMl
-        p.setOrRemove(K.waterGoalOverrideMl, s.waterGoalOverrideMl)
+        p[K.waterGoalOverrideMl] = s.waterGoalOverrideMl ?: WATER_GOAL_AUTO
         p[K.mealTimes] = encodeMeals(s.mealTimes)
         p[K.saveThumbnails] = s.saveThumbnails
         p[K.weeklyNotifyEnabled] = s.weeklyNotifyEnabled
@@ -171,6 +171,9 @@ class SettingsRepository @Inject constructor(
 
         /** Bản cài GĐ1–GĐ3 có thể đã ghi giá trị Claude vào DataStore; đổi sang Neuralwatt (09 §8). */
         const val LEGACY_PROVIDER = "anthropic"
+
+        /** Lưu "mục tiêu nước tự động" thành 0, vì thiếu khóa nghĩa là mặc định 1.500 (G5-8). */
+        const val WATER_GOAL_AUTO = 0
 
         fun isLegacyModel(id: String) = id.startsWith("claude-")
     }
