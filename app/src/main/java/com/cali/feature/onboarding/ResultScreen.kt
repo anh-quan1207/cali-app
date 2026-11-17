@@ -143,7 +143,8 @@ private fun ResultBody(s: OnboardingUiState, p: GoalPreview, onToggleHow: () -> 
             Triple(stringResource(R.string.metric_bmi), VnFormat.decimal1(r.bmi), stringResource(r.bmiClass.label())),
             Triple(stringResource(R.string.metric_bmr), VnFormat.int(r.bmr.roundToInt()), stringResource(R.string.unit_kcal)),
             Triple(stringResource(R.string.metric_tdee), VnFormat.int(r.tdee.roundToInt()), stringResource(R.string.unit_kcal)),
-            Triple(stringResource(R.string.metric_water), VnFormat.decimal1(r.waterMl / 1000.0), stringResource(R.string.unit_l_day)),
+            // Nước: mặc định 1.500 ml (G5-8), không theo công thức; đổi ở Cài đặt → Nước.
+            Triple(stringResource(R.string.metric_water), VnFormat.decimal1(com.cali.core.data.prefs.Settings.DEFAULT_WATER_GOAL_ML / 1000.0), stringResource(R.string.unit_l_day)),
         ),
     )
 

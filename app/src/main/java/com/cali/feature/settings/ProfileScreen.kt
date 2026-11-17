@@ -125,7 +125,7 @@ private fun CurrentGoalCard(d: ProfileData) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(Icons.Rounded.WaterDrop, null, tint = cs.onSurfaceVariant, modifier = Modifier.size(14.dp))
             Spacer(Modifier.width(Spacing.xs))
-            Text(stringResource(R.string.s41_water, VnFormat.decimal1(g.waterMl / 1000.0)), style = MaterialTheme.typography.labelMedium, color = cs.onSurface)
+            Text(stringResource(R.string.s41_water, VnFormat.decimal1((d.settings.waterGoalOverrideMl ?: g.waterMl) / 1000.0)), style = MaterialTheme.typography.labelMedium, color = cs.onSurface)
         }
         HorizontalDivider(Modifier.padding(vertical = Spacing.md), color = cs.outlineVariant)
         val p = d.profile

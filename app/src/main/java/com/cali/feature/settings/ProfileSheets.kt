@@ -197,12 +197,13 @@ fun ApplySheet(p: PendingApply, d: ProfileData, onCancel: () -> Unit, onApply: (
         }
         Spacer(Modifier.height(Spacing.md))
         CompareTable(
-            listOf(
+            listOfNotNull(
                 Triple(stringResource(R.string.metric_tdee), VnFormat.int(g.tdee.roundToInt()), VnFormat.int(r.tdee.roundToInt()) to stringResource(R.string.unit_kcal)),
                 Triple(stringResource(R.string.macro_protein), g.proteinG.toString(), r.macros.proteinG.toString() to stringResource(R.string.unit_g)),
                 Triple(stringResource(R.string.macro_carb), g.carbG.toString(), r.macros.carbG.toString() to stringResource(R.string.unit_g)),
                 Triple(stringResource(R.string.macro_fat), g.fatG.toString(), r.macros.fatG.toString() to stringResource(R.string.unit_g)),
-                Triple(stringResource(R.string.metric_water), VnFormat.decimal1(g.waterMl / 1000.0), VnFormat.decimal1(r.waterMl / 1000.0) to "L"),
+                // Nước chỉ đổi theo cân khi ở chế độ Tự động; mặc định là 1.500 ml cố định (G5-8).
+                if (d.settings.waterGoalOverrideMl == null) Triple(stringResource(R.string.metric_water), VnFormat.decimal1(g.waterMl / 1000.0), VnFormat.decimal1(r.waterMl / 1000.0) to "L") else null,
             ),
         )
         r.target.clampReason?.let { reason ->
