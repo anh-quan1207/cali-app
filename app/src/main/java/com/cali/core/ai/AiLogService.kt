@@ -61,6 +61,7 @@ class AiLogService @Inject constructor(
                     r.callId,
                 )
                 is AiResult.Text -> AiOutcome.Text(r.text, r.callId)
+                is AiResult.Review -> AiOutcome.Failed(AiErrorType.INVALID_RESPONSE, "Kết quả không phải ghi món")
                 is AiResult.Error -> AiOutcome.Failed(r.type, r.message)
             }
         } catch (e: CancellationException) {

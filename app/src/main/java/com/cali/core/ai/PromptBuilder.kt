@@ -30,6 +30,7 @@ class PromptBuilder(private val resolver: MealTypeResolver = MealTypeResolver())
     fun build(request: AiRequest): BuiltPrompt {
         val static = when (request.mode) {
             AiMode.PHOTO_LOG -> request.systemPrompt.trimEnd() + "\n\n" + PHOTO_LOG_RULE
+            AiMode.WEEKLY_REVIEW -> request.systemPrompt.trimEnd() + "\n\n" + WEEKLY_REVIEW_RULE
             else -> request.systemPrompt.trimEnd()
         }
         return BuiltPrompt(static, userContextBlock(request.context), messages(request))
@@ -120,6 +121,20 @@ class PromptBuilder(private val resolver: MealTypeResolver = MealTypeResolver())
                 "Người dùng vừa gửi ảnh món ăn. Bắt buộc trả kết quả bằng cách gọi tool `record_food_items` " +
                 "đúng một lần, không trả lời bằng văn bản thay cho tool. Nếu ảnh không có đồ ăn/uống, " +
                 "vẫn gọi tool với `items` rỗng và giải thích trong `comment`."
+
+        /** 08 §5.3. */
+        const val WEEKLY_REVIEW_RULE =
+            "## Đánh giá tuần\n" +
+                "Bạn nhận được <weekly_stats> của một tuần. Hãy gọi `submit_weekly_review`.\n" +
+                "- Dựa hoàn toàn vào số liệu được cung cấp, luôn dẫn con số cụ thể.\n" +
+                "- Đánh giá theo mục tiêu của người dùng (giảm / giữ / tăng cân): khi giảm cân, ăn thiếu " +
+                "nhẹ là tốt, nhưng thiếu > 25% hoặc dưới mức sàn là vấn đề.\n" +
+                "- So sánh thay đổi cân dự kiến với thực tế; nếu lệch nhiều, nêu khả năng ghi chép " +
+                "chưa đủ hoặc dao động nước, không kết luận vội.\n" +
+                "- Ngày chưa ghi / nghi ghi thiếu: nhắc nhẹ, không trách móc.\n" +
+                "- Gợi ý phải cụ thể, khả thi, gắn với món người dùng thực sự ăn " +
+                "(vd \"đổi trà sữa 100% đường sang 50% giúp bớt ~100 kcal/ly\").\n" +
+                "- Giọng thân thiện, xưng \"mình\" – \"bạn\", không phán xét. Không đưa lời khuyên y khoa."
 
         private val HHMM = DateTimeFormatter.ofPattern("HH:mm")
 

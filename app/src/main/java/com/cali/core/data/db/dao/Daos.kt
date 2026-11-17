@@ -42,6 +42,13 @@ interface GoalSnapshotDao {
 
     @Query("SELECT * FROM goal_snapshot WHERE effective_from <= :date ORDER BY effective_from DESC LIMIT 1")
     fun observeForDate(date: LocalDate): Flow<GoalSnapshotEntity?>
+
+    // GĐ6: mục tiêu từng ngày của một khoảng (S30–S35).
+    @Query("SELECT * FROM goal_snapshot ORDER BY effective_from")
+    suspend fun all(): List<GoalSnapshotEntity>
+
+    @Query("SELECT * FROM goal_snapshot ORDER BY effective_from")
+    fun observeAll(): Flow<List<GoalSnapshotEntity>>
 }
 
 @Dao
@@ -96,6 +103,16 @@ interface FoodEntryDao {
 
     @Query("SELECT * FROM food_entry WHERE date BETWEEN :from AND :to ORDER BY eaten_at, sort_order, id")
     suspend fun between(from: LocalDate, to: LocalDate): List<FoodEntryEntity>
+
+    // GĐ6
+    @Query("SELECT * FROM food_entry WHERE date BETWEEN :from AND :to ORDER BY eaten_at, sort_order, id")
+    fun observeBetween(from: LocalDate, to: LocalDate): Flow<List<FoodEntryEntity>>
+
+    @Query("SELECT MIN(date) FROM food_entry")
+    suspend fun firstDate(): LocalDate?
+
+    @Query("SELECT MIN(date) FROM food_entry")
+    fun observeFirstDate(): Flow<LocalDate?>
 
     /** Món ghi gần đây cho tab Gần đây (S13). */
     @Query("SELECT * FROM food_entry ORDER BY eaten_at DESC, id DESC LIMIT :limit")
@@ -175,6 +192,9 @@ interface WaterEntryDao {
 
     @Query("SELECT date, SUM(amount_ml) AS total FROM water_entry WHERE date BETWEEN :from AND :to GROUP BY date")
     fun observeTotalsBetween(from: LocalDate, to: LocalDate): Flow<List<WaterDayTotal>>
+
+    @Query("SELECT date, SUM(amount_ml) AS total FROM water_entry WHERE date BETWEEN :from AND :to GROUP BY date")
+    suspend fun totalsBetween(from: LocalDate, to: LocalDate): List<WaterDayTotal>
 }
 
 /** Tổng nước một ngày (cột tuần S15). */
@@ -225,4 +245,7 @@ interface WeeklyReviewDao {
 
     @Query("SELECT * FROM weekly_review WHERE week_start = :weekStart")
     suspend fun byWeek(weekStart: LocalDate): WeeklyReviewEntity?
+
+    @Query("SELECT * FROM weekly_review WHERE week_start = :weekStart")
+    fun observeByWeek(weekStart: LocalDate): Flow<WeeklyReviewEntity?>
 }

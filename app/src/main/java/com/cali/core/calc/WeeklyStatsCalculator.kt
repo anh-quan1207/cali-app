@@ -3,12 +3,21 @@ package com.cali.core.calc
 import com.cali.core.calc.model.MealType
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.YearMonth
 import java.time.temporal.ChronoUnit
 import kotlin.math.abs
 import kotlin.math.min
 
 /** 08 §2. */
-enum class DayStatus { ON_TARGET, OVER, UNDER, NOT_LOGGED }
+enum class DayStatus {
+    ON_TARGET, OVER, UNDER, NOT_LOGGED,
+
+    /** Trước ngày bắt đầu dùng app: để trống, không tính là chưa ghi (S30 f4, S32 f5). */
+    BEFORE_START,
+
+    /** Sau hôm nay. */
+    FUTURE,
+}
 
 enum class WeekGrade { EXCELLENT, GOOD, NEEDS_WORK, POOR }
 
@@ -57,7 +66,12 @@ data class ScoreBreakdown(
 }
 
 data class WeeklyStats(
+    /** Ngày đầu kỳ (Thứ Hai với tuần, ngày 1 với tháng). */
     val weekStart: LocalDate,
+    /** Số ngày ở cuối kỳ còn chưa tới (S32 "còn 3 ngày"). */
+    val remainingDays: Int = 0,
+    /** false khi người mới bắt đầu dùng app trong kỳ và chưa đủ 3 ngày ghi (S32 f5). */
+    val averagesReady: Boolean = true,
     /** Số ngày đã qua tính cả hôm nay (7 nếu tuần đã kết thúc). */
     val elapsedDays: Int,
     val isPartial: Boolean,
@@ -103,12 +117,16 @@ data class WeekComparison(
     val score: Trend,
 )
 
+/** Same-Days Rule: kỳ trước cắt đúng số ngày đầu như kỳ này; [trends] null khi kỳ trước chưa đủ ngày ghi. */
+data class SameDaysComparison(val previous: WeeklyStats, val enough: Boolean, val trends: WeekComparison?)
+
 /** 08 §2–§4. Thuần Kotlin. */
 object WeeklyStatsCalculator {
     private const val TOLERANCE = 0.10
     private const val UNDER_LOG_RATIO = 0.50
     private const val PROTEIN_MET_RATIO = 0.90
     private const val TOP_FOODS = 5
+    const val MIN_DAYS_FOR_AVERAGES = 3
 
     fun dayStatus(entryCount: Int, kcal: Double, targetKcal: Int): DayStatus {
         if (entryCount <= 0) return DayStatus.NOT_LOGGED
@@ -128,10 +146,60 @@ object WeeklyStatsCalculator {
         foods: List<FoodContribution> = emptyList(),
         weights: List<Double> = emptyList(),
         previousWeekAvgWeightKg: Double? = null,
+        firstUseDate: LocalDate? = null,
     ): WeeklyStats {
         require(weekStart.dayOfWeek == DayOfWeek.MONDAY) { "Tuần bắt đầu Thứ Hai" }
-        val elapsed = (ChronoUnit.DAYS.between(weekStart, today) + 1).toInt().coerceIn(1, 7)
-        val window = (0 until elapsed).map { weekStart.plusDays(it.toLong()) }
+        return computePeriod(weekStart, 7, today, days, foods, weights, previousWeekAvgWeightKg, firstUseDate)
+    }
+
+    /** Tháng dùng cùng chỉ số (S30, S32); điểm chỉ có ý nghĩa với tuần. */
+    fun computeMonth(
+        month: YearMonth,
+        today: LocalDate,
+        days: List<DayInput>,
+        foods: List<FoodContribution> = emptyList(),
+        firstUseDate: LocalDate? = null,
+    ): WeeklyStats = computePeriod(month.atDay(1), month.lengthOfMonth(), today, days, foods, emptyList(), null, firstUseDate)
+
+    /**
+     * Same-Days Rule (00-direction, S32/S35): kỳ trước tính đúng bấy nhiêu ngày đầu như kỳ này đã qua,
+     * chỉ những ngày từ lúc bắt đầu dùng app; chỉ so khi kỳ trước có >= [minLoggedDays] ngày ghi (tuần 3, tháng 7).
+     */
+    fun compareSameDays(
+        current: WeeklyStats,
+        previousStart: LocalDate,
+        previousLength: Int,
+        previousDays: List<DayInput>,
+        today: LocalDate,
+        firstUseDate: LocalDate? = null,
+        minLoggedDays: Int = 3,
+    ): SameDaysComparison {
+        val currentEnd = current.weekStart.plusDays((current.days.size - 1).toLong())
+        val offset = ChronoUnit.DAYS.between(current.weekStart, minOf(today, currentEnd)).coerceAtLeast(0)
+        val prev = computePeriod(
+            previousStart, previousLength, previousStart.plusDays(offset), previousDays,
+            emptyList(), emptyList(), null, firstUseDate,
+        )
+        val enough = prev.loggedDays >= minLoggedDays
+        return SameDaysComparison(prev, enough, if (enough) trends(current, prev) else null)
+    }
+
+    private fun computePeriod(
+        start: LocalDate,
+        length: Int,
+        today: LocalDate,
+        days: List<DayInput>,
+        foods: List<FoodContribution>,
+        weights: List<Double>,
+        previousWeekAvgWeightKg: Double?,
+        firstUseDate: LocalDate?,
+    ): WeeklyStats {
+        val end = start.plusDays((length - 1).toLong())
+        val from = if (firstUseDate != null && firstUseDate.isAfter(start)) firstUseDate else start
+        val to = minOf(end, today)
+        val window = if (to.isBefore(from)) emptyList() else (0..ChronoUnit.DAYS.between(from, to)).map { from.plusDays(it) }
+        val elapsed = window.size
+        val divisor = elapsed.coerceAtLeast(1)
         val byDate = days.associateBy { it.date }
         val inputs = window.map { byDate[it] }
 
@@ -151,10 +219,10 @@ object WeeklyStatsCalculator {
             0.0
         }
         val score = ScoreBreakdown(
-            calorie = 40.0 * onTarget / elapsed,
+            calorie = 40.0 * onTarget / divisor,
             protein = 20.0 * proteinRatio,
-            water = 20.0 * waterMet / elapsed,
-            logging = 20.0 * consistent / elapsed,
+            water = 20.0 * waterMet / divisor,
+            logging = 20.0 * consistent / divisor,
         )
 
         val present = inputs.filterNotNull()
@@ -170,7 +238,8 @@ object WeeklyStatsCalculator {
         val tdeeBalance = logged.sumOf { it.kcal - it.tdee }
         val avgWeight = weights.takeIf { it.isNotEmpty() }?.average()
 
-        val windowFoods = foods.filter { it.date in window }
+        val windowSet = window.toSet()
+        val windowFoods = foods.filter { it.date in windowSet }
         val topFoods = windowFoods.groupBy { it.name }
             .map { (name, items) -> TopFood(name, items.size, items.sumOf { it.kcal }) }
             .sortedByDescending { it.kcal }
@@ -181,14 +250,26 @@ object WeeklyStatsCalculator {
 
         val sumTarget = logged.sumOf { it.targetKcal.toDouble() }
         val sumEaten = logged.sumOf { it.kcal }
-        val totalScore = score.total
+        val resultByDate = results.associateBy { it.date }
+        val partial = today.isBefore(end)
 
         return WeeklyStats(
-            weekStart = weekStart,
+            weekStart = start,
+            remainingDays = when {
+                !partial -> 0
+                today.isBefore(start) -> length
+                else -> ChronoUnit.DAYS.between(today, end).toInt()
+            },
+            averagesReady = firstUseDate == null || !firstUseDate.isAfter(start) || logged.size >= MIN_DAYS_FOR_AVERAGES,
             elapsedDays = elapsed,
-            isPartial = elapsed < 7,
-            days = (0 until 7).map { i ->
-                if (i < elapsed) results[i] else dayResult(weekStart.plusDays(i.toLong()), null)
+            isPartial = partial,
+            days = (0 until length).map { i ->
+                val date = start.plusDays(i.toLong())
+                resultByDate[date] ?: if (date.isBefore(from)) {
+                    DayResult(date, DayStatus.BEFORE_START, null, false, false, false)
+                } else {
+                    DayResult(date, DayStatus.FUTURE, null, false, false, false)
+                }
             },
             loggedDays = logged.size,
             notLoggedDays = elapsed - logged.size,
@@ -211,7 +292,7 @@ object WeeklyStatsCalculator {
             proteinMetDays = results.count { it.proteinMet },
             waterTotalMl = waterTotal,
             waterTargetTotalMl = waterTargetTotal,
-            avgWaterMl = waterTotal.toDouble() / elapsed,
+            avgWaterMl = waterTotal.toDouble() / divisor,
             waterMetDays = waterMet,
             waterShortfallMl = shortfall,
             avgWeightKg = avgWeight,
@@ -223,7 +304,7 @@ object WeeklyStatsCalculator {
             topFoods = topFoods,
             topMeal = topMeal,
             score = score,
-            grade = grade(totalScore),
+            grade = grade(score.total),
         )
     }
 
@@ -236,15 +317,16 @@ object WeeklyStatsCalculator {
 
     fun compare(current: WeeklyStats, previousWeekStart: LocalDate, previousDays: List<DayInput>): WeekComparison {
         val sameDayToday = previousWeekStart.plusDays((current.elapsedDays - 1).toLong())
-        val prev = compute(previousWeekStart, sameDayToday, previousDays)
-        return WeekComparison(
-            avgKcal = trendOrNull(current.avgKcal, prev.avgKcal),
-            onTargetDays = trend(current.onTargetDays.toDouble(), prev.onTargetDays.toDouble()),
-            avgWaterMl = trend(current.avgWaterMl, prev.avgWaterMl),
-            avgProteinG = trendOrNull(current.avgProteinG, prev.avgProteinG),
-            score = trend(current.score.total.toDouble(), prev.score.total.toDouble()),
-        )
+        return trends(current, compute(previousWeekStart, sameDayToday, previousDays))
     }
+
+    private fun trends(current: WeeklyStats, prev: WeeklyStats) = WeekComparison(
+        avgKcal = trendOrNull(current.avgKcal, prev.avgKcal),
+        onTargetDays = trend(current.onTargetDays.toDouble(), prev.onTargetDays.toDouble()),
+        avgWaterMl = trend(current.avgWaterMl, prev.avgWaterMl),
+        avgProteinG = trendOrNull(current.avgProteinG, prev.avgProteinG),
+        score = trend(current.score.total.toDouble(), prev.score.total.toDouble()),
+    )
 
     private fun dayResult(date: LocalDate, d: DayInput?): DayResult {
         if (d == null) return DayResult(date, DayStatus.NOT_LOGGED, null, false, false, false)

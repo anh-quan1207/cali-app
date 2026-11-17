@@ -31,6 +31,8 @@ sealed interface AiResult {
     /** [callId] = id dòng `ai_call_log` để gắn vào món / tin nhắn (null nếu ghi log lỗi). */
     data class FoodLog(val payload: ValidatedFoodLog, val usage: TokenUsage, val callId: Long? = null) : AiResult
     data class Text(val text: String, val usage: TokenUsage, val callId: Long? = null) : AiResult
+    /** WEEKLY_REVIEW (08 §5). */
+    data class Review(val review: WeeklyReview, val usage: TokenUsage, val callId: Long? = null) : AiResult
     data class Error(val type: AiErrorType, val message: String, val callId: Long? = null) : AiResult
 }
 

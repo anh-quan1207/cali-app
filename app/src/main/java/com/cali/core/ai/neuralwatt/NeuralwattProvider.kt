@@ -4,6 +4,8 @@ import com.cali.core.ai.AiCallRecorder
 import com.cali.core.ai.AiErrorType
 import com.cali.core.ai.AiException
 import com.cali.core.ai.AiModelSource
+import com.cali.core.ai.WeeklyReviewTool
+import com.cali.core.ai.WeeklyReviewValidator
 import com.cali.core.ai.AiProvider
 import com.cali.core.ai.AiRequest
 import com.cali.core.ai.AiResult
@@ -72,9 +74,6 @@ class NeuralwattProvider(
 
     override suspend fun send(request: AiRequest): AiResult {
         val key = currentKey() ?: return AiResult.Error(AiErrorType.NO_KEY, "Chưa có API key")
-        if (request.mode == AiMode.WEEKLY_REVIEW) {
-            return AiResult.Error(AiErrorType.UNKNOWN, "Đánh giá tuần chưa được hỗ trợ")
-        }
         val model = models.modelFor(request.mode)
         val body = json.encodeToString(
             ChatCompletionRequest.serializer(),
@@ -159,21 +158,30 @@ class NeuralwattProvider(
                 ChatMessage("assistant", JsonPrimitive(m.parts.filterIsInstance<PromptPart.Text>().joinToString("\n\n") { it.text }))
             }
         }
-        val toolChoice: JsonElement = if (mode == AiMode.PHOTO_LOG) {
+        // PHOTO_LOG và WEEKLY_REVIEW ép gọi tool theo tên; CHAT để AI tự chọn.
+        val forced = when (mode) {
+            AiMode.PHOTO_LOG -> RecordFoodItemsTool.NAME
+            AiMode.WEEKLY_REVIEW -> WeeklyReviewTool.NAME
+            AiMode.CHAT -> null
+        }
+        val toolChoice: JsonElement = if (forced != null) {
             buildJsonObject {
                 put("type", "function")
-                putJsonObject("function") { put("name", RecordFoodItemsTool.NAME) }
+                putJsonObject("function") { put("name", forced) }
             }
         } else {
             JsonPrimitive("auto")
+        }
+        val tool = if (mode == AiMode.WEEKLY_REVIEW) {
+            ToolParam(FunctionDef(WeeklyReviewTool.NAME, WeeklyReviewTool.DESCRIPTION, WeeklyReviewTool.inputSchema))
+        } else {
+            ToolParam(FunctionDef(RecordFoodItemsTool.NAME, RecordFoodItemsTool.DESCRIPTION, RecordFoodItemsTool.inputSchema))
         }
         return ChatCompletionRequest(
             model = model,
             maxTokens = config.maxTokens,
             messages = listOf(system) + messages,
-            tools = listOf(
-                ToolParam(FunctionDef(RecordFoodItemsTool.NAME, RecordFoodItemsTool.DESCRIPTION, RecordFoodItemsTool.inputSchema)),
-            ),
+            tools = listOf(tool),
             toolChoice = toolChoice,
             reasoningEffort = config.effortFor(mode),
         )
@@ -230,6 +238,15 @@ class NeuralwattProvider(
         val message = choice.message
 
         if (choice.finishReason == "content_filter" || !message?.refusal.isNullOrBlank()) return Interpreted.Refused(usage)
+
+        if (mode == AiMode.WEEKLY_REVIEW) {
+            val review = message?.toolCalls?.firstOrNull { it.function?.name == WeeklyReviewTool.NAME }
+                ?.function?.arguments
+                ?.let { runCatching { json.parseToJsonElement(it) }.getOrNull() }
+                ?.let(WeeklyReviewValidator::validate)
+                ?: return Interpreted.Invalid(usage, "AI không trả nhận xét tuần đúng định dạng")
+            return Interpreted.Ok(usage) { id -> AiResult.Review(review, usage, id) }
+        }
 
         val call = message?.toolCalls?.firstOrNull { it.function?.name == RecordFoodItemsTool.NAME }
         if (call != null) {
