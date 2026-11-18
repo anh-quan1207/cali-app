@@ -26,8 +26,8 @@ android {
         applicationId = "com.cali"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -44,7 +44,8 @@ android {
 
     buildTypes {
         release {
-            if (releaseSigning != null) signingConfig = signingConfigs.getByName("release")
+            // Chưa có khoá release riêng thì ký khoá debug: cùng khoá với bản đang cài, cài đè được (G7-6).
+            signingConfig = signingConfigs.getByName(if (releaseSigning != null) "release" else "debug")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
